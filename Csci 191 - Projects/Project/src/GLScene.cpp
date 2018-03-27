@@ -155,23 +155,32 @@ static void update()
             directionX =  1;
             directionY =  1;
         }
-        Ball->modelInit("images/box/ball2P.png", true, ballHBTex);
+        Ball->modelInit("images/box/ball.png", true, ballHBTex);
         hud->modelInit("images/box/hud3.png", true, texH);
     }
 
     if(ply->jump > 0)
        {
            yex = 0.60*sin(ply->verticalVelocity);
-           ply->verticalVelocity -= 0.0048;
-           ply->PYpos += yex;
+
+           if(ply->verticalVelocity>0)
+                ply->verticalVelocity -= 0.0048;
+
+            ply->PYpos += yex;
+
             if(ply->PYpos <= -1.4)
             {
-
                 yex = 0;
                 ply->PYpos = -1.4;
                 ply->jump = 0;
             }
        }
+
+
+     if(ply->box_collision(ply->box,tile1->box)||ply->box_collision(ply->box,tile2->box)||ply->box_collision(ply->box,tile3->box)||ply->box_collision(ply->box,tile4->box)||
+    ply->box_collision(ply->box,tile5->box)||ply->box_collision(ply->box,tile6->box)||ply->box_collision(ply->box,tile7->box)||ply->box_collision(ply->box,tile8->box)||ply->PYpos>-1.4)
+            ply->PYpos-=0.03;
+
     if(ply2->jump > 0)
        {
            yex = 0.60*sin(ply->verticalVelocity);
@@ -179,28 +188,53 @@ static void update()
            ply2->PYpos += yex;
             if(ply2->PYpos <= -1.4)
             {
-
                 yex = 0;
                 ply2->PYpos = -1.4;
                 ply2->jump = 0;
             }
        }
-    if(Ball->box_collision(tile1->box, Ball->box))
+    if(Ball->box_collision(Ball->box, tile1->box ))
+    {
         tile1->health-=1;
-    if(Ball->box_collision(tile2->box, Ball->box))
+        tile1->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile2->box))
+     {
         tile2->health-=1;
-    if(Ball->box_collision(tile3->box, Ball->box))
+        tile2->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile3->box))
+       {
         tile3->health-=1;
-    if(Ball->box_collision(tile4->box, Ball->box))
+        tile3->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile4->box))
+     {
         tile4->health-=1;
-    if(Ball->box_collision(tile5->box, Ball->box))
+        tile4->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile5->box))
+        {
         tile5->health-=1;
-    if(Ball->box_collision(tile6->box, Ball->box))
+        tile5->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile6->box))
+     {
         tile6->health-=1;
-    if(Ball->box_collision(tile7->box, Ball->box))
+        tile6->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile7->box))
+        {
         tile7->health-=1;
-    if(Ball->box_collision(tile8->box, Ball->box))
+        tile7->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile8->box))
+        {
         tile8->health-=1;
+        tile8->isalive();
+    }
+
+
 
     Ball->Xpos = CurXpos;
     Ball->Ypos = CurYpos;
@@ -254,6 +288,8 @@ GLint GLScene::drawGLScene()
         ply->actions(ply->actionTrigger, ply, modelTeapot);
         ply->box.x = ply->PXpos;
         ply->box.y = ply->PYpos;
+        ply->box.height=0.3;
+        ply->box.width=0.3;
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
         ply->drawplayer();
@@ -272,30 +308,30 @@ GLint GLScene::drawGLScene()
         ply2->drawplayer();
     glPopMatrix();
 
-    // model*, tecture*, xpos, ypos, zerox, zeroy, etc, height width
+    // model*, tecture*, xpos, ypos, zerox, zeroy, etc,  width height
     if(tile1->health>0)
-    makeModel(tile1,tileTex,-3.5,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile1,tileTex,-3.5,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile2->health>0)
-    makeModel(tile2,tileTex,-3.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile2,tileTex,-3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile3->health>0)
-    makeModel(tile3,tileTex,-2.5,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile3,tileTex,-2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile4->health>0)
-    makeModel(tile4,tileTex,-2.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile4,tileTex,-1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile5->health>0)
-    makeModel(tile5,tileTex,-1.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile5,tileTex,0.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile6->health>0)
-    makeModel(tile6,tileTex,0.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile6,tileTex,1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile7->health>0)
-    makeModel(tile7,tileTex,1.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile7,tileTex,2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     if(tile8->health>0)
-    makeModel(tile8,tileTex,2.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
 
     //left wall
     makeModel(wallA,tex1,-4.0,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,.3,88);

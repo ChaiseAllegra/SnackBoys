@@ -113,11 +113,7 @@ void Inputs::keyPressed(player* ply)
 
 void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Model* wallT)
 {
-    /*box tmp1;
-    tmp1.x = ply->playerHBox.x - 0.2;
-    tmp1.y = ply->playerHBox.y - 0.2;
-    tmp1.width = ply->playerHBox.width;
-    tmp1.height = ply->playerHBox.height;*/
+
     switch(wParam)
     {
      case VK_LEFT:
