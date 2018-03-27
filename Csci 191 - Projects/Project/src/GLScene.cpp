@@ -36,6 +36,17 @@ Model* wallD = new Model(); // right wall// bottom wall
 Model* divide = new Model();
 Model* hud = new Model();
 
+Model* tile1=new Model();
+Model* tile2=new Model();
+Model* tile3=new Model();
+Model* tile4=new Model();
+Model* tile5=new Model();
+Model* tile6=new Model();
+Model* tile7=new Model();
+Model* tile8=new Model();
+
+
+
 Model* wallAHbawks = new Model(); // left wall
 Model* wallBHbawks = new Model(); // right wall
 Model* wallCHbawks = new Model(); // top wall
@@ -55,6 +66,8 @@ textureLoader* texc = new textureLoader();
 textureLoader* texd = new textureLoader();
 textureLoader* texD = new textureLoader();
 textureLoader* texH = new textureLoader();
+
+textureLoader* tileTex=new textureLoader();
 
 GLScene::GLScene()
 {
@@ -78,7 +91,7 @@ GLint GLScene::initGL()
     GLLight Light(GL_LIGHT0);
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
     modelTeapot2->modelInit("images/player/player0.png", true, tex0);
-    plx->parallaxInit("images/box/band-BG2.png");
+   // plx->parallaxInit("images/box/band-BG2.png");
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
@@ -96,6 +109,15 @@ GLint GLScene::initGL()
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
     BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
+
+    tile1->modelInit("images/box/ball.png", true, tileTex);
+     tile2->modelInit("images/box/ball.png", true, tileTex);
+      tile3->modelInit("images/box/ball.png", true, tileTex);
+       tile4->modelInit("images/box/ball.png", true, tileTex);
+       tile5->modelInit("images/box/ball.png", true, tileTex);
+        tile6->modelInit("images/box/ball.png", true, tileTex);
+         tile7->modelInit("images/box/ball.png", true, tileTex);
+          tile8->modelInit("images/box/ball.png", true, tileTex);
 
     return true;
 }
@@ -220,6 +242,14 @@ GLint GLScene::drawGLScene()
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
         ply2->drawplayer();
+    glPopMatrix();
+
+    glPushMatrix();
+        tile1->Xpos=0;
+        tile1->Ypos=0;
+        tile1->HBox.x = tile1->Xpos; //wallA->Xpos;
+        tile1->HBox.y = tile1->Ypos;
+        tile1->drawModel();
     glPopMatrix();
 
     //--------------------------LEFT WALL CREATION-----------------------------//
@@ -370,7 +400,7 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool pressed[256])
+int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     switch (uMsg) // Check For Windows Messages
     {
@@ -378,7 +408,7 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool pre
         KbMs->wParam = wParam;
         //KbMs->keyPressed(modelTeapot);
         KbMs->keyEnv(plx, 0.005);
-        KbMs->keyPressed(ply, modelTeapot, wallA, wallB, wallC,pressed);
+        KbMs->keyPressed(ply, modelTeapot, wallA, wallB, wallC);
 
 
         break;
@@ -386,7 +416,7 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool pre
     {
         KbMs->wParam = wParam;
         KbMs->keyUP();
-        KbMs->keyUp(ply,ply2, pressed);
+        KbMs->keyUp(ply);
         break; // Jump Back
     }
     case WM_LBUTTONDOWN: {

@@ -1,15 +1,10 @@
 #ifndef BOX_H
 #define BOX_H
-
-
 #include <iomanip>
 #include <iostream>
 #include <cmath>
 #include <math.h>
 #include<string>
-
-
-
 
 using namespace std;
 class box
