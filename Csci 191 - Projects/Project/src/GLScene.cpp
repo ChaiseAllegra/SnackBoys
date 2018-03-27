@@ -1,12 +1,12 @@
 #include "GLScene.h"
 #include <GLLight.h>
-#include <GLModel.h>
 #include <GLInputs.h>
 #include <parallax.h>
 #include <player.h>
 #include <skyBox.h>
 #include <windows.h>
 #include <mmsystem.h>
+#include<cmath>
 
 using namespace std;
 
@@ -95,17 +95,13 @@ GLint GLScene::initGL()
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
-    //Ball->Ypos=-1;
+
     wallA->modelInit("images/box/vertical_hitbox.png", true, tex1);
     wallB->modelInit("images/box/vertical_hitbox.png", true, tex2);
     wallC->modelInit("images/box/nothing.png", true, texc);
     wallD->modelInit("images/box/nothing.png", true, texb);
     divide->modelInit("images/box/nothing.png", true, tex2);
     hud->modelInit("images/box/hud.png", true, texH);
-    //wallAHbawks->modelInit("images/box/vertical_hitbox.png",true,texa);
-    //wallBHbawks->modelInit("images/box/vertical_hitbox.png",true,texb);
-    //wallCHbawks->modelInit("images/box/horizontal_hitbox.png",true,texc);
-    //wallDHbawks->modelInit("images/box/horizontal_hitbox.png",true,texd);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
     BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
@@ -122,60 +118,37 @@ GLint GLScene::initGL()
     return true;
 }
 
-bool b_collision(box rect1, box rect2)
-{
-
-    if (rect1.y < (rect2.y + rect2.height) && rect1.y > (rect2.y - rect2.height) && rect1.x < (rect2.x + rect2.width) && rect1.x > (rect2.x - rect2.width))
-        return true;
-    else
-        return false;
-}
-
-static void idle()
+static void update()
 {
     CurXpos = CurXpos + (directionX * ballSpeed);
     CurYpos = CurYpos + (directionY * ballSpeed);
 
-    if (b_collision(Ball->HBox, wallB->HBox))
-    {
-        //CurXpos = 3.1999;
-        //PlaySound(TEXT("sounds/wall_bounce.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    if (Ball->box_collision(Ball->box, wallB->box))
         directionX = -1;
-        //cout << " Right Collision " << endl;
-    }
-    if (b_collision(Ball->HBox, wallA->HBox))
-    {
-        //PlaySound(TEXT("sounds/wall_bounce.wav"), NULL, SND_FILENAME | SND_ASYNC);
-        //CurXpos = -3.1999;
+
+    if (Ball->box_collision(Ball->box, wallA->box))
         directionX = 1;
-        //cout << " Left Collision " << endl;
-    }
-    if (b_collision(Ball->HBox, wallC->HBox))
+
+    if (Ball->box_collision(Ball->box, wallC->box))
     {
-        //CurYpos = 1.8199;
-        //PlaySound(TEXT("sounds/wall_bounce.wav"), NULL, SND_FILENAME | SND_ASYNC);
         directionY = -1;
-        //cout << " Top Collision " << endl;
         hud->modelInit("images/box/hud1.png", true, texH);
     }
-    if (b_collision(Ball->HBox, wallD->HBox))
+    if (Ball->box_collision(Ball->box, wallD->box))
     {
-        //CurYpos = -1.8799;
-        //PlaySound(TEXT("sounds/wall_bounce.wav"), NULL, SND_FILENAME | SND_ASYNC);
         directionY = 1;
-        //cout << " Bottom Collision " << endl;
         hud->modelInit("images/box/hud2.png", true, texH);
     }
 
-    if (b_collision(Ball->HBox, ply->playerHBox))
+    if (Ball->box_collision(Ball->box, ply->box))
     {
-        if(Ball->Xpos < ply->playerHBox.x)
+        if(Ball->Xpos < ply->box.x)
         {
             ballSpeed = ballSpeed + 0.002;
             directionX =  -1;
             directionY =  1;
         }
-        if(Ball->Xpos >= ply->playerHBox.x)
+        if(Ball->Xpos >= ply->box.x)
         {
             ballSpeed = ballSpeed + 0.002;
 
@@ -185,10 +158,77 @@ static void idle()
         Ball->modelInit("images/box/ball2P.png", true, ballHBTex);
         hud->modelInit("images/box/hud3.png", true, texH);
     }
+
+    if(ply->jump > 0)
+       {
+           yex = 0.60*sin(ply->verticalVelocity);
+           ply->verticalVelocity -= 0.0048;
+           ply->PYpos += yex;
+            if(ply->PYpos <= -1.4)
+            {
+
+                yex = 0;
+                ply->PYpos = -1.4;
+                ply->jump = 0;
+            }
+       }
+    if(ply2->jump > 0)
+       {
+           yex = 0.60*sin(ply->verticalVelocity);
+           ply2->verticalVelocity -= 0.0048;
+           ply2->PYpos += yex;
+            if(ply2->PYpos <= -1.4)
+            {
+
+                yex = 0;
+                ply2->PYpos = -1.4;
+                ply2->jump = 0;
+            }
+       }
+    if(Ball->box_collision(tile1->box, Ball->box))
+        tile1->health-=1;
+    if(Ball->box_collision(tile2->box, Ball->box))
+        tile2->health-=1;
+    if(Ball->box_collision(tile3->box, Ball->box))
+        tile3->health-=1;
+    if(Ball->box_collision(tile4->box, Ball->box))
+        tile4->health-=1;
+    if(Ball->box_collision(tile5->box, Ball->box))
+        tile5->health-=1;
+    if(Ball->box_collision(tile6->box, Ball->box))
+        tile6->health-=1;
+    if(Ball->box_collision(tile7->box, Ball->box))
+        tile7->health-=1;
+    if(Ball->box_collision(tile8->box, Ball->box))
+        tile8->health-=1;
+
     Ball->Xpos = CurXpos;
     Ball->Ypos = CurYpos;
 }
 
+void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
+{
+       glPushMatrix();
+
+        mod->Xpos=xspot;
+        mod->Ypos=yspot;
+        mod->box.x = mod->Xpos; //wallA->Xpos;
+        mod->box.y = mod->Ypos;
+        mod->verticies[0].x = ZeroX;//-0.15;
+        mod->verticies[1].x = OneX;//0.15;
+        mod->verticies[2].x = TwoX;//0.15;
+        mod->verticies[3].x = ThreX;//-0.15;
+        mod->verticies[0].y = ZeroY;//-0.15;
+        mod->verticies[1].y = OneY;//-0.15;
+        mod->verticies[2].y = TwoY;//0.15;
+        mod->verticies[3].y = ThreY;//0.15;
+
+        mod->box.height = h;
+        mod->box.width = w;
+        mod->drawModel(texture);
+    glPopMatrix();
+    return;
+}
 GLint GLScene::drawGLScene()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
@@ -212,31 +252,19 @@ GLint GLScene::drawGLScene()
     //--------------------------PLAYER CREATION-----------------------------//
     glPushMatrix();
         ply->actions(ply->actionTrigger, ply, modelTeapot);
-        ply->playerHBox.x = ply->PXpos;
-        ply->playerHBox.y = ply->PYpos;
+        ply->box.x = ply->PXpos;
+        ply->box.y = ply->PYpos;
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
         ply->drawplayer();
     glPopMatrix();
 
-    if(ply->jump > 0)
-   {
-       yex = 0.60*sin(ply->verticalVelocity);
-       ply->verticalVelocity -= 0.0048;
-       ply->PYpos += yex;
-        if(ply->PYpos <= -1.4)
-        {
 
-            yex = 0;
-            ply->PYpos = -1.4;
-            ply->jump = 0;
-        }
-  }
 
     glPushMatrix();
         ply2->actions(ply2->actionTrigger, ply2, modelTeapot2);
-        ply2->playerHBox.x = ply2->PXpos;
-        ply2->playerHBox.y = ply2->PYpos;
+        ply2->box.x = ply2->PXpos;
+        ply2->box.y = ply2->PYpos;
         //ply2->Xpos = 1.0;
         ply2->PYpos = 1;
         //ply->playerHBox.width = .0; // .3 is a perfect value
@@ -244,120 +272,56 @@ GLint GLScene::drawGLScene()
         ply2->drawplayer();
     glPopMatrix();
 
-    glPushMatrix();
-        tile1->Xpos=0;
-        tile1->Ypos=0;
-        tile1->HBox.x = tile1->Xpos; //wallA->Xpos;
-        tile1->HBox.y = tile1->Ypos;
-        tile1->drawModel();
-    glPopMatrix();
+    // model*, tecture*, xpos, ypos, zerox, zeroy, etc, height width
+    if(tile1->health>0)
+    makeModel(tile1,tileTex,-3.5,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-    //--------------------------LEFT WALL CREATION-----------------------------//
-    glPushMatrix();
-        //glTranslated(wallA->Xpos, wallA->Ypos, (wallA->Zoom));
-        wallA->Xpos = -3.9;
-        wallA->Ypos = 0;
+    if(tile2->health>0)
+    makeModel(tile2,tileTex,-3.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-        // --------- REMODEL --------------- //
-        wallA->verticies[0].x = -0.2; //bottom left x
-        wallA->verticies[1].x = 0.2; //bottom right x
-        wallA->verticies[2].x = 0.2; //top right x
-        wallA->verticies[3].x = -0.2; //top left x
-        wallA->verticies[0].y = -2; //bottom left y
-        wallA->verticies[1].y = -2; //bottom right y
-        wallA->verticies[2].y = 2; //top right y
-        wallA->verticies[3].y = 2; // top left y
+    if(tile3->health>0)
+    makeModel(tile3,tileTex,-2.5,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-        //add the hitbox for the wall we created on the next four line
-        wallA->HBox.x = wallA->Xpos; //wallA->Xpos;
-        wallA->HBox.y = wallA->Ypos;
+    if(tile4->health>0)
+    makeModel(tile4,tileTex,-2.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-        wallA->HBox.width = .3;
-        wallA->HBox.height = 88;
-        wallA->tag = "L";
-        wallA->drawModel(tex1); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    if(tile5->health>0)
+    makeModel(tile5,tileTex,-1.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-    //--------------------------RIGHT WALL CREATION-----------------------------//
-    glPushMatrix();
-        //add the hitbox for the wall we created on the next four line
-        wallB->Xpos = 3.9;
-        wallB->Ypos = 0;
+    if(tile6->health>0)
+    makeModel(tile6,tileTex,0.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-        // --------- REMODEL --------------- //
-        wallB->verticies[0].x = -0.2; //bottom left x
-        wallB->verticies[1].x = 0.2; //bottom right x
-        wallB->verticies[2].x = 0.2; //top right x
-        wallB->verticies[3].x = -0.2; //top left x
-        wallB->verticies[0].y = -2; //bottom left y
-        wallB->verticies[1].y = -2; //bottom right y
-        wallB->verticies[2].y = 2; //top right y
-        wallB->verticies[3].y = 2; // top left y
+    if(tile7->health>0)
+    makeModel(tile7,tileTex,1.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-        wallB->HBox.x = wallB->Xpos;
-        wallB->HBox.y = wallB->Ypos;
-        wallB->HBox.width = .3;
-        wallB->HBox.height = 88;
-        wallB->tag = "R";
-        wallB->drawModel(tex2); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    if(tile8->health>0)
+    makeModel(tile8,tileTex,2.0,-2.1,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-    //--------------------------TOP WALL CREATION-----------------------------//
-    glPushMatrix();
-        wallC->Xpos = 0;
-        wallC->Ypos = 2.02;
-        //add the hitbox for the wall we created on the next four line
-        wallC->HBox.x = wallC->Xpos;
-        wallC->HBox.y = wallC->Ypos;
-        wallC->HBox.width = 66;
-        wallC->HBox.height = .2;
-        wallC->tag = "T";
-        wallC->drawModel(texc); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    //left wall
+    makeModel(wallA,tex1,-4.0,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,.3,88);
 
-    //--------------------------BOTTOM WALL CREATION-----------------------------//
-    glPushMatrix();
-        wallD->Xpos = 0;
-        wallD->Ypos = -2.09;
-        //add the hitbox for the wall we created on the next four line
-        wallD->HBox.x = wallD->Xpos;
-        wallD->HBox.y = wallD->Ypos;
-        wallD->HBox.width = 88;
-        wallD->HBox.height = 0.2;
-        wallD->tag = "B";
-        wallD->drawModel(texb); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    //right wall
+    makeModel(wallB,tex2,3.9,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
 
-    //--------------------------Dividing WALL CREATION-----------------------------//
-    glPushMatrix();
-        //add the hitbox for the wall we created on the next four line
-        divide->Xpos = 0;
-        divide->Ypos = 0;
+    //top wall
+    makeModel(wallC,texc,0,2.02,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,.2);
 
-        // --------- REMODEL --------------- //
-        divide->verticies[0].x = -0.2; //bottom left x
-        divide->verticies[1].x = 0.2; //bottom right x
-        divide->verticies[2].x = 0.2; //top right x
-        divide->verticies[3].x = -0.2; //top left x
-        divide->verticies[0].y = -2; //bottom left y
-        divide->verticies[1].y = -2; //bottom right y
-        divide->verticies[2].y = 2; //top right y
-        divide->verticies[3].y = 2; // top left y
+    //bottom wall
+    makeModel(wallD,texb,0,-2.09,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,88,0.2);
 
-        divide->HBox.x = divide->Xpos;
-        divide->HBox.y = divide->Ypos;
-        divide->HBox.width = .3;
-        divide->HBox.height = 88;
-        divide->tag = "R";
-        divide->drawModel(tex2); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    //dividing wall
+    makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
+
+    //ball creation
+    //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+
 
     //--------------------------BALL CREATION-----------------------------//
     glPushMatrix();
-        //glTranslated(1,0,(Ball->Zoom));
-        //glScalef(0.3,0.03,1);
         Ball->Ypos = 0;
         Ball->Ypos = -0.5;
+        Ball->box.height = 0.3;
+        Ball->box.width = 0.3;
 
         Ball->verticies[0].x = -0.15;
         Ball->verticies[1].x = 0.15;
@@ -368,9 +332,8 @@ GLint GLScene::drawGLScene()
         Ball->verticies[2].y = 0.15;
         Ball->verticies[3].y = 0.15;
 
-        Ball->HBox.height = 0.3;
-        Ball->HBox.width = 0.3;
-        idle();
+        update();
+
         Ball->UpdateHbox(Ball->Xpos, Ball->Ypos);
         Ball->drawModel(ballHBTex);
     glPopMatrix();

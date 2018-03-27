@@ -49,16 +49,10 @@
 		<Unit filename="include/GLScene.h" />
 		<Unit filename="include/GLTexture.h" />
 		<Unit filename="include/SOIL.h" />
-		<Unit filename="include/ball.h" />
-		<Unit filename="include/box.h" />
-		<Unit filename="include/circle.h" />
-		<Unit filename="include/collision.h" />
 		<Unit filename="include/parallax.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="include/skyBox.h" />
-		<Unit filename="include/tile.h" />
 		<Unit filename="include/timer.h" />
-		<Unit filename="include/wall.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/GLInputs.cpp" />
 		<Unit filename="src/GLLight.cpp" />

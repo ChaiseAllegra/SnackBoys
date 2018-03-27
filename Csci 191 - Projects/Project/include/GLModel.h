@@ -1,16 +1,24 @@
 #ifndef MODEL_H
 #define MODEL_H
 #include<windows.h>
+#include <string>
 #include<GL/glut.h>
-#include<wall.h>
-#include<ball.h>
 #include<GLTexture.h>
 typedef struct{
  float x;
  float y;
  float z;
 }vec1;
-class Model:public ball, public wall
+
+typedef struct
+{
+        float x;
+        float y;
+        float width;
+        float height;
+}Hbox;
+
+class Model
 {
     public:
         Model();
@@ -20,8 +28,12 @@ class Model:public ball, public wall
         void drawModel(textureLoader *tex);
         void modelInit(char *,bool,textureLoader* );
         void UpdateHbox(float , float );
-        box HBox = box();//(0,0,0,0);
-        //circle ballHBox = circle(0,0,0);
+        bool box_collision(Hbox, Hbox);
+
+        Hbox box;
+        float health;
+        std::string tag;
+
         double RotateX;
         double RotateY;
         double RotateZ;

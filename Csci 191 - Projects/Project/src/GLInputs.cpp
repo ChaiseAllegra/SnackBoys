@@ -96,8 +96,8 @@ void Inputs::keyUp(player* ply)
                    {
                        ply->actionTrigger = 3;
                    }
-                    ply->playerHBox.height = 0;
-                    ply->playerHBox.width = 0;
+                    ply->box.height = 0;
+                    ply->box.width = 0;
            break;
     }
 }
@@ -113,11 +113,11 @@ void Inputs::keyPressed(player* ply)
 
 void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Model* wallT)
 {
-    box tmp1;
+    /*box tmp1;
     tmp1.x = ply->playerHBox.x - 0.2;
     tmp1.y = ply->playerHBox.y - 0.2;
     tmp1.width = ply->playerHBox.width;
-    tmp1.height = ply->playerHBox.height;
+    tmp1.height = ply->playerHBox.height;*/
     switch(wParam)
     {
      case VK_LEFT:
@@ -135,18 +135,26 @@ void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Mode
         break;
 
     case 'T':
-
+      /*  if(ply2->jump<2)
+        {
+            ply2->jump++;
+            ply2->verticalVelocity=0.15;
+        }*/
         break;
 
     case VK_UP:
-
+         if(ply->jump<2)
+        {
+            ply->jump++;
+            ply->verticalVelocity=0.15;
+        }
         break;
 
     case VK_SPACE:
 
         ply->actionTrigger = 4;
-        ply->playerHBox.height = .5;
-        ply->playerHBox.width = .5;
+        ply->box.height = .5;
+        ply->box.width = .5;
 
         break;
 

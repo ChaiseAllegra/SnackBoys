@@ -2,10 +2,11 @@
 #define GLSCENE_H
 
 #include <windows.h>
-
+#include <GLModel.h>
 #include<gl/gl.h>
 #include<iostream>
 #include <player.h>
+
 
 using namespace std;
 

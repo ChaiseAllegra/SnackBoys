@@ -31,7 +31,7 @@ player::player()
     runspeed  = 0;
     jumpspeed = 0;
     actionTrigger = 0;
-    this->playerHBox.width = 0;
+    this->box.width = 0;
 }
 player::~player()
 {
@@ -225,8 +225,8 @@ void player::actions(int action, player* ply, Model* mdl)
  void player::playerUpdateHbox()//updates the hitbox location to the players location
  {
 
-    this->playerHBox.x= this->PXpos;
-    this->playerHBox.y= this->PYpos;
+    this->box.x= this->PXpos;
+    this->box.y= this->PYpos;
 
       return;
  }

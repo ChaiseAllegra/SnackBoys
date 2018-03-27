@@ -5,30 +5,18 @@
 #include<string>
 
 #include<circle.h>
-#include<box.h>
+
+
 using namespace std;
 
 
- bool box_collision(box rect1, box rect2){
-    //cout<<rect1.x<<","<<rect1.y<<","<<rect1.width<<","<<rect1.height<<endl;
-    //cout<<rect2.x<<","<<rect2.y<<","<<rect2.width<<","<<rect2.height<<endl;
-	if (rect1.x <= rect2.x + (rect2.width/2) &&
-	   rect1.x + (rect1.width/2) >= rect2.x &&
-	   rect1.y < rect2.y + rect2.height &&
-	   rect1.height + rect1.y > rect2.y)
-
-	{
-	   // cout<<"collision"<<endl;
-	    return true;// collision detected!
-	}
-	else
-	{
-
-	    //cout<<"no collision"<<endl;
-		return false;
-	}
+ bool box_collision(Hbox rect1, Hbox rect2){
+	if (rect1.y < (rect2.y + rect2.height) && rect1.y > (rect2.y - rect2.height) && rect1.x < (rect2.x + rect2.width) && rect1.x > (rect2.x - rect2.width))
+        return true;
+    else
+        return false;
 }
-bool circle_collision(circle circle1, circle circle2)
+/*bool circle_collision(circle circle1, circle circle2)
 {
   	int dx = circle1.x - circle2.x;
 	int dy = circle1.y - circle2.y;
@@ -43,7 +31,7 @@ bool circle_collision(circle circle1, circle circle2)
 		return false;
 	}
 }
-/*bool CR_collision(circle circle1, box rect)
+bool CR_collision(circle circle1, box rect)
 {
     float x = abs(circle1.x - rect.x);
     float y = abs(circle1.y - rect.y);
