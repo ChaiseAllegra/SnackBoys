@@ -25,6 +25,8 @@ class player:box, public Model
         int runspeed;
         int jumpspeed;
         int actionTrigger;
+        int jump;
+        float yex;
 
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
         void drawplayer();
@@ -34,6 +36,7 @@ class player:box, public Model
         //double PRotateX;
         //double PRotateY;
         //double PRotateZ;
+        float verticalVelocity;
 
         double PZoom;
         double PXpos;
