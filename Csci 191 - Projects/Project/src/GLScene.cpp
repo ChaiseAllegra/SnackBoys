@@ -134,14 +134,10 @@ static void update()
         directionY = -1;
         hud->modelInit("images/box/hud1.png", true, texH);
     }
-    if (Ball->box_collision(Ball->box, wallD->box))
-    {
-        directionY = 1;
-        hud->modelInit("images/box/hud2.png", true, texH);
-    }
 
     if (Ball->box_collision(Ball->box, ply->box))
     {
+        Ball->tag="P1";//the ball will remember who hit it last
         if(Ball->Xpos < ply->box.x)
         {
             ballSpeed = ballSpeed + 0.002;
@@ -158,13 +154,23 @@ static void update()
         Ball->modelInit("images/box/ball.png", true, ballHBTex);
         hud->modelInit("images/box/hud3.png", true, texH);
     }
+    if(CurYpos<-1.8)//makes the ball come in from the top of the map when it falls through the bottom
+    {
+        CurYpos=2;
+        directionY=-1;
+        if(directionX==-1)
+        CurXpos+=2;
 
+        if(directionX==1)
+        CurXpos-=2;
+
+    }
     if(ply->jump > 0)
        {
-           yex = 0.60*sin(ply->verticalVelocity);
+           yex = 1.5*sin(ply->verticalVelocity);
 
            if(ply->verticalVelocity>0)
-                ply->verticalVelocity -= 0.0048;
+                ply->verticalVelocity -= 0.0070;
 
             ply->PYpos += yex;
 
@@ -177,63 +183,72 @@ static void update()
        }
 
 
-     if(ply->box_collision(ply->box,tile1->box)||ply->box_collision(ply->box,tile2->box)||ply->box_collision(ply->box,tile3->box)||ply->box_collision(ply->box,tile4->box)||
-    ply->box_collision(ply->box,tile5->box)||ply->box_collision(ply->box,tile6->box)||ply->box_collision(ply->box,tile7->box)||ply->box_collision(ply->box,tile8->box)||ply->PYpos>-1.4)
-            ply->PYpos-=0.03;
+     if(!(ply->box_collision(ply->box,tile1->box)||ply->box_collision(ply->box,tile2->box)||ply->box_collision(ply->box,tile3->box)||ply->box_collision(ply->box,tile4->box)||
+    ply->box_collision(ply->box,tile5->box)||ply->box_collision(ply->box,tile6->box)||ply->box_collision(ply->box,tile7->box)||ply->box_collision(ply->box,tile8->box))||ply->PYpos>-1.4)
+            ply->PYpos-=0.05;
 
-    if(ply2->jump > 0)
-       {
-           yex = 0.60*sin(ply->verticalVelocity);
-           ply2->verticalVelocity -= 0.0048;
-           ply2->PYpos += yex;
-            if(ply2->PYpos <= -1.4)
-            {
-                yex = 0;
-                ply2->PYpos = -1.4;
-                ply2->jump = 0;
-            }
-       }
+    if (ply->box_collision(ply->box, wallD->box))//if the player hits the killbox end the game
+    {
+        exit(0);
+    }
+
+
     if(Ball->box_collision(Ball->box, tile1->box ))
     {
+        directionY = 1;
+        ballSpeed=0.02;
         tile1->health-=1;
         tile1->isalive();
     }
     if(Ball->box_collision(Ball->box, tile2->box))
      {
+         directionY = 1;
+           ballSpeed=0.02;
         tile2->health-=1;
         tile2->isalive();
     }
     if(Ball->box_collision(Ball->box, tile3->box))
        {
+           directionY = 1;
+             ballSpeed=0.02;
         tile3->health-=1;
         tile3->isalive();
     }
     if(Ball->box_collision(Ball->box, tile4->box))
      {
+         directionY = 1;
+           ballSpeed=0.02;
         tile4->health-=1;
         tile4->isalive();
     }
     if(Ball->box_collision(Ball->box, tile5->box))
         {
+            directionY = 1;
+              ballSpeed=0.02;
         tile5->health-=1;
         tile5->isalive();
     }
     if(Ball->box_collision(Ball->box, tile6->box))
      {
+         directionY = 1;
+           ballSpeed=0.02;
         tile6->health-=1;
         tile6->isalive();
     }
     if(Ball->box_collision(Ball->box, tile7->box))
         {
+            directionY = 1;
+              ballSpeed=0.02;
         tile7->health-=1;
         tile7->isalive();
     }
     if(Ball->box_collision(Ball->box, tile8->box))
         {
+            directionY = 1;
+              ballSpeed=0.02;
         tile8->health-=1;
         tile8->isalive();
     }
-
 
 
     Ball->Xpos = CurXpos;
@@ -296,8 +311,8 @@ GLint GLScene::drawGLScene()
     glPopMatrix();
 
 
-
-    glPushMatrix();
+     //--------------------------PLAYER DOS CREATION-----------------------------//
+    /*glPushMatrix();
         ply2->actions(ply2->actionTrigger, ply2, modelTeapot2);
         ply2->box.x = ply2->PXpos;
         ply2->box.y = ply2->PYpos;
@@ -306,32 +321,32 @@ GLint GLScene::drawGLScene()
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
         ply2->drawplayer();
-    glPopMatrix();
+    glPopMatrix();*/
 
     // model*, tecture*, xpos, ypos, zerox, zeroy, etc,  width height
     if(tile1->health>0)
-    makeModel(tile1,tileTex,-3.5,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile1,tileTex,-3.5,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile2->health>0)
-    makeModel(tile2,tileTex,-3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile2,tileTex,-3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile3->health>0)
-    makeModel(tile3,tileTex,-2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile3,tileTex,-2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile4->health>0)
-    makeModel(tile4,tileTex,-1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile4,tileTex,-1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile5->health>0)
-    makeModel(tile5,tileTex,0.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile5,tileTex,0.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile6->health>0)
-    makeModel(tile6,tileTex,1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile6,tileTex,1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile7->health>0)
-    makeModel(tile7,tileTex,2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile7,tileTex,2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     if(tile8->health>0)
-    makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.3,0.3);
+    makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
     //left wall
     makeModel(wallA,tex1,-4.0,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,.3,88);
@@ -342,8 +357,8 @@ GLint GLScene::drawGLScene()
     //top wall
     makeModel(wallC,texc,0,2.02,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,.2);
 
-    //bottom wall
-    makeModel(wallD,texb,0,-2.09,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,88,0.2);
+    //kill box
+    makeModel(wallD,texb,0,-3.09,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,88,0.2);
 
     //dividing wall
     makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
@@ -374,7 +389,8 @@ GLint GLScene::drawGLScene()
         Ball->drawModel(ballHBTex);
     glPopMatrix();
 
-    glPushMatrix();
+//---------------HUD IS DRAWN-----------------
+    /*glPushMatrix();
         hud->verticies[0].x = -1; //bottom left x
         hud->verticies[1].x = 1; //bottom right x
         hud->verticies[2].x = 1; //top right x
@@ -387,7 +403,7 @@ GLint GLScene::drawGLScene()
         hud->Ypos = 1.15;
         //hud->Zoom = 0;
         hud->drawModel(texH); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    glPopMatrix();*/
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {
@@ -407,7 +423,7 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         KbMs->wParam = wParam;
         //KbMs->keyPressed(modelTeapot);
         KbMs->keyEnv(plx, 0.005);
-        KbMs->keyPressed(ply, modelTeapot, wallA, wallB, wallC);
+        KbMs->keyPressed(ply, modelTeapot, wallA, wallB, wallC,divide);
 
 
         break;

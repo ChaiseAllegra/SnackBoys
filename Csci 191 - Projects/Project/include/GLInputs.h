@@ -17,7 +17,7 @@ class Inputs
 
         void keyPressed(Model *);
         void keyPressed(player *);
-        void keyPressed(player *,Model *, Model *,Model *,Model *);
+        void keyPressed(player *,Model *, Model *,Model *,Model *,Model*);
         void keyUp(player *);
         void keyUP();
         void keyEnv(parallax *, float); // movements of my background

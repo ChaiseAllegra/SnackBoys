@@ -15,14 +15,9 @@ textureLoader swingTextLeft[40];
 textureLoader stand[2];
 player::player()
 {
-    //ctor
-    //PRotateX =0.0; // Rotations
-    //PRotateY =0.0;
-    //PRotateZ =0.0;
-
     PZoom = -4;  //translations
-    PXpos = 0;
-    PYpos = -1.5;
+    PXpos = 0.2;
+    PYpos = -1.4;
 
         verticies[0].x=-0.5;verticies[0].y=-0.5;verticies[0].z=-1.0;
         verticies[1].x=0.5;verticies[1].y=-0.5;verticies[1].z=-1.0;
@@ -133,7 +128,7 @@ void player::actions(int action, player* ply, Model* mdl)
                 if (PXpos <= 3.4) // 3.1 = edgde
                 {
 
-                PXpos += 0.005;
+                PXpos += 0.05;
                 mdl->Xpos += 0.005;
                 T->reset();
                 }
@@ -161,7 +156,7 @@ void player::actions(int action, player* ply, Model* mdl)
            {
                if (PXpos >= -3.4) //
                 {
-                PXpos -= 0.005;
+                PXpos -= 0.05;
                 mdl->Xpos -= 0.005;
                 T->reset();
                 }

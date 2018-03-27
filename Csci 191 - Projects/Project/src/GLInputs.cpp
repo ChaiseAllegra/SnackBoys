@@ -111,20 +111,20 @@ void Inputs::keyPressed(player* ply)
     return;
 }
 
-void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Model* wallT)
+void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Model* wallT, Model* divide)
 {
 
     switch(wParam)
     {
      case VK_LEFT:
-
+      // if(!ply->box_collision(divide->box,ply->box))
        ply->actionTrigger = 2;
 
         lastKey = 'L';
         break;
 
     case VK_RIGHT:
-
+      // if(!ply->box_collision(ply->box,divide->box))
        ply->actionTrigger = 1;
 
         lastKey = 'R';
