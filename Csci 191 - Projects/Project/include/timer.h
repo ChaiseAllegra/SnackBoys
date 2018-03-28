@@ -26,6 +26,8 @@ class timer
 
         void reset();
         clock_t getTicks();
+        double GetCounter();
+        void StartCounter();
 
     protected:
 

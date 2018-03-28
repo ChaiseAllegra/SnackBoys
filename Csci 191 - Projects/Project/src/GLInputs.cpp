@@ -111,7 +111,7 @@ void Inputs::keyPressed(player* ply)
     return;
 }
 
-void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Model* wallT, Model* divide)
+void Inputs::keyPressed(player* ply, player* ply2,Model *play, Model* wallL,Model* wallR,Model* wallT, Model* divide)
 {
 
     switch(wParam)
@@ -144,6 +144,11 @@ void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Mode
             ply->jump++;
             ply->verticalVelocity=0.15;
         }
+        if(ply2->jump<2)
+        {
+            ply2->jump++;
+            ply2->verticalVelocity=0.15;
+        }
         break;
 
     case VK_SPACE:
@@ -152,11 +157,27 @@ void Inputs::keyPressed(player* ply, Model *play, Model* wallL,Model* wallR,Mode
         ply->box.height = .5;
         ply->box.width = .5;
 
+         ply2->actionTrigger = 4;
+        ply2->box.height = .5;
+        ply2->box.width = .5;
+
         break;
 
-    case VK_SUBTRACT:
+    case VK_NUMPAD1:
+         ply2->actionTrigger = 2;
+    break;
 
-        break;
+    case VK_NUMPAD3:
+        ply2->actionTrigger = 1;
+    break;
+
+    case VK_NUMPAD2:
+        if(ply2->jump<2)
+        {
+            ply2->jump++;
+            ply2->verticalVelocity=0.15;
+        }
+    break;
     }
 }
 

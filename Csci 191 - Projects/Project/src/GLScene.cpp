@@ -6,10 +6,12 @@
 #include <skyBox.h>
 #include <windows.h>
 #include <mmsystem.h>
+#include<timer.h>
 #include<cmath>
 
 using namespace std;
 
+timer* tim;
 float bound = 3;
 float directionX = 1;
 float directionY = 1;
@@ -17,9 +19,9 @@ float CurXpos, CurYpos; // Current x position of the ball, current y position of
 float r = 0.3f, t = 0.007; // Size of the ball, speed of the ball
 float xdir = bound, ydir = bound; // The direction the ball travels to in the x and y directions, set these to the maximum of the play area
 bool RwHit = false, TwHit = false; // Right wall hit: if set to false the ball just hit the left wall if set true it just hit the right wall, TwHit the same but with top and bottom
-float yex;
 
-float ballSpeed = .02;
+
+float ballSpeed = .002;//.02
 
 Model* modelTeapot = new Model();
 Model* modelTeapot2 = new Model();
@@ -44,6 +46,15 @@ Model* tile5=new Model();
 Model* tile6=new Model();
 Model* tile7=new Model();
 Model* tile8=new Model();
+
+Model* tile9=new Model();
+Model* tile10=new Model();
+Model* tile11=new Model();
+Model* tile12=new Model();
+Model* tile13=new Model();
+Model* tile14=new Model();
+Model* tile15=new Model();
+Model* tile16=new Model();
 
 
 
@@ -115,11 +126,27 @@ GLint GLScene::initGL()
          tile7->modelInit("images/box/ball.png", true, tileTex);
           tile8->modelInit("images/box/ball.png", true, tileTex);
 
+          tile9->modelInit("images/box/ball.png", true, tileTex);
+     tile10->modelInit("images/box/ball.png", true, tileTex);
+      tile11->modelInit("images/box/ball.png", true, tileTex);
+       tile12->modelInit("images/box/ball.png", true, tileTex);
+       tile13->modelInit("images/box/ball.png", true, tileTex);
+        tile14->modelInit("images/box/ball.png", true, tileTex);
+         tile15->modelInit("images/box/ball.png", true, tileTex);
+          tile16->modelInit("images/box/ball.png", true, tileTex);
+    ply2->PXpos=-2.8;
+    ply2->PYpos=-1.4;
+
+    ply->PXpos=2.5;
+    ply->PYpos=-1.4;
+
     return true;
 }
 
 static void update()
 {
+    //ballSpeed+=(1/tim->GetCounter());
+    //cout<<tim->GetCounter()<<endl;
     CurXpos = CurXpos + (directionX * ballSpeed);
     CurYpos = CurYpos + (directionY * ballSpeed);
 
@@ -140,13 +167,13 @@ static void update()
         Ball->tag="P1";//the ball will remember who hit it last
         if(Ball->Xpos < ply->box.x)
         {
-            ballSpeed = ballSpeed + 0.002;
+            ballSpeed = ballSpeed + 0.00002;//0.002;
             directionX =  -1;
             directionY =  1;
         }
         if(Ball->Xpos >= ply->box.x)
         {
-            ballSpeed = ballSpeed + 0.002;
+            ballSpeed = ballSpeed + 0.00002;//0.002;
 
             directionX =  1;
             directionY =  1;
@@ -167,87 +194,170 @@ static void update()
     }
     if(ply->jump > 0)
        {
-           yex = 1.5*sin(ply->verticalVelocity);
+           ply->yex = 1.5*sin(ply->verticalVelocity);
 
            if(ply->verticalVelocity>0)
                 ply->verticalVelocity -= 0.0070;
 
-            ply->PYpos += yex;
+            ply->PYpos += ply->yex;
 
             if(ply->PYpos <= -1.4)
             {
-                yex = 0;
+                ply->yex = 0;
                 ply->PYpos = -1.4;
                 ply->jump = 0;
+            }
+       }
+
+       if(ply2->jump > 0)
+       {
+           ply2->yex = 1.5*sin(ply->verticalVelocity);
+
+           if(ply2->verticalVelocity>0)
+                ply2->verticalVelocity -= 0.0070;
+
+            ply2->PYpos += ply2->yex;
+
+            if(ply2->PYpos <= -1.4)
+            {
+                ply2->yex = 0;
+                ply2->PYpos = -1.4;
+                ply2->jump = 0;
             }
        }
 
 
      if(!(ply->box_collision(ply->box,tile1->box)||ply->box_collision(ply->box,tile2->box)||ply->box_collision(ply->box,tile3->box)||ply->box_collision(ply->box,tile4->box)||
     ply->box_collision(ply->box,tile5->box)||ply->box_collision(ply->box,tile6->box)||ply->box_collision(ply->box,tile7->box)||ply->box_collision(ply->box,tile8->box))||ply->PYpos>-1.4)
-            ply->PYpos-=0.05;
+            ply->PYpos-=0.005;//0.05;
+      if(!(ply2->box_collision(ply2->box,tile1->box)||ply2->box_collision(ply2->box,tile2->box)||ply2->box_collision(ply2->box,tile3->box)||ply2->box_collision(ply2->box,tile4->box)||
+    ply2->box_collision(ply2->box,tile5->box)||ply2->box_collision(ply2->box,tile6->box)||ply2->box_collision(ply2->box,tile7->box)||ply2->box_collision(ply2->box,tile8->box))||ply2->PYpos>-1.4)
+            ply2->PYpos-=0.005;//0.05;
 
     if (ply->box_collision(ply->box, wallD->box))//if the player hits the killbox end the game
     {
-        exit(0);
+        //exit(0);
+    }
+
+    if (ply2->box_collision(ply2->box, wallD->box))//if the player hits the killbox end the game
+    {
+        //exit(0);
     }
 
 
     if(Ball->box_collision(Ball->box, tile1->box ))
     {
         directionY = 1;
-        ballSpeed=0.02;
+        ballSpeed=0.004;//0.002;
         tile1->health-=1;
         tile1->isalive();
     }
     if(Ball->box_collision(Ball->box, tile2->box))
      {
          directionY = 1;
-           ballSpeed=0.02;
+           ballSpeed=0.004;
         tile2->health-=1;
         tile2->isalive();
     }
     if(Ball->box_collision(Ball->box, tile3->box))
        {
            directionY = 1;
-             ballSpeed=0.02;
+             ballSpeed=0.004;;
         tile3->health-=1;
         tile3->isalive();
     }
     if(Ball->box_collision(Ball->box, tile4->box))
      {
          directionY = 1;
-           ballSpeed=0.02;
+           ballSpeed=0.004;
         tile4->health-=1;
         tile4->isalive();
     }
     if(Ball->box_collision(Ball->box, tile5->box))
         {
             directionY = 1;
-              ballSpeed=0.02;
+              ballSpeed=0.004;
         tile5->health-=1;
         tile5->isalive();
     }
     if(Ball->box_collision(Ball->box, tile6->box))
      {
          directionY = 1;
-           ballSpeed=0.02;
+           ballSpeed=0.004;
         tile6->health-=1;
         tile6->isalive();
     }
     if(Ball->box_collision(Ball->box, tile7->box))
         {
             directionY = 1;
-              ballSpeed=0.02;
+              ballSpeed=0.004;
         tile7->health-=1;
         tile7->isalive();
     }
     if(Ball->box_collision(Ball->box, tile8->box))
         {
             directionY = 1;
-              ballSpeed=0.02;
+              ballSpeed=0.004;
         tile8->health-=1;
         tile8->isalive();
+    }
+
+
+     if(Ball->box_collision(Ball->box, tile9->box ))
+    {
+        directionY = -1;
+        ballSpeed=0.004;
+        tile9->health-=1;
+        tile9->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile10->box))
+     {
+         directionY = -1;
+           ballSpeed=0.004;
+        tile10->health-=1;
+        tile10->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile11->box))
+       {
+           directionY = -1;
+             ballSpeed=0.004;
+        tile11->health-=1;
+        tile11->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile12->box))
+     {
+         directionY = -1;
+           ballSpeed=0.004;
+        tile12->health-=1;
+        tile12->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile13->box))
+        {
+            directionY = -1;
+              ballSpeed=0.004;
+        tile13->health-=1;
+        tile13->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile14->box))
+     {
+         directionY = -1;
+           ballSpeed=0.004;
+        tile14->health-=1;
+        tile14->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile15->box))
+        {
+            directionY = -1;
+              ballSpeed=0.004;
+        tile15->health-=1;
+        tile15->isalive();
+    }
+    if(Ball->box_collision(Ball->box, tile16->box))
+        {
+            directionY = -1;
+              ballSpeed=0.004;
+        tile16->health-=1;
+        tile16->isalive();
     }
 
 
@@ -280,6 +390,8 @@ void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float Z
 }
 GLint GLScene::drawGLScene()
 {
+    tim->StartCounter();
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
     glLoadIdentity();
     // Reset The Current Modelview Matrix
@@ -317,7 +429,7 @@ GLint GLScene::drawGLScene()
         ply2->box.x = ply2->PXpos;
         ply2->box.y = ply2->PYpos;
         //ply2->Xpos = 1.0;
-        ply2->PYpos = 1;
+
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
         ply2->drawplayer();
@@ -348,6 +460,31 @@ GLint GLScene::drawGLScene()
     if(tile8->health>0)
     makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
 
+    //top tiles
+    if(tile9->health>0)
+    makeModel(tile9,tileTex,-3.5,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile10->health>0)
+    makeModel(tile10,tileTex,-3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile11->health>0)
+    makeModel(tile11,tileTex,-2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile12->health>0)
+    makeModel(tile12,tileTex,-1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile13->health>0)
+    makeModel(tile13,tileTex,0.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile14->health>0)
+    makeModel(tile14,tileTex,1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile15->health>0)
+    makeModel(tile15,tileTex,2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
+    if(tile16->health>0)
+    makeModel(tile16,tileTex,3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+
     //left wall
     makeModel(wallA,tex1,-4.0,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,.3,88);
 
@@ -366,6 +503,7 @@ GLint GLScene::drawGLScene()
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
+   // tim->GetCounter();
 
     //--------------------------BALL CREATION-----------------------------//
     glPushMatrix();
@@ -423,7 +561,7 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
         KbMs->wParam = wParam;
         //KbMs->keyPressed(modelTeapot);
         KbMs->keyEnv(plx, 0.005);
-        KbMs->keyPressed(ply, modelTeapot, wallA, wallB, wallC,divide);
+        KbMs->keyPressed(ply,ply2,modelTeapot, wallA, wallB, wallC,divide);
 
 
         break;
