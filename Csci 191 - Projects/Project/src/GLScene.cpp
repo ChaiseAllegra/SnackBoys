@@ -21,7 +21,7 @@ float xdir = bound, ydir = bound; // The direction the ball travels to in the x 
 bool RwHit = false, TwHit = false; // Right wall hit: if set to false the ball just hit the left wall if set true it just hit the right wall, TwHit the same but with top and bottom
 
 
-float ballSpeed = .002;//.02
+float ballSpeed = .02;//.02
 
 Model* modelTeapot = new Model();
 Model* modelTeapot2 = new Model();
@@ -167,13 +167,13 @@ static void update()
         Ball->tag="P1";//the ball will remember who hit it last
         if(Ball->Xpos < ply->box.x)
         {
-            ballSpeed = ballSpeed + 0.00002;//0.002;
+            ballSpeed = ballSpeed + 0.002;//0.002;
             directionX =  -1;
             directionY =  1;
         }
         if(Ball->Xpos >= ply->box.x)
         {
-            ballSpeed = ballSpeed + 0.00002;//0.002;
+            ballSpeed = ballSpeed + 0.002;//0.002;
 
             directionX =  1;
             directionY =  1;
