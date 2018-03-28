@@ -167,13 +167,13 @@ static void update()
         Ball->tag="P1";//the ball will remember who hit it last
         if(Ball->Xpos < ply->box.x)
         {
-            ballSpeed = ballSpeed + 0.002;//0.002;
+            ballSpeed = ballSpeed + 0.02;//0.002;
             directionX =  -1;
             directionY =  1;
         }
         if(Ball->Xpos >= ply->box.x)
         {
-            ballSpeed = ballSpeed + 0.002;//0.002;
+            ballSpeed = ballSpeed + 0.02;//0.002;
 
             directionX =  1;
             directionY =  1;
@@ -248,56 +248,56 @@ static void update()
     if(Ball->box_collision(Ball->box, tile1->box ))
     {
         directionY = 1;
-        ballSpeed=0.004;//0.002;
+        ballSpeed=0.02;//0.002;
         tile1->health-=1;
         tile1->isalive();
     }
     if(Ball->box_collision(Ball->box, tile2->box))
      {
          directionY = 1;
-           ballSpeed=0.004;
+           ballSpeed=0.02;
         tile2->health-=1;
         tile2->isalive();
     }
     if(Ball->box_collision(Ball->box, tile3->box))
        {
            directionY = 1;
-             ballSpeed=0.004;;
+             ballSpeed=0.02;;
         tile3->health-=1;
         tile3->isalive();
     }
     if(Ball->box_collision(Ball->box, tile4->box))
      {
          directionY = 1;
-           ballSpeed=0.004;
+           ballSpeed=0.02;
         tile4->health-=1;
         tile4->isalive();
     }
     if(Ball->box_collision(Ball->box, tile5->box))
         {
             directionY = 1;
-              ballSpeed=0.004;
+              ballSpeed=0.02;
         tile5->health-=1;
         tile5->isalive();
     }
     if(Ball->box_collision(Ball->box, tile6->box))
      {
          directionY = 1;
-           ballSpeed=0.004;
+           ballSpeed=0.02;
         tile6->health-=1;
         tile6->isalive();
     }
     if(Ball->box_collision(Ball->box, tile7->box))
         {
             directionY = 1;
-              ballSpeed=0.004;
+              ballSpeed=0.02;
         tile7->health-=1;
         tile7->isalive();
     }
     if(Ball->box_collision(Ball->box, tile8->box))
         {
             directionY = 1;
-              ballSpeed=0.004;
+              ballSpeed=0.02;
         tile8->health-=1;
         tile8->isalive();
     }
@@ -306,56 +306,56 @@ static void update()
      if(Ball->box_collision(Ball->box, tile9->box ))
     {
         directionY = -1;
-        ballSpeed=0.004;
+        ballSpeed=0.02;
         tile9->health-=1;
         tile9->isalive();
     }
     if(Ball->box_collision(Ball->box, tile10->box))
      {
          directionY = -1;
-           ballSpeed=0.004;
+           ballSpeed=0.02;
         tile10->health-=1;
         tile10->isalive();
     }
     if(Ball->box_collision(Ball->box, tile11->box))
        {
            directionY = -1;
-             ballSpeed=0.004;
+             ballSpeed=0.02;
         tile11->health-=1;
         tile11->isalive();
     }
     if(Ball->box_collision(Ball->box, tile12->box))
      {
          directionY = -1;
-           ballSpeed=0.004;
+           ballSpeed=0.02;
         tile12->health-=1;
         tile12->isalive();
     }
     if(Ball->box_collision(Ball->box, tile13->box))
         {
             directionY = -1;
-              ballSpeed=0.004;
+              ballSpeed=0.02;
         tile13->health-=1;
         tile13->isalive();
     }
     if(Ball->box_collision(Ball->box, tile14->box))
      {
          directionY = -1;
-           ballSpeed=0.004;
+           ballSpeed=0.02;
         tile14->health-=1;
         tile14->isalive();
     }
     if(Ball->box_collision(Ball->box, tile15->box))
         {
             directionY = -1;
-              ballSpeed=0.004;
+              ballSpeed=0.02;
         tile15->health-=1;
         tile15->isalive();
     }
     if(Ball->box_collision(Ball->box, tile16->box))
         {
             directionY = -1;
-              ballSpeed=0.004;
+              ballSpeed=0.02;
         tile16->health-=1;
         tile16->isalive();
     }
