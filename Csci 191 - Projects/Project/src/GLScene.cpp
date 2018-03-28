@@ -197,7 +197,7 @@ static void update()
            ply->yex = 1.5*sin(ply->verticalVelocity);
 
            if(ply->verticalVelocity>0)
-                ply->verticalVelocity -= 0.0070;
+                ply->verticalVelocity -= 0.0060;
 
             ply->PYpos += ply->yex;
 
@@ -209,27 +209,31 @@ static void update()
             }
        }
 
-       if(ply2->jump > 0)
-       {
-           ply2->yex = 1.5*sin(ply->verticalVelocity);
-
-           if(ply2->verticalVelocity>0)
-                ply2->verticalVelocity -= 0.0070;
-
-            ply2->PYpos += ply2->yex;
-
-            if(ply2->PYpos <= -1.4)
+        if(ply->dash==true)
+        {
+            if(ply->lastKey=='R')
             {
-                ply2->yex = 0;
-                ply2->PYpos = -1.4;
-                ply2->jump = 0;
+                ply->PXpos+=0.05;
+
+                if(ply->PXpos>ply->prevXPos+1)
+                ply->dash=false;
             }
-       }
+
+            if(ply->lastKey=='L')
+            {
+                ply->PXpos-=0.05;
+
+                if(ply->PXpos<ply->prevXPos-1)
+                ply->dash=false;
+            }
+
+
+        }
 
 
      if(!(ply->box_collision(ply->box,tile1->box)||ply->box_collision(ply->box,tile2->box)||ply->box_collision(ply->box,tile3->box)||ply->box_collision(ply->box,tile4->box)||
     ply->box_collision(ply->box,tile5->box)||ply->box_collision(ply->box,tile6->box)||ply->box_collision(ply->box,tile7->box)||ply->box_collision(ply->box,tile8->box))||ply->PYpos>-1.4)
-            ply->PYpos-=0.005;//0.05;
+            ply->PYpos-=0.05;//0.05;
       if(!(ply2->box_collision(ply2->box,tile1->box)||ply2->box_collision(ply2->box,tile2->box)||ply2->box_collision(ply2->box,tile3->box)||ply2->box_collision(ply2->box,tile4->box)||
     ply2->box_collision(ply2->box,tile5->box)||ply2->box_collision(ply2->box,tile6->box)||ply2->box_collision(ply2->box,tile7->box)||ply2->box_collision(ply2->box,tile8->box))||ply2->PYpos>-1.4)
             ply2->PYpos-=0.005;//0.05;

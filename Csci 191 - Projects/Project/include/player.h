@@ -28,6 +28,9 @@ class player: public Model
         int jump;
         float yex;
         float verticalVelocity;
+        float prevXPos;
+        bool dash;
+        char lastKey;
 
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
         void drawplayer();

@@ -5,7 +5,7 @@
 #include<box.h>
 #include <stdint.h>
 
-char lastKey ;
+
 Inputs::Inputs()
 {
     //ctor
@@ -87,7 +87,7 @@ void Inputs::keyUp(player* ply)
     switch(wParam)
     {
        default:
-                   if (lastKey == 'R')
+                   if (ply->lastKey == 'R')
                    {
                        ply->actionTrigger = 0;
 
@@ -120,14 +120,14 @@ void Inputs::keyPressed(player* ply, player* ply2,Model *play, Model* wallL,Mode
       // if(!ply->box_collision(divide->box,ply->box))
        ply->actionTrigger = 2;
 
-        lastKey = 'L';
+        ply->lastKey = 'L';
         break;
 
     case VK_RIGHT:
       // if(!ply->box_collision(ply->box,divide->box))
        ply->actionTrigger = 1;
 
-        lastKey = 'R';
+        ply->lastKey = 'R';
         break;
 
     case 'T':
@@ -162,6 +162,10 @@ void Inputs::keyPressed(player* ply, player* ply2,Model *play, Model* wallL,Mode
         ply2->box.width = .5;
 
         break;
+    case VK_DOWN:
+        ply->prevXPos=ply->PXpos;
+        ply->dash=true;
+    break;
 
     case VK_NUMPAD1:
          ply2->actionTrigger = 2;
