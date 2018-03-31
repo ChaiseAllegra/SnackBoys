@@ -394,7 +394,6 @@ void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float Z
 }
 GLint GLScene::drawGLScene()
 {
-    tim->StartCounter();
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
     glLoadIdentity();
@@ -419,8 +418,8 @@ GLint GLScene::drawGLScene()
         ply->actions(ply->actionTrigger, ply, modelTeapot);
         ply->box.x = ply->PXpos;
         ply->box.y = ply->PYpos;
-        ply->box.height=0.3;
-        ply->box.width=0.3;
+        ply->box.height=0.5;
+        ply->box.width=0.5;
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
         ply->drawplayer();
@@ -441,53 +440,53 @@ GLint GLScene::drawGLScene()
 
     // model*, tecture*, xpos, ypos, zerox, zeroy, etc,  width height
     if(tile1->health>0)
-    makeModel(tile1,tileTex,-3.5,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile1,tileTex,-3.5,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile2->health>0)
-    makeModel(tile2,tileTex,-3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile2,tileTex,-3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile3->health>0)
-    makeModel(tile3,tileTex,-2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile3,tileTex,-2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile4->health>0)
-    makeModel(tile4,tileTex,-1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile4,tileTex,-1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile5->health>0)
-    makeModel(tile5,tileTex,0.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile5,tileTex,0.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile6->health>0)
-    makeModel(tile6,tileTex,1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile6,tileTex,1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile7->health>0)
-    makeModel(tile7,tileTex,2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile7,tileTex,2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile8->health>0)
-    makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     //top tiles
     if(tile9->health>0)
-    makeModel(tile9,tileTex,-3.5,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile9,tileTex,-3.5,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile10->health>0)
-    makeModel(tile10,tileTex,-3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile10,tileTex,-3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile11->health>0)
-    makeModel(tile11,tileTex,-2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile11,tileTex,-2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile12->health>0)
-    makeModel(tile12,tileTex,-1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile12,tileTex,-1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile13->health>0)
-    makeModel(tile13,tileTex,0.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile13,tileTex,0.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile14->health>0)
-    makeModel(tile14,tileTex,1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile14,tileTex,1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile15->health>0)
-    makeModel(tile15,tileTex,2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile15,tileTex,2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     if(tile16->health>0)
-    makeModel(tile16,tileTex,3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.7);
+    makeModel(tile16,tileTex,3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     //left wall
     makeModel(wallA,tex1,-4.0,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,.3,88);
@@ -496,18 +495,18 @@ GLint GLScene::drawGLScene()
     makeModel(wallB,tex2,3.9,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
 
     //top wall
-    makeModel(wallC,texc,0,2.02,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,.2);
+    makeModel(wallC,texc,0,3.5,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,.1);
 
     //kill box
     makeModel(wallD,texb,0,-3.09,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,88,0.2);
 
     //dividing wall
-    makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
+   // makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
 
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
-   // tim->GetCounter();
+
 
     //--------------------------BALL CREATION-----------------------------//
     glPushMatrix();
