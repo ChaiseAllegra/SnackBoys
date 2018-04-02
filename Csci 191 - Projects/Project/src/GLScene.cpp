@@ -21,7 +21,7 @@ float xdir = bound, ydir = bound; // The direction the ball travels to in the x 
 bool RwHit = false, TwHit = false; // Right wall hit: if set to false the ball just hit the left wall if set true it just hit the right wall, TwHit the same but with top and bottom
 
 
-float ballSpeed = .02;//.02
+float ballSpeed = .0000002;//.02
 
 Model* modelTeapot = new Model();
 Model* modelTeapot2 = new Model();
@@ -501,7 +501,7 @@ GLint GLScene::drawGLScene()
     makeModel(wallD,texb,0,-3.09,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,88,0.2);
 
     //dividing wall
-   // makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
+    makeModel(divide,tex2,-0.5,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,0.3,88);
 
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);

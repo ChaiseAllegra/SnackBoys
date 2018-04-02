@@ -21,7 +21,7 @@ class player: public Model
 
         float scalesize[3]={1.0,1.0,1.0};
         vec verticies[4];
-
+        Model * testModel;
         int runspeed;
         int jumpspeed;
         int actionTrigger;

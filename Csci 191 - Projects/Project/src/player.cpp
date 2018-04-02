@@ -150,7 +150,10 @@ void player::actions(int action, player* ply, Model* mdl)
     break;
 
    case 2:
+
        glPushMatrix();
+       if(ply->box_collision(ply->testModel->box,ply->box)==false)
+       {
            glTranslated(PXpos,PYpos,PZoom);
            if(T->getTicks()>.25)
            {
@@ -167,10 +170,11 @@ void player::actions(int action, player* ply, Model* mdl)
             runspeed = (runspeed % 5);
             T2->reset();
           }
-
+       }
            runText_left[runspeed].binder();
            drawplayer();
        glPopMatrix();
+
        lastCase = 'L';
     break;
 

@@ -117,14 +117,14 @@ void Inputs::keyPressed(player* ply, player* ply2,Model *play, Model* wallL,Mode
     switch(wParam)
     {
      case VK_LEFT:
-       if(ply->box_collision(divide->box,ply->box)==false)
+       //if(ply->box_collision(divide->box,ply->box)==false)
        ply->actionTrigger = 2;
-
+        ply->testModel=divide;
         ply->lastKey = 'L';
         break;
 
     case VK_RIGHT:
-       if(ply->box_collision(ply->box,divide->box)==false)
+       //if(ply->box_collision(ply->box,divide->box)==false)
        ply->actionTrigger = 1;
 
         ply->lastKey = 'R';
