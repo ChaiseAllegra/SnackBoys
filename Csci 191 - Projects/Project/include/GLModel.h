@@ -28,10 +28,10 @@ class Model
         void drawModel(textureLoader *tex);
         void modelInit(char *,bool,textureLoader* );
         void UpdateHbox(float , float );
-        bool box_collision(Hbox, Hbox);
         void isalive();
 
         Hbox box;
+        Hbox pl_pltfrm_box;
         float health;
         std::string tag;
 

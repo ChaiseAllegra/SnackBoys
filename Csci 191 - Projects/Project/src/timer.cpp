@@ -1,8 +1,5 @@
 #include "timer.h"
-#include <windows.h>
 
-double PCFreq = 0.0;
-__int64 CounterStart = 0;
 timer::timer()
 {
     //ctor
@@ -72,4 +69,3 @@ clock_t timer::getTicks()
     if(paused)return pausedAt - startedAt;
     return clock() - startedAt;
 }
-

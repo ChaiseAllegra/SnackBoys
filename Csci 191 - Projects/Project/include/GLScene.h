@@ -19,7 +19,7 @@ class GLScene
         GLint drawGLScene();
         GLvoid resizeGLScene(GLsizei, GLsizei);
 
-        int windMsg(HWND,UINT,WPARAM,LPARAM);
+        int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
 
         WPARAM wParam;
         float screenHeight;

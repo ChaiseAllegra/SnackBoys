@@ -4,6 +4,10 @@
 #include<GLModel.h>
 #include<gl/gl.h>
 #include<GLtexture.h>
+#include <timer.h>
+#include <string>
+
+using namespace std;
 
 typedef struct
 {
@@ -21,16 +25,27 @@ class player: public Model
 
         float scalesize[3]={1.0,1.0,1.0};
         vec verticies[4];
-        Model * testModel;
+
         int runspeed;
         int jumpspeed;
         int actionTrigger;
         int jump;
         float yex;
         float verticalVelocity;
-        float prevXPos;
-        bool dash;
+        float aimX;
+        float aimY;
         char lastKey;
+
+        char lastCase = 'R';
+
+        float plyAccel = 1.004;
+
+        textureLoader runText[40];
+        textureLoader runText_left[40];
+        textureLoader swingText[40];
+        textureLoader swingTextLeft[40];
+        textureLoader stand[2];
+
 
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
         void drawplayer();
@@ -41,6 +56,34 @@ class player: public Model
         double PXpos;
         double PYpos;
 
+        float plyVel;
+
+        bool jumpInitiated;
+        bool startJump;
+        bool endJump;
+        bool onGround;
+
+        bool swinging;
+        timer* swingTimer = new timer();
+        timer* swingDuration = new timer();
+        timer *T = new timer();
+        timer *T2 = new timer();
+        string swingDirection;
+        bool ballCollided;
+        bool midCollision;
+        bool leftReleased;
+        bool rightReleased;
+        bool jumpReleased;
+        bool swingReleased;
+        bool swingPressed;
+        bool upPressed;
+        bool downPressed;
+
+        int freezeTimer;
+
+        int isPlayer;
+
+        string playerDirection;
 
     protected:
 

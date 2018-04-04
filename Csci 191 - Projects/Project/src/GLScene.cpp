@@ -6,22 +6,27 @@
 #include <skyBox.h>
 #include <windows.h>
 #include <mmsystem.h>
-#include<timer.h>
-#include<cmath>
+#include <cmath>
+#include <timer.h>
 
 using namespace std;
 
-timer* tim;
-float bound = 3;
-float directionX = 1;
+
+timer* D = new timer();
+timer* pCol = new timer();
+timer* ballCollTimer = new timer();
+float xx, yy;
+int dirXX = 1, dirYY = 1;
+float max_xx_yy;
+float directionX = -2;
 float directionY = 1;
-float CurXpos, CurYpos; // Current x position of the ball, current y position of the ball,
-float r = 0.3f, t = 0.007; // Size of the ball, speed of the ball
-float xdir = bound, ydir = bound; // The direction the ball travels to in the x and y directions, set these to the maximum of the play area
-bool RwHit = false, TwHit = false; // Right wall hit: if set to false the ball just hit the left wall if set true it just hit the right wall, TwHit the same but with top and bottom
+float CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
+float yex;
+float ballSpeed = .001;
 
+float yVelocity = 0.0032;
+float gravity = - 0.000003;
 
-float ballSpeed = .0000002;//.02
 
 Model* modelTeapot = new Model();
 Model* modelTeapot2 = new Model();
@@ -34,10 +39,10 @@ player* ply2 = new player();
 Model* wallA = new Model(); // left wall
 Model* wallB = new Model(); // right wall
 Model* wallC = new Model(); // top wall
-Model* wallD = new Model(); // right wall// bottom wall
 Model* divide = new Model();
 Model* hud = new Model();
 
+//left side tiles
 Model* tile1=new Model();
 Model* tile2=new Model();
 Model* tile3=new Model();
@@ -45,23 +50,24 @@ Model* tile4=new Model();
 Model* tile5=new Model();
 Model* tile6=new Model();
 Model* tile7=new Model();
+
+//middle tile
 Model* tile8=new Model();
 
+//right side tiles
 Model* tile9=new Model();
 Model* tile10=new Model();
-Model* tile11=new Model();
+Model* tile22=new Model();
 Model* tile12=new Model();
 Model* tile13=new Model();
 Model* tile14=new Model();
 Model* tile15=new Model();
-Model* tile16=new Model();
 
 
 
 Model* wallAHbawks = new Model(); // left wall
 Model* wallBHbawks = new Model(); // right wall
 Model* wallCHbawks = new Model(); // top wall
-Model* wallDHbawks = new Model(); // right wall// bottom wall
 skyBox* sky = new skyBox;
 Model* Ball = new Model(); // the ball
 Model* BallHbawks = new Model();
@@ -71,14 +77,24 @@ textureLoader* tex1 = new textureLoader();
 textureLoader* tex2 = new textureLoader();
 textureLoader* ballHBTex = new textureLoader();
 textureLoader* ballHBTex2 = new textureLoader();
-textureLoader* texa = new textureLoader();
-textureLoader* texb = new textureLoader();
 textureLoader* texc = new textureLoader();
-textureLoader* texd = new textureLoader();
-textureLoader* texD = new textureLoader();
 textureLoader* texH = new textureLoader();
 
 textureLoader* tileTex=new textureLoader();
+textureLoader* tileTex2=new textureLoader();
+textureLoader* tileTex3=new textureLoader();
+textureLoader* tileTex4=new textureLoader();
+textureLoader* tileTex5=new textureLoader();
+textureLoader* tileTex6=new textureLoader();
+textureLoader* tileTex7=new textureLoader();
+textureLoader* tileTex8=new textureLoader();
+textureLoader* tileTex9=new textureLoader();
+textureLoader* tileTex10=new textureLoader();
+textureLoader* tileTex11=new textureLoader();
+textureLoader* tileTex12=new textureLoader();
+textureLoader* tileTex13=new textureLoader();
+textureLoader* tileTex14=new textureLoader();
+textureLoader* tileTex15=new textureLoader();
 
 GLScene::GLScene()
 {
@@ -93,6 +109,8 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+
+
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
@@ -106,267 +124,530 @@ GLint GLScene::initGL()
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
-
+    plx->parallaxInit("images/parallax/parallax_f.png");
     wallA->modelInit("images/box/vertical_hitbox.png", true, tex1);
     wallB->modelInit("images/box/vertical_hitbox.png", true, tex2);
     wallC->modelInit("images/box/nothing.png", true, texc);
-    wallD->modelInit("images/box/nothing.png", true, texb);
     divide->modelInit("images/box/nothing.png", true, tex2);
     hud->modelInit("images/box/hud.png", true, texH);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
     BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
 
-    tile1->modelInit("images/box/ball.png", true, tileTex);
-     tile2->modelInit("images/box/ball.png", true, tileTex);
-      tile3->modelInit("images/box/ball.png", true, tileTex);
-       tile4->modelInit("images/box/ball.png", true, tileTex);
-       tile5->modelInit("images/box/ball.png", true, tileTex);
-        tile6->modelInit("images/box/ball.png", true, tileTex);
-         tile7->modelInit("images/box/ball.png", true, tileTex);
-          tile8->modelInit("images/box/ball.png", true, tileTex);
+    tile1->modelInit("images/platform/grass-block.png", true, tileTex);
+    tile2->modelInit("images/platform/grass-block.png", true, tileTex2);
+    tile3->modelInit("images/platform/grass-block.png", true, tileTex3);
+    tile4->modelInit("images/platform/grass-block.png", true, tileTex4);
+    tile5->modelInit("images/platform/grass-block.png", true, tileTex5);
+    tile6->modelInit("images/platform/grass-block.png", true, tileTex6);
+    tile7->modelInit("images/platform/grass-block.png", true, tileTex7);
+    tile8->modelInit("images/platform/grass-block.png", true, tileTex8);
+    tile9->modelInit("images/platform/grass-block.png", true, tileTex9);
+    tile10->modelInit("images/platform/grass-block.png", true, tileTex10);
+    tile22->modelInit("images/platform/grass-block.png", true, tileTex11);
+    tile12->modelInit("images/platform/grass-block.png", true, tileTex12);
+    tile13->modelInit("images/platform/grass-block.png", true, tileTex13);
+    tile14->modelInit("images/platform/grass-block.png", true, tileTex14);
+    tile15->modelInit("images/platform/grass-block.png", true, tileTex15);
 
-          tile9->modelInit("images/box/ball.png", true, tileTex);
-     tile10->modelInit("images/box/ball.png", true, tileTex);
-      tile11->modelInit("images/box/ball.png", true, tileTex);
-       tile12->modelInit("images/box/ball.png", true, tileTex);
-       tile13->modelInit("images/box/ball.png", true, tileTex);
-        tile14->modelInit("images/box/ball.png", true, tileTex);
-         tile15->modelInit("images/box/ball.png", true, tileTex);
-          tile16->modelInit("images/box/ball.png", true, tileTex);
-    ply2->PXpos=-2.8;
-    ply2->PYpos=-1.4;
+    ply->PXpos = -2;
+    ply2->PXpos = 2;
 
-    ply->PXpos=2.5;
-    ply->PYpos=-1.4;
-
+    ply->isPlayer = 1;
+    ply2->isPlayer = 2;
     return true;
 }
 
+
+
+ static bool box_collision(Hbox rect1, Hbox rect2)
+ {
+
+ bool collisionX;
+ bool collisionY;
+
+collisionY = (((rect1.y-rect1.height) < (rect2.y + rect2.height) && (rect1.y+rect1.height) > (rect2.y - rect2.height))||((rect2.y-rect2.height) < (rect1.y + rect1.height) && (rect2.y+rect2.height) > (rect1.y - rect1.height)));
+collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1.width) > (rect2.x - rect2.width))||((rect2.x-rect2.width) < (rect1.x + rect1.width) && (rect2.x+rect2.width) > (rect1.x - rect1.width)));
+
+    return collisionX && collisionY;
+}
 static void update()
 {
-    //ballSpeed+=(1/tim->GetCounter());
-    //cout<<tim->GetCounter()<<endl;
-    CurXpos = CurXpos + (directionX * ballSpeed);
-    CurYpos = CurYpos + (directionY * ballSpeed);
+    if(ply->ballCollided == false && ply2->ballCollided == false)
+    {
+        CurXpos = CurXpos + 1.2*(directionX * ballSpeed);
+        CurYpos = CurYpos + (directionY * ballSpeed);
+    }
 
-    if (Ball->box_collision(Ball->box, wallB->box))
+
+    //-------------------------------------------------------------------------------------------------//
+    //------------------------------- BALL VS WALL COLLISIONS -----------------------------------------//
+    //-------------------------------------------------------------------------------------------------//
+    if (box_collision(Ball->box, wallB->box))
+    {
         directionX = -1;
+        //cout << "right" << endl;
+    }
 
-    if (Ball->box_collision(Ball->box, wallA->box))
+    if (box_collision(Ball->box, wallA->box))
+    {
         directionX = 1;
+        //cout << "left" << endl;
+    }
 
-    if (Ball->box_collision(Ball->box, wallC->box))
+    if (box_collision(Ball->box, wallC->box))
     {
         directionY = -1;
-        hud->modelInit("images/box/hud1.png", true, texH);
+        //cout << "top" << endl;
+        //hud->modelInit("images/box/hud1.png", true, texH);
     }
 
-    if (Ball->box_collision(Ball->box, ply->box))
+    if(CurYpos<-2.2)
     {
-        Ball->tag="P1";//the ball will remember who hit it last
-        if(Ball->Xpos < ply->box.x)
-        {
-            ballSpeed = ballSpeed + 0.02;//0.002;
-            directionX =  -1;
-            directionY =  1;
-        }
-        if(Ball->Xpos >= ply->box.x)
-        {
-            ballSpeed = ballSpeed + 0.02;//0.002;
-
-            directionX =  1;
-            directionY =  1;
-        }
-        Ball->modelInit("images/box/ball.png", true, ballHBTex);
-        hud->modelInit("images/box/hud3.png", true, texH);
-    }
-    if(CurYpos<-1.8)//makes the ball come in from the top of the map when it falls through the bottom
-    {
-        CurYpos=2;
+        CurYpos=1.6;
         directionY=-1;
-        if(directionX==-1)
-        CurXpos+=2;
+        Ball->Xpos-=0.3;
+    }
 
-        if(directionX==1)
-        CurXpos-=2;
+    //---------------------------------------------------------------------------------------------------//
+    //------------------------------- BALL VS PLAYER COLLISIONS -----------------------------------------//
+    //---------------------------------------------------------------------------------------------------//
+
+    //----------------------PLAYER 1 --------------------------------------//
+    if (box_collision(Ball->box, ply->box) && ply->swinging == true && pCol->getTicks() >= 350)
+    {
+        if ((ply->playerDirection == "RIGHT" && Ball->Xpos >= ply->PXpos) || (ply->playerDirection == "LEFT" && Ball->Xpos <= ply->PXpos ))
+        {
+            pCol->reset();
+            ballSpeed *= 1.2;
+            if (ballSpeed > .0043)
+            {
+                ballSpeed = .0043;
+            }
+            if (ply->freezeTimer > 0)
+            {
+                ply->ballCollided = true;
+                ply2->midCollision = true;
+
+                ply->swingTimer->pause();
+                ballCollTimer->reset();
+                ballCollTimer->start();
+            }
+
+                //ballSpeed = ballSpeed + 0.002;
+                //directionX =  -1;
+                //directionY =  1;
+                if(ply->swingDirection == "TOPRIGHT")
+                {
+                    directionX = 1;
+                    directionY = 1;
+                }
+                else if(ply->swingDirection == "TOPLEFT")
+                {
+                    directionX = -1;
+                    directionY = 1;
+                }
+                else if(ply->swingDirection == "BOTTOMLEFT")
+                {
+                    directionX = -1;
+                    directionY = -1;
+                }
+                else if(ply->swingDirection == "BOTTOMRIGHT")
+                {
+                    directionX = 1;
+                    directionY = -1;
+                }
+                else if(ply->swingDirection == "LEFT")
+                {
+                    directionX = -1;
+                    directionY = 0;
+                }
+                else if(ply->swingDirection == "RIGHT")
+                {
+                    directionX = 1;
+                    directionY = 0;
+                }
+        }
 
     }
-    if(ply->jump > 0)
-       {
-           ply->yex = 1.5*sin(ply->verticalVelocity);
 
-           if(ply->verticalVelocity>0)
-                ply->verticalVelocity -= 0.0060;
-
-            ply->PYpos += ply->yex;
-
-            if(ply->PYpos <= -1.4)
+        //---------------------- PLAYER 2 --------------------------------------//
+    if (box_collision(Ball->box, ply2->box) && ply2->swinging == true && pCol->getTicks() >= 350)
+    {
+        if ((ply2->playerDirection == "RIGHT" && Ball->Xpos >= ply2->PXpos) || (ply2->playerDirection == "LEFT" && Ball->Xpos <= ply2->PXpos ))
+        {
+            pCol->reset();
+            ballSpeed *= 1.2;
+            if (ballSpeed > .0043)
             {
-                ply->yex = 0;
-                ply->PYpos = -1.4;
-                ply->jump = 0;
+                ballSpeed = .0043;
             }
+            if (ply->freezeTimer > 0)
+            {
+                ply2->ballCollided = true;
+                ply->midCollision = true;
+
+                ply2->swingTimer->pause();
+                ballCollTimer->reset();
+                ballCollTimer->start();
+            }
+
+                //ballSpeed = ballSpeed + 0.002;
+                //directionX =  -1;
+                //directionY =  1;
+                if(ply2->swingDirection == "TOPRIGHT")
+                {
+                    directionX = 1;
+                    directionY = 1;
+                }
+                else if(ply2->swingDirection == "TOPLEFT")
+                {
+                    directionX = -1;
+                    directionY = 1;
+                }
+                else if(ply2->swingDirection == "BOTTOMLEFT")
+                {
+                    directionX = -1;
+                    directionY = -1;
+                }
+                else if(ply2->swingDirection == "BOTTOMRIGHT")
+                {
+                    directionX = 1;
+                    directionY = -1;
+                }
+                else if(ply2->swingDirection == "LEFT")
+                {
+                    directionX = -1;
+                    directionY = 0;
+                }
+                else if(ply2->swingDirection == "RIGHT")
+                {
+                    directionX = 1;
+                    directionY = 0;
+                }
+        }
+
+    }
+
+      //------------------------------------------------------------------------------------------------//
+     //---------------------------- PLAYER JUMP & GROUND COLLISIONS -----------------------------------//
+    //------------------------------------------------------------------------------------------------//
+
+    //------------------------------- PLAYER 1 --------------------------------------//
+    if(ply->jumpInitiated == false && ply->onGround == false )
+       {
+                ply->PYpos -= 0.0015;
        }
 
-        if(ply->dash==true)
+
+        if((box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+        box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+        box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+        box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
+            {
+                if (ply->PYpos >= -1.19)
+                    ply->onGround = true;
+            }
+        else
         {
-            if(ply->lastKey=='R')
+            ply->onGround = false;
+        }
+
+    //------------------------------- PLAYER 2 --------------------------------------//
+    if(ply2->jumpInitiated == false && ply2->onGround == false )
+       {
+                ply2->PYpos -= 0.0015;
+       }
+
+
+        if((box_collision(ply2->pl_pltfrm_box,tile1->box)||box_collision(ply2->pl_pltfrm_box,tile2->box)||box_collision(ply2->pl_pltfrm_box,tile3->box)||box_collision(ply2->pl_pltfrm_box,tile4->box)||
+        box_collision(ply2->pl_pltfrm_box,tile5->box)||box_collision(ply2->pl_pltfrm_box,tile6->box)||box_collision(ply2->pl_pltfrm_box,tile7->box)||box_collision(ply2->pl_pltfrm_box,tile8->box)||
+        box_collision(ply2->pl_pltfrm_box,tile9->box)||box_collision(ply2->pl_pltfrm_box,tile10->box)||box_collision(ply2->pl_pltfrm_box,tile22->box)||box_collision(ply2->pl_pltfrm_box,tile12->box)||
+        box_collision(ply2->pl_pltfrm_box,tile13->box)||box_collision(ply2->pl_pltfrm_box,tile14->box)||box_collision(ply2->pl_pltfrm_box,tile15->box)))
             {
-                ply->PXpos+=0.05;
-
-                if(ply->PXpos>ply->prevXPos+1)
-                ply->dash=false;
+                if (ply2->PYpos >= -1.19)
+                    ply2->onGround = true;
             }
-
-            if(ply->lastKey=='L')
-            {
-                ply->PXpos-=0.05;
-
-                if(ply->PXpos<ply->prevXPos-1)
-                ply->dash=false;
-            }
-
-
+        else
+        {
+            ply2->onGround = false;
         }
 
 
-     if(!(ply->box_collision(ply->box,tile1->box)||ply->box_collision(ply->box,tile2->box)||ply->box_collision(ply->box,tile3->box)||ply->box_collision(ply->box,tile4->box)||
-    ply->box_collision(ply->box,tile5->box)||ply->box_collision(ply->box,tile6->box)||ply->box_collision(ply->box,tile7->box)||ply->box_collision(ply->box,tile8->box))||ply->PYpos>-1.4)
-            ply->PYpos-=0.05;//0.05;
-      if(!(ply2->box_collision(ply2->box,tile1->box)||ply2->box_collision(ply2->box,tile2->box)||ply2->box_collision(ply2->box,tile3->box)||ply2->box_collision(ply2->box,tile4->box)||
-    ply2->box_collision(ply2->box,tile5->box)||ply2->box_collision(ply2->box,tile6->box)||ply2->box_collision(ply2->box,tile7->box)||ply2->box_collision(ply2->box,tile8->box))||ply2->PYpos>-1.4)
-            ply2->PYpos-=0.005;//0.05;
 
-    if (ply->box_collision(ply->box, wallD->box))//if the player hits the killbox end the game
+      //-------------------------------------------------------------------------------------------------//
+     //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
+    //-------------------------------------------------------------------------------------------------//
+    if(box_collision(Ball->box, tile1->box ) && D->getTicks() >= 200)
     {
-        //exit(0);
-    }
-
-    if (ply2->box_collision(ply2->box, wallD->box))//if the player hits the killbox end the game
-    {
-        //exit(0);
-    }
-
-
-    if(Ball->box_collision(Ball->box, tile1->box ))
-    {
-        directionY = 1;
-        ballSpeed=0.02;//0.002;
+        D->reset();
+        directionY =  1;
         tile1->health-=1;
         tile1->isalive();
+        //cout << tile1->health << endl;
+
+        if (tile1->health == 2)
+        {
+            tile1->modelInit("images/platform/grass-block2.png", true, tileTex);
+        }
+        if (tile1->health == 1)
+        {
+            tile1->modelInit("images/platform/grass-block3.png", true, tileTex);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile2->box))
+    if(box_collision(Ball->box, tile2->box) && D->getTicks() >= 200)
      {
-         directionY = 1;
-           ballSpeed=0.02;
+        D->reset();
+         directionY =  1;
         tile2->health-=1;
+        //cout << "top2" << endl;
         tile2->isalive();
+        if (tile2->health == 2)
+        {
+            tile2->modelInit("images/platform/grass-block2.png", true, tileTex2);
+        }
+        if (tile2->health == 1)
+        {
+            tile2->modelInit("images/platform/grass-block3.png", true, tileTex2);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile3->box))
+    if(box_collision(Ball->box, tile3->box) && D->getTicks() >= 200)
        {
-           directionY = 1;
-             ballSpeed=0.02;;
+        D->reset();
+        directionY =  1;
         tile3->health-=1;
+        //cout << "top3" << endl;
         tile3->isalive();
+        if (tile3->health == 2)
+        {
+            tile3->modelInit("images/platform/grass-block2.png", true, tileTex3);
+        }
+        if (tile3->health == 1)
+        {
+            tile3->modelInit("images/platform/grass-block3.png", true, tileTex3);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile4->box))
+    if(box_collision(Ball->box, tile4->box) && D->getTicks() >= 200)
      {
-         directionY = 1;
-           ballSpeed=0.02;
+        D->reset();
+         directionY =  1;
+         //cout << "top4" << endl;
         tile4->health-=1;
         tile4->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile5->box))
+        if (tile4->health == 2)
         {
-            directionY = 1;
-              ballSpeed=0.02;
+            tile4->modelInit("images/platform/grass-block2.png", true, tileTex4);
+        }
+        if (tile4->health == 1)
+        {
+            tile4->modelInit("images/platform/grass-block3.png", true, tileTex4);
+        }
+    }
+    if(box_collision(Ball->box, tile5->box) && D->getTicks() >= 200)
+    {
+        D->reset();
+        directionY =  1;
+        //cout << "top5" << endl;
         tile5->health-=1;
         tile5->isalive();
+        if (tile5->health == 2)
+        {
+            tile5->modelInit("images/platform/grass-block2.png", true, tileTex5);
+        }
+        if (tile5->health == 1)
+        {
+            tile5->modelInit("images/platform/grass-block3.png", true, tileTex5);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile6->box))
+    if(box_collision(Ball->box, tile6->box) && D->getTicks() >= 200)
      {
-         directionY = 1;
-           ballSpeed=0.02;
+        D->reset();
+         directionY =  1;
+         //cout << "top6" << endl;
         tile6->health-=1;
         tile6->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile7->box))
+        if (tile6->health == 2)
         {
-            directionY = 1;
-              ballSpeed=0.02;
+            tile6->modelInit("images/platform/grass-block2.png", true, tileTex6);
+        }
+        if (tile6->health == 1)
+        {
+            tile6->modelInit("images/platform/grass-block3.png", true, tileTex6);
+        }
+    }
+    if(box_collision(Ball->box, tile7->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
+        //cout << "top7" << endl;
         tile7->health-=1;
         tile7->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile8->box))
+        if (tile7->health == 2)
         {
-            directionY = 1;
-              ballSpeed=0.02;
+            tile7->modelInit("images/platform/grass-block2.png", true, tileTex7);
+        }
+        if (tile7->health == 1)
+        {
+            tile7->modelInit("images/platform/grass-block3.png", true, tileTex7);
+        }
+    }
+    if(box_collision(Ball->box, tile8->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+            directionY =  1;
+        //cout << "top8" << endl;
         tile8->health-=1;
         tile8->isalive();
+        if (tile8->health == 2)
+        {
+            tile8->modelInit("images/platform/grass-block2.png", true, tileTex8);
+        }
+        if (tile8->health == 1)
+        {
+            tile8->modelInit("images/platform/grass-block3.png", true, tileTex8);
+        }
     }
-
-
-     if(Ball->box_collision(Ball->box, tile9->box ))
-    {
-        directionY = -1;
-        ballSpeed=0.02;
+    if(box_collision(Ball->box, tile9->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
         tile9->health-=1;
+
+        //cout << "top9" << endl;
         tile9->isalive();
+        if (tile9->health == 2)
+        {
+            tile9->modelInit("images/platform/grass-block2.png", true, tileTex9);
+        }
+        if (tile9->health == 1)
+        {
+            tile9->modelInit("images/platform/grass-block3.png", true, tileTex9);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile10->box))
-     {
-         directionY = -1;
-           ballSpeed=0.02;
+    if(box_collision(Ball->box, tile10->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
         tile10->health-=1;
+        //cout << "top10" << endl;
         tile10->isalive();
+        if (tile10->health == 2)
+        {
+            tile10->modelInit("images/platform/grass-block2.png", true, tileTex10);
+        }
+        if (tile10->health == 1)
+        {
+            tile10->modelInit("images/platform/grass-block3.png", true, tileTex10);
+        }
+        }
+    if(box_collision(Ball->box, tile22->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
+        tile22->health-=1;
+        //cout << "top11" << endl;
+        tile22->isalive();
+        if (tile22->health == 2)
+        {
+            tile22->modelInit("images/platform/grass-block2.png", true, tileTex11);
+        }
+        if (tile22->health == 1)
+        {
+            tile22->modelInit("images/platform/grass-block3.png", true, tileTex11);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile11->box))
-       {
-           directionY = -1;
-             ballSpeed=0.02;
-        tile11->health-=1;
-        tile11->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile12->box))
-     {
-         directionY = -1;
-           ballSpeed=0.02;
+    if(box_collision(Ball->box, tile12->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
         tile12->health-=1;
+        //cout << "top12" << endl;
         tile12->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile13->box))
+        if (tile12->health == 2)
         {
-            directionY = -1;
-              ballSpeed=0.02;
+            tile12->modelInit("images/platform/grass-block2.png", true, tileTex12);
+        }
+        if (tile12->health == 1)
+        {
+            tile12->modelInit("images/platform/grass-block3.png", true, tileTex12);
+        }
+    }
+    if(box_collision(Ball->box, tile13->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
         tile13->health-=1;
+        //cout << "top13" << endl;
         tile13->isalive();
+        if (tile13->health == 2)
+        {
+            tile13->modelInit("images/platform/grass-block2.png", true, tileTex13);
+        }
+        if (tile13->health == 1)
+        {
+            tile13->modelInit("images/platform/grass-block3.png", true, tileTex13);
+        }
     }
-    if(Ball->box_collision(Ball->box, tile14->box))
-     {
-         directionY = -1;
-           ballSpeed=0.02;
+    if(box_collision(Ball->box, tile14->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
         tile14->health-=1;
+        //cout << "top14" << endl;
         tile14->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile15->box))
+        if (tile14->health == 2)
         {
-            directionY = -1;
-              ballSpeed=0.02;
+            tile14->modelInit("images/platform/grass-block2.png", true, tileTex14);
+        }
+        if (tile14->health == 1)
+        {
+            tile14->modelInit("images/platform/grass-block3.png", true, tileTex14);
+        }
+    }
+    if(box_collision(Ball->box, tile15->box) && D->getTicks() >= 200)
+        {
+        D->reset();
+        directionY =  1;
         tile15->health-=1;
+        //cout << "top15" << endl;
         tile15->isalive();
-    }
-    if(Ball->box_collision(Ball->box, tile16->box))
+        if (tile15->health == 2)
         {
-            directionY = -1;
-              ballSpeed=0.02;
-        tile16->health-=1;
-        tile16->isalive();
+            tile15->modelInit("images/platform/grass-block2.png", true, tileTex15);
+        }
+        if (tile15->health == 1)
+        {
+            tile15->modelInit("images/platform/grass-block3.png", true, tileTex15);
+        }
     }
 
 
-    Ball->Xpos = CurXpos;
-    Ball->Ypos = CurYpos;
+
+            Ball->Xpos = CurXpos;
+            Ball->Ypos = CurYpos;
+
+}
+
+static void jumpUpdate(player* p)
+{
+    if(p->ballCollided == false)
+        yVelocity += gravity;
+    if (yVelocity <= -.01)
+    {
+        if(p->ballCollided == false)
+            yVelocity = -.01;
+    }
+
+
+    if (p->onGround == true && yVelocity < 0)
+    {
+         yVelocity = 0.0032;
+         p->jumpInitiated = false;
+    }
+        if(p->ballCollided == false)
+            p->PYpos += yVelocity;
+
+
 }
 
 void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
@@ -392,9 +673,84 @@ void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float Z
     glPopMatrix();
     return;
 }
+
 GLint GLScene::drawGLScene()
 {
+    if (ply->ballCollided == true || ply2->ballCollided == true)
+    {
+        if(ply->freezeTimer == 500)
+        {
+            max_xx_yy = 4;
+        }
+        else if (ply->freezeTimer == 700)
+        {
+            max_xx_yy = 5;
+        }
+        else if (ply->freezeTimer == 2000)
+        {
+            max_xx_yy = 6;
+        }
 
+        if (xx >= max_xx_yy)
+        {
+            dirXX = -1;
+        }
+        if (xx <= -max_xx_yy)
+        {
+            dirXX=1;
+        }
+        if (yy >= max_xx_yy)
+        {
+            dirYY = -1;
+        }
+        if (yy <= -max_xx_yy)
+        {
+            dirYY=1;
+        }
+            xx += dirXX*0.18;
+            yy += dirYY*0.09;
+        glViewport(xx,yy, screenWidth, screenHeight);
+    }
+    else
+        glViewport(0,0, screenWidth, screenHeight);
+
+    if (ballSpeed > 0.002 &&  ballSpeed <= .0024)
+    {
+        ply->freezeTimer = 500;
+    }
+    else if (ballSpeed > .0024 && ballSpeed <= .0035 )
+    {
+        ply->freezeTimer = 700;
+    }
+    else if (ballSpeed > .0035)
+    {
+        ply->freezeTimer = 2000;
+    }
+
+
+        if (ballCollTimer->getTicks() >= ply->freezeTimer)
+        {
+            ballCollTimer->stop();
+            ply->swingTimer->resume();
+            ply->ballCollided = false;
+            ply2->swingTimer->resume();
+            ply2->ballCollided = false;
+        }
+      //-----------------------------------------------------------------------------------------------//
+     //------------------------------------------ TIMERS ---------------------------------------------//
+    //-----------------------------------------------------------------------------------------------//
+        D->start();
+        pCol->start();
+        ply->swingTimer->start();
+        ply2->swingTimer->start();
+        //ply->swingDuration->start();
+
+
+      //-----------------------------------------------------------------------------------------------//
+     //-------------------------------- SKYBOX CREATION ----------------------------------------------//
+    //-----------------------------------------------------------------------------------------------//
+
+    //cout<<ply->PYpos<<endl;
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
     glLoadIdentity();
     // Reset The Current Modelview Matrix
@@ -406,114 +762,141 @@ GLint GLScene::drawGLScene()
         glEnable(GL_LIGHTING);
     glPopMatrix();
 
-    //--------------------------PARALLAX CREATION-----------------------------//
+      //-----------------------------------------------------------------------------------------------//
+     //------------------------------- PARALLAX CREATION ---------------------------------------------//
+    //-----------------------------------------------------------------------------------------------//
     glPushMatrix();
-        glScaled(3.33, 3.33, 1.0);
+        glScaled(2, 3.555, 1.0);
         plx->drawSquare(screenWidth, screenHeight);
     glPopMatrix();
     //plx->scroll(true,"up",0.005);
 
-    //--------------------------PLAYER CREATION-----------------------------//
+      //-------------------------------------------------------------------------------------------------//
+     //------------------------------- PLAYER CREATION -------------------------------------------------//
+    //-------------------------------------------------------------------------------------------------//
     glPushMatrix();
+
         ply->actions(ply->actionTrigger, ply, modelTeapot);
         ply->box.x = ply->PXpos;
         ply->box.y = ply->PYpos;
+        ply->pl_pltfrm_box.x = ply ->PXpos;
+        ply->pl_pltfrm_box.y = ply -> PYpos;
+        ply->pl_pltfrm_box.height = 0.6;
+        ply->pl_pltfrm_box.width = 0.14;
         ply->box.height=0.5;
         ply->box.width=0.5;
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
-        ply->drawplayer();
+
+        update();
+
+        if (ply->jumpInitiated == true)
+        {
+            //ply->onGround = false;
+
+            jumpUpdate(ply);
+        }
+
+            ply->drawplayer();
     glPopMatrix();
 
 
-     //--------------------------PLAYER DOS CREATION-----------------------------//
-    /*glPushMatrix();
+
+    glPushMatrix();
+
         ply2->actions(ply2->actionTrigger, ply2, modelTeapot2);
         ply2->box.x = ply2->PXpos;
         ply2->box.y = ply2->PYpos;
-        //ply2->Xpos = 1.0;
+        ply2->pl_pltfrm_box.x = ply2 ->PXpos;
+        ply2->pl_pltfrm_box.y = ply2 -> PYpos;
+        ply2->pl_pltfrm_box.height = 0.6;
+        ply2->pl_pltfrm_box.width = 0.14;
+        ply2->box.height=0.5;
+        ply2->box.width=0.5;
+        update();
+        if (ply2->jumpInitiated == true)
+        {
+            //ply->onGround = false;
 
-        //ply->playerHBox.width = .0; // .3 is a perfect value
-        //ply->playerHBox.height = .0; //.4 is a perfect value
-        ply2->drawplayer();
-    glPopMatrix();*/
+            jumpUpdate(ply2);
+        }
+            ply2->drawplayer();
+    glPopMatrix();
 
-    // model*, tecture*, xpos, ypos, zerox, zeroy, etc,  width height
+      //-------------------------------------------------------------------------------------------------//
+     //------------------------------- TILE CREATION ---------------------------------------------------//
+    //-------------------------------------------------------------------------------------------------//
+
+    // model , texture, xpos,ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
     if(tile1->health>0)
-    makeModel(tile1,tileTex,-3.5,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile2->health>0)
-    makeModel(tile2,tileTex,-3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile3->health>0)
-    makeModel(tile3,tileTex,-2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile4->health>0)
-    makeModel(tile4,tileTex,-1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile5->health>0)
-    makeModel(tile5,tileTex,0.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile6->health>0)
-    makeModel(tile6,tileTex,1.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile7->health>0)
-    makeModel(tile7,tileTex,2.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile8->health>0)
-    makeModel(tile8,tileTex,3.0,-2.1,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    //top tiles
     if(tile9->health>0)
-    makeModel(tile9,tileTex,-3.5,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile10->health>0)
-    makeModel(tile10,tileTex,-3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile11->health>0)
-    makeModel(tile11,tileTex,-2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    if(tile22->health>0)
+    makeModel(tile22,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile12->health>0)
-    makeModel(tile12,tileTex,-1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile13->health>0)
-    makeModel(tile13,tileTex,0.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile14->health>0)
-    makeModel(tile14,tileTex,1.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile15->health>0)
-    makeModel(tile15,tileTex,2.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
+    makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile16->health>0)
-    makeModel(tile16,tileTex,3.0,2.0,-0.70,-0.15,0.70,-0.15,0.70,0.15,-0.70,0.15,0.7,0.1);
 
     //left wall
-    makeModel(wallA,tex1,-4.0,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,.3,88);
+    makeModel(wallA,tex1,-4.7,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,1,88);
 
     //right wall
-    makeModel(wallB,tex2,3.9,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
+    makeModel(wallB,tex2,4.7,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,1,88);
 
     //top wall
-    makeModel(wallC,texc,0,3.5,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,.1);
+    makeModel(wallC,texc,0,3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
-    //kill box
-    makeModel(wallD,texb,0,-3.09,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,88,0.2);
 
     //dividing wall
-    makeModel(divide,tex2,-0.5,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,0.3,88);
+    //makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
 
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
 
 
-
-    //--------------------------BALL CREATION-----------------------------//
+      //-------------------------------------------------------------------------------------------------//
+     //--------------------------------- TILE CREATION -------------------------------------------------//
+    //-------------------------------------------------------------------------------------------------//
     glPushMatrix();
-        Ball->Ypos = 0;
-        Ball->Ypos = -0.5;
-        Ball->box.height = 0.3;
-        Ball->box.width = 0.3;
+        Ball->box.height =  .2;
+        Ball->box.width = .05;
 
         Ball->verticies[0].x = -0.15;
         Ball->verticies[1].x = 0.15;
@@ -523,15 +906,16 @@ GLint GLScene::drawGLScene()
         Ball->verticies[1].y = -0.15;
         Ball->verticies[2].y = 0.15;
         Ball->verticies[3].y = 0.15;
+        Ball->box.x = Ball ->Xpos;
+        Ball->box.y = Ball ->Ypos;
 
         update();
 
-        Ball->UpdateHbox(Ball->Xpos, Ball->Ypos);
+        //Ball->UpdateHbox(Ball->Xpos, Ball->Ypos);
         Ball->drawModel(ballHBTex);
     glPopMatrix();
 
-//---------------HUD IS DRAWN-----------------
-    /*glPushMatrix();
+    glPushMatrix();
         hud->verticies[0].x = -1; //bottom left x
         hud->verticies[1].x = 1; //bottom right x
         hud->verticies[2].x = 1; //top right x
@@ -544,7 +928,9 @@ GLint GLScene::drawGLScene()
         hud->Ypos = 1.15;
         //hud->Zoom = 0;
         hud->drawModel(texH); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();*/
+    glPopMatrix();
+
+    //cout << ply->PYpos << endl;
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {
@@ -556,53 +942,17 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
-int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool press[256])
 {
-    switch (uMsg) // Check For Windows Messages
+    if(uMsg==WM_KEYDOWN)
     {
-    case WM_KEYDOWN:
         KbMs->wParam = wParam;
-        //KbMs->keyPressed(modelTeapot);
         KbMs->keyEnv(plx, 0.005);
-        KbMs->keyPressed(ply,ply2,modelTeapot, wallA, wallB, wallC,divide);
-
-
-        break;
-    case WM_KEYUP: // Has A Key Been Released?
+        KbMs->keyPressed(ply, ply2, modelTeapot, modelTeapot2, wallA, wallB, wallC,press);
+    }
+     if(uMsg==WM_KEYUP)
     {
         KbMs->wParam = wParam;
-        KbMs->keyUP();
-        KbMs->keyUp(ply);
-        break; // Jump Back
-    }
-    case WM_LBUTTONDOWN: {
-        KbMs->wParam = wParam;
-        KbMs->mouseEventDown(modelTeapot, LOWORD(lParam), HIWORD(lParam));
-        break; // Jump Back
-    }
-    case WM_RBUTTONDOWN: {
-        KbMs->wParam = wParam;
-        KbMs->mouseEventDown(modelTeapot, LOWORD(lParam), HIWORD(lParam));
-        break; // Jump Back
-    }
-    case WM_MBUTTONDOWN: {
-        KbMs->wParam = wParam;
-        KbMs->mouseEventDown(modelTeapot, LOWORD(lParam), HIWORD(lParam));
-        break; // Jump Back
-    }
-    case WM_LBUTTONUP:
-    case WM_RBUTTONUP:
-    case WM_MBUTTONUP: {
-        KbMs->mouseEventUp();
-        break; // Jump Back
-    }
-    case WM_MOUSEMOVE: {
-        KbMs->mouseMove(modelTeapot, LOWORD(lParam), HIWORD(lParam));
-        break; // Jump Back
-    }
-    case WM_MOUSEWHEEL: {
-        KbMs->mouseWheel(modelTeapot, (double)GET_WHEEL_DELTA_WPARAM(wParam));
-        break; // Jump Back
-    }
+        KbMs->keyUp(ply, ply2, press);
     }
 }

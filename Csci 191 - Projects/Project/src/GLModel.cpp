@@ -1,5 +1,7 @@
 #include "GLModel.h"
+#include <stdlib.h>
 #include <textureLoader.h>
+
 
 
 Model::Model()
@@ -10,15 +12,17 @@ Model::Model()
         RotateZ =0.0;
 
         Zoom = -4.0;  //translations
-        Xpos = -0.5;
+        Xpos = 0;
         Ypos = 0;
 
+        this->box.width = 0;
+        this->box.height = 0;
         verticies[0].x=-0.5;verticies[0].y=-0.5;verticies[0].z=-1.0;
         verticies[1].x=0.5;verticies[1].y=-0.5;verticies[1].z=-1.0;
         verticies[2].x=0.5;verticies[2].y=0.5;verticies[2].z=-1.0;
         verticies[3].x=-0.5;verticies[3].y=0.5;verticies[3].z=-1.0;
 
-        health=1;
+        health=30;
 }
 
 Model::Model(float x, float y, float z,float a,float b,float c,float d, float e, float f,float q,float w, float r)
@@ -67,13 +71,7 @@ void Model::drawModel(textureLoader *tex)
     glVertex3f(verticies[3].x,verticies[3].y,verticies[3].z);
     glEnd();
 }
- bool Model::box_collision(Hbox rect1, Hbox rect2){
-	if ((((rect1.y-rect1.height) < (rect2.y + rect2.height) && (rect1.y+rect1.height) > (rect2.y - rect2.height))||((rect2.y-rect2.height) < (rect1.y + rect1.height) && (rect2.y+rect2.height) > (rect1.y - rect1.height)))
-        && (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1.width) > (rect2.x - rect2.width))||((rect2.x-rect2.width) < (rect1.x + rect1.width) && (rect2.x+rect2.width) > (rect1.x - rect1.width))))
-        return true;
-    else
-        return false;
-}
+
 void Model::UpdateHbox(float CurXpos, float CurYpos)//updates the hitbox location to the players location
 {
    this->box.x=CurXpos;
@@ -86,9 +84,7 @@ void Model::isalive()
     if(this->health<1)
     {
       this->box.width=0;
-      this->box.height=0;
-      this->box.x=10;
-      this->box.y=10;
+      this->box.height=-10;
     }
     return;
 }

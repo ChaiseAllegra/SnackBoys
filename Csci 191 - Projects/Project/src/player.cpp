@@ -4,20 +4,22 @@
 #include <windows.h>
 #include <iostream>
 //#include<gameclasses.h>
-timer *T = new timer();
-timer *T2 = new timer();
-char lastCase;
 
-textureLoader runText[40];
-textureLoader runText_left[40];
-textureLoader swingText[40];
-textureLoader swingTextLeft[40];
-textureLoader stand[2];
+
+
 player::player()
 {
+    //ctor
+    //PRotateX =0.0; // Rotations
+    //PRotateY =0.0;
+    //PRotateZ =0.0;
+
+    this->jumpInitiated = false;
     PZoom = -4;  //translations
-    PXpos = 0.2;
-    PYpos = -1.4;
+    PXpos = 0;
+    PYpos = -1.181;
+    aimX=0;
+    aimY=-1;
 
         verticies[0].x=-0.5;verticies[0].y=-0.5;verticies[0].z=-1.0;
         verticies[1].x=0.5;verticies[1].y=-0.5;verticies[1].z=-1.0;
@@ -27,6 +29,29 @@ player::player()
     jumpspeed = 0;
     actionTrigger = 0;
     this->box.width = 0;
+    this->box.height = 0;
+
+    this->swinging = false;
+
+    this->plyVel = 0.002;
+    this->ballCollided = false;
+    this->midCollision = false;
+    freezeTimer = 0;
+
+    swingDuration->start();
+
+    this->playerDirection = "RIGHT";
+
+    isPlayer = 1;
+
+      leftReleased = true;
+        rightReleased = true;
+         jumpReleased = true;
+        swingReleased = true;
+         swingPressed = false;
+         upPressed = false;
+         downPressed = false;
+
 }
 player::~player()
 {
@@ -110,78 +135,111 @@ void player::actions(int action, player* ply, Model* mdl)
 {
    switch(action){
        case 0:
+           plyVel = 0.002;
        glPushMatrix();
            glTranslated(PXpos,PYpos,PZoom);
-           stand[0].binder();
-
+            if (this->ballCollided == false && this->swingDuration->getTicks() >= 400)
+            stand[0].binder();
+            else
+            swingText[2].binder();
            drawplayer();
        glPopMatrix();
-       lastCase = 'R';
-              break;
+      break;
+
    case 1:
        glPushMatrix();
             glTranslated(PXpos,PYpos,PZoom);
-            if(T->getTicks()>.25)
+            if(T->getTicks() > 0.25)
             {
-
-
-                if (PXpos <= 3.4) // 3.1 = edgde
+                if (PXpos <= 3.4 && ply->ballCollided == false && (this->swingDuration->getTicks() >= 400 || jumpInitiated == true))  // 3.1 = edgde
                 {
+                    ply->plyVel *= plyAccel;
 
-                PXpos += 0.05;
-                mdl->Xpos += 0.005;
+                    if (ply->plyVel  > 0.004)
+                    {
+                        ply->plyVel = 0.004;
+                    }
+                PXpos += ply->plyVel;
+               // mdl->Xpos += 0.004;
                 T->reset();
                 }
+
             }
 
-            if(T2 ->getTicks()>80)
+            if (this->swingDuration->getTicks() >= 400 && this->ballCollided == false)
             {
-                runspeed++;
-                runspeed = (runspeed % 5);
-                T2->reset();
+                if(T2 ->getTicks()>80)
+                {
+                    runspeed++;
+                    runspeed = (runspeed % 5);
+                    T2->reset();
+                }
+                runText[runspeed].binder();
             }
 
-            runText[runspeed].binder();
+            else
+                swingText[2].binder();
+
 
 
             drawplayer();
        glPopMatrix();
        lastCase = 'R';
+       playerDirection = "RIGHT";
     break;
 
    case 2:
-
        glPushMatrix();
-       if(ply->box_collision(ply->testModel->box,ply->box)==false)
-       {
            glTranslated(PXpos,PYpos,PZoom);
            if(T->getTicks()>.25)
-           {
-               if (PXpos >= -3.4) //
+            {
+
+
+                if (PXpos >= -3.4 && this->ballCollided == false && (this->swingDuration->getTicks() >= 400 || jumpInitiated == true)) // if the ball isn't in the middle of the collision animation pause
                 {
-                PXpos -= 0.05;
-                mdl->Xpos -= 0.005;
+                    ply->plyVel *= plyAccel;
+
+                    if (ply->plyVel  > 0.004)
+                    {
+                        ply->plyVel = 0.004;
+                    }
+                PXpos -= ply->plyVel;
+                mdl->Xpos -= 0.004;
                 T->reset();
                 }
-           }
-          if(T2 ->getTicks()>80)
-          {
-            runspeed++;
-            runspeed = (runspeed % 5);
-            T2->reset();
-          }
-       }
-           runText_left[runspeed].binder();
+
+            }
+
+            if (this->swingDuration->getTicks() >= 400 && this->ballCollided == false)
+            {
+                  if(T2 ->getTicks()>80)
+                  {
+                    runspeed++;
+                    runspeed = (runspeed % 5);
+                    T2->reset();
+                  }
+
+                runText_left[runspeed].binder();
+            }
+            else
+            {
+                swingTextLeft[2].binder();
+            }
+
            drawplayer();
        glPopMatrix();
-
        lastCase = 'L';
+       playerDirection = "LEFT";
     break;
 
     case 3:
        glPushMatrix();
+       plyVel = 0.002;
            glTranslated(PXpos,PYpos,PZoom);
+            if (this->ballCollided == false && this->swingDuration->getTicks() >= 400)
             stand[1].binder();
+            else
+            swingTextLeft[2].binder();
            drawplayer();
        glPopMatrix();
               break;
