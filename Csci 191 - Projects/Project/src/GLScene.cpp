@@ -22,7 +22,7 @@ float directionX = -2;
 float directionY = 1;
 float CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
 float yex;
-float ballSpeed = .001;
+float ballSpeed = .01;
 
 float yVelocity = 0.0032;
 float gravity = - 0.000003;
@@ -776,7 +776,7 @@ GLint GLScene::drawGLScene()
     //-------------------------------------------------------------------------------------------------//
     glPushMatrix();
 
-        ply->actions(ply->actionTrigger, ply, modelTeapot);
+        ply->actions();
         ply->box.x = ply->PXpos;
         ply->box.y = ply->PYpos;
         ply->pl_pltfrm_box.x = ply ->PXpos;
@@ -804,7 +804,7 @@ GLint GLScene::drawGLScene()
 
     glPushMatrix();
 
-        ply2->actions(ply2->actionTrigger, ply2, modelTeapot2);
+        ply2->actions();
         ply2->box.x = ply2->PXpos;
         ply2->box.y = ply2->PYpos;
         ply2->pl_pltfrm_box.x = ply2 ->PXpos;

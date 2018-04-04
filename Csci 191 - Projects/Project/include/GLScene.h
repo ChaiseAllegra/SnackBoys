@@ -21,6 +21,7 @@ class GLScene
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
 
+
         WPARAM wParam;
         float screenHeight;
         float screenWidth;

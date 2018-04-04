@@ -50,7 +50,7 @@ class player: public Model
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
         void drawplayer();
         void playerInit();
-        void actions(int, player*, Model*);
+        void actions();
 
         double PZoom;
         double PXpos;
