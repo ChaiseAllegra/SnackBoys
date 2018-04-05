@@ -22,7 +22,7 @@ Model::Model()
         verticies[2].x=0.5;verticies[2].y=0.5;verticies[2].z=-1.0;
         verticies[3].x=-0.5;verticies[3].y=0.5;verticies[3].z=-1.0;
 
-        health=30;
+        health=3;
 }
 
 Model::Model(float x, float y, float z,float a,float b,float c,float d, float e, float f,float q,float w, float r)

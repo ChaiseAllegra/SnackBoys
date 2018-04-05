@@ -241,6 +241,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 							LPARAM	lParam)			// Additional Message Information
 {
     Scene->windMsg(hWnd,uMsg,wParam,lParam,keys);
+
 	switch (uMsg)									// Check For Windows Messages
 	{
 		case WM_ACTIVATE:							// Watch For Window Activate Message
@@ -353,7 +354,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			}
 			else									// Not Time To Quit, Update Screen
 			{
-			    Scene->drawGLScene();
+			    Scene->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
 

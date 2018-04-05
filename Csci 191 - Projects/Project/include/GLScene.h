@@ -16,7 +16,7 @@ class GLScene
         GLScene();
         virtual ~GLScene();
         GLint initGL();
-        GLint drawGLScene();
+        GLint drawGLScene(bool[256]);
         GLvoid resizeGLScene(GLsizei, GLsizei);
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);

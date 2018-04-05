@@ -71,13 +71,11 @@ class player: public Model
         string swingDirection;
         bool ballCollided;
         bool midCollision;
-        bool leftReleased;
-        bool rightReleased;
-        bool jumpReleased;
-        bool swingReleased;
-        bool swingPressed;
-        bool upPressed;
-        bool downPressed;
+        bool leftWC;
+        bool rightWC;
+        bool upPress;
+        bool downPress;
+
 
         int freezeTimer;
 

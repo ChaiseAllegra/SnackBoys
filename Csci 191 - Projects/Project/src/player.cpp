@@ -23,8 +23,12 @@ player::player()
     actionTrigger = 0;
     box.width = 0;
     box.height = 0;
+    leftWC=false;
+    rightWC=false;
 
     swinging = false;
+    upPress=false;
+    downPress=false;
 
     plyVel = 0.2;
     !ballCollided;
@@ -35,14 +39,6 @@ player::player()
     playerDirection = "RIGHT";
 
     isPlayer = 1;
-
-      leftReleased = true;
-      rightReleased = true;
-      jumpReleased = true;
-      swingReleased = true;
-      swingPressed = false;
-      upPressed = false;
-      downPressed = false;
 }
 
 player::~player()
@@ -68,8 +64,8 @@ void player::playerInit()
 {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    T2->start();
-    T->start();
+    //T2->start();
+    //T->start();
     runText[0].bindTexture("images/player_right/player0.png");
     runText[1].bindTexture("images/player_right/player1.png");
     runText[2].bindTexture("images/player_right/player2.png");
@@ -143,7 +139,7 @@ void player::actions()
    case 1:
            glPushMatrix();
                 glTranslated(PXpos, PYpos, PZoom);
-                if(T->getTicks() > 0.25)
+                if(5==5)//T->getTicks() > 3)
                 {
                     if ((PXpos >= -3.4 && PXpos <= 3.4 ) && !ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated))
                     {
@@ -151,12 +147,11 @@ void player::actions()
 
                         if (plyVel  > 0.004)
                             plyVel = 0.004;
-                        if(lastCase == 'R')
-                            PXpos += plyVel*10;
-                        if(lastCase == 'L')
-                            PXpos -= plyVel*10;
-                        //mdl->Xpos -= 0.004;
-                        //mdl->Xpos += 0.04;
+                        if(lastCase == 'R'&& !rightWC)
+                            PXpos += plyVel*3;
+                        if(lastCase == 'L'&& !leftWC)
+                            PXpos -= plyVel*3;
+
                     T->reset();
                     }
                 }
@@ -185,8 +180,7 @@ void player::actions()
                 }
                 drawplayer();
            glPopMatrix();
-           // lastCase = 'R';
-           // playerDirection = "RIGHT";
+
     break;
 
     case 4:

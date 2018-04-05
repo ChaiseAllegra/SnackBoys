@@ -22,10 +22,10 @@ float directionX = -2;
 float directionY = 1;
 float CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
 float yex;
-float ballSpeed = .01;
+float ballSpeed = .0015;
 
-float yVelocity = 0.0032;
-float gravity = - 0.000003;
+float yVelocity = 0.0082;
+float gravity = - 0.00003;
 
 
 Model* modelTeapot = new Model();
@@ -155,6 +155,13 @@ GLint GLScene::initGL()
 
     ply->isPlayer = 1;
     ply2->isPlayer = 2;
+
+    ply->T->start();
+    ply->T2->start();
+    ply2->T->start();
+    ply2->T2->start();
+
+
     return true;
 }
 
@@ -329,6 +336,25 @@ static void update()
 
     }
 
+    if(box_collision(ply->box,wallA->box))//player has hit the left wall
+        ply->leftWC=true;//set to true so the player cannot move left
+    else
+        ply->leftWC=false;
+
+    if(box_collision(ply->box,wallB->box))//player has hit the right wall
+        ply->rightWC=true;//set to true so the player cannot move right
+    else
+        ply->rightWC=false;
+
+    if(box_collision(ply2->box,wallA->box))//player has hit the left wall
+        ply2->leftWC=true;//set to true so the player cannot move left
+    else
+        ply2->leftWC=false;
+
+    if(box_collision(ply2->box,wallB->box))//player has hit the right wall
+        ply2->rightWC=true;//set to true so the player cannot move right
+    else
+        ply2->rightWC=false;
       //------------------------------------------------------------------------------------------------//
      //---------------------------- PLAYER JUMP & GROUND COLLISIONS -----------------------------------//
     //------------------------------------------------------------------------------------------------//
@@ -641,7 +667,7 @@ static void jumpUpdate(player* p)
 
     if (p->onGround == true && yVelocity < 0)
     {
-         yVelocity = 0.0032;
+         yVelocity = 0.0082;
          p->jumpInitiated = false;
     }
         if(p->ballCollided == false)
@@ -674,22 +700,12 @@ void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float Z
     return;
 }
 
-GLint GLScene::drawGLScene()
+GLint GLScene::drawGLScene(bool pressed[256])
 {
+/*ply->freezeTimer = 10;
     if (ply->ballCollided == true || ply2->ballCollided == true)
     {
-        if(ply->freezeTimer == 500)
-        {
             max_xx_yy = 4;
-        }
-        else if (ply->freezeTimer == 700)
-        {
-            max_xx_yy = 5;
-        }
-        else if (ply->freezeTimer == 2000)
-        {
-            max_xx_yy = 6;
-        }
 
         if (xx >= max_xx_yy)
         {
@@ -707,25 +723,14 @@ GLint GLScene::drawGLScene()
         {
             dirYY=1;
         }
-            xx += dirXX*0.18;
-            yy += dirYY*0.09;
+            xx += dirXX*8;
+            yy += dirYY*4;
         glViewport(xx,yy, screenWidth, screenHeight);
     }
     else
-        glViewport(0,0, screenWidth, screenHeight);
+        glViewport(0,0, screenWidth, screenHeight);*/
 
-    if (ballSpeed > 0.002 &&  ballSpeed <= .0024)
-    {
-        ply->freezeTimer = 500;
-    }
-    else if (ballSpeed > .0024 && ballSpeed <= .0035 )
-    {
-        ply->freezeTimer = 700;
-    }
-    else if (ballSpeed > .0035)
-    {
-        ply->freezeTimer = 2000;
-    }
+
 
 
         if (ballCollTimer->getTicks() >= ply->freezeTimer)
@@ -929,7 +934,7 @@ GLint GLScene::drawGLScene()
         //hud->Zoom = 0;
         hud->drawModel(texH); //made the z equal to 2 so the pillar is in front of the player
     glPopMatrix();
-
+    KbMs->idle(pressed,ply,ply2);
     //cout << ply->PYpos << endl;
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
@@ -944,7 +949,7 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 }
 int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool press[256])
 {
-    if(uMsg==WM_KEYDOWN)
+    /*if(uMsg==WM_KEYDOWN)
     {
         KbMs->wParam = wParam;
         KbMs->keyEnv(plx, 0.005);
@@ -954,5 +959,5 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool pre
     {
         KbMs->wParam = wParam;
         KbMs->keyUp(ply, ply2, press);
-    }
+    }*/
 }

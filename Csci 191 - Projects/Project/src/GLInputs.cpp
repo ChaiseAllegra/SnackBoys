@@ -72,8 +72,26 @@ void Inputs::keyPressed(Model* Mdl)
 
 void Inputs::keyUp(player* ply, player* ply2, bool pressed[256])
 {
-    /*//-----------------------------------PLAYER 1----------------------------------------------//
-    if ((!pressed['D'] || wParam != 'D') || (!pressed['A'] || wParam != 'A') && !ply->midCollision)
+    if(pressed['D']==true)
+    {
+        cout<<"should work"<<endl;
+        pressed['D']=false;
+        pressed['A']=false;
+        ply->actionTrigger = 0;
+    }
+   /* if(!pressed['D'])
+        cout<<"d false"<<endl;
+
+    if(!pressed['A'])
+        cout<<"a false"<<endl;
+
+        if(!pressed['J'])
+        cout<<"j false"<<endl;
+
+        if(!pressed['L'])
+        cout<<"l false"<<endl;*/
+    //-----------------------------------PLAYER 1----------------------------------------------//
+    /*if ((pressed['D'] || wParam == 'D') || (pressed['A'] || wParam == 'A') && !ply->midCollision)
     {
             ply->actionTrigger = 0;
     }
@@ -81,7 +99,7 @@ void Inputs::keyUp(player* ply, player* ply2, bool pressed[256])
 
     //-----------------------------------PLAYER 2----------------------------------------------//
 
-    if ((!pressed['J'] || wParam != 'J') || (!pressed['L'] || wParam != 'L') && !ply2->midCollision)
+    if ((pressed['J'] || wParam == 'J') || (pressed['L'] || wParam == 'L') && !ply2->midCollision)
     {
             ply2->actionTrigger = 0;
     }
@@ -98,25 +116,33 @@ void Inputs::keyPressed(player* ply)
 
 void Inputs::keyPressed(player* ply, player* ply2, Model *play, Model *play2, Model* wallL,Model* wallR,Model* wallT, bool pressed[256])
 {
-    // --------------------------------------------------------- PLAYER 1 ---------------------------------------------------------//
-     if(pressed['A']||wParam=='A')
+    /*// --------------------------------------------------------- PLAYER 1 ---------------------------------------------------------//
+   // if(pressed['A']==false)
+   //     cout<<"A not pressed"<<endl;
+     if(pressed['A'])
      {
-         ply->leftReleased = false;
+         cout<<"A pressed"<<endl;
+         //ply->leftReleased = false;
          //if(ply->leftReleased == false && ply->midCollision == false)
             ply->actionTrigger = 1;
          ply->lastKey = 'L';
          ply->lastCase = 'L';
      }
 
-    else if(pressed['D']||wParam=='D')
+    if(pressed['D'])
     {
-
-        ply->rightReleased = false;
+        cout<<"D pressed"<<endl;
+        //ply->rightReleased = false;
        // if(ply->rightReleased == false && ply->midCollision == false)
         ply->actionTrigger = 1;
         // ply->actions(ply->actionTrigger, ply, play);
         ply->lastKey = 'R';
         ply->lastCase = 'R';
+    }
+    if(!pressed['D']&&!pressed['A'])
+    {
+        cout<<"not pressed"<<endl;
+        ply->actionTrigger=0;
     }
 
     if(pressed['W'])
@@ -261,7 +287,107 @@ void Inputs::keyUP()
                 break;
             }
 }
+void Inputs::idle(bool pressed[256],player* ply, player * ply2)
+{
+    if(pressed['A'])
+     {
+            ply->actionTrigger = 1;
+         ply->lastKey = 'L';
+         ply->lastCase = 'L';
+     }
 
+    if(pressed['D'])
+    {
+        ply->actionTrigger = 1;
+        ply->lastKey = 'R';
+        ply->lastCase = 'R';
+    }
+
+    if(!pressed['D']&&!pressed['A'])
+        ply->actionTrigger=0;
+
+    if(pressed['E'])
+            ply->jumpInitiated = true;
+
+
+
+    if(pressed['W'])
+    {
+        ply->upPress = true;
+        ply->downPress=false;
+        }
+
+    if(pressed['S'])
+    {
+        ply->upPress = false;
+        ply->downPress=true;
+    }
+    if(!pressed['S']&&!pressed['W'])
+    {
+           ply->upPress = false;
+        ply->downPress=false;
+    }
+
+     if(pressed['F'])
+    {
+        if( ply->swingTimer->getTicks()>= 500)
+        {
+            ply->swingDuration->reset();
+            ply->swingDuration->start();
+            ply->swingTimer->reset();
+
+              if (ply->upPress)
+              {
+
+                if(ply->lastCase == 'R')
+                    ply->swingDirection = "TOPRIGHT";
+
+                if(ply->lastCase == 'L')
+                    ply->swingDirection = "TOPLEFT";
+              }
+              else if (ply->downPress)
+              {
+                if(ply->lastCase == 'R')
+                    ply->swingDirection = "BOTTOMRIGHT";
+
+                if(ply->lastCase == 'L')
+                    ply->swingDirection = "BOTTOMLEFT";
+
+              }
+
+              else
+                {
+                if(ply->lastCase == 'R')
+                    ply->swingDirection = "RIGHT";
+
+                if(ply->lastCase == 'L')
+                    ply->swingDirection = "LEFT";
+              }
+            ply->swinging = true;
+        }
+    }
+        else
+            ply->swinging = false;
+
+    if(pressed['J'])
+     {
+        ply2->actionTrigger = 1;
+         ply2->lastKey = 'L';
+         ply2->lastCase = 'L';
+     }
+
+    if(pressed['L'])
+    {
+        ply2->actionTrigger = 1;
+        ply2->lastKey = 'R';
+        ply2->lastCase = 'R';
+    }
+    if(!pressed['J']&&!pressed['L'])
+        ply2->actionTrigger=0;
+
+      if(pressed['O'])
+            ply2->jumpInitiated = true;
+}
 void Inputs::mouseEventDown(Model *Model, double x,double y)
 {
         prev_Mouse_X =x;
