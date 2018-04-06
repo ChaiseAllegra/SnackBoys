@@ -1410,14 +1410,14 @@
 	<iostream>
 	<windows.h>
 
-1522888026 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1523048181 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<windows.h>
 	<GLModel.h>
 	<gl/gl.h>
 	<iostream>
 	<player.h>
 
-1522891494 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\player.h
+1523048333 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
@@ -1472,7 +1472,7 @@
 
 1522788708 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1522893945 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1523049767 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1518,7 +1518,7 @@
 1522788708 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1522890729 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1523050407 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
@@ -1531,7 +1531,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1522892335 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1523051276 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -1547,7 +1547,7 @@
 1522788710 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1522893870 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1523051241 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	"GLScene.h"
 	<GLLight.h>
 	<GLInputs.h>

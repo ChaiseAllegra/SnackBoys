@@ -39,6 +39,7 @@ player* ply2 = new player();
 Model* wallA = new Model(); // left wall
 Model* wallB = new Model(); // right wall
 Model* wallC = new Model(); // top wall
+Model* killBox = new Model();
 Model* divide = new Model();
 Model* hud = new Model();
 
@@ -178,43 +179,76 @@ collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1
 
     return collisionX && collisionY;
 }
+
+
+void tileChange(Model* b, Model* t,textureLoader* TX)
+{
+    if(box_collision(b->box, t->box ) && D->getTicks() >= 200)
+    {
+                D->reset();
+                directionY =  1;
+                t->health-=1;
+                t->isalive();
+
+                if (t->health == 2)
+                    t->modelInit("images/platform/grass-block2.png", true, TX);
+                if (t->health == 1)
+                    t->modelInit("images/platform/grass-block3.png", true, TX);
+                    return;
+    }
+
+}
+
 static void update()
 {
-    if(ply->ballCollided == false && ply2->ballCollided == false)
-    {
         CurXpos = CurXpos + 1.2*(directionX * ballSpeed);
         CurYpos = CurYpos + (directionY * ballSpeed);
-    }
-
 
     //-------------------------------------------------------------------------------------------------//
-    //------------------------------- BALL VS WALL COLLISIONS -----------------------------------------//
+    //-------------------------------WALL COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
     if (box_collision(Ball->box, wallB->box))
-    {
         directionX = -1;
-        //cout << "right" << endl;
-    }
 
     if (box_collision(Ball->box, wallA->box))
-    {
         directionX = 1;
-        //cout << "left" << endl;
-    }
 
     if (box_collision(Ball->box, wallC->box))
-    {
         directionY = -1;
-        //cout << "top" << endl;
-        //hud->modelInit("images/box/hud1.png", true, texH);
+
+    if (box_collision(Ball->box, killBox->box))
+    {
+        cout<<"kill box collision"<<endl;
+       CurYpos=2;
+       directionY=-1;
+
+        if(directionX==-1)
+        CurXpos+=2;
+
+        if(directionX==1)
+        CurXpos-=2;
     }
 
-    if(CurYpos<-2.2)
-    {
-        CurYpos=1.6;
-        directionY=-1;
-        Ball->Xpos-=0.3;
-    }
+    //wall versus player collisions
+    if(box_collision(ply->box,wallA->box))//player has hit the left wall
+        ply->leftWC=true;//set to true so the player cannot move left
+    else
+        ply->leftWC=false;
+
+    if(box_collision(ply->box,wallB->box))//player has hit the right wall
+        ply->rightWC=true;//set to true so the player cannot move right
+    else
+        ply->rightWC=false;
+
+    if(box_collision(ply2->box,wallA->box))//player has hit the left wall
+        ply2->leftWC=true;//set to true so the player cannot move left
+    else
+        ply2->leftWC=false;
+
+    if(box_collision(ply2->box,wallB->box))//player has hit the right wall
+        ply2->rightWC=true;//set to true so the player cannot move right
+    else
+        ply2->rightWC=false;
 
     //---------------------------------------------------------------------------------------------------//
     //------------------------------- BALL VS PLAYER COLLISIONS -----------------------------------------//
@@ -336,342 +370,77 @@ static void update()
 
     }
 
-    if(box_collision(ply->box,wallA->box))//player has hit the left wall
-        ply->leftWC=true;//set to true so the player cannot move left
-    else
-        ply->leftWC=false;
 
-    if(box_collision(ply->box,wallB->box))//player has hit the right wall
-        ply->rightWC=true;//set to true so the player cannot move right
-    else
-        ply->rightWC=false;
-
-    if(box_collision(ply2->box,wallA->box))//player has hit the left wall
-        ply2->leftWC=true;//set to true so the player cannot move left
-    else
-        ply2->leftWC=false;
-
-    if(box_collision(ply2->box,wallB->box))//player has hit the right wall
-        ply2->rightWC=true;//set to true so the player cannot move right
-    else
-        ply2->rightWC=false;
       //------------------------------------------------------------------------------------------------//
      //---------------------------- PLAYER JUMP & GROUND COLLISIONS -----------------------------------//
     //------------------------------------------------------------------------------------------------//
 
     //------------------------------- PLAYER 1 --------------------------------------//
-    if(ply->jumpInitiated == false && ply->onGround == false )
-       {
-                ply->PYpos -= 0.0015;
-       }
+    if(ply->jump>0)
+        ply->PYpos+=ply->verticalVelocity;
 
+               if(ply->PYpos<-1.181&&(box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
+                {
+                    ply->PYpos=-1.181;
+                    ply->jump=0;
+               }
 
-        if((box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-        box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-        box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-        box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
-            {
-                if (ply->PYpos >= -1.19)
-                    ply->onGround = true;
-            }
-        else
-        {
-            ply->onGround = false;
-        }
-
-    //------------------------------- PLAYER 2 --------------------------------------//
-    if(ply2->jumpInitiated == false && ply2->onGround == false )
-       {
-                ply2->PYpos -= 0.0015;
-       }
-
-
-        if((box_collision(ply2->pl_pltfrm_box,tile1->box)||box_collision(ply2->pl_pltfrm_box,tile2->box)||box_collision(ply2->pl_pltfrm_box,tile3->box)||box_collision(ply2->pl_pltfrm_box,tile4->box)||
-        box_collision(ply2->pl_pltfrm_box,tile5->box)||box_collision(ply2->pl_pltfrm_box,tile6->box)||box_collision(ply2->pl_pltfrm_box,tile7->box)||box_collision(ply2->pl_pltfrm_box,tile8->box)||
-        box_collision(ply2->pl_pltfrm_box,tile9->box)||box_collision(ply2->pl_pltfrm_box,tile10->box)||box_collision(ply2->pl_pltfrm_box,tile22->box)||box_collision(ply2->pl_pltfrm_box,tile12->box)||
-        box_collision(ply2->pl_pltfrm_box,tile13->box)||box_collision(ply2->pl_pltfrm_box,tile14->box)||box_collision(ply2->pl_pltfrm_box,tile15->box)))
-            {
-                if (ply2->PYpos >= -1.19)
-                    ply2->onGround = true;
-            }
-        else
-        {
-            ply2->onGround = false;
-        }
-
+        else if(!(box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
+                {
+                    if(ply->jump<=0)
+                        ply->PYpos+=ply->verticalVelocity;
+                    ply->verticalVelocity+=ply->playerGrav;
+               }
 
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-    if(box_collision(Ball->box, tile1->box ) && D->getTicks() >= 200)
-    {
-        D->reset();
-        directionY =  1;
-        tile1->health-=1;
-        tile1->isalive();
-        //cout << tile1->health << endl;
 
-        if (tile1->health == 2)
-        {
-            tile1->modelInit("images/platform/grass-block2.png", true, tileTex);
-        }
-        if (tile1->health == 1)
-        {
-            tile1->modelInit("images/platform/grass-block3.png", true, tileTex);
-        }
-    }
-    if(box_collision(Ball->box, tile2->box) && D->getTicks() >= 200)
-     {
-        D->reset();
-         directionY =  1;
-        tile2->health-=1;
-        //cout << "top2" << endl;
-        tile2->isalive();
-        if (tile2->health == 2)
-        {
-            tile2->modelInit("images/platform/grass-block2.png", true, tileTex2);
-        }
-        if (tile2->health == 1)
-        {
-            tile2->modelInit("images/platform/grass-block3.png", true, tileTex2);
-        }
-    }
-    if(box_collision(Ball->box, tile3->box) && D->getTicks() >= 200)
-       {
-        D->reset();
-        directionY =  1;
-        tile3->health-=1;
-        //cout << "top3" << endl;
-        tile3->isalive();
-        if (tile3->health == 2)
-        {
-            tile3->modelInit("images/platform/grass-block2.png", true, tileTex3);
-        }
-        if (tile3->health == 1)
-        {
-            tile3->modelInit("images/platform/grass-block3.png", true, tileTex3);
-        }
-    }
-    if(box_collision(Ball->box, tile4->box) && D->getTicks() >= 200)
-     {
-        D->reset();
-         directionY =  1;
-         //cout << "top4" << endl;
-        tile4->health-=1;
-        tile4->isalive();
-        if (tile4->health == 2)
-        {
-            tile4->modelInit("images/platform/grass-block2.png", true, tileTex4);
-        }
-        if (tile4->health == 1)
-        {
-            tile4->modelInit("images/platform/grass-block3.png", true, tileTex4);
-        }
-    }
-    if(box_collision(Ball->box, tile5->box) && D->getTicks() >= 200)
-    {
-        D->reset();
-        directionY =  1;
-        //cout << "top5" << endl;
-        tile5->health-=1;
-        tile5->isalive();
-        if (tile5->health == 2)
-        {
-            tile5->modelInit("images/platform/grass-block2.png", true, tileTex5);
-        }
-        if (tile5->health == 1)
-        {
-            tile5->modelInit("images/platform/grass-block3.png", true, tileTex5);
-        }
-    }
-    if(box_collision(Ball->box, tile6->box) && D->getTicks() >= 200)
-     {
-        D->reset();
-         directionY =  1;
-         //cout << "top6" << endl;
-        tile6->health-=1;
-        tile6->isalive();
-        if (tile6->health == 2)
-        {
-            tile6->modelInit("images/platform/grass-block2.png", true, tileTex6);
-        }
-        if (tile6->health == 1)
-        {
-            tile6->modelInit("images/platform/grass-block3.png", true, tileTex6);
-        }
-    }
-    if(box_collision(Ball->box, tile7->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        //cout << "top7" << endl;
-        tile7->health-=1;
-        tile7->isalive();
-        if (tile7->health == 2)
-        {
-            tile7->modelInit("images/platform/grass-block2.png", true, tileTex7);
-        }
-        if (tile7->health == 1)
-        {
-            tile7->modelInit("images/platform/grass-block3.png", true, tileTex7);
-        }
-    }
-    if(box_collision(Ball->box, tile8->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-            directionY =  1;
-        //cout << "top8" << endl;
-        tile8->health-=1;
-        tile8->isalive();
-        if (tile8->health == 2)
-        {
-            tile8->modelInit("images/platform/grass-block2.png", true, tileTex8);
-        }
-        if (tile8->health == 1)
-        {
-            tile8->modelInit("images/platform/grass-block3.png", true, tileTex8);
-        }
-    }
-    if(box_collision(Ball->box, tile9->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile9->health-=1;
+    tileChange(Ball, tile1,tileTex);
+    tileChange(Ball, tile2,tileTex2);
+    tileChange(Ball, tile3,tileTex3);
+    tileChange(Ball, tile4,tileTex4);
+    tileChange(Ball, tile5,tileTex5);
+    tileChange(Ball, tile6,tileTex6);
+    tileChange(Ball, tile7,tileTex7);
+    tileChange(Ball, tile8,tileTex8);
+    tileChange(Ball, tile9,tileTex9);
+    tileChange(Ball, tile10,tileTex10);
+    tileChange(Ball, tile22,tileTex11);
+    tileChange(Ball, tile12,tileTex12);
+    tileChange(Ball, tile13,tileTex13);
+    tileChange(Ball, tile14,tileTex14);
+    tileChange(Ball, tile15,tileTex15);
 
-        //cout << "top9" << endl;
-        tile9->isalive();
-        if (tile9->health == 2)
-        {
-            tile9->modelInit("images/platform/grass-block2.png", true, tileTex9);
-        }
-        if (tile9->health == 1)
-        {
-            tile9->modelInit("images/platform/grass-block3.png", true, tileTex9);
-        }
-    }
-    if(box_collision(Ball->box, tile10->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile10->health-=1;
-        //cout << "top10" << endl;
-        tile10->isalive();
-        if (tile10->health == 2)
-        {
-            tile10->modelInit("images/platform/grass-block2.png", true, tileTex10);
-        }
-        if (tile10->health == 1)
-        {
-            tile10->modelInit("images/platform/grass-block3.png", true, tileTex10);
-        }
-        }
-    if(box_collision(Ball->box, tile22->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile22->health-=1;
-        //cout << "top11" << endl;
-        tile22->isalive();
-        if (tile22->health == 2)
-        {
-            tile22->modelInit("images/platform/grass-block2.png", true, tileTex11);
-        }
-        if (tile22->health == 1)
-        {
-            tile22->modelInit("images/platform/grass-block3.png", true, tileTex11);
-        }
-    }
-    if(box_collision(Ball->box, tile12->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile12->health-=1;
-        //cout << "top12" << endl;
-        tile12->isalive();
-        if (tile12->health == 2)
-        {
-            tile12->modelInit("images/platform/grass-block2.png", true, tileTex12);
-        }
-        if (tile12->health == 1)
-        {
-            tile12->modelInit("images/platform/grass-block3.png", true, tileTex12);
-        }
-    }
-    if(box_collision(Ball->box, tile13->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile13->health-=1;
-        //cout << "top13" << endl;
-        tile13->isalive();
-        if (tile13->health == 2)
-        {
-            tile13->modelInit("images/platform/grass-block2.png", true, tileTex13);
-        }
-        if (tile13->health == 1)
-        {
-            tile13->modelInit("images/platform/grass-block3.png", true, tileTex13);
-        }
-    }
-    if(box_collision(Ball->box, tile14->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile14->health-=1;
-        //cout << "top14" << endl;
-        tile14->isalive();
-        if (tile14->health == 2)
-        {
-            tile14->modelInit("images/platform/grass-block2.png", true, tileTex14);
-        }
-        if (tile14->health == 1)
-        {
-            tile14->modelInit("images/platform/grass-block3.png", true, tileTex14);
-        }
-    }
-    if(box_collision(Ball->box, tile15->box) && D->getTicks() >= 200)
-        {
-        D->reset();
-        directionY =  1;
-        tile15->health-=1;
-        //cout << "top15" << endl;
-        tile15->isalive();
-        if (tile15->health == 2)
-        {
-            tile15->modelInit("images/platform/grass-block2.png", true, tileTex15);
-        }
-        if (tile15->health == 1)
-        {
-            tile15->modelInit("images/platform/grass-block3.png", true, tileTex15);
-        }
-    }
-
-
-
-            Ball->Xpos = CurXpos;
-            Ball->Ypos = CurYpos;
-
+    Ball->Xpos = CurXpos;
+    Ball->Ypos = CurYpos;
 }
 
 static void jumpUpdate(player* p)
 {
-    if(p->ballCollided == false)
-        yVelocity += gravity;
+    yVelocity += gravity;
+
     if (yVelocity <= -.01)
-    {
-        if(p->ballCollided == false)
             yVelocity = -.01;
-    }
 
 
-    if (p->onGround == true && yVelocity < 0)
-    {
+
+        if((box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+        box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+        box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+        box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box))||ply->PYpos >= -1.19 && yVelocity < 0)
+        {
          yVelocity = 0.0082;
-         p->jumpInitiated = false;
-    }
-        if(p->ballCollided == false)
-            p->PYpos += yVelocity;
+        }
+
+    p->PYpos += yVelocity;
 
 
 }
@@ -795,12 +564,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
 
         update();
 
-        if (ply->jumpInitiated == true)
-        {
-            //ply->onGround = false;
-
-            jumpUpdate(ply);
-        }
 
             ply->drawplayer();
     glPopMatrix();
@@ -819,12 +582,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply2->box.height=0.5;
         ply2->box.width=0.5;
         update();
-        if (ply2->jumpInitiated == true)
-        {
-            //ply->onGround = false;
 
-            jumpUpdate(ply2);
-        }
             ply2->drawplayer();
     glPopMatrix();
 
@@ -888,6 +646,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
     //top wall
     makeModel(wallC,texc,0,3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
+    //bottom wall
+    makeModel(killBox,texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
     //dividing wall
     //makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);

@@ -6,6 +6,9 @@
 
 player::player()
 {
+    //verticalVelocity=0.005;
+    playerGrav=-0.00001;
+
     jumpInitiated = false;
     PZoom = -4;
     PXpos = 0;

@@ -31,7 +31,10 @@ class player: public Model
         int actionTrigger;
         int jump;
         float yex;
+
         float verticalVelocity;
+        float playerGrav;
+
         float aimX;
         float aimY;
         char lastKey;

@@ -9,6 +9,8 @@
 
 using namespace std;
 
+timer* J = new timer();
+
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -289,6 +291,7 @@ void Inputs::keyUP()
 }
 void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
+    J->start();
     if(pressed['A'])
      {
             ply->actionTrigger = 1;
@@ -306,8 +309,14 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(!pressed['D']&&!pressed['A'])
         ply->actionTrigger=0;
 
-    if(pressed['E'])
-            ply->jumpInitiated = true;
+    if(pressed['E']&&J->getTicks() >= 200)
+            if(ply->jump<2)
+            {
+            J->reset();
+            ply->verticalVelocity=0.005;
+            ply->jump++;
+            cout<<ply->jump<<endl;
+            }
 
 
 
@@ -330,8 +339,8 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 
      if(pressed['F'])
     {
-        if( ply->swingTimer->getTicks()>= 500)
-        {
+       // if( ply->swingTimer->getTicks()>= 500)
+       // {
             ply->swingDuration->reset();
             ply->swingDuration->start();
             ply->swingTimer->reset();
@@ -364,7 +373,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
                     ply->swingDirection = "LEFT";
               }
             ply->swinging = true;
-        }
+        //}
     }
         else
             ply->swinging = false;

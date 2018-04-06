@@ -25,6 +25,7 @@ class GLScene
         WPARAM wParam;
         float screenHeight;
         float screenWidth;
+
     protected:
 
     private:
