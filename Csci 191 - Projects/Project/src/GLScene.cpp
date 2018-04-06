@@ -1,4 +1,4 @@
-#include "GLScene.h"
+#include <GLScene.h>
 #include <GLLight.h>
 #include <GLInputs.h>
 #include <parallax.h>
@@ -11,97 +11,92 @@
 
 using namespace std;
 
-
-timer* D = new timer();
-timer* pCol = new timer();
-timer* ballCollTimer = new timer();
-float xx, yy;
-int dirXX = 1, dirYY = 1;
-float max_xx_yy;
-float directionX = -2;
-float directionY = 1;
-float CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
-float yex;
-float ballSpeed = 0.0015;
-
-float yVelocity = 0.0082;
-float gravity = - 0.00003;
-
-
-Model* modelTeapot = new Model();
-Model* modelTeapot2 = new Model();
-
-Inputs* KbMs = new Inputs();
-
-parallax* plx = new parallax();
-player* ply = new player();
-player* ply2 = new player();
-Model* wallA = new Model(); // left wall
-Model* wallB = new Model(); // right wall
-Model* wallC = new Model(); // top wall
-Model* killBox = new Model();
-Model* divide = new Model();
-Model* hud = new Model();
-
-//left side tiles
-Model* tile1=new Model();
-Model* tile2=new Model();
-Model* tile3=new Model();
-Model* tile4=new Model();
-Model* tile5=new Model();
-Model* tile6=new Model();
-Model* tile7=new Model();
-
-//middle tile
-Model* tile8=new Model();
-
-//right side tiles
-Model* tile9=new Model();
-Model* tile10=new Model();
-Model* tile22=new Model();
-Model* tile12=new Model();
-Model* tile13=new Model();
-Model* tile14=new Model();
-Model* tile15=new Model();
-
-
-
-Model* wallAHbawks = new Model(); // left wall
-Model* wallBHbawks = new Model(); // right wall
-Model* wallCHbawks = new Model(); // top wall
-skyBox* sky = new skyBox;
-Model* Ball = new Model(); // the ball
-Model* BallHbawks = new Model();
-
-textureLoader* tex0 = new textureLoader();
-textureLoader* tex1 = new textureLoader();
-textureLoader* tex2 = new textureLoader();
-textureLoader* ballHBTex = new textureLoader();
-textureLoader* ballHBTex2 = new textureLoader();
-textureLoader* texc = new textureLoader();
-textureLoader* texH = new textureLoader();
-
-textureLoader* tileTex=new textureLoader();
-textureLoader* tileTex2=new textureLoader();
-textureLoader* tileTex3=new textureLoader();
-textureLoader* tileTex4=new textureLoader();
-textureLoader* tileTex5=new textureLoader();
-textureLoader* tileTex6=new textureLoader();
-textureLoader* tileTex7=new textureLoader();
-textureLoader* tileTex8=new textureLoader();
-textureLoader* tileTex9=new textureLoader();
-textureLoader* tileTex10=new textureLoader();
-textureLoader* tileTex11=new textureLoader();
-textureLoader* tileTex12=new textureLoader();
-textureLoader* tileTex13=new textureLoader();
-textureLoader* tileTex14=new textureLoader();
-textureLoader* tileTex15=new textureLoader();
-
 GLScene::GLScene()
 {
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
-}
+    ground=-1.181;
+
+    dirXX = 1, dirYY = 1;
+    directionX = -2;
+    directionY = 1;
+    CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
+    ballSpeed = 0.0015;
+
+    D = new timer();
+    pCol = new timer();
+    ballCollTimer = new timer();
+
+       modelTeapot = new Model();
+     modelTeapot2 = new Model();
+
+     KbMs = new Inputs();
+
+     plx = new parallax();
+     ply = new player();
+     ply2 = new player();
+     wallA = new Model(); // left wall
+     wallB = new Model(); // right wall
+    wallC = new Model(); // top wall
+     killBox = new Model();
+     divide = new Model();
+     hud = new Model();
+
+    //left side tiles
+     tile1=new Model();
+     tile2=new Model();
+     tile3=new Model();
+     tile4=new Model();
+     tile5=new Model();
+     tile6=new Model();
+     tile7=new Model();
+
+    //middle tile
+     tile8=new Model();
+
+    //right side tiles
+     tile9=new Model();
+     tile10=new Model();
+     tile22=new Model();
+     tile12=new Model();
+     tile13=new Model();
+     tile14=new Model();
+      tile15=new Model();
+
+
+
+     wallAHbawks = new Model(); // left wall
+     wallBHbawks = new Model(); // right wall
+     wallCHbawks = new Model(); // top wall
+     sky = new skyBox;
+     Ball = new Model(); // the ball
+     BallHbawks = new Model();
+
+     tex0 = new textureLoader();
+     tex1 = new textureLoader();
+     tex2 = new textureLoader();
+     ballHBTex = new textureLoader();
+     ballHBTex2 = new textureLoader();
+     texc = new textureLoader();
+     texH = new textureLoader();
+
+     tileTex=new textureLoader();
+     tileTex2=new textureLoader();
+     tileTex3=new textureLoader();
+     tileTex4=new textureLoader();
+     tileTex5=new textureLoader();
+     tileTex6=new textureLoader();
+     tileTex7=new textureLoader();
+     tileTex8=new textureLoader();
+     tileTex9=new textureLoader();
+     tileTex10=new textureLoader();
+     tileTex11=new textureLoader();
+     tileTex12=new textureLoader();
+     tileTex13=new textureLoader();
+     tileTex14=new textureLoader();
+     tileTex15=new textureLoader();
+
+    }
 
 GLScene::~GLScene()
 {
@@ -110,8 +105,6 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
-
-
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     glClearDepth(1.0f);
@@ -168,7 +161,7 @@ GLint GLScene::initGL()
 
 
 
- static bool box_collision(Hbox rect1, Hbox rect2)
+ bool GLScene::box_collision(Hbox rect1, Hbox rect2)
  {
 
  bool collisionX;
@@ -181,7 +174,7 @@ collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1
 }
 
 
-void tileChange(Model* b, Model* t,textureLoader* TX)
+void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
 {
     if(box_collision(b->box, t->box ) && D->getTicks() >= 200)
     {
@@ -199,7 +192,17 @@ void tileChange(Model* b, Model* t,textureLoader* TX)
 
 }
 
-static void update()
+bool GLScene::playerOnTile(player* ply)
+{
+    if((box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
+               return true;
+    else
+        false;
+}
+void GLScene:: update()
 {
         CurXpos = CurXpos + 1.2*(directionX * ballSpeed);
         CurYpos = CurYpos + (directionY * ballSpeed);
@@ -218,7 +221,6 @@ static void update()
 
     if (box_collision(Ball->box, killBox->box))
     {
-        cout<<"kill box collision"<<endl;
        CurYpos=2;
        directionY=-1;
 
@@ -372,47 +374,43 @@ static void update()
 
 
       //------------------------------------------------------------------------------------------------//
-     //---------------------------- PLAYER JUMP & GROUND COLLISIONS -----------------------------------//
+     //---------------------------- PLAYER JUMP-----------------------------------//
     //------------------------------------------------------------------------------------------------//
 
     //------------------------------- PLAYER 1 --------------------------------------//
     if(ply->jump>0)
         ply->PYpos+=ply->verticalVelocity;
 
-               if(ply->PYpos<-1.181&&(box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
-                {
-                    ply->PYpos=-1.181;
-                    ply->jump=0;
-               }
+    if(ply->PYpos<ground&&playerOnTile(ply))
+    {
+        ply->PYpos=ground;
+        ply->jump=0;
+    }
 
-        else if(!(box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
-                {
-                    if(ply->jump<=0)
-                        ply->PYpos+=ply->verticalVelocity;
-                    ply->verticalVelocity+=ply->playerGrav;
-               }
+    else if(!(playerOnTile(ply)))
+    {
+        if(ply->jump<=0)
+            ply->PYpos+=ply->verticalVelocity;
 
+        ply->verticalVelocity+=ply->playerGrav;
+    }
+   //------------------------------- PLAYER 2 --------------------------------------//
+    if(ply2->jump>0)
+        ply2->PYpos+=ply2->verticalVelocity;
 
+    if(ply2->PYpos<ground&&playerOnTile(ply2))
+    {
+        ply2->PYpos=ground;
+        ply2->jump=0;
+    }
 
-    //------------------------------- PLAYER 2 --------------------------------------//
-    if(ply2->jumpInitiated == false && ply2->onGround == false )
-        ply2->PYpos -= 0.0015;
+    else if(!(playerOnTile(ply2)))
+    {
+        if(ply2->jump<=0)
+            ply2->PYpos+=ply2->verticalVelocity;
 
-        if((box_collision(ply2->pl_pltfrm_box,tile1->box)||box_collision(ply2->pl_pltfrm_box,tile2->box)||box_collision(ply2->pl_pltfrm_box,tile3->box)||box_collision(ply2->pl_pltfrm_box,tile4->box)||
-        box_collision(ply2->pl_pltfrm_box,tile5->box)||box_collision(ply2->pl_pltfrm_box,tile6->box)||box_collision(ply2->pl_pltfrm_box,tile7->box)||box_collision(ply2->pl_pltfrm_box,tile8->box)||
-        box_collision(ply2->pl_pltfrm_box,tile9->box)||box_collision(ply2->pl_pltfrm_box,tile10->box)||box_collision(ply2->pl_pltfrm_box,tile22->box)||box_collision(ply2->pl_pltfrm_box,tile12->box)||
-        box_collision(ply2->pl_pltfrm_box,tile13->box)||box_collision(ply2->pl_pltfrm_box,tile14->box)||box_collision(ply2->pl_pltfrm_box,tile15->box)))
-            if (ply2->PYpos >= -1.19)
-                ply2->onGround = true;
-            else
-                ply2->onGround = false;
-
+        ply2->verticalVelocity+=ply2->playerGrav;
+    }
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
@@ -439,12 +437,7 @@ static void update()
     Ball->Ypos = CurYpos;
 }
 
-static void jumpUpdate(player* p)
-{
-
-}
-
-void makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
+void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
 {
        glPushMatrix();
 

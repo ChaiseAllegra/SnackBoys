@@ -10,6 +10,7 @@
 using namespace std;
 
 timer* J = new timer();
+timer* J2= new timer();
 
 Inputs::Inputs()
 {
@@ -292,6 +293,7 @@ void Inputs::keyUP()
 void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
     J->start();
+    J2->start();
     if(pressed['A'])
      {
             ply->actionTrigger = 1;
@@ -315,7 +317,6 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
             J->reset();
             ply->verticalVelocity=0.005;
             ply->jump++;
-            cout<<ply->jump<<endl;
             }
 
 
@@ -394,8 +395,15 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(!pressed['J']&&!pressed['L'])
         ply2->actionTrigger=0;
 
-      if(pressed['O'])
-            ply2->jumpInitiated = true;
+      if(pressed['O']&&J2->getTicks() >= 200)
+    {
+        if(ply2->jump<2)
+        {
+            J2->reset();
+            ply2->verticalVelocity=0.005;
+            ply2->jump++;
+        }
+    }
 }
 void Inputs::mouseEventDown(Model *Model, double x,double y)
 {

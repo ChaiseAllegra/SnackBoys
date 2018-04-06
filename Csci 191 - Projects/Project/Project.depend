@@ -1410,8 +1410,11 @@
 	<iostream>
 	<windows.h>
 
-1523048181 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1523057351 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
+	<time.h>
+	<GLInputs.h>
 	<windows.h>
+	<parallax.h>
 	<GLModel.h>
 	<gl/gl.h>
 	<iostream>
@@ -1472,7 +1475,7 @@
 
 1522788708 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1523049767 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1523054619 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1547,8 +1550,8 @@
 1522788710 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1523053306 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
-	"GLScene.h"
+1523057189 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
 	<parallax.h>
