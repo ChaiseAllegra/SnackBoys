@@ -151,9 +151,9 @@ void player::actions()
                         if (plyVel  > 0.004)
                             plyVel = 0.004;
                         if(lastCase == 'R'&& !rightWC)
-                            PXpos += plyVel*3;
+                            PXpos += plyVel*10;
                         if(lastCase == 'L'&& !leftWC)
-                            PXpos -= plyVel*3;
+                            PXpos -= plyVel*10;
 
                     T->reset();
                     }
