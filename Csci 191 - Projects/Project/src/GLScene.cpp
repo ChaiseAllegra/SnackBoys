@@ -257,30 +257,16 @@ void GLScene:: update()
     //---------------------------------------------------------------------------------------------------//
 
     //----------------------PLAYER 1 --------------------------------------//
-    if (box_collision(Ball->box, ply->box) && ply->swinging == true && pCol->getTicks() >= 350)
+    if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
     {
-        if ((ply->playerDirection == "RIGHT" && Ball->Xpos >= ply->PXpos) || (ply->playerDirection == "LEFT" && Ball->Xpos <= ply->PXpos ))
-        {
+
             pCol->reset();
             ballSpeed *= 1.2;
+
             if (ballSpeed > .0043)
-            {
                 ballSpeed = .0043;
-            }
-            if (ply->freezeTimer > 0)
-            {
-                ply->ballCollided = true;
-                ply2->midCollision = true;
 
-                ply->swingTimer->pause();
-                ballCollTimer->reset();
-                ballCollTimer->start();
-            }
-
-                //ballSpeed = ballSpeed + 0.002;
-                //directionX =  -1;
-                //directionY =  1;
-                if(ply->swingDirection == "TOPRIGHT")
+            if(ply->swingDirection == "TOPRIGHT")
                 {
                     directionX = 1;
                     directionY = 1;
@@ -310,34 +296,18 @@ void GLScene:: update()
                     directionX = 1;
                     directionY = 0;
                 }
-        }
 
     }
 
         //---------------------- PLAYER 2 --------------------------------------//
     if (box_collision(Ball->box, ply2->box) && ply2->swinging == true && pCol->getTicks() >= 350)
     {
-        if ((ply2->playerDirection == "RIGHT" && Ball->Xpos >= ply2->PXpos) || (ply2->playerDirection == "LEFT" && Ball->Xpos <= ply2->PXpos ))
-        {
             pCol->reset();
             ballSpeed *= 1.2;
+
             if (ballSpeed > .0043)
-            {
                 ballSpeed = .0043;
-            }
-            if (ply->freezeTimer > 0)
-            {
-                ply2->ballCollided = true;
-                ply->midCollision = true;
 
-                ply2->swingTimer->pause();
-                ballCollTimer->reset();
-                ballCollTimer->start();
-            }
-
-                //ballSpeed = ballSpeed + 0.002;
-                //directionX =  -1;
-                //directionY =  1;
                 if(ply2->swingDirection == "TOPRIGHT")
                 {
                     directionX = 1;
@@ -368,8 +338,6 @@ void GLScene:: update()
                     directionX = 1;
                     directionY = 0;
                 }
-        }
-
     }
 
 
@@ -378,21 +346,21 @@ void GLScene:: update()
     //------------------------------------------------------------------------------------------------//
 
     //------------------------------- PLAYER 1 --------------------------------------//
-    if(ply->jump>0)
-        ply->PYpos+=ply->verticalVelocity;
+    if(ply->jump>0)//if jump is greater than zero the jump key has been pressed
+        ply->PYpos+=ply->verticalVelocity;//add the vertical velocity to the players ypos to make them jump
 
-    if(ply->PYpos<ground&&playerOnTile(ply))
+    if(ply->PYpos<ground&&playerOnTile(ply))//if the player is touching a tile and is below the ground Y level
     {
-        ply->PYpos=ground;
-        ply->jump=0;
+        ply->PYpos=ground;//set his ypos to the gournd
+        ply->jump=0;//reset his jump counter
     }
 
-    else if(!(playerOnTile(ply)))
+    else if(!(playerOnTile(ply)))//if the player is not touching a tile
     {
-        if(ply->jump<=0)
-            ply->PYpos+=ply->verticalVelocity;
+        if(ply->jump<=0)//if the jump is over
+            ply->PYpos+=ply->verticalVelocity;//change the plaeyrs y position
 
-        ply->verticalVelocity+=ply->playerGrav;
+        ply->verticalVelocity+=ply->playerGrav;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
     }
    //------------------------------- PLAYER 2 --------------------------------------//
     if(ply2->jump>0)
@@ -638,7 +606,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
     makeModel(killBox,texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
     //dividing wall
-    //makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
+    makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
 
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
@@ -707,4 +675,15 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool pre
         KbMs->wParam = wParam;
         KbMs->keyUp(ply, ply2, press);
     }*/
+           /* if ((ply->playerDirection == "RIGHT" && Ball->Xpos >= ply->PXpos) || (ply->playerDirection == "LEFT" && Ball->Xpos <= ply->PXpos ))
+        {
+         if (ply->freezeTimer > 0)
+            {
+                ply->ballCollided = true;
+                ply2->midCollision = true;
+
+                ply->swingTimer->pause();
+                ballCollTimer->reset();
+                ballCollTimer->start();
+            }*/
 }
