@@ -2,19 +2,89 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="include\GLTexture.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\GLInputs.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="110" topLine="0" />
+			<Cursor1 position="534" topLine="7" />
 		</Cursor>
 	</File>
-	<File name="include\GLModel.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="include\GLModel.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="230" topLine="25" />
+		</Cursor>
+	</File>
+	<File name="src\GLLight.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="58" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="include\GLScene.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="509" topLine="9" />
+		</Cursor>
+	</File>
+	<File name="src\GLScene.cpp" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14825" topLine="375" />
+		</Cursor>
+	</File>
+	<File name="src\parallax.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="95" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="include\parallax.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="82" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src\GLTexture.cpp" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="342" topLine="4" />
+		</Cursor>
+	</File>
+	<File name="include\player.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="576" topLine="29" />
+		</Cursor>
+	</File>
+	<File name="src\GLModel.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="625" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="src\player.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="137" topLine="3" />
+		</Cursor>
+	</File>
+	<File name="src\GLInputs.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8116" topLine="43" />
+		</Cursor>
+		<Folding>
+			<Collapse line="14" />
+			<Collapse line="22" />
+			<Collapse line="27" />
+			<Collapse line="50" />
+			<Collapse line="75" />
+			<Collapse line="110" />
+			<Collapse line="119" />
+			<Collapse line="284" />
+		</Folding>
+	</File>
+	<File name="src\skyBox.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="682" topLine="72" />
+		</Cursor>
+	</File>
+	<File name="src\timer.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="730" topLine="48" />
+		</Cursor>
+	</File>
+	<File name="include\GLTexture.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="110" topLine="0" />
 		</Cursor>
 	</File>
 	<File name="include\timer.h" open="0" top="0" tabpos="15" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -26,83 +96,5 @@
 		<Cursor>
 			<Cursor1 position="13567" topLine="345" />
 		</Cursor>
-	</File>
-	<File name="src\GLInputs.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="9851" topLine="296" />
-		</Cursor>
-		<Folding>
-			<Collapse line="48" />
-			<Collapse line="73" />
-			<Collapse line="108" />
-		</Folding>
-	</File>
-	<File name="src\GLLight.cpp" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="58" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\GLScene.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="15312" topLine="256" />
-		</Cursor>
-		<Folding>
-			<Collapse line="100" />
-			<Collapse line="106" />
-			<Collapse line="111" />
-			<Collapse line="171" />
-			<Collapse line="252" />
-			<Collapse line="310" />
-			<Collapse line="458" />
-		</Folding>
-	</File>
-	<File name="src\GLModel.cpp" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="625" topLine="6" />
-		</Cursor>
-	</File>
-	<File name="include\player.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1269" topLine="18" />
-		</Cursor>
-	</File>
-	<File name="src\GLTexture.cpp" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="342" topLine="4" />
-		</Cursor>
-	</File>
-	<File name="src\parallax.cpp" open="0" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="95" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="src\skyBox.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="682" topLine="72" />
-		</Cursor>
-	</File>
-	<File name="include\GLInputs.h" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="534" topLine="7" />
-		</Cursor>
-	</File>
-	<File name="src\timer.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="730" topLine="48" />
-		</Cursor>
-	</File>
-	<File name="include\GLScene.h" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="312" topLine="9" />
-		</Cursor>
-	</File>
-	<File name="src\player.cpp" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="4981" topLine="47" />
-		</Cursor>
-		<Folding>
-			<Collapse line="44" />
-			<Collapse line="49" />
-		</Folding>
 	</File>
 </CodeBlocks_layout_file>
