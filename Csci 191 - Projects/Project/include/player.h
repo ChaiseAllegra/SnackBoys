@@ -55,6 +55,10 @@ class player: public Model
         void playerInit();
         void actions();
 
+        float ydir;
+        float xdir;
+        float x_direction;
+
         double PZoom;
         double PXpos;
         double PYpos;

@@ -180,6 +180,30 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         else
             ply->swinging = false;
 
+    if(pressed['T'])
+    {
+
+      if(ply->ydir<1)
+        ply->ydir+=0.001;
+
+       if(ply->ydir>0&&ply->xdir>0)
+         ply->xdir-=0.001;
+
+        if(ply->ydir<=0&&ply->xdir<1)
+         ply->xdir+=0.001;
+    }
+     if(pressed['G'])
+    {
+        if(ply->ydir>-1)
+        ply->ydir-=0.001;
+
+       if(ply->ydir<=0&&ply->xdir>0)
+         ply->xdir-=0.001;
+
+         if(ply->ydir>0&&ply->xdir<1)
+         ply->xdir+=0.001;
+
+    }
     if(pressed['J'])
      {
         ply2->actionTrigger = 1;

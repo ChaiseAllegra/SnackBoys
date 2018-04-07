@@ -20,8 +20,8 @@ GLScene::GLScene()
     dirXX = 1, dirYY = 1;
     directionX = -2;
     directionY = 1;
-    CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
-    ballSpeed = 0.015;
+    CurXpos = 0, CurYpos = 0;//-1.3 ; // Current x position of the ball, current y position of the ball,
+    ballSpeed = 0.0015;
 
     D = new timer();
     pCol = new timer();
@@ -211,8 +211,9 @@ bool GLScene::playerOnTile(player* ply)
 }
 void GLScene:: update()
 {
-        CurXpos = CurXpos + 1.2*(directionX * ballSpeed);
-        CurYpos = CurYpos + (directionY * ballSpeed);
+      CurYpos = CurYpos + (directionY * ballSpeed);
+        CurXpos = CurXpos + (directionX * ballSpeed);
+
 
     //-------------------------------------------------------------------------------------------------//
     //-------------------------------WALL COLLISIONS -----------------------------------------//
@@ -264,6 +265,22 @@ void GLScene:: update()
     //---------------------------------------------------------------------------------------------------//
 
     //----------------------PLAYER 1 --------------------------------------//
+    if(box_collision(Ball->box, ply->box) )
+    {
+        if(ply->lastCase=='R')
+        {
+        directionX=ply->xdir;
+        directionY=ply->ydir;
+        }
+        if(ply->lastCase=='L')
+        {
+        directionX=-1*ply->xdir;
+        directionY=ply->ydir;
+        }
+    }
+            //cout<<ply->xdir<<endl;
+      //  cout<<ply->ydir<<endl;
+       // cout<<""<<endl;
     if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
     {
 
@@ -358,7 +375,7 @@ void GLScene:: update()
 
     if(ply->PYpos<ground&&playerOnTile(ply))//if the player is touching a tile and is below the ground Y level
     {
-       ply->PYpos=ground;//set his ypos to the gournd
+        ply->PYpos=ground;//set his ypos to the gournd
         ply->jump=0;//reset his jump counter
     }
 

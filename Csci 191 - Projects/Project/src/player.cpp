@@ -8,6 +8,8 @@ player::player()
 {
     //verticalVelocity=0.005;
     playerGrav=-0.001;//-0.00001;
+    ydir=0;
+    xdir=1;
 
     jumpInitiated = false;
     PZoom = -4;
@@ -28,6 +30,8 @@ player::player()
     box.height = 0;
     leftWC=false;
     rightWC=false;
+
+    x_direction = 1;
 
     swinging = false;
     upPress=false;
@@ -144,7 +148,7 @@ void player::actions()
                 glTranslated(PXpos, PYpos, PZoom);
                 if(5==5)//T->getTicks() > 3)
                 {
-                    if ((PXpos >= -3.4 && PXpos <= 3.4 ) && !ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated))
+                    if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated))
                     {
                         plyVel *= plyAccel;
 

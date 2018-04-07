@@ -83,7 +83,7 @@ void Model::isalive()
 {
     if(this->health<1)
     {
-      this->box.width=0;
+      this->box.width=-10;
       this->box.height=-10;
     }
     return;
