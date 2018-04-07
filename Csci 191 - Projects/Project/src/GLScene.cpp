@@ -15,7 +15,7 @@ GLScene::GLScene()
 {
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
-    ground=-1.181;
+    ground=-1.0;//-1.181;
 
     dirXX = 1, dirYY = 1;
     directionX = -2;
@@ -194,10 +194,10 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
 
 bool GLScene::playerOnTile(player* ply)
 {
-    if((box_collision(ply->pl_pltfrm_box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
+   if((box_collision(ply->box,tile1->box)||box_collision(ply->box,tile2->box)||box_collision(ply->box,tile3->box)||box_collision(ply->box,tile4->box)||
+                    box_collision(ply->box,tile5->box)||box_collision(ply->box,tile6->box)||box_collision(ply->box,tile7->box)||box_collision(ply->box,tile8->box)||
+                    box_collision(ply->box,tile9->box)||box_collision(ply->box,tile10->box)||box_collision(ply->box,tile22->box)||box_collision(ply->box,tile12->box)||
+                    box_collision(ply->box,tile13->box)||box_collision(ply->box,tile14->box)||box_collision(ply->box,tile15->box)))
                return true;
     else
         false;
@@ -237,12 +237,12 @@ void GLScene:: update()
     else
         ply->leftWC=false;
 
-    if(box_collision(ply->box,wallB->box))//player has hit the right wall
+    if(box_collision(ply->box,divide->box))//player has hit the right wall
         ply->rightWC=true;//set to true so the player cannot move right
     else
         ply->rightWC=false;
 
-    if(box_collision(ply2->box,wallA->box))//player has hit the left wall
+    if(box_collision(ply2->box,divide->box))//player has hit the left wall
         ply2->leftWC=true;//set to true so the player cannot move left
     else
         ply2->leftWC=false;
@@ -351,7 +351,7 @@ void GLScene:: update()
 
     if(ply->PYpos<ground&&playerOnTile(ply))//if the player is touching a tile and is below the ground Y level
     {
-        ply->PYpos=ground;//set his ypos to the gournd
+       //ply->PYpos=ground;//set his ypos to the gournd
         ply->jump=0;//reset his jump counter
     }
 
@@ -368,7 +368,7 @@ void GLScene:: update()
 
     if(ply2->PYpos<ground&&playerOnTile(ply2))
     {
-        ply2->PYpos=ground;
+       // ply2->PYpos=ground;
         ply2->jump=0;
     }
 
@@ -507,12 +507,12 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply->actions();
         ply->box.x = ply->PXpos;
         ply->box.y = ply->PYpos;
-        ply->pl_pltfrm_box.x = ply ->PXpos;
-        ply->pl_pltfrm_box.y = ply -> PYpos;
-        ply->pl_pltfrm_box.height = 0.6;
-        ply->pl_pltfrm_box.width = 0.14;
-        ply->box.height=0.5;
-        ply->box.width=0.5;
+        //ply->pl_pltfrm_box.x = ply ->PXpos;
+        //ply->pl_pltfrm_box.y = ply -> PYpos;
+        //ply->pl_pltfrm_box.height = 0.6;
+        //ply->pl_pltfrm_box.width = 0.14;
+        ply->box.height=0.6;
+        ply->box.width=0.2;
         //ply->playerHBox.width = .0; // .3 is a perfect value
         //ply->playerHBox.height = .0; //.4 is a perfect value
 
@@ -533,7 +533,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply2->pl_pltfrm_box.height = 0.6;
         ply2->pl_pltfrm_box.width = 0.14;
         ply2->box.height=0.5;
-        ply2->box.width=0.5;
+        ply2->box.width=0.2;
         update();
 
             ply2->drawplayer();
@@ -606,7 +606,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
     makeModel(killBox,texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
     //dividing wall
-    makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.3,88);
+    makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
 
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
@@ -685,5 +685,15 @@ int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool pre
                 ply->swingTimer->pause();
                 ballCollTimer->reset();
                 ballCollTimer->start();
-            }*/
+            }
+              if((box_collision(ply-box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
+               return true;
+    else
+        false;
+
+
+            */
 }

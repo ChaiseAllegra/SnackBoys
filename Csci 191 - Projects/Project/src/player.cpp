@@ -12,7 +12,7 @@ player::player()
     jumpInitiated = false;
     PZoom = -4;
     PXpos = 0;
-    PYpos = -1.181;
+    PYpos = -1.0;
     aimX = 0;
     aimY = -1;
 
