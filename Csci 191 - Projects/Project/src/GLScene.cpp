@@ -15,13 +15,13 @@ GLScene::GLScene()
 {
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
-    ground=-1.0;//-1.181;
+    ground=-1.181;
 
     dirXX = 1, dirYY = 1;
     directionX = -2;
     directionY = 1;
     CurXpos = -3.5, CurYpos = -1.3 ; // Current x position of the ball, current y position of the ball,
-    ballSpeed = 0.0015;
+    ballSpeed = 0.015;
 
     D = new timer();
     pCol = new timer();
@@ -194,10 +194,17 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
 
 bool GLScene::playerOnTile(player* ply)
 {
-   if((box_collision(ply->box,tile1->box)||box_collision(ply->box,tile2->box)||box_collision(ply->box,tile3->box)||box_collision(ply->box,tile4->box)||
+   /*if((box_collision(ply->box,tile1->box)||box_collision(ply->box,tile2->box)||box_collision(ply->box,tile3->box)||box_collision(ply->box,tile4->box)||
                     box_collision(ply->box,tile5->box)||box_collision(ply->box,tile6->box)||box_collision(ply->box,tile7->box)||box_collision(ply->box,tile8->box)||
                     box_collision(ply->box,tile9->box)||box_collision(ply->box,tile10->box)||box_collision(ply->box,tile22->box)||box_collision(ply->box,tile12->box)||
                     box_collision(ply->box,tile13->box)||box_collision(ply->box,tile14->box)||box_collision(ply->box,tile15->box)))
+               return true;
+    else
+        false;*/
+         if((box_collision(ply->box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
+                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
+                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
+                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
                return true;
     else
         false;
@@ -351,7 +358,7 @@ void GLScene:: update()
 
     if(ply->PYpos<ground&&playerOnTile(ply))//if the player is touching a tile and is below the ground Y level
     {
-       //ply->PYpos=ground;//set his ypos to the gournd
+       ply->PYpos=ground;//set his ypos to the gournd
         ply->jump=0;//reset his jump counter
     }
 
@@ -368,7 +375,7 @@ void GLScene:: update()
 
     if(ply2->PYpos<ground&&playerOnTile(ply2))
     {
-       // ply2->PYpos=ground;
+        ply2->PYpos=ground;
         ply2->jump=0;
     }
 
@@ -507,10 +514,10 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply->actions();
         ply->box.x = ply->PXpos;
         ply->box.y = ply->PYpos;
-        //ply->pl_pltfrm_box.x = ply ->PXpos;
-        //ply->pl_pltfrm_box.y = ply -> PYpos;
-        //ply->pl_pltfrm_box.height = 0.6;
-        //ply->pl_pltfrm_box.width = 0.14;
+        ply->pl_pltfrm_box.x = ply ->PXpos;
+        ply->pl_pltfrm_box.y = ply -> PYpos;
+        ply->pl_pltfrm_box.height = 0.6;
+        ply->pl_pltfrm_box.width = 0.14;
         ply->box.height=0.6;
         ply->box.width=0.2;
         //ply->playerHBox.width = .0; // .3 is a perfect value

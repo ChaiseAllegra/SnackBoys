@@ -112,11 +112,11 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(!pressed['D']&&!pressed['A'])
         ply->actionTrigger=0;
 
-    if(pressed['E']&&J->getTicks() >= 200)
+    if(pressed['E']&&J->getTicks() >= 200)//200ms
             if(ply->jump<2)
             {
             J->reset();
-            ply->verticalVelocity=0.005;
+            ply->verticalVelocity=0.05;
             ply->jump++;
             }
 

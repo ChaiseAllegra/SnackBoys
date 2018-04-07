@@ -7,7 +7,7 @@
 player::player()
 {
     //verticalVelocity=0.005;
-    playerGrav=-0.00001;
+    playerGrav=-0.001;//-0.00001;
 
     jumpInitiated = false;
     PZoom = -4;
@@ -151,9 +151,9 @@ void player::actions()
                         if (plyVel  > 0.004)
                             plyVel = 0.004;
                         if(lastCase == 'R'&& !rightWC)
-                            PXpos += plyVel*10;
+                            PXpos += plyVel*20;//10;
                         if(lastCase == 'L'&& !leftWC)
-                            PXpos -= plyVel*10;
+                            PXpos -= plyVel*20;//10;
 
                     T->reset();
                     }
