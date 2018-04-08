@@ -95,14 +95,14 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
     J->start();
     J2->start();
-    if(pressed['A'])
+    if(pressed['A']&&!ply->isDash)
      {
             ply->actionTrigger = 1;
          ply->lastKey = 'L';
          ply->lastCase = 'L';
      }
 
-    if(pressed['D'])
+    if(pressed['D']&&!ply->isDash)
     {
         ply->actionTrigger = 1;
         ply->lastKey = 'R';
@@ -184,24 +184,24 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     {
 
       if(ply->ydir<1)
-        ply->ydir+=0.001;
+        ply->ydir+=0.01;
 
        if(ply->ydir>0&&ply->xdir>0)
-         ply->xdir-=0.001;
+         ply->xdir-=0.01;
 
         if(ply->ydir<=0&&ply->xdir<1)
-         ply->xdir+=0.001;
+         ply->xdir+=0.01;
     }
      if(pressed['G'])
     {
         if(ply->ydir>-1)
-        ply->ydir-=0.001;
+        ply->ydir-=0.01;
 
        if(ply->ydir<=0&&ply->xdir>0)
-         ply->xdir-=0.001;
+         ply->xdir-=0.01;
 
          if(ply->ydir>0&&ply->xdir<1)
-         ply->xdir+=0.001;
+         ply->xdir+=0.01;
 
     }
     if(pressed['R'])

@@ -43,6 +43,8 @@ class GLScene
         float ballSpeed;
 
         timer* D;
+        timer* PAT;//projectile A timer to stop multiple health decrements on a collision
+        timer* BPA;//projectile A and ball collision timer
         timer* pCol;
         timer* ballCollTimer;
 

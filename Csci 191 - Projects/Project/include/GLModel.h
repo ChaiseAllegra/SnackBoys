@@ -28,7 +28,7 @@ class Model
         void drawModel(textureLoader *tex);
         void modelInit(char *,bool,textureLoader* );
         void UpdateHbox(float , float );
-        void isalive();
+        bool isalive();
 
         Hbox box;
         Hbox pl_pltfrm_box;

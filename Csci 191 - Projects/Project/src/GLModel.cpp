@@ -79,12 +79,13 @@ void Model::UpdateHbox(float CurXpos, float CurYpos)//updates the hitbox locatio
 
      return;
 }
-void Model::isalive()
+bool Model::isalive()
 {
     if(this->health<1)
     {
-      this->box.width=-10;
-      this->box.height=-10;
+      this->box.width=0;
+      this->box.height=0;
+      return false;
     }
-    return;
+    return true;
 }

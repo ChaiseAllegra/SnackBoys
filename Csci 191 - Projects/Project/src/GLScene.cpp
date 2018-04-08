@@ -14,8 +14,11 @@ float yDirA;
 float xDirA;
 float ProjACurY;
 float ProjACurX;
+float projAXdir;
+float projAYdir;
 bool projAdrawn;
 float dashVel;
+bool shot;
 
 
 
@@ -30,9 +33,11 @@ GLScene::GLScene()
     directionX = -2;
     directionY = 1;
     CurXpos = 0, CurYpos = 0;//-1.3 ; // Current x position of the ball, current y position of the ball,
-    ballSpeed = 0.0015;
+    ballSpeed = 0.015;
 
     D = new timer();
+    PAT= new timer();
+    BPA= new timer();
     pCol = new timer();
     ballCollTimer = new timer();
 
@@ -166,8 +171,11 @@ GLint GLScene::initGL()
     ply2->T->start();
     ply2->T2->start();
 
-        projA->Xpos=ply->Xpos;
-            projA->Ypos=ply->Ypos;
+    ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
+    projA->Xpos=999;
+    projA->Ypos=999;
+     projA->box.x = projA ->Xpos;
+            projA->box.y = projA ->Ypos;
 
 
     return true;
@@ -226,7 +234,16 @@ bool GLScene::playerOnTile(player* ply)
 void GLScene:: update()
 {
       CurYpos = CurYpos + (directionY * ballSpeed);
-        CurXpos = CurXpos + (directionX * ballSpeed);
+      CurXpos = CurXpos + (directionX * ballSpeed);
+
+        if(ply->thrown)
+        {
+            ProjACurY += (projAYdir * 0.015);
+            ProjACurX += (projAXdir * 0.015);
+
+            projA->Xpos = ProjACurX;
+            projA->Ypos = ProjACurY;
+        }
 
 
     //-------------------------------------------------------------------------------------------------//
@@ -274,12 +291,48 @@ void GLScene:: update()
     else
         ply2->rightWC=false;
 
+        //---------------------------------------------------
+    if(box_collision(projA->box,wallA->box)&& PAT->getTicks() >= 200)
+    {
+         PAT->reset();
+        projA->health--;
+        projAXdir*=-1;
+    }
+
+    if(box_collision(projA->box,wallB->box)&& PAT->getTicks() >= 200)
+    {
+       PAT->reset();
+        projA->health--;
+        projAXdir*=-1;
+    }
+
+    if(box_collision(projA->box,wallC->box)&& PAT->getTicks() >= 200)
+    {
+         PAT->reset();
+        projA->health--;
+        projAYdir*=-1;
+    }
+
+    if(box_collision(projA->box,killBox->box)&& PAT->getTicks() >= 200)
+    {
+         PAT->reset();
+        projA->health--;
+        projAYdir*=-1;
+    }
+
+    if(box_collision(Ball->box,projA->box)&&BPA->getTicks() >= 200)
+    {
+        BPA->reset();
+        directionX*=-1;
+        directionY*=-1;
+    }
+
     //---------------------------------------------------------------------------------------------------//
     //------------------------------- BALL VS PLAYER COLLISIONS -----------------------------------------//
     //---------------------------------------------------------------------------------------------------//
 
     //----------------------PLAYER 1 --------------------------------------//
-    if(box_collision(Ball->box, ply->box) )
+    /*if(box_collision(Ball->box, ply->box) )
     {
         if(ply->lastCase=='R')
         {
@@ -291,10 +344,27 @@ void GLScene:: update()
         directionX=-1*ply->xdir;
         directionY=ply->ydir;
         }
-    }
+    }*/
             //cout<<ply->xdir<<endl;
       //  cout<<ply->ydir<<endl;
        // cout<<""<<endl;
+
+       if(box_collision(ply2->box,Ball->box)&&ply2->isalive())
+           ply2->health--;
+
+       if(box_collision(projA->box,ply2->box)&&ply2->isalive())//ball from player one hits player
+       {
+           projA->health=0;
+           ply2->health--;
+           //player 2 is deleted or stunned
+       }
+       if(box_collision(projA->box,ply->box)&&ply->swinging==true)//player one can hit his own wall
+       {
+           //projA->health--;
+            projAXdir=ply->xdir;
+            projAYdir=ply->ydir;
+           //player 2 is deleted or stunned
+       }
     if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
     {
 
@@ -380,10 +450,39 @@ void GLScene:: update()
 
     if(ply->isDash)
     {
-        dashVel*=ply->plyAccel;
-        ply->PXpos += dashVel*10;
-        if(ply->PXpos>ply->prevx+1)
-            ply->isDash=false;
+        if(ply->lastCase=='R')
+        {
+            if(!ply->rightWC)
+            {
+                dashVel*=ply->plyAccel;
+                ply->PXpos += dashVel*10;
+                if(dashVel>0.0012)
+                dashVel-=0.00001;
+            }
+
+            if(ply->PXpos>ply->prevx+1||ply->rightWC)
+            {
+                ply->isDash=false;
+                dashVel=0.0012;
+            }
+        }
+
+        if(ply->lastCase=='L')
+        {
+             if(!ply->leftWC)
+            {
+                dashVel*=ply->plyAccel;
+                ply->PXpos -= dashVel*10;
+                 if(dashVel>0)
+                dashVel+=0.00001;
+            }
+            if(ply->PXpos<ply->prevx-1||ply->leftWC)
+            {
+                ply->isDash=false;
+                dashVel=0.0012;
+            }
+        }
+
     }
       //------------------------------------------------------------------------------------------------//
      //---------------------------- PLAYER JUMP-----------------------------------//
@@ -399,7 +498,7 @@ void GLScene:: update()
         ply->jump=0;//reset his jump counter
     }
 
-    else if(!(playerOnTile(ply)))//if the player is not touching a tile
+    else if(!(playerOnTile(ply))&&ply->isDash==false)//if the player is not touching a tile
     {
         if(ply->jump<=0)//if the jump is over
             ply->PYpos+=ply->verticalVelocity;//change the plaeyrs y position
@@ -502,29 +601,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
     }
     else
         glViewport(0,0, screenWidth, screenHeight);*/
-        if(ply->thrown)
-        {
-            cout<<"thrown"<<endl;
-            projA->box.height =  .2;
-            projA->box.width = .05;
-
-            projA->verticies[0].x = -0.15;
-            projA->verticies[1].x = 0.15;
-            projA->verticies[2].x = 0.15;
-            projA->verticies[3].x = -0.15;
-            projA->verticies[0].y = -0.15;
-            projA->verticies[1].y = -0.15;
-            projA->verticies[2].y = 0.15;
-            projA->verticies[3].y = 0.15;
-          //  projA->box.x = Ball ->Xpos;
-          //  projA->box.y = Ball ->Ypos;
-            projA->drawModel(ballHBTex);
-             ProjACurY += (ply->ydir * ballSpeed);
-        ProjACurX += (ply->xdir * ballSpeed);
-
-        projA->Xpos = ProjACurX;
-        projA->Ypos = ProjACurY;
-        }
 
         if (ballCollTimer->getTicks() >= ply->freezeTimer)
         {
@@ -538,6 +614,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
      //------------------------------------------ TIMERS ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
         D->start();
+        PAT->start();
+        BPA->start();
         pCol->start();
         ply->swingTimer->start();
         ply2->swingTimer->start();
@@ -589,26 +667,36 @@ GLint GLScene::drawGLScene(bool pressed[256])
     glPopMatrix();
 
 
+    if(ply2->health>0)
+    {
+        glPushMatrix();
 
-    glPushMatrix();
-
-        ply2->actions();
-        ply2->box.x = ply2->PXpos;
-        ply2->box.y = ply2->PYpos;
-        ply2->pl_pltfrm_box.x = ply2 ->PXpos;
-        ply2->pl_pltfrm_box.y = ply2 -> PYpos;
-        ply2->pl_pltfrm_box.height = 0.6;
-        ply2->pl_pltfrm_box.width = 0.14;
-        ply2->box.height=0.5;
-        ply2->box.width=0.2;
-        update();
+            ply2->actions();
+            ply2->box.x = ply2->PXpos;
+            ply2->box.y = ply2->PYpos;
+            ply2->pl_pltfrm_box.x = ply2 ->PXpos;
+            ply2->pl_pltfrm_box.y = ply2 -> PYpos;
+            ply2->pl_pltfrm_box.height = 0.6;
+            ply2->pl_pltfrm_box.width = 0.14;
+            ply2->box.height=0.5;
+            ply2->box.width=0.2;
+            update();
 
             ply2->drawplayer();
 
-
-        ply2->drawplayer();
-
-    glPopMatrix();
+        glPopMatrix();
+    }
+    if(ply2->health<=0)
+    {
+            ply2->box.height=0;
+            ply2->box.width=0;
+            ply2->pl_pltfrm_box.x =999;
+            ply2->pl_pltfrm_box.y = 999;
+            ply2->pl_pltfrm_box.height = 0;
+            ply2->pl_pltfrm_box.width = 0;
+            ply2->PXpos=999;
+            ply2->PYpos=999;
+    }
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- TILE CREATION ---------------------------------------------------//
@@ -681,6 +769,56 @@ GLint GLScene::drawGLScene(bool pressed[256])
       //-------------------------------------------------------------------------------------------------//
      //--------------------------------- TILE CREATION -------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
+        if(ply->thrown)
+        {
+              glPushMatrix();
+            projA->box.height =  .2;
+            projA->box.width = .05;
+
+            projA->verticies[0].x = -0.15;
+            projA->verticies[1].x = 0.15;
+            projA->verticies[2].x = 0.15;
+            projA->verticies[3].x = -0.15;
+            projA->verticies[0].y = -0.15;
+            projA->verticies[1].y = -0.15;
+            projA->verticies[2].y = 0.15;
+            projA->verticies[3].y = 0.15;
+            projA->box.x = projA ->Xpos;
+            projA->box.y = projA ->Ypos;
+          //projA->Xpos=ply->PXpos;
+            // projA->Ypos=ply->PYpos;
+            if(!shot)
+            {
+                cout<<"!shot"<<endl;
+                if(ply->lastCase=='R')//lets player aim to his right
+                {
+                    projAXdir=ply->xdir;
+                    projAYdir=ply->ydir;
+                }
+                if(ply->lastCase=='L')//lets player aim to his left
+                {
+                    projAXdir=-ply->xdir;
+                    projAYdir=-ply->ydir;
+                }
+
+                projA->Xpos=ply->PXpos;
+                projA->Ypos=ply->PYpos;
+                projA->health=3;
+                shot=true;
+            }
+            projA->drawModel(ballHBTex);
+          glPopMatrix();
+        }
+    if(projA->health<=0)
+    {
+        cout<<"health<=0"<<endl;
+        ply->thrown=false;
+        shot=false;
+    }
+        if(ply->thrown==false)
+        {
+             ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
+        }
     glPushMatrix();
         Ball->box.height =  .2;
         Ball->box.width = .05;
@@ -701,6 +839,9 @@ GLint GLScene::drawGLScene(bool pressed[256])
         //Ball->UpdateHbox(Ball->Xpos, Ball->Ypos);
         Ball->drawModel(ballHBTex);
     glPopMatrix();
+
+
+
 
     glPushMatrix();
         hud->verticies[0].x = -1; //bottom left x
