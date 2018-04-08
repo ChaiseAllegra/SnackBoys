@@ -204,6 +204,13 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
          ply->xdir+=0.001;
 
     }
+    if(pressed['R'])
+    {
+        ply->isDash=true;
+        ply->prevx=ply->PXpos;
+    }
+    if(pressed['Q'])
+        ply->thrown=true;
     if(pressed['J'])
      {
         ply2->actionTrigger = 1;

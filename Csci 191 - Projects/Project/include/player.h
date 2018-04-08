@@ -38,6 +38,9 @@ class player: public Model
         float aimX;
         float aimY;
         char lastKey;
+        bool thrown;
+        bool isDash;
+        float prevx;
 
         char lastCase = 'R';
 

@@ -46,6 +46,7 @@ class GLScene
         timer* pCol;
         timer* ballCollTimer;
 
+        Model * projA;
         Model* modelTeapot;
         Model* modelTeapot2;
 

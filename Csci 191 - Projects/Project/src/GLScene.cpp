@@ -10,9 +10,18 @@
 #include <timer.h>
 
 using namespace std;
+float yDirA;
+float xDirA;
+float ProjACurY;
+float ProjACurX;
+bool projAdrawn;
+float dashVel;
+
+
 
 GLScene::GLScene()
 {
+    dashVel=0.0012;
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     ground=-1.181;
@@ -32,6 +41,7 @@ GLScene::GLScene()
 
      KbMs = new Inputs();
 
+     projA = new Model();
      plx = new parallax();
      ply = new player();
      ply2 = new player();
@@ -126,6 +136,7 @@ GLint GLScene::initGL()
     hud->modelInit("images/box/hud.png", true, texH);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
+    projA->modelInit("images/box/ball.png", true, ballHBTex);
     BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
 
     tile1->modelInit("images/platform/grass-block.png", true, tileTex);
@@ -154,6 +165,9 @@ GLint GLScene::initGL()
     ply->T2->start();
     ply2->T->start();
     ply2->T2->start();
+
+        projA->Xpos=ply->Xpos;
+            projA->Ypos=ply->Ypos;
 
 
     return true;
@@ -364,7 +378,13 @@ void GLScene:: update()
                 }
     }
 
-
+    if(ply->isDash)
+    {
+        dashVel*=ply->plyAccel;
+        ply->PXpos += dashVel*10;
+        if(ply->PXpos>ply->prevx+1)
+            ply->isDash=false;
+    }
       //------------------------------------------------------------------------------------------------//
      //---------------------------- PLAYER JUMP-----------------------------------//
     //------------------------------------------------------------------------------------------------//
@@ -482,6 +502,29 @@ GLint GLScene::drawGLScene(bool pressed[256])
     }
     else
         glViewport(0,0, screenWidth, screenHeight);*/
+        if(ply->thrown)
+        {
+            cout<<"thrown"<<endl;
+            projA->box.height =  .2;
+            projA->box.width = .05;
+
+            projA->verticies[0].x = -0.15;
+            projA->verticies[1].x = 0.15;
+            projA->verticies[2].x = 0.15;
+            projA->verticies[3].x = -0.15;
+            projA->verticies[0].y = -0.15;
+            projA->verticies[1].y = -0.15;
+            projA->verticies[2].y = 0.15;
+            projA->verticies[3].y = 0.15;
+          //  projA->box.x = Ball ->Xpos;
+          //  projA->box.y = Ball ->Ypos;
+            projA->drawModel(ballHBTex);
+             ProjACurY += (ply->ydir * ballSpeed);
+        ProjACurX += (ply->xdir * ballSpeed);
+
+        projA->Xpos = ProjACurX;
+        projA->Ypos = ProjACurY;
+        }
 
         if (ballCollTimer->getTicks() >= ply->freezeTimer)
         {
