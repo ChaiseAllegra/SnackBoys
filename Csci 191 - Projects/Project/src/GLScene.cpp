@@ -598,7 +598,7 @@ void GLScene:: update()
         }
         if(ply->lastCase=='L')
         {
-             directionY=-ply->ydir;
+             directionY=ply->ydir;
              directionX=-ply->xdir;
         }
              CurYpos=ply->PYpos;
