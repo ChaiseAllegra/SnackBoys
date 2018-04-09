@@ -35,7 +35,7 @@ GLScene::GLScene()
     directionX = -2;
     directionY = 1;
     CurXpos = 0, CurYpos = 0;//-1.3 ; // Current x position of the ball, current y position of the ball,
-    ballSpeed = 0.015;
+    ballSpeed = 0.0015;
 
     D = new timer();
     PAT= new timer();
@@ -224,7 +224,7 @@ GLint GLScene::initGL()
     projA->Ypos=999;
     projA->box.x = projA ->Xpos;
     projA->box.y = projA ->Ypos;
-    ply2->health=500;
+    ply2->health=5;
     ply->health=5;
 
     return true;
@@ -381,30 +381,18 @@ void GLScene:: update()
     //---------------------------------------------------------------------------------------------------//
 
     //----------------------PLAYER 1 --------------------------------------//
-    /*if(box_collision(Ball->box, ply->box) )
-    {
-        if(ply->lastCase=='R')
-        {
-        directionX=ply->xdir;
-        directionY=ply->ydir;
-        }
-        if(ply->lastCase=='L')
-        {
-        directionX=-1*ply->xdir;
-        directionY=ply->ydir;
-        }
-    }*/
-            //cout<<ply->xdir<<endl;
-      //  cout<<ply->ydir<<endl;
-       // cout<<""<<endl;
-
-       if(box_collision(ply2->box,Ball->box)&&ply2->isalive())
-           ply2->health--;
-
-       if(box_collision(projA->box,ply2->box)&&ply2->isalive())//ball from player one hits player
+       if(box_collision(ply2->box,Ball->box)&&ply2->isalive()&&Ball->myTime->getTicks()>200)
        {
+           Ball->myTime->reset();
+           ply2->health--;
+       }
+
+       if(box_collision(projA->box,ply2->box)&&ply2->isalive()&&projA->myTime->getTicks()>200)//ball from player one hits player
+       {
+           projA->myTime->reset();
            projA->health=0;
            ply2->health--;
+           //cout<<"p2 collisions"<<endl;
            //player 2 is deleted or stunned
        }
        if(box_collision(projA->box,ply->box)&&ply->swinging==true)//player one can hit his own wall
@@ -689,6 +677,10 @@ GLint GLScene::drawGLScene(bool pressed[256])
         PAT->start();
         BPA->start();
         pCol->start();
+
+        Ball->myTime->start();
+        projA->myTime->start();
+
         ply->swingTimer->start();
         ply2->swingTimer->start();
         //ply->swingDuration->start();
@@ -769,6 +761,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
     {
             ply2->box.height=0;
             ply2->box.width=0;
+            ply2->box.x=999;
+            ply2->box.y=999;
             ply2->pl_pltfrm_box.x =999;
             ply2->pl_pltfrm_box.y = 999;
             ply2->pl_pltfrm_box.height = 0;
@@ -876,7 +870,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
                 if(ply->lastCase=='L')//lets player aim to his left
                 {
                     projAXdir=-ply->xdir;
-                    projAYdir=-ply->ydir;
+                    projAYdir=ply->ydir;
                 }
 
                 projA->Xpos=ply->PXpos;
@@ -895,6 +889,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
         projA->Ypos=999;
         projA->box.width=0;
         projA->box.height=0;
+        projA->box.x=999;
+        projA->box.y=999;
     }
     if(ply->thrown==false)
         ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;

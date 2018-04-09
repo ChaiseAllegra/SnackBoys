@@ -4,6 +4,7 @@
 #include <string>
 #include<GL/glut.h>
 #include<GLTexture.h>
+#include<timer.h>
 typedef struct{
  float x;
  float y;
@@ -34,6 +35,7 @@ class Model
         Hbox pl_pltfrm_box;
         float health;
         std::string tag;
+        timer* myTime;
 
         double RotateX;
         double RotateY;
