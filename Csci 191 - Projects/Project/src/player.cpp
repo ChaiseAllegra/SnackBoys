@@ -14,14 +14,14 @@ player::player()
     jumpInitiated = false;
     PZoom = -4;
     PXpos = 0;
-    PYpos = -1.0;
+    PYpos = -1.38;
     aimX = 0;
     aimY = -1;
 
-        verticies[0].x = -0.5; verticies[0].y = -0.5; verticies[0].z = -1.0;
-        verticies[1].x =  0.5; verticies[1].y = -0.5; verticies[1].z = -1.0;
-        verticies[2].x =  0.5; verticies[2].y =  0.5; verticies[2].z = -1.0;
-        verticies[3].x = -0.5; verticies[3].y =  0.5; verticies[3].z = -1.0;
+        verticies[0].x=-0.3;verticies[0].y=-0.3;verticies[0].z=-1.0;
+        verticies[1].x=0.3;verticies[1].y=-0.3;verticies[1].z=-1.0;
+        verticies[2].x=0.3;verticies[2].y=0.3;verticies[2].z=-1.0;
+        verticies[3].x=-0.3;verticies[3].y=0.3;verticies[3].z=-1.0;
 
     runspeed  = 0;
     jumpspeed = 0;

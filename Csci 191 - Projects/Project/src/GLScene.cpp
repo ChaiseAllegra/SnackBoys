@@ -27,7 +27,7 @@ GLScene::GLScene()
     dashVel=0.0012;
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
-    ground=-1.181;
+    ground=-1.38;
 
     dirXX = 1, dirYY = 1;
     directionX = -2;
@@ -48,11 +48,12 @@ GLScene::GLScene()
 
      projA = new Model();
      plx = new parallax();
+     plx2 = new parallax();
      ply = new player();
      ply2 = new player();
      wallA = new Model(); // left wall
      wallB = new Model(); // right wall
-    wallC = new Model(); // top wall
+     wallC = new Model(); // top wall
      killBox = new Model();
      divide = new Model();
      hud = new Model();
@@ -76,7 +77,7 @@ GLScene::GLScene()
      tile12=new Model();
      tile13=new Model();
      tile14=new Model();
-      tile15=new Model();
+     tile15=new Model();
 
 
 
@@ -90,10 +91,14 @@ GLScene::GLScene()
      tex0 = new textureLoader();
      tex1 = new textureLoader();
      tex2 = new textureLoader();
+     tex3 = new textureLoader();
+     texD = new textureLoader();
      ballHBTex = new textureLoader();
      ballHBTex2 = new textureLoader();
      texc = new textureLoader();
      texH = new textureLoader();
+     texSky1 = new textureLoader();
+     texSky2 = new textureLoader();
 
      tileTex=new textureLoader();
      tileTex2=new textureLoader();
@@ -133,6 +138,7 @@ GLint GLScene::initGL()
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
+/*
     plx->parallaxInit("images/parallax/parallax_f.png");
     wallA->modelInit("images/box/vertical_hitbox.png", true, tex1);
     wallB->modelInit("images/box/vertical_hitbox.png", true, tex2);
@@ -159,6 +165,35 @@ GLint GLScene::initGL()
     tile13->modelInit("images/platform/grass-block.png", true, tileTex13);
     tile14->modelInit("images/platform/grass-block.png", true, tileTex14);
     tile15->modelInit("images/platform/grass-block.png", true, tileTex15);
+*/
+
+    plx->parallaxInit("images/box/sky.png",texSky1);
+    plx2->parallaxInit("images/box/city.png",texSky2);
+    wallA->modelInit("images/box/girder.png", true, tex1);
+    wallB->modelInit("images/box/girder.png", true, tex2);
+    wallC->modelInit("images/box/girder2.png", true, tex3);
+    divide->modelInit("images/box/nothing.png", true, texD);
+    hud->modelInit("images/box/hud.png", true, texH);
+
+    Ball->modelInit("images/box/ball.png", true, ballHBTex);
+    projA->modelInit("images/box/ball.png", true, ballHBTex);
+    BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
+
+    tile1->modelInit("images/box/nothing2.png", true, tileTex);
+    tile2->modelInit("images/box/block.png", true, tileTex2);
+    tile3->modelInit("images/box/block.png", true, tileTex3);
+    tile4->modelInit("images/box/block.png", true, tileTex4);
+    tile5->modelInit("images/box/block.png", true, tileTex5);
+    tile6->modelInit("images/box/block.png", true, tileTex6);
+    tile7->modelInit("images/box/block.png", true, tileTex7);
+    tile8->modelInit("images/box/block.png", true, tileTex8);
+    tile9->modelInit("images/box/block.png", true, tileTex9);
+    tile10->modelInit("images/box/block.png", true, tileTex10);
+    tile22->modelInit("images/box/block.png", true, tileTex11);
+    tile12->modelInit("images/box/block.png", true, tileTex12);
+    tile13->modelInit("images/box/block.png", true, tileTex13);
+    tile14->modelInit("images/box/block.png", true, tileTex14);
+    tile15->modelInit("images/box/nothing2.png", true, tileTex15);
 
     ply->PXpos = -2;
     ply2->PXpos = 2;
@@ -174,9 +209,8 @@ GLint GLScene::initGL()
     ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
     projA->Xpos=999;
     projA->Ypos=999;
-     projA->box.x = projA ->Xpos;
-            projA->box.y = projA ->Ypos;
-
+    projA->box.x = projA ->Xpos;
+    projA->box.y = projA ->Ypos;
 
     return true;
 }
@@ -206,9 +240,9 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
                 t->isalive();
 
                 if (t->health == 2)
-                    t->modelInit("images/platform/grass-block2.png", true, TX);
+                    t->modelInit("images/box/block2.png", true, TX);
                 if (t->health == 1)
-                    t->modelInit("images/platform/grass-block3.png", true, TX);
+                    t->modelInit("images/box/block3.png", true, TX);
                     return;
     }
 
@@ -640,10 +674,19 @@ GLint GLScene::drawGLScene(bool pressed[256])
      //------------------------------- PARALLAX CREATION ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
     glPushMatrix();
-        glScaled(2, 3.555, 1.0);
-        plx->drawSquare(screenWidth, screenHeight);
+        glScaled(3.33, 3.33, 1.0);
+        plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
-    //plx->scroll(true,"up",0.005);
+    plx->scroll(true,"left",0.0002);
+
+      //-----------------------------------------------------------------------------------------------//
+     //------------------------------- PARALLAX2 CREATION --------------------------------------------//
+    //-----------------------------------------------------------------------------------------------//
+    glPushMatrix();
+        glScaled(3.33, 3.33, 1.0);
+        plx2->drawSquare(screenWidth, screenHeight, texSky2);
+    glPopMatrix();
+    plx2->scroll(false,"left",0.0002);
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
@@ -658,19 +701,14 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply->pl_pltfrm_box.width = 0.14;
         ply->box.height=0.6;
         ply->box.width=0.2;
-        //ply->playerHBox.width = .0; // .3 is a perfect value
-        //ply->playerHBox.height = .0; //.4 is a perfect value
-
         update();
-
-            ply->drawplayer();
+        ply->drawplayer();
     glPopMatrix();
 
 
     if(ply2->health>0)
     {
         glPushMatrix();
-
             ply2->actions();
             ply2->box.x = ply2->PXpos;
             ply2->box.y = ply2->PYpos;
@@ -681,9 +719,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
             ply2->box.height=0.5;
             ply2->box.width=0.2;
             update();
-
             ply2->drawplayer();
-
         glPopMatrix();
     }
     if(ply2->health<=0)
@@ -749,19 +785,19 @@ GLint GLScene::drawGLScene(bool pressed[256])
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     //left wall
-    makeModel(wallA,tex1,-4.7,0,-0.2,-2.0,0.2,-2.0,0.2,2.0,-0.2,2,1,88);
+    makeModel(wallA,tex1,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
 
     //right wall
-    makeModel(wallB,tex2,4.7,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,1,88);
-
-    //top wall
-    makeModel(wallC,texc,0,3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
+    makeModel(wallB,tex2,3.37,0,-0.2,3.0,0.2,3.0,0.2,-3.0,-0.2,-3.0,0.3,88);
 
     //bottom wall
     makeModel(killBox,texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
     //dividing wall
-    makeModel(divide,tex2,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
+    makeModel(divide,texD,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
+
+    //top wall
+    makeModel(wallC,tex3,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
     //ball creation
     //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);

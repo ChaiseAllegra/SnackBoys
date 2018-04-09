@@ -55,6 +55,7 @@ class GLScene
         Inputs* KbMs;
 
         parallax* plx;
+        parallax* plx2;
         player* ply;
         player* ply2;
         Model* wallA; // left wall
@@ -97,10 +98,15 @@ class GLScene
         textureLoader* tex0;
         textureLoader* tex1;
         textureLoader* tex2;
+        textureLoader* tex3;
+        textureLoader* texD;
         textureLoader* ballHBTex;
         textureLoader* ballHBTex2;
         textureLoader* texc;
         textureLoader* texH;
+
+        textureLoader* texSky1;
+        textureLoader* texSky2;
 
         textureLoader* tileTex;
         textureLoader* tileTex2;

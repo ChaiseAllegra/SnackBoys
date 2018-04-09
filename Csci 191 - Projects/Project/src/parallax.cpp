@@ -1,8 +1,6 @@
 #include "parallax.h"
 #include <textureLoader.h>
 
-textureLoader *bTex = new textureLoader();
-
 parallax::parallax()
 {
     //ctor
@@ -17,26 +15,26 @@ parallax::~parallax()
     //dtor
 }
 
-void parallax::drawSquare(float width, float height)
+void parallax::drawSquare(float width, float height, textureLoader* bTex)
 {
     glColor3f(1.0,1.0,1.0);
     bTex->binder();
     glBegin(GL_POLYGON);
         glTexCoord2f(Xmin,Ymin);
-        glVertex3f(-width/height*1.75,-1,-8.0f);
+        glVertex3f(-width/height,-1,-8.0f);
 
         glTexCoord2f(Xmax,Ymin);
-        glVertex3f(width/height*1.75,-1,-8.0f);
+        glVertex3f(width/height,-1,-8.0f);
 
         glTexCoord2f(Xmax,Ymax);
-        glVertex3f(width/height*1.75,1,-8.0f);
+        glVertex3f(width/height,1,-8.0f);
 
         glTexCoord2f(Xmin,Ymax);
-        glVertex3f(-width/height*1.75,1,-8.0f);
+        glVertex3f(-width/height,1,-8.0f);
      glEnd();
 }
 
-void parallax::parallaxInit(char *FileName)
+void parallax::parallaxInit(char *FileName, textureLoader* bTex)
 {
     bTex->binder();
     bTex->bindTexture(FileName);
