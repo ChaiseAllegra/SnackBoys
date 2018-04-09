@@ -33,6 +33,8 @@ class GLScene
         float screenHeight;
         float screenWidth;
         float ground;
+        bool levelOne;
+        bool levelTwo;
 
         float xx, yy;
         int dirXX,dirYY;
@@ -55,6 +57,7 @@ class GLScene
         Inputs* KbMs;
 
         parallax* plx;
+          parallax* plx2;//keep
         player* ply;
         player* ply2;
         Model* wallA; // left wall

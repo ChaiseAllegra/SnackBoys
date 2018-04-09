@@ -25,6 +25,8 @@ bool shot;
 GLScene::GLScene()
 {
     dashVel=0.0012;
+    levelOne=true;
+    levelTwo=false;
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     ground=-1.181;
@@ -48,6 +50,7 @@ GLScene::GLScene()
 
      projA = new Model();
      plx = new parallax();
+     plx2= new parallax();
      ply = new player();
      ply2 = new player();
      wallA = new Model(); // left wall
@@ -133,7 +136,7 @@ GLint GLScene::initGL()
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
-    plx->parallaxInit("images/parallax/parallax_f.png");
+
     wallA->modelInit("images/box/vertical_hitbox.png", true, tex1);
     wallB->modelInit("images/box/vertical_hitbox.png", true, tex2);
     wallC->modelInit("images/box/nothing.png", true, texc);
@@ -144,6 +147,8 @@ GLint GLScene::initGL()
     projA->modelInit("images/box/ball.png", true, ballHBTex);
     BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
 
+    plx->parallaxInit("images/parallax/parallax_f.png");//keep
+    plx2->parallaxInit("images/parallax/map3.jpg");//keep
     tile1->modelInit("images/platform/grass-block.png", true, tileTex);
     tile2->modelInit("images/platform/grass-block.png", true, tileTex2);
     tile3->modelInit("images/platform/grass-block.png", true, tileTex3);
@@ -159,6 +164,7 @@ GLint GLScene::initGL()
     tile13->modelInit("images/platform/grass-block.png", true, tileTex13);
     tile14->modelInit("images/platform/grass-block.png", true, tileTex14);
     tile15->modelInit("images/platform/grass-block.png", true, tileTex15);
+
 
     ply->PXpos = -2;
     ply2->PXpos = 2;
@@ -574,6 +580,7 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
+
 /*ply->freezeTimer = 10;
     if (ply->ballCollided == true || ply2->ballCollided == true)
     {
@@ -641,7 +648,10 @@ GLint GLScene::drawGLScene(bool pressed[256])
     //-----------------------------------------------------------------------------------------------//
     glPushMatrix();
         glScaled(2, 3.555, 1.0);
-        plx->drawSquare(screenWidth, screenHeight);
+        if(levelOne)//keep
+            plx->drawSquare(screenWidth, screenHeight);
+        if(levelTwo)//keep
+            plx2->drawSquare(screenWidth, screenHeight);
     glPopMatrix();
     //plx->scroll(true,"up",0.005);
 
