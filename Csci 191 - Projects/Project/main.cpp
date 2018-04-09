@@ -357,6 +357,16 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			    Scene->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
+			if(keys[VK_F2])//keep
+			{
+                Scene->levelTwo=true;
+                Scene->levelOne=false;
+			}
+			if(keys[VK_F3])//keep
+			{
+                Scene->levelTwo=false;
+                Scene->levelOne=true;
+			}
 
 			if (keys[VK_F1])						// Is F1 Being Pressed?
 			{

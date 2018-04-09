@@ -25,6 +25,8 @@ bool shot;
 GLScene::GLScene()
 {
     dashVel=0.0012;
+    levelOne=true;
+    levelTwo=false;
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
     ground=-1.38;
@@ -48,7 +50,11 @@ GLScene::GLScene()
 
      projA = new Model();
      plx = new parallax();
+<<<<<<< HEAD
      plx2 = new parallax();
+=======
+     plx2= new parallax();
+>>>>>>> 9bb56e825b3a67a88f8498f051423be8c990241b
      ply = new player();
      ply2 = new player();
      wallA = new Model(); // left wall
@@ -138,8 +144,12 @@ GLint GLScene::initGL()
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
+<<<<<<< HEAD
 /*
     plx->parallaxInit("images/parallax/parallax_f.png");
+=======
+
+>>>>>>> 9bb56e825b3a67a88f8498f051423be8c990241b
     wallA->modelInit("images/box/vertical_hitbox.png", true, tex1);
     wallB->modelInit("images/box/vertical_hitbox.png", true, tex2);
     wallC->modelInit("images/box/nothing.png", true, texc);
@@ -150,6 +160,8 @@ GLint GLScene::initGL()
     projA->modelInit("images/box/ball.png", true, ballHBTex);
     BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
 
+    plx->parallaxInit("images/parallax/parallax_f.png");//keep
+    plx2->parallaxInit("images/parallax/map3.jpg");//keep
     tile1->modelInit("images/platform/grass-block.png", true, tileTex);
     tile2->modelInit("images/platform/grass-block.png", true, tileTex2);
     tile3->modelInit("images/platform/grass-block.png", true, tileTex3);
@@ -194,6 +206,7 @@ GLint GLScene::initGL()
     tile13->modelInit("images/box/block.png", true, tileTex13);
     tile14->modelInit("images/box/block.png", true, tileTex14);
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+
 
     ply->PXpos = -2;
     ply2->PXpos = 2;
@@ -608,6 +621,7 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
+
 /*ply->freezeTimer = 10;
     if (ply->ballCollided == true || ply2->ballCollided == true)
     {
@@ -674,6 +688,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
      //------------------------------- PARALLAX CREATION ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
     glPushMatrix();
+<<<<<<< HEAD
         glScaled(3.33, 3.33, 1.0);
         plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
@@ -685,6 +700,13 @@ GLint GLScene::drawGLScene(bool pressed[256])
     glPushMatrix();
         glScaled(3.33, 3.33, 1.0);
         plx2->drawSquare(screenWidth, screenHeight, texSky2);
+=======
+        glScaled(2, 3.555, 1.0);
+        if(levelOne)//keep
+            plx->drawSquare(screenWidth, screenHeight);
+        if(levelTwo)//keep
+            plx2->drawSquare(screenWidth, screenHeight);
+>>>>>>> 9bb56e825b3a67a88f8498f051423be8c990241b
     glPopMatrix();
     plx2->scroll(false,"left",0.0002);
 
