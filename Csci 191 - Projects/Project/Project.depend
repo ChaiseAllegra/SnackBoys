@@ -2000,14 +2000,14 @@
 	<windows.h>
 	<iostream>
 
-1523045108 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
+1523241465 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
 	<iostream>
 	<windows.h>
 
-1523240401 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1523305548 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -2017,11 +2017,12 @@
 	<iostream>
 	<player.h>
 
-1523235089 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glmodel.h
+1523312037 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glmodel.h
 	<windows.h>
 	<string>
 	<GL/glut.h>
 	<GLTexture.h>
+	<timer.h>
 
 1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\gl\glut.h
 	<windows.h>
@@ -2034,7 +2035,7 @@
 
 1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1523224010 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\player.h
+1523243700 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
@@ -2044,7 +2045,7 @@
 1522874275 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\timer.h
 	<time.h>
 
-1523235089 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1523308783 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -2105,12 +2106,12 @@
 1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1523237610 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1523312385 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
 
-1523241124 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1523313609 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2130,7 +2131,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1523241032 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1523241340 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>

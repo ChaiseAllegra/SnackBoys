@@ -6,7 +6,6 @@
 
 Model::Model()
 {
-    //ctor
         RotateX =0.0; // Rotations
         RotateY =0.0;
         RotateZ =0.0;
@@ -23,6 +22,8 @@ Model::Model()
         verticies[3].x=-0.5;verticies[3].y=0.5;verticies[3].z=-1.0;
 
         health=3;
+
+        myTime = new timer();
 }
 
 Model::Model(float x, float y, float z,float a,float b,float c,float d, float e, float f,float q,float w, float r)

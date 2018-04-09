@@ -20,8 +20,6 @@ bool projAdrawn;
 float dashVel;
 bool shot;
 
-
-
 GLScene::GLScene()
 {
     dashVel=0.0012;
@@ -43,7 +41,7 @@ GLScene::GLScene()
     pCol = new timer();
     ballCollTimer = new timer();
 
-       modelTeapot = new Model();
+     modelTeapot = new Model();
      modelTeapot2 = new Model();
 
      KbMs = new Inputs();
@@ -85,7 +83,7 @@ GLScene::GLScene()
      tile14=new Model();
      tile15=new Model();
 
-
+     cross=new Model();
 
      wallAHbawks = new Model(); // left wall
      wallBHbawks = new Model(); // right wall
@@ -122,6 +120,7 @@ GLScene::GLScene()
      tileTex14=new textureLoader();
      tileTex15=new textureLoader();
 
+     crosshair=new textureLoader();
     }
 
 GLScene::~GLScene()
@@ -207,6 +206,7 @@ GLint GLScene::initGL()
     tile14->modelInit("images/box/block.png", true, tileTex14);
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
 
+    cross->modelInit("images/box/crosshair.png", true, crosshair);
 
     ply->PXpos = -2;
     ply2->PXpos = 2;
@@ -224,7 +224,7 @@ GLint GLScene::initGL()
     projA->Ypos=999;
     projA->box.x = projA ->Xpos;
     projA->box.y = projA ->Ypos;
-    ply2->health=500;
+    ply2->health=5;
     ply->health=5;
 
     return true;
@@ -381,28 +381,13 @@ void GLScene:: update()
     //---------------------------------------------------------------------------------------------------//
 
     //----------------------PLAYER 1 --------------------------------------//
-    /*if(box_collision(Ball->box, ply->box) )
-    {
-        if(ply->lastCase=='R')
-        {
-        directionX=ply->xdir;
-        directionY=ply->ydir;
-        }
-        if(ply->lastCase=='L')
-        {
-        directionX=-1*ply->xdir;
-        directionY=ply->ydir;
-        }
-    }*/
-            //cout<<ply->xdir<<endl;
-      //  cout<<ply->ydir<<endl;
-       // cout<<""<<endl;
 
-       if(box_collision(ply2->box,Ball->box)&&ply2->isalive())
+       if(box_collision(ply2->box,Ball->box)&&ply2->isalive() && projA->myTime->getTicks() > 200)
            ply2->health--;
 
-       if(box_collision(projA->box,ply2->box)&&ply2->isalive())//ball from player one hits player
+       if(box_collision(projA->box,ply2->box)&&ply2->isalive() && projA->myTime->getTicks() > 200)//ball from player one hits player
        {
+           projA->myTime->reset();
            projA->health=0;
            ply2->health--;
            //player 2 is deleted or stunned
@@ -689,6 +674,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
         PAT->start();
         BPA->start();
         pCol->start();
+
+        projA->myTime->start();
         ply->swingTimer->start();
         ply2->swingTimer->start();
         //ply->swingDuration->start();
@@ -775,8 +762,9 @@ GLint GLScene::drawGLScene(bool pressed[256])
             ply2->pl_pltfrm_box.width = 0;
             ply2->PXpos=999;
             ply2->PYpos=999;
+            ply2->box.x=999;
+            ply2->box.y=999;
     }
-
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- TILE CREATION ---------------------------------------------------//
@@ -870,36 +858,43 @@ GLint GLScene::drawGLScene(bool pressed[256])
             {
                 if(ply->lastCase=='R')//lets player aim to his right
                 {
-                    projAXdir=ply->xdir;
-                    projAYdir=ply->ydir;
-                }
-                if(ply->lastCase=='L')//lets player aim to his left
-                {
-                    projAXdir=-ply->xdir;
-                    projAYdir=-ply->ydir;
+                    projAXdir = ply->xdir;
+                    projAYdir = ply->ydir;
                 }
 
-                projA->Xpos=ply->PXpos;
-                projA->Ypos=ply->PYpos;
-                projA->health=3;
-                shot=true;
+                if(ply->lastCase=='L')//lets player aim to his left
+                {
+                    projAXdir = -ply->xdir;
+                    projAYdir = ply->ydir;
+                }
+
+                projA->Xpos = ply->PXpos;
+                projA->Ypos = ply->PYpos;
+                projA->health = 3;
+                shot = true;
             }
             projA->drawModel(ballHBTex);
           glPopMatrix();
         }
+
     if(projA->health<=0)
     {
         ply->thrown=false;
         shot=false;
+        projA->Xpos=999;
+        projA->Ypos=999;
+        projA->box.x=999;
+        projA->box.y=999;
+        projA->box.width=0;
+        projA->box.height=0;
     }
-        if(ply->thrown==false)
-        {
-             ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
-        }
+
+    if(ply->thrown==false)
+        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
+
     glPushMatrix();
         Ball->box.height =  .2;
         Ball->box.width = .05;
-
         Ball->verticies[0].x = -0.15;
         Ball->verticies[1].x = 0.15;
         Ball->verticies[2].x = 0.15;
@@ -910,15 +905,9 @@ GLint GLScene::drawGLScene(bool pressed[256])
         Ball->verticies[3].y = 0.15;
         Ball->box.x = Ball ->Xpos;
         Ball->box.y = Ball ->Ypos;
-
         update();
-
-        //Ball->UpdateHbox(Ball->Xpos, Ball->Ypos);
         Ball->drawModel(ballHBTex);
     glPopMatrix();
-
-
-
 
     glPushMatrix();
         hud->verticies[0].x = -1; //bottom left x
@@ -931,11 +920,20 @@ GLint GLScene::drawGLScene(bool pressed[256])
         hud->verticies[3].y = 1; // top left y
         hud->Xpos = -2.69;
         hud->Ypos = 1.15;
-        //hud->Zoom = 0;
         hud->drawModel(texH); //made the z equal to 2 so the pillar is in front of the player
     glPopMatrix();
+
+    float tmp1 = ply->PXpos - ply->xdir;
+    float tmp2 = ply->PYpos + ply->ydir;
+    float tmp3 = ply->PXpos + ply->xdir;
+
+    if(ply->lastCase=='L')
+        makeModel(cross, crosshair, tmp1, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
+
+    if(ply->lastCase=='R')
+        makeModel(cross, crosshair, tmp3, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
+
     KbMs->idle(pressed,ply,ply2);
-    //cout << ply->PYpos << endl;
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {

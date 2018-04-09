@@ -91,7 +91,7 @@ class GLScene
         Model* tile14;
         Model* tile15;
 
-
+        Model* cross;
 
         Model* wallAHbawks; // left wall
         Model* wallBHbawks; // right wall
@@ -128,6 +128,8 @@ class GLScene
         textureLoader* tileTex13;
         textureLoader* tileTex14;
         textureLoader* tileTex15;
+
+        textureLoader* crosshair;
 
     protected:
 
