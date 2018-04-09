@@ -891,11 +891,14 @@ GLint GLScene::drawGLScene(bool pressed[256])
     {
         ply->thrown=false;
         shot=false;
+        projA->Xpos=999;
+        projA->Ypos=999;
+        projA->box.width=0;
+        projA->box.height=0;
     }
-        if(ply->thrown==false)
-        {
-             ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
-        }
+    if(ply->thrown==false)
+        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
+
     glPushMatrix();
         Ball->box.height =  .2;
         Ball->box.width = .05;
@@ -920,7 +923,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
 
 
 
-    glPushMatrix();
+    /*glPushMatrix();
         hud->verticies[0].x = -1; //bottom left x
         hud->verticies[1].x = 1; //bottom right x
         hud->verticies[2].x = 1; //top right x
@@ -933,9 +936,9 @@ GLint GLScene::drawGLScene(bool pressed[256])
         hud->Ypos = 1.15;
         //hud->Zoom = 0;
         hud->drawModel(texH); //made the z equal to 2 so the pillar is in front of the player
-    glPopMatrix();
+    glPopMatrix();*/
     KbMs->idle(pressed,ply,ply2);
-    //cout << ply->PYpos << endl;
+
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {
