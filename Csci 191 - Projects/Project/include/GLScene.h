@@ -57,11 +57,10 @@ class GLScene
         Inputs* KbMs;
 
         parallax* plx;
-<<<<<<< HEAD
+
         parallax* plx2;
-=======
-          parallax* plx2;//keep
->>>>>>> 9bb56e825b3a67a88f8498f051423be8c990241b
+
+
         player* ply;
         player* ply2;
         Model* wallA; // left wall

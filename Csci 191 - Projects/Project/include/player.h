@@ -31,6 +31,8 @@ class player: public Model
         int actionTrigger;
         int jump;
         float yex;
+        bool hold;
+        bool throwB;
 
         float verticalVelocity;
         float playerGrav;

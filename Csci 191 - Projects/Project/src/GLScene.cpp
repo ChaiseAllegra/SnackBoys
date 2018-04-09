@@ -50,11 +50,11 @@ GLScene::GLScene()
 
      projA = new Model();
      plx = new parallax();
-<<<<<<< HEAD
+
      plx2 = new parallax();
-=======
+
      plx2= new parallax();
->>>>>>> 9bb56e825b3a67a88f8498f051423be8c990241b
+
      ply = new player();
      ply2 = new player();
      wallA = new Model(); // left wall
@@ -144,7 +144,7 @@ GLint GLScene::initGL()
     ply->playerInit();
     ply2->playerInit();
     sky->loadTextures();
-<<<<<<< HEAD
+
 /*
     plx->parallaxInit("images/parallax/parallax_f.png");
 =======
@@ -591,8 +591,25 @@ void GLScene:: update()
     tileChange(Ball, tile14,tileTex14);
     tileChange(Ball, tile15,tileTex15);
 
-    Ball->Xpos = CurXpos;
-    Ball->Ypos = CurYpos;
+     if(box_collision(Ball->box, ply->box)&&ply->hold)//lets the player hold the ball
+    {
+        Ball->Xpos=ply->PXpos;
+        Ball->Ypos=ply->PYpos;
+        if(ply->throwB)
+        {
+             CurYpos=ply->PYpos;
+             CurXpos=ply->PXpos;
+             directionY=ply->ydir;
+             directionX=ply->xdir;
+             ply->hold=false;
+        }
+    }
+    else
+    {
+        Ball->Xpos = CurXpos;
+        Ball->Ypos = CurYpos;
+    }
+
 }
 
 void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
@@ -688,7 +705,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
      //------------------------------- PARALLAX CREATION ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
     glPushMatrix();
-<<<<<<< HEAD
         glScaled(3.33, 3.33, 1.0);
         plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
@@ -699,14 +715,12 @@ GLint GLScene::drawGLScene(bool pressed[256])
     //-----------------------------------------------------------------------------------------------//
     glPushMatrix();
         glScaled(3.33, 3.33, 1.0);
-        plx2->drawSquare(screenWidth, screenHeight, texSky2);
-=======
-        glScaled(2, 3.555, 1.0);
+
         if(levelOne)//keep
-            plx->drawSquare(screenWidth, screenHeight);
-        if(levelTwo)//keep
-            plx2->drawSquare(screenWidth, screenHeight);
->>>>>>> 9bb56e825b3a67a88f8498f051423be8c990241b
+             plx2->drawSquare(screenWidth, screenHeight, texSky2);
+      //  if(levelTwo)//keep
+           //  plx2->drawSquare(screenWidth, screenHeight, texSky2);
+
     glPopMatrix();
     plx2->scroll(false,"left",0.0002);
 
@@ -755,6 +769,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
             ply2->PXpos=999;
             ply2->PYpos=999;
     }
+
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- TILE CREATION ---------------------------------------------------//
@@ -843,11 +858,9 @@ GLint GLScene::drawGLScene(bool pressed[256])
             projA->verticies[3].y = 0.15;
             projA->box.x = projA ->Xpos;
             projA->box.y = projA ->Ypos;
-          //projA->Xpos=ply->PXpos;
-            // projA->Ypos=ply->PYpos;
+
             if(!shot)
             {
-                cout<<"!shot"<<endl;
                 if(ply->lastCase=='R')//lets player aim to his right
                 {
                     projAXdir=ply->xdir;
