@@ -224,6 +224,8 @@ GLint GLScene::initGL()
     projA->Ypos=999;
     projA->box.x = projA ->Xpos;
     projA->box.y = projA ->Ypos;
+    ply2->health=500;
+    ply->health=5;
 
     return true;
 }
@@ -595,14 +597,19 @@ void GLScene:: update()
     {
         Ball->Xpos=ply->PXpos;
         Ball->Ypos=ply->PYpos;
-        if(ply->throwB)
+        if(ply->lastCase=='R')
         {
-             CurYpos=ply->PYpos;
-             CurXpos=ply->PXpos;
              directionY=ply->ydir;
              directionX=ply->xdir;
-             ply->hold=false;
         }
+        if(ply->lastCase=='L')
+        {
+             directionY=-ply->ydir;
+             directionX=-ply->xdir;
+        }
+             CurYpos=ply->PYpos;
+             CurXpos=ply->PXpos;
+             ply->hold=false;
     }
     else
     {
@@ -882,7 +889,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
         }
     if(projA->health<=0)
     {
-        cout<<"health<=0"<<endl;
         ply->thrown=false;
         shot=false;
     }
