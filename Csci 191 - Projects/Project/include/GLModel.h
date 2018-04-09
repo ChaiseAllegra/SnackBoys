@@ -5,10 +5,7 @@
 #include<GL/glut.h>
 #include<GLTexture.h>
 #include<timer.h>
-<<<<<<< HEAD
 
-=======
->>>>>>> f782b2eaa50c01dabdd579d09581c90b7b94edda
 typedef struct{
  float x;
  float y;
@@ -39,8 +36,6 @@ class Model
         Hbox pl_pltfrm_box;
         float health;
         std::string tag;
-        timer* myTime;
-
         timer* myTime;
 
         double RotateX;
