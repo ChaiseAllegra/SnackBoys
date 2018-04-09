@@ -9,6 +9,7 @@ Model::Model()
         RotateX =0.0; // Rotations
         RotateY =0.0;
         RotateZ =0.0;
+        myTime=new timer();
 
         Zoom = -4.0;  //translations
         Xpos = 0;
@@ -82,10 +83,10 @@ void Model::UpdateHbox(float CurXpos, float CurYpos)//updates the hitbox locatio
 }
 bool Model::isalive()
 {
-    if(this->health<1)
+    if(health<1)
     {
-      this->box.width=0;
-      this->box.height=0;
+      //box.width=0;
+      //box.height=0;
       return false;
     }
     return true;
