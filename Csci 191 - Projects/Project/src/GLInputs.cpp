@@ -116,7 +116,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
             if(ply->jump<2)
             {
             J->reset();
-            ply->verticalVelocity=0.05;
+            ply->verticalVelocity=0.008;
             ply->jump++;
             }
 

@@ -29,7 +29,8 @@ class Model
         void drawModel(float x, float y, float z,float a,float b,float c,float d, float e, float f,float q,float w, float r);
         void drawModel(textureLoader *tex);
         void modelInit(char *,bool,textureLoader* );
-        void UpdateHbox(float , float );
+        void UpdateHbox(float , float);
+                        bool bcollision(Hbox , Hbox );
         bool isalive();
 
         Hbox box;

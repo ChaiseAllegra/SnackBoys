@@ -23,6 +23,7 @@ class GLScene
          void update();
          void makeModel(Model* ,textureLoader* ,float ,float ,float ,float ,float , float , float , float , float, float, float, float);
         bool playerOnTile(player* );
+         bool lol(player* );
         void tileChange(Model* , Model* ,textureLoader* );
         bool box_collision(Hbox, Hbox);
 
@@ -69,6 +70,8 @@ class GLScene
         Model* killBox;
         Model* divide;
         Model* hud;
+        Model* GoalL;
+        Model* GoalR;
 
         //left side tiles
         Model* tile1;
@@ -100,7 +103,15 @@ class GLScene
         Model* Ball; // the ball
         Model* BallHbawks;
 
+        Model* platTileBL;
+        Model* platTileBR;
+        Model* platTileTL;
+        Model* platTileTR;
+        Model* platTileM;
+
         textureLoader* tex0;
+        textureLoader* texGL;
+        textureLoader* texGR;
         textureLoader* tex1;
         textureLoader* tex2;
         textureLoader* tex3;
