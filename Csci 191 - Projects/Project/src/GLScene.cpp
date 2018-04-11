@@ -11,6 +11,9 @@
 
 using namespace std;
 
+float curFrame = 0;
+float prevFrame = 0;
+
 GLScene::GLScene()
 {
     dashVel=0.0020;
@@ -237,7 +240,8 @@ GLint GLScene::initGL()
     projA->box.y = projA ->Ypos;
     ply2->health=0;
     ply->health=5;
-    frameRate= new timer();
+
+    ply->frameRate->start();
 
     return true;
 }
@@ -600,7 +604,17 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
+<<<<<<< HEAD
         frameRate->start();
+=======
+
+    curFrame = ply->frameRate->getTicks();
+    ply->delta = curFrame - prevFrame;
+/*
+    if (ply->ballCollided == true || ply2->ballCollided == true)
+    {
+            max_xx_yy = 4;
+>>>>>>> 81f5d46d23cd41fc5d1f043f5c52a35295e42b56
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
@@ -634,7 +648,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         glScaled(3.33, 3.33, 1.0);
         plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
-    plx->scroll(true,"left",0.0002);
+    plx->scroll(true,"left",0.0002*ply->delta);
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------- PARALLAX2 CREATION --------------------------------------------//
@@ -877,8 +891,13 @@ GLint GLScene::drawGLScene(bool pressed[256])
 
     KbMs->idle(pressed,ply,ply2);
 
-    scale=frameRate->getTicks();
-    cout<<scale<<endl;
+    prevFrame = curFrame;
+
+
+    if (ply->frameRate->getTicks() >= 10000000)
+    {
+        ply->frameRate->reset();
+    }
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
