@@ -45,6 +45,16 @@ class GLScene
         float CurXpos, CurYpos; // Current x position of the ball, current y position of the ball,
         float ballSpeed;
         float scale;
+        float yDirA;
+        float xDirA;
+        float ProjACurY;
+        float ProjACurX;
+        float projAXdir;
+        float projAYdir;
+        bool projAdrawn;
+        float dashVel;
+        bool shot;
+        float dashChange=0.00001;
 
         timer* D;
         timer* PAT;//projectile A timer to stop multiple health decrements on a collision

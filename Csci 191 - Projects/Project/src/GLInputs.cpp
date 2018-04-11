@@ -120,26 +120,6 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
             ply->jump++;
         }
 
-
-
-
-    if(pressed['W'])
-    {
-        ply->upPress = true;
-        ply->downPress=false;
-        }
-
-    if(pressed['S'])
-    {
-        ply->upPress = false;
-        ply->downPress=true;
-    }
-    if(!pressed['S']&&!pressed['W'])
-    {
-           ply->upPress = false;
-        ply->downPress=false;
-    }
-
      if(pressed['F'])
      {
         ply->swinging=true;
@@ -209,22 +189,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
             ply2->jump++;
         }
     }
-     if(pressed['I'])
-    {
-        ply2->upPress = true;
-        ply2->downPress=false;
-        }
 
-    if(pressed['K'])
-    {
-        ply2->upPress = false;
-        ply2->downPress=true;
-    }
-    if(!pressed['I']&&!pressed['K'])
-    {
-           ply2->upPress = false;
-        ply2->downPress=false;
-    }
     if(pressed['H'])
     {
         //}

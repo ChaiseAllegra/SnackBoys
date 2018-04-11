@@ -34,13 +34,11 @@ player::player()
     x_direction = 1;
 
     swinging = false;
-    upPress=false;
-    downPress=false;
 
     plyVel = 0.2;
     !ballCollided;
     !midCollision;
-    freezeTimer = 0;
+
     swingDuration->start();
 
     playerDirection = "RIGHT";

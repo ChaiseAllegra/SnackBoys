@@ -84,11 +84,7 @@ class player: public Model
         bool midCollision;
         bool leftWC;
         bool rightWC;
-        bool upPress;
-        bool downPress;
-
-
-        int freezeTimer;
+        bool topWC;
 
         int isPlayer;
 

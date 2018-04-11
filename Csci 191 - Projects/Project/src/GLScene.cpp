@@ -10,16 +10,6 @@
 #include <timer.h>
 
 using namespace std;
-float yDirA;
-float xDirA;
-float ProjACurY;
-float ProjACurX;
-float projAXdir;
-float projAYdir;
-bool projAdrawn;
-float dashVel;
-bool shot;
-float dashChange=0.00001;
 
 GLScene::GLScene()
 {
@@ -297,27 +287,10 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
         return true;
         else
         return false;
-        //tileT->box.x-tileT->box.width
-        //tileT->box.y+tileT->box.height;
-        //tileT->box.x+tileT->box.width
-            //(ply->pl_pltfrm_box.x+ply->pl_pltfrm_box.width)<=(tileT->box.x+tileT->box.width)&&
-        //(ply->pl_pltfrm_box.x-ply->pl_pltfrm_box.width)>=(tileT->box.x-tileT->box.width)
 
     }
 bool GLScene::playerOnTile(player* ply)
 {
-   /*if((box_collision(ply->box,tile1->box)||box_collision(ply->box,tile2->box)||box_collision(ply->box,tile3->box)||box_collision(ply->box,tile4->box)||
-                    box_collision(ply->box,tile5->box)||box_collision(ply->box,tile6->box)||box_collision(ply->box,tile7->box)||box_collision(ply->box,tile8->box)||
-                    box_collision(ply->box,tile9->box)||box_collision(ply->box,tile10->box)||box_collision(ply->box,tile22->box)||box_collision(ply->box,tile12->box)||
-                    box_collision(ply->box,tile13->box)||box_collision(ply->box,tile14->box)||box_collision(ply->box,tile15->box)))
-               return true;
-    else
-        false;*/
-        /* if((box_collision(ply->box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
-               return true;*/
               if((topOfTile(ply,tile1)||topOfTile(ply,tile2)||topOfTile(ply,tile3)||topOfTile(ply,tile4)||
                     topOfTile(ply,tile5)||topOfTile(ply,tile6)||topOfTile(ply,tile7)||topOfTile(ply,tile8)||
                     topOfTile(ply,tile9)||topOfTile(ply,tile10)||topOfTile(ply,tile22)||topOfTile(ply,tile12)||
@@ -329,18 +302,6 @@ bool GLScene::playerOnTile(player* ply)
     else
         false;
 }
-
-bool GLScene::lol(player* ply)
-{
-    if((box_collision(ply->box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
-               return true;
-               else
-                return false;
-}
-
 
 void GLScene:: update()
 {
@@ -356,14 +317,6 @@ void GLScene:: update()
             projA->Ypos = ProjACurY;
         }
 
-    if(box_collision(Ball->box,GoalL->box))
-    {
-        //cout<<"score Left"<<endl;
-    }
-    if(box_collision(Ball->box,GoalR->box))
-    {
-        //cout<<"score Right"<<endl;
-    }
     //-------------------------------------------------------------------------------------------------//
     //-------------------------------WALL COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
@@ -399,6 +352,12 @@ void GLScene:: update()
     else
         ply->rightWC=false;
 
+     if(box_collision(ply->box,wallC->box))//player has hit the top wall
+        ply->topWC=true;//set to true so the player cannot move up
+    else
+        ply->topWC=false;
+
+
     if(box_collision(ply2->box,wallA->box))//player has hit the left wall
         ply2->leftWC=true;//set to true so the player cannot move left
     else
@@ -410,30 +369,30 @@ void GLScene:: update()
         ply2->rightWC=false;
 
         //---------------------------------------------------
-    if(box_collision(projA->box,wallA->box)&& PAT->getTicks() >= 200)
+    if(box_collision(projA->box,wallA->box)&& projA->myTime->getTicks() >= 200)
     {
-         PAT->reset();
+         projA->myTime->reset();
         projA->health--;
         projAXdir*=-1;
     }
 
-    if(box_collision(projA->box,wallB->box)&& PAT->getTicks() >= 200)
+    if(box_collision(projA->box,wallB->box)&& projA->myTime->getTicks() >= 200)
     {
-       PAT->reset();
+       projA->myTime->reset();
         projA->health--;
         projAXdir*=-1;
     }
 
-    if(box_collision(projA->box,wallC->box)&& PAT->getTicks() >= 200)
+    if(box_collision(projA->box,wallC->box)&& projA->myTime->getTicks() >= 200)
     {
-         PAT->reset();
+         projA->myTime->reset();
         projA->health--;
         projAYdir*=-1;
     }
 
-    if(box_collision(projA->box,killBox->box)&& PAT->getTicks() >= 200)
+    if(box_collision(projA->box,killBox->box)&& projA->myTime->getTicks() >= 200)
     {
-         PAT->reset();
+         projA->myTime->reset();
         projA->health--;
         projAYdir*=-1;
     }
@@ -446,12 +405,19 @@ void GLScene:: update()
     }
 
     //---------------------------------------------------------------------------------------------------//
-    //------------------------------- BALL VS PLAYER COLLISIONS -----------------------------------------//
+    //------------------------------- BALL COLLISIONS -----------------------------------------//
     //---------------------------------------------------------------------------------------------------//
 
     //----------------------PLAYER 1 --------------------------------------//
 
-
+        if(box_collision(Ball->box,GoalL->box))
+        {
+            //cout<<"score Left"<<endl;
+        }
+        if(box_collision(Ball->box,GoalR->box))
+        {
+            //cout<<"score Right"<<endl;
+        }
 
 
        if(box_collision(ply2->box,Ball->box)&&ply2->isalive()&&Ball->myTime->getTicks()>200)
@@ -497,6 +463,11 @@ void GLScene:: update()
         ply->swinging=false;
 
     }
+
+    //----------------------------------------------------------------------------
+    //----------------------PLAYER MOVEMENT---------------------------------------
+    //----------------------------------------------------------------------------
+
     float rer=10000;
     if(ply->isDash)
     {
@@ -538,6 +509,7 @@ void GLScene:: update()
     //------------------------------------------------------------------------------------------------//
 
     //------------------------------- PLAYER 1 --------------------------------------//
+
     ply->PYpos+=(ply->verticalVelocity);//*scale);
 
     if(playerOnTile(ply)&&ply->verticalVelocity<0)
@@ -546,27 +518,11 @@ void GLScene:: update()
         ply->verticalVelocity=0;
     }
 
+    if(ply->topWC)
+        ply->verticalVelocity=-0.0003;
+
     if(!playerOnTile(ply))
         ply->verticalVelocity+=ply->playerGrav;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
-
-
-   //------------------------------- PLAYER 2 --------------------------------------//
-    if(ply2->jump>0)
-        ply2->PYpos+=ply2->verticalVelocity;
-
-    if(ply2->PYpos<ground&&playerOnTile(ply2))
-    {
-        //ply2->PYpos=ground;
-        ply2->jump=0;
-    }
-
-    else if(!(playerOnTile(ply2)))
-    {
-        if(ply2->jump<=0)
-            ply2->PYpos+=ply2->verticalVelocity;
-
-        ply2->verticalVelocity+=ply2->playerGrav;
-    }
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
@@ -589,6 +545,9 @@ void GLScene:: update()
     tileChange(Ball, tile14,tileTex14);
     tileChange(Ball, tile15,tileTex15);
 
+    //----------------------------------
+    //holding the ball
+    //---------------------------------
      if(box_collision(Ball->box, ply->box)&&ply->hold)//lets the player hold the ball
     {
         Ball->Xpos=ply->PXpos;
@@ -641,65 +600,19 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
-    frameRate->reset();
-    frameRate->start();
-    /*ply->freezeTimer = 10;
-    if (ply->ballCollided == true || ply2->ballCollided == true)
-    {
-            max_xx_yy = 4;
+        frameRate->start();
 
-        if (xx >= max_xx_yy)
-        {
-            dirXX = -1;
-        }
-        if (xx <= -max_xx_yy)
-        {
-            dirXX=1;
-        }
-        if (yy >= max_xx_yy)
-        {
-            dirYY = -1;
-        }
-        if (yy <= -max_xx_yy)
-        {
-            dirYY=1;
-        }
-            xx += dirXX*8;
-            yy += dirYY*4;
-        glViewport(xx,yy, screenWidth, screenHeight);
-    }
-    else
-        glViewport(0,0, screenWidth, screenHeight);*/
-
-        if (ballCollTimer->getTicks() >= ply->freezeTimer)
-        {
-            ballCollTimer->stop();
-            ply->swingTimer->resume();
-            ply->ballCollided = false;
-            ply2->swingTimer->resume();
-            ply2->ballCollided = false;
-        }
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
         D->start();
-        PAT->start();
+        projA->myTime->start();
         BPA->start();
         pCol->start();
         ply->myTime->start();
-
-
-        projA->myTime->start();
-
         Ball->myTime->start();
-        projA->myTime->start();
-
-
         ply->swingTimer->start();
         ply2->swingTimer->start();
-        //ply->swingDuration->start();
-
-
       //-----------------------------------------------------------------------------------------------//
      //-------------------------------- SKYBOX CREATION ----------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -952,24 +865,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
 
     glPushMatrix();
 
-
-
-
-    /*glPushMatrix();
-        hud->verticies[0].x = -1; //bottom left x
-        hud->verticies[1].x = 1; //bottom right x
-        hud->verticies[2].x = 1; //top right x
-        hud->verticies[3].x = -1; //top left x
-        hud->verticies[0].y = -1; //bottom left y
-        hud->verticies[1].y = -1; //bottom right y
-        hud->verticies[2].y = 1; //top right y
-        hud->verticies[3].y = 1; // top left y
-        hud->Xpos = -2.69;
-        hud->Ypos = 1.15;
-        hud->drawModel(texH); //made the z equal to 2 so the pillar is in front of the player
-
-    glPopMatrix();*/
-
     float tmp1 = ply->PXpos - ply->xdir;
     float tmp2 = ply->PYpos + ply->ydir;
     float tmp3 = ply->PXpos + ply->xdir;
@@ -998,36 +893,4 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 }
 int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool press[256])
 {
-    /*if(uMsg==WM_KEYDOWN)
-    {
-        KbMs->wParam = wParam;
-        KbMs->keyEnv(plx, 0.005);
-        KbMs->keyPressed(ply, ply2, modelTeapot, modelTeapot2, wallA, wallB, wallC,press);
-    }
-     if(uMsg==WM_KEYUP)
-    {
-        KbMs->wParam = wParam;
-        KbMs->keyUp(ply, ply2, press);
-    }*/
-           /* if ((ply->playerDirection == "RIGHT" && Ball->Xpos >= ply->PXpos) || (ply->playerDirection == "LEFT" && Ball->Xpos <= ply->PXpos ))
-        {
-         if (ply->freezeTimer > 0)
-            {
-                ply->ballCollided = true;
-                ply2->midCollision = true;
-
-                ply->swingTimer->pause();
-                ballCollTimer->reset();
-                ballCollTimer->start();
-            }
-              if((box_collision(ply-box,tile1->box)||box_collision(ply->pl_pltfrm_box,tile2->box)||box_collision(ply->pl_pltfrm_box,tile3->box)||box_collision(ply->pl_pltfrm_box,tile4->box)||
-                    box_collision(ply->pl_pltfrm_box,tile5->box)||box_collision(ply->pl_pltfrm_box,tile6->box)||box_collision(ply->pl_pltfrm_box,tile7->box)||box_collision(ply->pl_pltfrm_box,tile8->box)||
-                    box_collision(ply->pl_pltfrm_box,tile9->box)||box_collision(ply->pl_pltfrm_box,tile10->box)||box_collision(ply->pl_pltfrm_box,tile22->box)||box_collision(ply->pl_pltfrm_box,tile12->box)||
-                    box_collision(ply->pl_pltfrm_box,tile13->box)||box_collision(ply->pl_pltfrm_box,tile14->box)||box_collision(ply->pl_pltfrm_box,tile15->box)))
-               return true;
-    else
-        false;
-
-
-            */
 }
