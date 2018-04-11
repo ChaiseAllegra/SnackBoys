@@ -80,6 +80,10 @@ class player: public Model
         timer* swingDuration = new timer();
         timer *T = new timer();
         timer *T2 = new timer();
+        timer* frameRate = new timer();
+
+        float delta;
+
         bool ballCollided;
         bool midCollision;
         bool leftWC;

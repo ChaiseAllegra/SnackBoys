@@ -21,6 +21,9 @@ float dashVel;
 bool shot;
 float dashChange=0.00001;
 
+float curFrame = 0;
+float prevFrame = 0;
+
 GLScene::GLScene()
 {
     dashVel=0.0020;
@@ -247,7 +250,8 @@ GLint GLScene::initGL()
     projA->box.y = projA ->Ypos;
     ply2->health=0;
     ply->health=5;
-    frameRate= new timer();
+
+    ply->frameRate->start();
 
     return true;
 }
@@ -641,9 +645,10 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
-    frameRate->reset();
-    frameRate->start();
-    /*ply->freezeTimer = 10;
+
+    curFrame = ply->frameRate->getTicks();
+    ply->delta = curFrame - prevFrame;
+/*
     if (ply->ballCollided == true || ply2->ballCollided == true)
     {
             max_xx_yy = 4;
@@ -982,8 +987,13 @@ GLint GLScene::drawGLScene(bool pressed[256])
 
     KbMs->idle(pressed,ply,ply2);
 
-    scale=frameRate->getTicks();
-    cout<<scale<<endl;
+    prevFrame = curFrame;
+
+
+    if (ply->frameRate->getTicks() >= 10000000)
+    {
+        ply->frameRate->reset();
+    }
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)

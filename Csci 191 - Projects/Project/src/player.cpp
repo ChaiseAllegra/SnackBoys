@@ -155,13 +155,13 @@ void player::actions()
                         if (plyVel  > 0.004)
                             plyVel = 0.004;
                         if(lastCase == 'R'&& !rightWC&&jump==0)//running on the ground and not colliding with the wall
-                            PXpos += plyVel*2.5;//10;
+                            PXpos += plyVel*this->delta/2;//10;
                         if(lastCase == 'L'&& !leftWC&&jump==0)
-                            PXpos -= plyVel*2.5;//10
+                            PXpos -= plyVel*this->delta/2;//10
                         if(lastCase == 'L'&& !leftWC&&jump>0)//move slower in the air
-                            PXpos -= plyVel*2;//10;
+                            PXpos -= plyVel*this->delta/2;//10;
                         if(lastCase == 'R'&& !rightWC&&jump>0)
-                            PXpos += plyVel*2;//10;
+                            PXpos += plyVel*this->delta/2;//10;
                     T->reset();
                     }
                 }
@@ -171,7 +171,7 @@ void player::actions()
                     if(T2 ->getTicks()>80)
                     {
                         runspeed++;
-                        runspeed %= 5;;
+                        runspeed %= 5;
                         T2->reset();
                     }
                     if(lastCase == 'R')
