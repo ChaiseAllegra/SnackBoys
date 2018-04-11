@@ -19,10 +19,11 @@ float projAYdir;
 bool projAdrawn;
 float dashVel;
 bool shot;
+float dashChange=0.00001;
 
 GLScene::GLScene()
 {
-    dashVel=0.0012;
+    dashVel=0.0020;
     levelOne=true;
     levelTwo=false;
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
@@ -498,15 +499,11 @@ void GLScene:: update()
 
     if(ply->isDash)
     {
-        if(ply->lastCase=='R')
+        if(ply->lastCase=='R'&&!ply->rightWC)
         {
-            if(!ply->rightWC)
-            {
-                dashVel*=ply->plyAccel;
-                ply->PXpos += dashVel*10;
-                if(dashVel>0.0012)
-                dashVel-=0.00001;
-            }
+            ply->PXpos += dashVel;//10;
+
+
 
             if(ply->PXpos>ply->prevx+1||ply->rightWC)
             {
@@ -514,15 +511,16 @@ void GLScene:: update()
                 dashVel=0.0012;
             }
         }
+        //dashChange+=0.0000038dtd;
 
         if(ply->lastCase=='L')
         {
              if(!ply->leftWC)
             {
                 dashVel*=ply->plyAccel;
-                ply->PXpos -= dashVel*10;
-                 if(dashVel>0)
-                dashVel+=0.00001;
+                ply->PXpos -= dashVel*2.5;//10;
+              //   if(dashVel<0.0012)
+               // dashVel+=0.00001;
             }
             if(ply->PXpos<ply->prevx-1||ply->leftWC)
             {
