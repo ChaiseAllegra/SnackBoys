@@ -6,7 +6,7 @@
 
 player::player()
 {
-    //verticalVelocity=0.005;
+    verticalVelocity=0;
     playerGrav=-0.00003;//-0.00001;
     ydir=0;
     xdir=1;
@@ -154,11 +154,14 @@ void player::actions()
 
                         if (plyVel  > 0.004)
                             plyVel = 0.004;
-                        if(lastCase == 'R'&& !rightWC)
+                        if(lastCase == 'R'&& !rightWC&&jump==0)//running on the ground and not colliding with the wall
                             PXpos += plyVel*2;//10;
-                        if(lastCase == 'L'&& !leftWC)
+                        if(lastCase == 'L'&& !leftWC&&jump==0)
                             PXpos -= plyVel*2;//10;
-
+                        if(lastCase == 'L'&& !leftWC&&jump>0)//move slower in the air
+                            PXpos -= plyVel*1.2;//10;
+                        if(lastCase == 'R'&& !rightWC&&jump>0)
+                            PXpos += plyVel*1.2;//10;
                     T->reset();
                     }
                 }

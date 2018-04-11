@@ -83,13 +83,16 @@ void Model::UpdateHbox(float CurXpos, float CurYpos)//updates the hitbox locatio
 }
 bool Model::isalive()
 {
-    if(health<1)
-    {
-      //box.width=0;
-      //box.height=0;
-      return false;
+    if(health>1)
+      return true;
+    else{
+        box.x=999;
+        box.x=999;
+        box.width=0;
+        box.height=0;
+        return false;
     }
-    return true;
+
 }
 
  bool Model::bcollision(Hbox rect1, Hbox rect2)

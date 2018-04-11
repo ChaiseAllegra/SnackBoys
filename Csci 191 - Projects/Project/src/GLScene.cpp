@@ -33,7 +33,7 @@ GLScene::GLScene()
     directionX = -2;
     directionY = 1;
     CurXpos = 0, CurYpos = 0;//-1.3 ; // Current x position of the ball, current y position of the ball,
-    ballSpeed = 0.0015;
+    ballSpeed = 0.001;
 
     D = new timer();
     PAT= new timer();
@@ -244,7 +244,7 @@ GLint GLScene::initGL()
     projA->Ypos=999;
     projA->box.x = projA ->Xpos;
     projA->box.y = projA ->Ypos;
-    ply2->health=5;
+    ply2->health=0;
     ply->health=5;
 
     return true;
@@ -347,8 +347,8 @@ void GLScene:: update()
 
         if(ply->thrown)
         {
-            ProjACurY += (projAYdir * 0.015);
-            ProjACurX += (projAXdir * 0.015);
+            ProjACurY += (projAYdir * 0.003);
+            ProjACurX += (projAXdir * 0.003);
 
             projA->Xpos = ProjACurX;
             projA->Ypos = ProjACurY;
@@ -392,12 +392,12 @@ void GLScene:: update()
     else
         ply->leftWC=false;
 
-    if(box_collision(ply->box,divide->box))//player has hit the right wall
+    if(box_collision(ply->box,wallB->box))//player has hit the right wall
         ply->rightWC=true;//set to true so the player cannot move right
     else
         ply->rightWC=false;
 
-    if(box_collision(ply2->box,divide->box))//player has hit the left wall
+    if(box_collision(ply2->box,wallA->box))//player has hit the left wall
         ply2->leftWC=true;//set to true so the player cannot move left
     else
         ply2->leftWC=false;
@@ -475,89 +475,26 @@ void GLScene:: update()
             projAYdir=ply->ydir;
            //player 2 is deleted or stunned
        }
+    if(box_collision(projA->box,ply->box)&&ply->swinging==false)//player one can hit his own wall
+         ply->verticalVelocity=0.008;
     if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
     {
+        pCol->reset();
+        if(ply->lastCase=='R')//lets player aim to his right
+        {
+            directionX = ply->xdir;
+            directionY = ply->ydir;
+        }
 
-            pCol->reset();
-            ballSpeed *= 1.2;
-
-            if (ballSpeed > .0043)
-                ballSpeed = .0043;
-
-            if(ply->swingDirection == "TOPRIGHT")
-                {
-                    directionX = 1;
-                    directionY = 1;
-                }
-                else if(ply->swingDirection == "TOPLEFT")
-                {
-                    directionX = -1;
-                    directionY = 1;
-                }
-                else if(ply->swingDirection == "BOTTOMLEFT")
-                {
-                    directionX = -1;
-                    directionY = -1;
-                }
-                else if(ply->swingDirection == "BOTTOMRIGHT")
-                {
-                    directionX = 1;
-                    directionY = -1;
-                }
-                else if(ply->swingDirection == "LEFT")
-                {
-                    directionX = -1;
-                    directionY = 0;
-                }
-                else if(ply->swingDirection == "RIGHT")
-                {
-                    directionX = 1;
-                    directionY = 0;
-                }
+        if(ply->lastCase=='L')//lets player aim to his left
+        {
+            directionX = -ply->xdir;
+            directionY = ply->ydir;
+        }
+        ballSpeed += 0.00015;
+        ply->swinging=false;
 
     }
-
-        //---------------------- PLAYER 2 --------------------------------------//
-    if (box_collision(Ball->box, ply2->box) && ply2->swinging == true && pCol->getTicks() >= 350)
-    {
-            pCol->reset();
-            ballSpeed *= 1.2;
-
-            if (ballSpeed > .0043)
-                ballSpeed = .0043;
-
-                if(ply2->swingDirection == "TOPRIGHT")
-                {
-                    directionX = 1;
-                    directionY = 1;
-                }
-                else if(ply2->swingDirection == "TOPLEFT")
-                {
-                    directionX = -1;
-                    directionY = 1;
-                }
-                else if(ply2->swingDirection == "BOTTOMLEFT")
-                {
-                    directionX = -1;
-                    directionY = -1;
-                }
-                else if(ply2->swingDirection == "BOTTOMRIGHT")
-                {
-                    directionX = 1;
-                    directionY = -1;
-                }
-                else if(ply2->swingDirection == "LEFT")
-                {
-                    directionX = -1;
-                    directionY = 0;
-                }
-                else if(ply2->swingDirection == "RIGHT")
-                {
-                    directionX = 1;
-                    directionY = 0;
-                }
-    }
-
 
     if(ply->isDash)
     {
@@ -600,23 +537,17 @@ void GLScene:: update()
     //------------------------------------------------------------------------------------------------//
 
     //------------------------------- PLAYER 1 --------------------------------------//
-    if(ply->jump>0)//if jump is greater than zero the jump key has been pressed
-        ply->PYpos+=ply->verticalVelocity;//add the vertical velocity to the players ypos to make them jump
+    ply->PYpos+=ply->verticalVelocity;
 
-    if(ply->PYpos<ground&&playerOnTile(ply))//if the player is touching a tile and is below the ground Y level
+    if(playerOnTile(ply)&&ply->verticalVelocity<0)
     {
-        //ply->PYpos=ground;//set his ypos to the gournd
-        ply->jump=0;//reset his jump counter
+        ply->jump=0;
+        ply->verticalVelocity=0;
     }
 
-    else if(!(playerOnTile(ply))&&ply->isDash==false
-            )//if the player is not touching a tile
-    {
-        if(ply->jump<=0)//if the jump is over
-            ply->PYpos+=ply->verticalVelocity;//change the plaeyrs y position
-
+    if(!playerOnTile(ply))
         ply->verticalVelocity+=ply->playerGrav;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
-    }
+
 
    //------------------------------- PLAYER 2 --------------------------------------//
     if(ply2->jump>0)
@@ -753,6 +684,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         PAT->start();
         BPA->start();
         pCol->start();
+        ply->myTime->start();
 
 
         projA->myTime->start();
@@ -814,8 +746,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply->pl_pltfrm_box.y = ply -> PYpos;
         ply->pl_pltfrm_box.height = 0.6;
         ply->pl_pltfrm_box.width = 0.07;
-        ply->box.height=0.6;
-        ply->box.width=0.2;
+        ply->box.height=0.1;
+        ply->box.width=0.1;
         update();
         ply->drawplayer();
     glPopMatrix();
@@ -858,50 +790,51 @@ GLint GLScene::drawGLScene(bool pressed[256])
     //-------------------------------------------------------------------------------------------------//
 
     // model , texture, xpos,ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
-    if(tile1->health>0)
+    if(tile1->isalive())
     makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile2->health>0)
+    if(tile2->isalive())
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile3->health>0)
+    if(tile3->isalive())
     //makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile4->health>0)
+    if(tile4->isalive())
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile5->health>0)
+    if(tile5->isalive())
     makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile6->health>0)
+    if(tile6->isalive())
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile7->health>0)
+    if(tile7->isalive())
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile8->health>0)
+    if(tile8->isalive())
     makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile9->health>0)
+    if(tile9->isalive())
     makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile10->health>0)
+    if(tile10->isalive())
     makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile22->health>0)
+    if(tile22->isalive())
     makeModel(tile22,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile12->health>0)
+    if(tile12->isalive())
     makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile13->health>0)
+    if(tile13->isalive())
     makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile14->health>0)
+    if(tile14->isalive())
     makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
-    if(tile15->health>0)
+    if(tile15->isalive())
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+
 
     //left wall
     makeModel(wallA,tex1,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
@@ -925,11 +858,11 @@ GLint GLScene::drawGLScene(bool pressed[256])
      makeModel(GoalR,texGL,3,0,-0.2,0.5,0.2,0.5,0.2,-0.5,-0.2,-0.5,0.5,1);
 
      // Platform Tiles
-    makeModel(platTileBL, tileTex, -1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 1, 0.3);
-    makeModel(platTileBR, tileTex, 1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 1, 0.3);
-    makeModel(platTileTL, tileTex, -1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 1, 0.3);
-    makeModel(platTileTR, tileTex, 1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 1, 0.3);
-    makeModel(platTileM, tileTex, 0, 0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 1, 0.3);
+    makeModel(platTileBL, tileTex, -1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+    makeModel(platTileBR, tileTex, 1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+    makeModel(platTileTL, tileTex, -1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+    makeModel(platTileTR, tileTex, 1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+    makeModel(platTileM, tileTex, 0, 0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
 
 
 
@@ -971,8 +904,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
                     projAYdir = ply->ydir;
                 }
 
-                projA->Xpos = ply->PXpos;
-                projA->Ypos = ply->PYpos;
                 projA->health = 3;
                 shot = true;
             }
@@ -994,8 +925,10 @@ GLint GLScene::drawGLScene(bool pressed[256])
     }
 
 
-    if(ply->thrown==false)
-        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
+    if(ply->thrown==false&&ply->lastCase=='R')
+        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos+0.3;
+     if(ply->thrown==false&&ply->lastCase=='L')
+           ProjACurY=ply->PYpos, ProjACurX=ply->PXpos-0.3;
 
     glPushMatrix();
         Ball->box.height =  .2;

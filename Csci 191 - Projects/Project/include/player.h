@@ -80,7 +80,6 @@ class player: public Model
         timer* swingDuration = new timer();
         timer *T = new timer();
         timer *T2 = new timer();
-        string swingDirection;
         bool ballCollided;
         bool midCollision;
         bool leftWC;

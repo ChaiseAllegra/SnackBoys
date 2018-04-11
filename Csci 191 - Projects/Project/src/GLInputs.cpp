@@ -113,12 +113,13 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply->actionTrigger=0;
 
     if(pressed['E']&&J->getTicks() >= 200)//200ms
-            if(ply->jump<2)
-            {
+        if(ply->jump<2)
+        {
             J->reset();
             ply->verticalVelocity=0.008;
             ply->jump++;
-            }
+        }
+
 
 
 
@@ -140,45 +141,12 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     }
 
      if(pressed['F'])
-    {
-       // if( ply->swingTimer->getTicks()>= 500)
-       // {
-            ply->swingDuration->reset();
-            ply->swingDuration->start();
-            ply->swingTimer->reset();
-
-              if (ply->upPress)
-              {
-
-                if(ply->lastCase == 'R')
-                    ply->swingDirection = "TOPRIGHT";
-
-                if(ply->lastCase == 'L')
-                    ply->swingDirection = "TOPLEFT";
-              }
-              else if (ply->downPress)
-              {
-                if(ply->lastCase == 'R')
-                    ply->swingDirection = "BOTTOMRIGHT";
-
-                if(ply->lastCase == 'L')
-                    ply->swingDirection = "BOTTOMLEFT";
-
-              }
-
-              else
-                {
-                if(ply->lastCase == 'R')
-                    ply->swingDirection = "RIGHT";
-
-                if(ply->lastCase == 'L')
-                    ply->swingDirection = "LEFT";
-              }
-            ply->swinging = true;
-        //}
-    }
-        else
-            ply->swinging = false;
+     {
+        ply->swinging=true;
+        ply->actionTrigger=4;
+     }
+     if(!pressed['F'])
+        ply->swinging=false;
 
     if(pressed['T'])
     {
@@ -259,44 +227,9 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     }
     if(pressed['H'])
     {
-       // if( ply->swingTimer->getTicks()>= 500)
-       // {
-            ply2->swingDuration->reset();
-            ply2->swingDuration->start();
-            ply2->swingTimer->reset();
-
-              if (ply2->upPress)
-              {
-
-                if(ply2->lastCase == 'R')
-                    ply2->swingDirection = "TOPRIGHT";
-
-                if(ply2->lastCase == 'L')
-                    ply2->swingDirection = "TOPLEFT";
-              }
-              else if (ply2->downPress)
-              {
-                if(ply2->lastCase == 'R')
-                    ply2->swingDirection = "BOTTOMRIGHT";
-
-                if(ply2->lastCase == 'L')
-                    ply2->swingDirection = "BOTTOMLEFT";
-
-              }
-
-              else
-                {
-                if(ply2->lastCase == 'R')
-                    ply2->swingDirection = "RIGHT";
-
-                if(ply2->lastCase == 'L')
-                    ply2->swingDirection = "LEFT";
-              }
-            ply2->swinging = true;
         //}
     }
-        else
-            ply2->swinging = false;
+
 }
 void Inputs::mouseEventDown(Model *Model, double x,double y)
 {
