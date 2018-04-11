@@ -726,7 +726,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         glScaled(3.33, 3.33, 1.0);
         plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
-    plx->scroll(true,"left",0.0002);
+    plx->scroll(true,"left",0.0002*ply->delta);
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------- PARALLAX2 CREATION --------------------------------------------//
