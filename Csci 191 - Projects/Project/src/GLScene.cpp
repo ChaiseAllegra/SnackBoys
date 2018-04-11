@@ -247,6 +247,7 @@ GLint GLScene::initGL()
     projA->box.y = projA ->Ypos;
     ply2->health=0;
     ply->health=5;
+    frameRate= new timer();
 
     return true;
 }
@@ -496,12 +497,12 @@ void GLScene:: update()
         ply->swinging=false;
 
     }
-
+    float rer=10000;
     if(ply->isDash)
     {
         if(ply->lastCase=='R'&&!ply->rightWC)
         {
-            ply->PXpos += dashVel;//10;
+            ply->PXpos += dashChange;//10;
 
 
 
@@ -511,6 +512,8 @@ void GLScene:: update()
                 dashVel=0.0012;
             }
         }
+        dashChange=5/rer;
+        rer+=10;
         //dashChange+=0.0000038dtd;
 
         if(ply->lastCase=='L')
@@ -535,7 +538,7 @@ void GLScene:: update()
     //------------------------------------------------------------------------------------------------//
 
     //------------------------------- PLAYER 1 --------------------------------------//
-    ply->PYpos+=ply->verticalVelocity;
+    ply->PYpos+=(ply->verticalVelocity);//*scale);
 
     if(playerOnTile(ply)&&ply->verticalVelocity<0)
     {
@@ -638,8 +641,9 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
-
-/*ply->freezeTimer = 10;
+    frameRate->reset();
+    frameRate->start();
+    /*ply->freezeTimer = 10;
     if (ply->ballCollided == true || ply2->ballCollided == true)
     {
             max_xx_yy = 4;
@@ -978,7 +982,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
 
     KbMs->idle(pressed,ply,ply2);
 
-    KbMs->idle(pressed,ply,ply2);
+    scale=frameRate->getTicks();
+    cout<<scale<<endl;
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)

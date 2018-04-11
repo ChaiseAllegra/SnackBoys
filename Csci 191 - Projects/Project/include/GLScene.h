@@ -44,12 +44,14 @@ class GLScene
         float directionY;
         float CurXpos, CurYpos; // Current x position of the ball, current y position of the ball,
         float ballSpeed;
+        float scale;
 
         timer* D;
         timer* PAT;//projectile A timer to stop multiple health decrements on a collision
         timer* BPA;//projectile A and ball collision timer
         timer* pCol;
         timer* ballCollTimer;
+        timer* frameRate;
 
         Model * projA;
         Model* modelTeapot;
