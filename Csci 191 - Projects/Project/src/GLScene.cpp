@@ -13,6 +13,8 @@ using namespace std;
 
 float curFrame = 0;
 float prevFrame = 0;
+float dashDec=1.5;
+float dashVel=1;
 
 GLScene::GLScene()
 {
@@ -126,6 +128,7 @@ GLScene::GLScene()
      tileTex15=new textureLoader();
 
      crosshair=new textureLoader();
+      dashVel=.0075;//0.01;//ply->plyVel*0.5;
     }
 
 GLScene::~GLScene()
@@ -471,40 +474,28 @@ void GLScene:: update()
     //----------------------------------------------------------------------------
     //----------------------PLAYER MOVEMENT---------------------------------------
     //----------------------------------------------------------------------------
-
-    float rer=10000;
     if(ply->isDash)
     {
         if(ply->lastCase=='R'&&!ply->rightWC)
         {
-            ply->PXpos += dashChange;//10;
-
-
-
-            if(ply->PXpos>ply->prevx+1||ply->rightWC)
+            ply->PXpos += dashVel;
+            if(dashVel<=0)
             {
                 ply->isDash=false;
-                dashVel=0.0012;
+                dashVel=.0075;
             }
+            dashVel-=0.00002;//dashDec;
         }
-        dashChange=5/rer;
-        rer+=10;
-        //dashChange+=0.0000038dtd;
 
-        if(ply->lastCase=='L')
+         if(ply->lastCase=='L'&&!ply->leftWC)
         {
-             if(!ply->leftWC)
-            {
-                dashVel*=ply->plyAccel;
-                ply->PXpos -= dashVel*2.5;//10;
-              //   if(dashVel<0.0012)
-               // dashVel+=0.00001;
-            }
-            if(ply->PXpos<ply->prevx-1||ply->leftWC)
+            ply->PXpos -= dashVel;
+            if(dashVel<=0)
             {
                 ply->isDash=false;
-                dashVel=0.0012;
+                dashVel=.0075;
             }
+            dashVel-=0.00002;//dashDec;
         }
 
     }

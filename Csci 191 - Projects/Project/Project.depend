@@ -1476,7 +1476,7 @@
 
 1522788708 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1523494800 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1523494883 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1536,7 +1536,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1523494647 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1523497457 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -1552,7 +1552,7 @@
 1522788710 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1523494761 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1523498377 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
