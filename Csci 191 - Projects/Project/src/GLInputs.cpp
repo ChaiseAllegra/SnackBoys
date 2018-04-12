@@ -9,9 +9,6 @@
 
 using namespace std;
 
-timer* J = new timer();
-timer* J2= new timer();
-
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -27,50 +24,12 @@ Inputs::~Inputs()
 
 void Inputs::keyEnv(parallax* plx, float speed)
 {
-    switch(wParam)
-    {
-        case VK_LEFT:
-            // plx->Xmin -=speed;
-            // plx->Xmax -=speed;
-            break;
-        case VK_RIGHT:
-            // plx->Xmin +=speed;
-            // plx->Xmax +=speed;
-            break;
-         case VK_UP:
-            // plx->Ymin -=speed;
-            // plx->Ymax -=speed;
-            break;
-        case VK_DOWN:
-            //  plx->Ymin +=speed;
-            //  plx->Ymax +=speed;
-            break;
-    }
+
 }
 
 void Inputs::keyPressed(Model* Mdl)
 {
-    switch(wParam)
-    {
-    case VK_LEFT:
-        Mdl->RotateX +=1.0;
-        break;
-    case VK_RIGHT:
-        Mdl->RotateX -=1.0;
-        break;
-    case VK_DOWN:
-        Mdl->RotateY -=1.0;
-        break;
-    case VK_UP:
-        Mdl->RotateY +=1.0;
-        break;
-    case VK_ADD:
-        Mdl->Zoom +=1.0;
-        break;
-    case VK_SUBTRACT:
-        Mdl->Zoom -=1.0;
-        break;
-    }
+
 }
 
 void Inputs::keyUp(player* ply, player* ply2, bool pressed[256])
@@ -85,21 +44,17 @@ void Inputs::keyPressed(player* ply, player* ply2, Model *play, Model *play2, Mo
 }
 void Inputs::keyUP()
 {
-  switch (wParam)
-            {
-                default:
-                break;
-            }
+
 }
 void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
-    J->start();
-    J2->start();
+    ply->jumpTimer->start();
+
     if(pressed['A']&&!ply->isDash)
      {
-            ply->actionTrigger = 1;
-         ply->lastKey = 'L';
-         ply->lastCase = 'L';
+        ply->actionTrigger = 1;
+        ply->lastKey = 'L';
+        ply->lastCase = 'L';
      }
 
     if(pressed['D']&&!ply->isDash)
@@ -112,19 +67,17 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(!pressed['D']&&!pressed['A'])
         ply->actionTrigger=0;
 
-    if(pressed['E']&&J->getTicks() >= 200)//200ms
+    if(pressed['E']&&ply->jumpTimer->getTicks() >= 200)//200ms
         if(ply->jump<2)
         {
-            J->reset();
+            ply->jumpTimer->reset();
             ply->verticalVelocity=0.008;
             ply->jump++;
         }
 
      if(pressed['F'])
-     {
         ply->swinging=true;
-        //ply->actionTrigger=4;
-     }
+
      if(!pressed['F'])
         ply->swinging=false;
 
@@ -179,22 +132,6 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     }
     if(!pressed['J']&&!pressed['L'])
         ply2->actionTrigger=0;
-
-      if(pressed['O']&&J2->getTicks() >= 200)
-    {
-        if(ply2->jump<2)
-        {
-            J2->reset();
-            ply2->verticalVelocity=0.005;
-            ply2->jump++;
-        }
-    }
-
-    if(pressed['H'])
-    {
-        //}
-    }
-
 }
 void Inputs::mouseEventDown(Model *Model, double x,double y)
 {

@@ -604,17 +604,8 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
-<<<<<<< HEAD
-        frameRate->start();
-=======
-
     curFrame = ply->frameRate->getTicks();
     ply->delta = curFrame - prevFrame;
-/*
-    if (ply->ballCollided == true || ply2->ballCollided == true)
-    {
-            max_xx_yy = 4;
->>>>>>> 81f5d46d23cd41fc5d1f043f5c52a35295e42b56
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//

@@ -81,6 +81,7 @@ class player: public Model
         timer *T = new timer();
         timer *T2 = new timer();
         timer* frameRate = new timer();
+        timer* jumpTimer = new timer();
 
         float delta;
 

@@ -67,6 +67,7 @@ void player::drawplayer()
 }
 void player::playerInit()
 {
+    jumpTimer = new timer();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     //T2->start();
@@ -191,8 +192,6 @@ void player::actions()
 
     break;
    }
-
-   // case 4:
    if(swinging)
    {
            glPushMatrix();
@@ -209,9 +208,6 @@ void player::actions()
               drawplayer();
            glPopMatrix();
    }
-
-   // break;
-   //}
 }
  void player::playerUpdateHbox() // updates the hit-box location to the players location
  {
