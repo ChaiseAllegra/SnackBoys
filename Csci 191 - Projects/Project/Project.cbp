@@ -41,7 +41,10 @@
 			<Add library="opengl32" />
 			<Add library="glu32" />
 			<Add library="gdi32" />
+			<Add library="glfw3" />
+			<Add library="gdi32" />
 			<Add directory="../common/include" />
+			<Add directory="lib-mingw" />
 		</Linker>
 		<Unit filename="include/GLInputs.h" />
 		<Unit filename="include/GLLight.h" />

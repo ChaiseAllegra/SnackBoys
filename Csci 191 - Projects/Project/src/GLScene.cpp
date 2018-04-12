@@ -20,7 +20,8 @@ double currentTime;
 double lastTime = glfwGetTime();
 double deltaTime;
 int frameCount=0;
-float scale;
+float scale=1;
+bool above;
 
 GLScene::GLScene()
 {
@@ -319,19 +320,16 @@ bool GLScene::playerOnTile(player* ply)
 void GLScene:: update()
 {
     double currentTime = glfwGetTime();
-    //deltaTime=currentTime-lastFrame;
-    //lastFrame=currentFrame;
 
     frameCount++;
     if(currentTime-lastTime>=1.0)
     {
-        scale=1000/double(frameCount);
-       // cout<<currentTime<<endl;
-      //  cout<<scale<<endl;
+        scale=(frameCount)/2;
         frameCount=0;
         lastTime+=1.0;
-            ballSpeed=0.125/scale;
-        //cout<<"bs "<<ballSpeed<<endl;
+        ballSpeed=(0.125*2)/scale;
+        //cout<<"scale "<<scale<<endl;
+        ply->delta=scale;
     }
 
     if (!glfwInit())
@@ -530,7 +528,8 @@ void GLScene:: update()
 
     //------------------------------- PLAYER 1 --------------------------------------//
 
-    ply->PYpos+=(ply->verticalVelocity);//*scale);
+    if(scale>0)
+    ply->PYpos+=(ply->verticalVelocity*200)/scale;
 
     if(playerOnTile(ply)&&ply->verticalVelocity<0)
     {
@@ -541,8 +540,8 @@ void GLScene:: update()
     if(ply->topWC)
         ply->verticalVelocity=-0.0003;
 
-    if(!playerOnTile(ply))
-        ply->verticalVelocity+=ply->playerGrav;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+    if(!playerOnTile(ply)&&scale>0)
+        ply->verticalVelocity+=(ply->playerGrav*250)/scale;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
@@ -620,8 +619,8 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
-    curFrame = ply->frameRate->getTicks();
-    ply->delta = curFrame - prevFrame;
+    //curFrame = ply->frameRate->getTicks();
+  //  ply->delta = curFrame - prevFrame;
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//

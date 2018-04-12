@@ -35,7 +35,7 @@ player::player()
 
     swinging = false;
 
-    plyVel = 0.2;
+    plyVel = 2;
     !ballCollided;
     !midCollision;
 
@@ -121,6 +121,7 @@ void player::playerInit()
 
 void player::actions()
 {
+        // cout<<"delta "<<delta<<endl;
    switch(actionTrigger){
        case 0:
            plyVel = 0.002;
@@ -149,18 +150,19 @@ void player::actions()
                 {
                     if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated))
                     {
-                        plyVel *= plyAccel;
+                       // plyVel *= plyAccel;
 
-                        if (plyVel  > 0.004)
-                            plyVel = 0.004;
+                        //if (plyVel  > 0.004)
+                        //    plyVel = 0.004;
+                        //cout<<"plyvel/delta "<<plyVel/delta<<endl;
                         if(lastCase == 'R'&& !rightWC&&jump==0)//running on the ground and not colliding with the wall
-                            PXpos += plyVel*2.5;//10;
+                            PXpos += (plyVel*1200.5)/delta;//10;
                         if(lastCase == 'L'&& !leftWC&&jump==0)
-                            PXpos -= plyVel*2.5;//10
+                            PXpos -= (plyVel*1200.5)/delta;//10
                         if(lastCase == 'L'&& !leftWC&&jump>0)//move slower in the air
-                            PXpos -= plyVel*2.0;//10;
+                            PXpos -= (plyVel*1200.5)/delta;//10;
                         if(lastCase == 'R'&& !rightWC&&jump>0)
-                            PXpos += plyVel*2.0;//10;
+                            PXpos += (plyVel*1200.5)/delta;//10;
                     T->reset();
                     }
                 }
