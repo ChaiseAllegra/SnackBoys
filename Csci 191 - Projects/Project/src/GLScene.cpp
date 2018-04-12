@@ -8,6 +8,7 @@
 #include <mmsystem.h>
 #include <cmath>
 #include <timer.h>
+#include <GLFW/glfw3.h>
 
 using namespace std;
 
@@ -15,6 +16,11 @@ float curFrame = 0;
 float prevFrame = 0;
 float dashDec=1.5;
 float dashVel=1;
+double currentTime;
+double lastTime = glfwGetTime();
+double deltaTime;
+int frameCount=0;
+float scale;
 
 GLScene::GLScene()
 {
@@ -312,6 +318,25 @@ bool GLScene::playerOnTile(player* ply)
 
 void GLScene:: update()
 {
+    double currentTime = glfwGetTime();
+    //deltaTime=currentTime-lastFrame;
+    //lastFrame=currentFrame;
+
+    frameCount++;
+    if(currentTime-lastTime>=1.0)
+    {
+        scale=1000/double(frameCount);
+       // cout<<currentTime<<endl;
+      //  cout<<scale<<endl;
+        frameCount=0;
+        lastTime+=1.0;
+            ballSpeed=0.125/scale;
+        //cout<<"bs "<<ballSpeed<<endl;
+    }
+
+    if (!glfwInit())
+    exit(EXIT_FAILURE);
+
       CurYpos = CurYpos + (directionY * ballSpeed);
       CurXpos = CurXpos + (directionX * ballSpeed);
 
