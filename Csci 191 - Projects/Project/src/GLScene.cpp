@@ -22,6 +22,7 @@ double deltaTime;
 int frameCount=0;
 float scale=1;
 bool above;
+bool setBallSpeed;
 
 GLScene::GLScene()
 {
@@ -324,10 +325,15 @@ void GLScene:: update()
     frameCount++;
     if(currentTime-lastTime>=1.0)
     {
-        scale=(frameCount)/2;
+        if((frameCount/2)>0)
+            scale=(frameCount)/2;
+        if(setBallSpeed==false)
+        {
+         ballSpeed=(0.125*8)/scale;//put this in init
+         setBallSpeed=true;
+        }
         frameCount=0;
         lastTime+=1.0;
-        ballSpeed=(0.125*2)/scale;
         //cout<<"scale "<<scale<<endl;
         ply->delta=scale;
     }
@@ -335,13 +341,11 @@ void GLScene:: update()
     if (!glfwInit())
     exit(EXIT_FAILURE);
 
-      CurYpos = CurYpos + (directionY * ballSpeed);
-      CurXpos = CurXpos + (directionX * ballSpeed);
 
         if(ply->thrown)
         {
-            ProjACurY += (projAYdir * 0.003);
-            ProjACurX += (projAXdir * 0.003);
+            ProjACurY += (projAYdir * 3)/scale;
+            ProjACurX += (projAXdir * 3)/scale;
 
             projA->Xpos = ProjACurX;
             projA->Ypos = ProjACurY;
@@ -489,10 +493,11 @@ void GLScene:: update()
             directionX = -ply->xdir;
             directionY = ply->ydir;
         }
-        ballSpeed += 0.00015;
+        ballSpeed += (0.0015*300)/scale;
         ply->swinging=false;
 
     }
+
 
     //----------------------------------------------------------------------------
     //----------------------PLAYER MOVEMENT---------------------------------------
@@ -501,24 +506,24 @@ void GLScene:: update()
     {
         if(ply->lastCase=='R'&&!ply->rightWC)
         {
-            ply->PXpos += dashVel;
+            ply->PXpos += (dashVel*200)/scale;
             if(dashVel<=0)
             {
                 ply->isDash=false;
                 dashVel=.0075;
             }
-            dashVel-=0.00002;//dashDec;
+            dashVel-=(0.00002*300)/scale;//dashDec;
         }
 
          if(ply->lastCase=='L'&&!ply->leftWC)
         {
-            ply->PXpos -= dashVel;
+            ply->PXpos -= (dashVel*200)/scale;
             if(dashVel<=0)
             {
                 ply->isDash=false;
                 dashVel=.0075;
             }
-            dashVel-=0.00002;//dashDec;
+            dashVel-=(0.00002*300)/scale;
         }
 
     }
@@ -529,7 +534,7 @@ void GLScene:: update()
     //------------------------------- PLAYER 1 --------------------------------------//
 
     if(scale>0)
-    ply->PYpos+=(ply->verticalVelocity*200)/scale;
+    ply->PYpos+=(ply->verticalVelocity*300)/scale;
 
     if(playerOnTile(ply)&&ply->verticalVelocity<0)
     {
@@ -541,7 +546,7 @@ void GLScene:: update()
         ply->verticalVelocity=-0.0003;
 
     if(!playerOnTile(ply)&&scale>0)
-        ply->verticalVelocity+=(ply->playerGrav*250)/scale;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+        ply->verticalVelocity+=(ply->playerGrav*350)/scale;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
@@ -567,6 +572,8 @@ void GLScene:: update()
     //----------------------------------
     //holding the ball
     //---------------------------------
+     CurYpos = CurYpos + (directionY * ballSpeed);
+      CurXpos = CurXpos + (directionX * ballSpeed);
      if(box_collision(Ball->box, ply->box)&&ply->hold)//lets the player hold the ball
     {
         Ball->Xpos=ply->PXpos;

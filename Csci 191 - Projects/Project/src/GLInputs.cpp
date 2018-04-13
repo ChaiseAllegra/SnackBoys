@@ -85,24 +85,24 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     {
 
       if(ply->ydir<1)
-        ply->ydir+=0.0025;
+        ply->ydir+=(0.0025*600)/ply->delta;
 
        if(ply->ydir>0&&ply->xdir>0)
-         ply->xdir-=0.0025;
+         ply->xdir-=(0.0025*600)/ply->delta;
 
         if(ply->ydir<=0&&ply->xdir<1)
-         ply->xdir+=0.0025;
+         ply->xdir+=(0.0025*600)/ply->delta;
     }
      if(pressed['G'])
     {
         if(ply->ydir>-1)
-        ply->ydir-=0.0025;
+        ply->ydir-=(0.0025*600)/ply->delta;
 
        if(ply->ydir<=0&&ply->xdir>0)
-         ply->xdir-=0.0025;
+         ply->xdir-=(0.0025*600)/ply->delta;
 
          if(ply->ydir>0&&ply->xdir<1)
-         ply->xdir+=0.0025;
+         ply->xdir+=(0.0025*600)/ply->delta;
 
     }
     if(pressed['R'])
