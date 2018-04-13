@@ -38,6 +38,7 @@ class GLScene
         bool levelTwo;
         float TBscore=0;
         float TRscore=0;
+        float prevBallSpeed;
         timer* goalscore=new timer();
 
         float xx, yy;

@@ -119,6 +119,8 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 
     if(pressed['C'])
         ply->hold=true;
+    else
+        ply->hold=false;
 
 
     if(pressed['J'])

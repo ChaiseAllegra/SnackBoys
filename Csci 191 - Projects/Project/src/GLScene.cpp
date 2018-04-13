@@ -451,7 +451,7 @@ void GLScene:: update()
             CurYpos=0;
             directionX=0;
             directionY=0;
-            ballSpeed=0.001;
+           setBallSpeed=false;
             TBscore++;
              cout<<"blue team score "<<TBscore<<endl;
         }
@@ -462,7 +462,7 @@ void GLScene:: update()
             CurYpos=0;
             directionX=0;
             directionY=0;
-            ballSpeed=0.001;
+           setBallSpeed=false;
              TRscore++;
               cout<<"red team score "<<TRscore<<endl;
         }
@@ -618,17 +618,18 @@ void GLScene:: update()
              CurYpos=ply->PYpos;
              CurXpos=ply->PXpos;
              Ball->prevHeld=true;
-             ply->hold=false;
     }
     else
     {
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
     }
-     /*if(Ball->prevHeld)
-     {ballSpeed+=0.0001;
-     Ball->prevHeld=false;
-     }*/
+     if(Ball->prevHeld&&!ply->hold)
+     {
+         prevBallSpeed=ballSpeed;
+        ballSpeed += (0.010*200)/scale;
+        Ball->prevHeld=false;
+     }
 
 }
 
