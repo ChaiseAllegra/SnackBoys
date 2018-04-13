@@ -40,29 +40,30 @@ void parallax::parallaxInit(char *FileName, textureLoader* bTex)
     bTex->bindTexture(FileName);
 }
 
-void parallax::scroll(bool Auto, string dir, float speed)
+void parallax::scroll(bool Auto, string dir, float speed,float scale)
 {
     if(Auto){
 
         if(dir == "up")
         {
-           Ymin -=speed;
-           Ymax -=speed;
+           Ymin -=(speed*200)/scale;
+           Ymax -=(speed*200)/scale;
         }
         if(dir == "down")
         {
-           Ymin +=speed;
-           Ymax +=speed;
+           Ymin +=(speed*200)/scale;
+           Ymax +=(speed*200)/scale;
         }
         if(dir == "left")
         {
-           Xmin -=speed;
-           Xmax -=speed;
+
+           Xmin -=(speed*0.05)/scale;
+           Xmax -=(speed*0.05)/scale;
         }
         if(dir == "right")
         {
-           Xmin +=speed;
-           Xmax +=speed;
+           Xmin +=(speed*200)/scale;
+           Xmax +=(speed*200)/scale;
         }
     }
 }

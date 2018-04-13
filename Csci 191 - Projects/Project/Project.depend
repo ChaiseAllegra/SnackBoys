@@ -1494,7 +1494,7 @@
 	<player.h>
 	<skyBox.h>
 
-1523305292 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\parallax.h
+1523661117 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\parallax.h
 	<iostream>
 	<string.h>
 	<gl/gl.h>
@@ -1532,7 +1532,7 @@
 	<iostream>
 	"textureLoader.h"
 
-1523305292 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\parallax.cpp
+1523662583 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\parallax.cpp
 	"parallax.h"
 	<textureLoader.h>
 
@@ -1552,7 +1552,7 @@
 1522788710 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1523660262 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1523663887 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>

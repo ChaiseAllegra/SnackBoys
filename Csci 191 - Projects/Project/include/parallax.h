@@ -16,7 +16,7 @@ class parallax
         virtual ~parallax();
         void drawSquare(float,float,textureLoader*);
         void parallaxInit(char *, textureLoader*);
-        void scroll(bool,string,float);
+        void scroll(bool,string,float,float);
 
         float Xmax,Ymax,Xmin,Ymin;
     protected:

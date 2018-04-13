@@ -596,8 +596,11 @@ void GLScene:: update()
     //----------------------------------
     //holding the ball
     //---------------------------------
-     CurYpos = CurYpos + (directionY * ballSpeed);
-      CurXpos = CurXpos + (directionX * ballSpeed);
+    if(timeFromStart-startTime>=2)
+     CurYpos = CurYpos + directionY * ballSpeed;
+     if(timeFromStart-startTime>=2)
+      CurXpos = CurXpos + directionX * ballSpeed;
+
      if(box_collision(Ball->box, ply->box)&&ply->hold)//lets the player hold the ball
     {
         Ball->Xpos=ply->PXpos;
@@ -692,7 +695,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
         glScaled(3.33, 3.33, 1.0);
         plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
-    plx->scroll(true,"left",0.000001*scale);
+     if(timeFromStart-startTime>=2)//wait three seconds to start the game
+    plx->scroll(true,"left",1,scale);
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------- PARALLAX2 CREATION --------------------------------------------//
@@ -706,7 +710,8 @@ GLint GLScene::drawGLScene(bool pressed[256])
            //  plx2->drawSquare(screenWidth, screenHeight, texSky2);
 
     glPopMatrix();
-    plx2->scroll(false,"left",0.0002);
+     if(timeFromStart-startTime>=2)//wait three seconds to start the game
+    plx2->scroll(false,"left",0.0002,scale);
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
