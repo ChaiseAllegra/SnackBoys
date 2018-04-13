@@ -56,9 +56,6 @@ GLScene::GLScene()
      plx = new parallax();
 
      plx2 = new parallax();
-
-     plx2= new parallax();
-
      ply = new player();
      ply2 = new player();
      wallA = new Model(); // left wall
@@ -625,10 +622,10 @@ void GLScene:: update()
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
     }
-     if(Ball->prevHeld)
+     /*if(Ball->prevHeld)
      {ballSpeed+=0.0001;
      Ball->prevHeld=false;
-     }
+     }*/
 
 }
 
@@ -695,7 +692,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         glScaled(3.33, 3.33, 1.0);
         plx->drawSquare(screenWidth, screenHeight, texSky1);
     glPopMatrix();
-    plx->scroll(true,"left",0.0002*ply->delta);
+    plx->scroll(true,"left",0.000001*scale);
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------- PARALLAX2 CREATION --------------------------------------------//
@@ -937,8 +934,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
     if(ply->lastCase=='R')
         makeModel(cross, crosshair, tmp3, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
-        cout<<timeFromStart<<endl;
-        //cout<<currentTime-startTime<<endl;
     if(timeFromStart-startTime>=2)//wait three seconds to start the game
     KbMs->idle(pressed,ply,ply2);
 
