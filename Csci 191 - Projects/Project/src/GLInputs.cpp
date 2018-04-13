@@ -66,6 +66,10 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 
     if(!pressed['D']&&!pressed['A'])
         ply->actionTrigger=0;
+    if(pressed['S'])//ducking
+        ply->box.height=ply->trueHeight/2;
+    if(!pressed['S'])
+        ply->box.height=ply->trueHeight;
 
     if(pressed['E']&&ply->jumpTimer->getTicks() >= 200)//200ms
         if(ply->jump<2)

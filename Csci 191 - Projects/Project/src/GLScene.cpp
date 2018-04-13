@@ -17,12 +17,14 @@ float prevFrame = 0;
 float dashDec=1.5;
 float dashVel=1;
 double currentTime;
+double timeFromStart;
 double lastTime = glfwGetTime();
 double deltaTime;
 int frameCount=0;
 float scale=1;
 bool above;
 bool setBallSpeed;
+double startTime;
 
 GLScene::GLScene()
 {
@@ -253,6 +255,7 @@ GLint GLScene::initGL()
     ply->health=5;
 
     ply->frameRate->start();
+    startTime = glfwGetTime();
 
     return true;
 }
@@ -444,13 +447,27 @@ void GLScene:: update()
 
     //----------------------PLAYER 1 --------------------------------------//
 
-        if(box_collision(Ball->box,GoalL->box))
+        if(box_collision(Ball->box,GoalL->box)&&goalscore->getTicks()>200)
         {
-            //cout<<"score Left"<<endl;
+            goalscore->reset();
+            CurXpos=0;
+            CurYpos=0;
+            directionX=0;
+            directionY=0;
+            ballSpeed=0.001;
+            TBscore++;
+             cout<<"blue team score "<<TBscore<<endl;
         }
-        if(box_collision(Ball->box,GoalR->box))
+        if(box_collision(Ball->box,GoalR->box)&&goalscore->getTicks()>200)
         {
-            //cout<<"score Right"<<endl;
+             goalscore->reset();
+            CurXpos=0;
+            CurYpos=0;
+            directionX=0;
+            directionY=0;
+            ballSpeed=0.001;
+             TRscore++;
+              cout<<"red team score "<<TRscore<<endl;
         }
 
 
@@ -493,7 +510,7 @@ void GLScene:: update()
             directionX = -ply->xdir;
             directionY = ply->ydir;
         }
-        ballSpeed += (0.0015*300)/scale;
+        ballSpeed += (0.0010*200)/scale;
         ply->swinging=false;
 
     }
@@ -504,26 +521,36 @@ void GLScene:: update()
     //----------------------------------------------------------------------------
     if(ply->isDash)
     {
+        if(ply->lastCase=='R'&&ply->rightWC)
+        {
+                    ply->isDash=false;
+                    dashVel=.0075;
+        }
         if(ply->lastCase=='R'&&!ply->rightWC)
         {
-            ply->PXpos += (dashVel*200)/scale;
-            if(dashVel<=0)
+            ply->PXpos += (dashVel*500)/scale;
+            if(dashVel<=0||ply->rightWC)
             {
                 ply->isDash=false;
                 dashVel=.0075;
             }
-            dashVel-=(0.00002*300)/scale;//dashDec;
+            dashVel-=(0.00002*600)/scale;//dashDec;
         }
 
+        if(ply->lastCase=='L'&&ply->leftWC)
+        {
+                    ply->isDash=false;
+                    dashVel=.0075;
+        }
          if(ply->lastCase=='L'&&!ply->leftWC)
         {
-            ply->PXpos -= (dashVel*200)/scale;
-            if(dashVel<=0)
+            ply->PXpos -= (dashVel*500)/scale;
+            if(dashVel<=0||ply->leftWC)
             {
                 ply->isDash=false;
                 dashVel=.0075;
             }
-            dashVel-=(0.00002*300)/scale;
+            dashVel-=(0.00002*600)/scale;
         }
 
     }
@@ -590,6 +617,7 @@ void GLScene:: update()
         }
              CurYpos=ply->PYpos;
              CurXpos=ply->PXpos;
+             Ball->prevHeld=true;
              ply->hold=false;
     }
     else
@@ -597,6 +625,10 @@ void GLScene:: update()
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
     }
+     if(Ball->prevHeld)
+     {ballSpeed+=0.0001;
+     Ball->prevHeld=false;
+     }
 
 }
 
@@ -628,6 +660,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
 {
     //curFrame = ply->frameRate->getTicks();
   //  ply->delta = curFrame - prevFrame;
+  timeFromStart=glfwGetTime();
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
@@ -640,6 +673,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         Ball->myTime->start();
         ply->swingTimer->start();
         ply2->swingTimer->start();
+        goalscore->start();
       //-----------------------------------------------------------------------------------------------//
      //-------------------------------- SKYBOX CREATION ----------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -689,6 +723,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         ply->pl_pltfrm_box.height = 0.6;
         ply->pl_pltfrm_box.width = 0.07;
         ply->box.height=0.1;
+        ply->trueHeight=0.1;
         ply->box.width=0.1;
         update();
         ply->drawplayer();
@@ -739,7 +774,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile3->isalive())
-    //makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
 
     if(tile4->isalive())
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
@@ -902,6 +937,9 @@ GLint GLScene::drawGLScene(bool pressed[256])
     if(ply->lastCase=='R')
         makeModel(cross, crosshair, tmp3, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
+        cout<<timeFromStart<<endl;
+        //cout<<currentTime-startTime<<endl;
+    if(timeFromStart-startTime>=2)//wait three seconds to start the game
     KbMs->idle(pressed,ply,ply2);
 
     prevFrame = curFrame;

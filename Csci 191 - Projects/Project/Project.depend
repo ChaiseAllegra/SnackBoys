@@ -1410,7 +1410,7 @@
 	<iostream>
 	<windows.h>
 
-1523492956 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1523656479 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1420,14 +1420,14 @@
 	<iostream>
 	<player.h>
 
-1523494530 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\player.h
+1523659072 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
 	<timer.h>
 	<string>
 
-1523321671 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glmodel.h
+1523656863 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glmodel.h
 	<windows.h>
 	<string>
 	<GL/glut.h>
@@ -1476,7 +1476,7 @@
 
 1522788708 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1523494883 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1523659187 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1536,7 +1536,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1523497457 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1523655628 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -1552,7 +1552,7 @@
 1522788710 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1523498377 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1523659487 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1563,6 +1563,7 @@
 	<mmsystem.h>
 	<cmath>
 	<timer.h>
+	<GLFW/glfw3.h>
 
 1523238250 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
@@ -2293,6 +2294,27 @@
 	"timer.h"
 
 1523513801 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<vulkan/vulkan.h>
+	<GL/gl.h>
+	<GL/glext.h>
+	<GL/glu.h>
+
+1523515965 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glfw\glfw3.h
 	<stddef.h>
 	<stdint.h>
 	<OpenGL/gl3.h>

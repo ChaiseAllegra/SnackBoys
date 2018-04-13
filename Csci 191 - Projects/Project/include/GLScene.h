@@ -36,6 +36,9 @@ class GLScene
         float ground;
         bool levelOne;
         bool levelTwo;
+        float TBscore=0;
+        float TRscore=0;
+        timer* goalscore=new timer();
 
         float xx, yy;
         int dirXX,dirYY;

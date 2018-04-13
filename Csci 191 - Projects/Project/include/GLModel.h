@@ -32,6 +32,7 @@ class Model
         void UpdateHbox(float , float);
                         bool bcollision(Hbox , Hbox );
         bool isalive();
+        bool prevHeld;
 
         Hbox box;
         Hbox pl_pltfrm_box;
