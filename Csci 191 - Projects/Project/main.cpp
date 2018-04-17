@@ -10,6 +10,7 @@
 #pragma comment(lib, "glu32.lib")
 
 #include <GLScene.h> //change
+#include<level1.h>
 #include <stdlib.h>
 #include <iostream>
 #include <windows.h>		// Header File For Windows
@@ -25,10 +26,13 @@ HINSTANCE	hInstance;		// Holds The Instance Of The Application
 bool	keys[256];			// Array Used For The Keyboard Routine
 bool	active=TRUE;		// Window Active Flag Set To TRUE By Default
 bool	fullscreen=TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
+int currLevel=0;
 
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
 GLScene *Scene = new GLScene();
+
+level1 * levelA = new  level1();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //										THE KILL GL WINDOW
@@ -217,10 +221,20 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 
 	ShowWindow(hWnd,SW_SHOW);						// Show The Window
 	SetForegroundWindow(hWnd);						// Slightly Higher Priority
-	SetFocus(hWnd);									// Sets Keyboard Focus To The Window
+	SetFocus(hWnd);
+	if(currLevel==0)					// Sets Keyboard Focus To The Window
 	Scene->resizeGLScene(width, height);			// Set Up Our Perspective GL Screen
-
+	if(currLevel==1)
+	levelA->resizeGLScene(width, height);
+    if(currLevel==0)
 	if (!Scene->initGL())							// Initialize Our Newly Created GL Window
+	{
+		KillGLWindow();								// Reset The Display
+		MessageBox(NULL,"Initialization Failed.","ERROR",MB_OK|MB_ICONEXCLAMATION);
+		return FALSE;								// Return FALSE
+	}
+	if(currLevel==1)
+    if (!levelA->initGL())							// Initialize Our Newly Created GL Window
 	{
 		KillGLWindow();								// Reset The Display
 		MessageBox(NULL,"Initialization Failed.","ERROR",MB_OK|MB_ICONEXCLAMATION);
@@ -240,7 +254,8 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 							WPARAM	wParam,			// Additional Message Information
 							LPARAM	lParam)			// Additional Message Information
 {
-    Scene->windMsg(hWnd,uMsg,wParam,lParam,keys);
+   // Scene->windMsg(hWnd,uMsg,wParam,lParam,keys);
+//    levelA->windMsg(hWnd,uMsg,wParam,lParam,keys);
 
 	switch (uMsg)									// Check For Windows Messages
 	{
@@ -293,7 +308,10 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
                                                     // LoWord=Width, HiWord=Height
 			//Scene->ReSizeGLScene(GetSystemMetrics(SM_CXSCREEN),HIWORD(lParam));
 
+			if(currLevel==0)
 			Scene->resizeGLScene(LOWORD(lParam),HIWORD(lParam));
+			if(currLevel==1)
+			levelA->resizeGLScene(LOWORD(lParam),HIWORD(lParam));
 			return 0;								// Jump Back
 		}
 	}
@@ -352,21 +370,37 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			{
 				done=TRUE;							// ESC or DrawGLScene Signalled A Quit
 			}
-			else									// Not Time To Quit, Update Screen
+			if(currLevel==0)									// Not Time To Quit, Update Screen
 			{
 			    Scene->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
-			if(keys[VK_F2])//keep
+			if(currLevel==1)									// Not Time To Quit, Update Screen
 			{
-                Scene->levelTwo=true;
-                Scene->levelOne=false;
+			    levelA->drawGLScene(keys);
+				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
-			if(keys[VK_F3])//keep
-			{
-                Scene->levelTwo=false;
-                Scene->levelOne=true;
-			}
+			if(keys['Z'])
+                currLevel=1;
+            if(keys['V'])
+                currLevel=0;
+            if(keys['B'])
+               Scene->pauseMenu=true;
+
+            if(Scene->pauseMenu)
+            {
+               if(keys['S'])
+                   if(Scene->menuPos>0)
+                        Scene->menuPos-=1;
+               if(keys['W'])
+                    if(Scene->menuPos<2)
+                        Scene->menuPos++;
+               if(keys['E'])
+                    Scene->pauseChoice=true;
+               if(Scene->pauseChoice&&Scene->menuPos==0)
+                    done=true;
+                    //cout<<Scene->menuPos<<endl;
+            }
 
 			if (keys[VK_F1])						// Is F1 Being Pressed?
 			{

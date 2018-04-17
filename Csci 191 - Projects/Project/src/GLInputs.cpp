@@ -49,15 +49,16 @@ void Inputs::keyUP()
 void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
     ply->jumpTimer->start();
+    ply2->jumpTimer->start();
 
-    if(pressed['A']&&!ply->isDash)
+    if(pressed['A'])
      {
         ply->actionTrigger = 1;
         ply->lastKey = 'L';
         ply->lastCase = 'L';
      }
 
-    if(pressed['D']&&!ply->isDash)
+    if(pressed['D'])
     {
         ply->actionTrigger = 1;
         ply->lastKey = 'R';
@@ -75,7 +76,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         if(ply->jump<2)
         {
             ply->jumpTimer->reset();
-            ply->verticalVelocity=0.008;
+            ply->verticalVelocity=6;//0.008;
             ply->jump++;
         }
 
@@ -123,11 +124,12 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply->hold=false;
 
 
-    if(pressed['J'])
+    //------------------------------player 2---------------------------//
+     if(pressed['J'])
      {
         ply2->actionTrigger = 1;
-         ply2->lastKey = 'L';
-         ply2->lastCase = 'L';
+        ply2->lastKey = 'L';
+        ply2->lastCase = 'L';
      }
 
     if(pressed['L'])
@@ -136,8 +138,66 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply2->lastKey = 'R';
         ply2->lastCase = 'R';
     }
+
     if(!pressed['J']&&!pressed['L'])
         ply2->actionTrigger=0;
+    if(pressed['K'])//ducking
+        ply2->box.height=ply2->trueHeight/2;
+    if(!pressed['K'])
+        ply2->box.height=ply2->trueHeight;
+
+    if(pressed['O']&&ply2->jumpTimer->getTicks() >= 200)//200ms
+        if(ply2->jump<2)
+        {
+            ply2->jumpTimer->reset();
+            ply2->verticalVelocity=4;//0.008;
+            ply2->jump++;
+        }
+
+     if(pressed['P'])
+        ply2->swinging=true;
+
+     if(!pressed['P'])
+        ply2->swinging=false;
+
+    if(pressed['Y'])
+    {
+
+      if(ply2->ydir<1)
+        ply2->ydir+=(0.0025*600)/ply2->delta;
+
+       if(ply2->ydir>0&&ply2->xdir>0)
+         ply2->xdir-=(0.0025*600)/ply2->delta;
+
+        if(ply2->ydir<=0&&ply2->xdir<1)
+         ply2->xdir+=(0.0025*600)/ply2->delta;
+    }
+     if(pressed['H'])
+    {
+        if(ply2->ydir>-1)
+        ply2->ydir-=(0.0025*600)/ply2->delta;
+
+       if(ply2->ydir<=0&&ply2->xdir>0)
+         ply2->xdir-=(0.0025*600)/ply2->delta;
+
+         if(ply2->ydir>0&&ply2->xdir<1)
+         ply2->xdir+=(0.0025*600)/ply2->delta;
+
+    }
+    if(pressed['U'])
+    {
+        ply2->isDash=true;
+        ply2->prevx=ply2->PXpos;
+    }
+    if(pressed['M'])
+        ply2->thrown=true;
+
+    if(pressed['N'])
+        ply2->hold=true;
+    else
+        ply2->hold=false;
+
+
 }
 void Inputs::mouseEventDown(Model *Model, double x,double y)
 {

@@ -7,7 +7,7 @@
 player::player()
 {
     verticalVelocity=0;
-    playerGrav=-0.00003;//-0.00001;
+    playerGrav=-18.5;
     ydir=0;
     xdir=1;
 
@@ -121,7 +121,6 @@ void player::playerInit()
 
 void player::actions()
 {
-        // cout<<"delta "<<delta<<endl;
    switch(actionTrigger){
        case 0:
            plyVel = 0.002;
@@ -210,6 +209,57 @@ void player::actions()
               drawplayer();
            glPopMatrix();
    }
+    if(isDash)
+    {
+        if(lastCase=='R'&&rightWC)
+        {
+                    isDash=false;
+                    dashVel=4;
+        }
+        if(lastCase=='R'&&!rightWC)
+        {
+            PXpos += (dashVel)/delta;
+            if(dashVel<=0||rightWC)
+            {
+                isDash=false;
+                dashVel=4;
+            }
+            dashVel-=(5.5)/delta;//dashDec;
+        }
+
+        if(lastCase=='L'&&leftWC)
+        {
+                    isDash=false;
+                    dashVel=4;
+        }
+         if(lastCase=='L'&&!leftWC)
+        {
+            PXpos -= (dashVel)/delta;
+            if(dashVel<=0||leftWC)
+            {
+                isDash=false;
+                dashVel=4;
+            }
+            dashVel-=(5.5)/delta;
+        }
+
+    }
+    if(delta>0)
+    {
+        PYpos+=(verticalVelocity)/delta;
+
+        if(OnTile&&verticalVelocity<0)
+        {
+            jump=0;
+            verticalVelocity=0;
+        }
+
+        if(topWC)
+            verticalVelocity=-0.5;
+
+        if(!OnTile)
+            verticalVelocity+=(playerGrav)/delta;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+    }
 }
  void player::playerUpdateHbox() // updates the hit-box location to the players location
  {

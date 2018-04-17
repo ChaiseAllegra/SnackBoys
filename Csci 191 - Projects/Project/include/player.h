@@ -75,6 +75,8 @@ class player: public Model
         bool endJump;
         bool onGround;
         float trueHeight;
+        float dashVel=4;
+        bool OnTile;
 
         bool swinging;
         timer* swingTimer = new timer();

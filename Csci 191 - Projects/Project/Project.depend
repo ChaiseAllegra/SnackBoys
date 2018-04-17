@@ -1565,14 +1565,15 @@
 	<timer.h>
 	<GLFW/glfw3.h>
 
-1523238250 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
+1523762125 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
+	<level1.h>
 	<stdlib.h>
 	<iostream>
 	<windows.h>
 
-1523511379 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
+1523764237 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1582,14 +1583,14 @@
 	<iostream>
 	<player.h>
 
-1523511379 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\player.h
+1523688644 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
 	<timer.h>
 	<string>
 
-1523333734 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glmodel.h
+1523686870 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glmodel.h
 	<windows.h>
 	<string>
 	<GL/glut.h>
@@ -1638,7 +1639,7 @@
 
 1522122624 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\soil.h
 
-1523588437 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1523692719 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1656,7 +1657,7 @@
 	<player.h>
 	<skyBox.h>
 
-1523241560 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\parallax.h
+1523686870 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\parallax.h
 	<iostream>
 	<string.h>
 	<gl/gl.h>
@@ -1690,7 +1691,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1523589036 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+1523831239 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1707,11 +1708,11 @@
 	<iostream>
 	"textureLoader.h"
 
-1523241560 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\parallax.cpp
+1523686870 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\parallax.cpp
 	"parallax.h"
 	<textureLoader.h>
 
-1523519753 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
+1523692739 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -2334,4 +2335,27 @@
 	<GL/gl.h>
 	<GL/glext.h>
 	<GL/glu.h>
+
+1523694573 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\level1.cpp
+	<level1.h>
+	<GLLight.h>
+	<GLInputs.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<windows.h>
+	<mmsystem.h>
+	<cmath>
+	<timer.h>
+	<GLFW/glfw3.h>
+
+1523693589 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\level1.h
+	<time.h>
+	<GLInputs.h>
+	<windows.h>
+	<parallax.h>
+	<GLModel.h>
+	<gl/gl.h>
+	<iostream>
+	<player.h>
 

@@ -1,5 +1,5 @@
-#ifndef GLSCENE_H
-#define GLSCENE_H
+#ifndef LEVEL1_H
+#define LEVEL1_H
 #include<time.h>
 #include <GLInputs.h>
 #include <windows.h>
@@ -9,14 +9,11 @@
 #include<iostream>
 #include <player.h>
 
-
-using namespace std;
-
-class GLScene
+class level1
 {
     public:
-        GLScene();
-        virtual ~GLScene();
+        level1();
+        virtual ~level1();
         GLint initGL();
         GLint drawGLScene(bool[256]);
         GLvoid resizeGLScene(GLsizei, GLsizei);
@@ -26,15 +23,12 @@ class GLScene
          bool lol(player* );
         void tileChange(Model* , Model* ,textureLoader* );
         bool box_collision(Hbox, Hbox);
-        void reset();
+        bool topOfTile(player*,Model*);
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
 
 
         WPARAM wParam;
-        bool pauseMenu;
-        int menuPos=2;
-        float pauseChoice;
         float screenHeight;
         float screenWidth;
         float ground;
@@ -129,9 +123,7 @@ class GLScene
         Model* tile13;
         Model* tile14;
         Model* tile15;
-        Model* playMod;
-        Model* resetMod;
-        Model* exitMod;
+
         Model* cross;
 
         Model* wallAHbawks; // left wall
@@ -177,9 +169,6 @@ class GLScene
         textureLoader* tileTex13;
         textureLoader* tileTex14;
         textureLoader* tileTex15;
-        textureLoader* playTex;
-        textureLoader* resetTex;
-        textureLoader* exitTex;
 
         textureLoader* crosshair;
 
@@ -188,76 +177,4 @@ class GLScene
     private:
 };
 
-#endif // GLSCENE_H
-/*timer* D = new timer();
-    pCol = new timer();
-    ballCollTimer = new timer();
-
-     modelTeapot = new Model();
-     modelTeapot2 = new Model();
-
-     KbMs = new Inputs();
-
-     plx = new parallax();
-     ply = new player();
-     ply2 = new player();
-     wallA = new Model(); // left wall
-    Model* wallB = new Model(); // right wall
-    wallC = new Model(); // top wall
-     killBox = new Model();
-     divide = new Model();
-     hud = new Model();
-
-    //left side tiles
-     tile1=new Model();
-     tile2=new Model();
-     tile3=new Model();
-     tile4=new Model();
-     tile5=new Model();
-     tile6=new Model();
-     tile7=new Model();
-
-    //middle tile
-     tile8=new Model();
-
-    //right side tiles
-     tile9=new Model();
-     tile10=new Model();
-     tile22=new Model();
-     tile12=new Model();
-     tile13=new Model();
-     tile14=new Model();
-      tile15=new Model();
-
-
-
-     wallAHbawks = new Model(); // left wall
-     wallBHbawks = new Model(); // right wall
-     wallCHbawks = new Model(); // top wall
-     sky = new skyBox;
-     Ball = new Model(); // the ball
-     BallHbawks = new Model();
-
-     tex0 = new textureLoader();
-     tex1 = new textureLoader();
-     tex2 = new textureLoader();
-     ballHBTex = new textureLoader();
-     ballHBTex2 = new textureLoader();
-     texc = new textureLoader();
-     texH = new textureLoader();
-
-     tileTex=new textureLoader();
-     tileTex2=new textureLoader();
-     tileTex3=new textureLoader();
-     tileTex4=new textureLoader();
-     tileTex5=new textureLoader();
-     tileTex6=new textureLoader();
-     tileTex7=new textureLoader();
-     tileTex8=new textureLoader();
-     tileTex9=new textureLoader();
-     tileTex10=new textureLoader();
-     tileTex11=new textureLoader();
-     tileTex12=new textureLoader();
-     tileTex13=new textureLoader();
-     tileTex14=new textureLoader();
-     tileTex15=new textureLoader();*/
+#endif // LEVEL1_H
