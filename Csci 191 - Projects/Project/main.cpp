@@ -381,9 +381,9 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
 			if(keys['Z'])
-                currLevel=1;
+               Scene->level=1;
             if(keys['V'])
-                currLevel=0;
+                Scene->level=2;
             if(keys['B'])
                Scene->pauseMenu=true;
 

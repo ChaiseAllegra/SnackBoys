@@ -150,7 +150,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         if(ply2->jump<2)
         {
             ply2->jumpTimer->reset();
-            ply2->verticalVelocity=4;//0.008;
+            ply2->verticalVelocity=6;//0.008;
             ply2->jump++;
         }
 

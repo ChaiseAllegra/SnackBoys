@@ -9,6 +9,8 @@
 #include <cmath>
 #include <timer.h>
 #include <GLFW/glfw3.h>
+float tw=100,th=100;
+float mX,mY;
 
 using namespace std;
 
@@ -70,6 +72,14 @@ GLScene::GLScene()
      tile14=new Model();
      tile15=new Model();
 
+     //platform tiles
+     platTileBL = new Model();
+     platTileBR = new Model();
+     platTileTL = new Model();
+     platTileTR = new Model();
+     platTileM = new Model();
+
+
      playMod= new Model();
      resetMod= new Model();
      exitMod= new Model();
@@ -79,6 +89,8 @@ GLScene::GLScene()
      wallAHbawks = new Model(); // left wall
      wallBHbawks = new Model(); // right wall
      wallCHbawks = new Model(); // top wall
+      GoalL= new Model();
+     GoalR= new Model();
      sky = new skyBox;
      Ball = new Model(); // the ball
      BallHbawks = new Model();
@@ -177,6 +189,13 @@ GLint GLScene::initGL()
     tile13->modelInit("images/box/block.png", true, tileTex13);
     tile14->modelInit("images/box/block.png", true, tileTex14);
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+     GoalL->modelInit("images/box/hitbox.png",true,texGL);
+    GoalR->modelInit("images/box/hitbox.png",true,texGR);
+    platTileBL->modelInit("images/box/block.png", true, tileTex);
+    platTileBR->modelInit("images/box/block.png", true, tileTex);
+    platTileTL->modelInit("images/box/block.png", true, tileTex);
+    platTileTR->modelInit("images/box/block.png", true, tileTex);
+    platTileM->modelInit("images/box/block.png", true, tileTex);
 
     playMod->modelInit("images/box/pMPlay.png", true, playTex);
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
@@ -215,6 +234,12 @@ GLint GLScene::initGL()
     return true;
 }
 
+float manhattanDist(player* ply, player* ply2)
+{
+     mX=abs(ply->PXpos-ply2->PXpos);
+     mY=abs(ply->PYpos-ply2->PYpos);
+    return mX+mY;
+}
 
 
  bool GLScene::box_collision(Hbox rect1, Hbox rect2)
@@ -262,13 +287,17 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
         else
         return false;
 
+
+
     }
 bool GLScene::playerOnTile(player* ply)
 {
-              if((topOfTile(ply,tile1)||topOfTile(ply,tile2)||topOfTile(ply,tile3)||topOfTile(ply,tile4)||
+             if((topOfTile(ply,tile1)||topOfTile(ply,tile2)||topOfTile(ply,tile3)||topOfTile(ply,tile4)||
                     topOfTile(ply,tile5)||topOfTile(ply,tile6)||topOfTile(ply,tile7)||topOfTile(ply,tile8)||
                     topOfTile(ply,tile9)||topOfTile(ply,tile10)||topOfTile(ply,tile22)||topOfTile(ply,tile12)||
-                    topOfTile(ply,tile13)||topOfTile(ply,tile14)||topOfTile(ply,tile15)))
+                    topOfTile(ply,tile13)||topOfTile(ply,tile14)||topOfTile(ply,tile15)||topOfTile(ply,platTileBL)||
+                    topOfTile(ply,platTileBR)||topOfTile(ply,platTileTL)||topOfTile(ply,platTileTR)||
+                    topOfTile(ply,platTileM)))
 
                return true;
     else
@@ -330,21 +359,41 @@ void GLScene:: update()
     else
         ply->leftWC=false;
 
+     if(level==1)
+    {
     if(box_collision(ply->box,divide->box))//player has hit the right wall
         ply->rightWC=true;//set to true so the player cannot move right
     else
         ply->rightWC=false;
+    }
+        if(level==2)
+    {
+    if(box_collision(ply->box,wallB->box))//player has hit the right wall
+        ply->rightWC=true;//set to true so the player cannot move right
+    else
+        ply->rightWC=false;
+    }
+
 
      if(box_collision(ply->box,wallC->box))//player has hit the top wall
         ply->topWC=true;//set to true so the player cannot move up
     else
         ply->topWC=false;
 
-
+    if(level==1)
+    {
     if(box_collision(ply2->box,divide->box))//player has hit the left wall
+        ply2->leftWC=true;//set to true so the player cannot move left
+        else
+        ply2->leftWC=false;
+    }
+    if(level==2)
+    {
+    if(box_collision(ply2->box,wallA->box))//player has hit the left wall
         ply2->leftWC=true;//set to true so the player cannot move left
     else
         ply2->leftWC=false;
+    }
 
     if(box_collision(ply2->box,wallB->box))//player has hit the right wall
         ply2->rightWC=true;//set to true so the player cannot move right
@@ -832,12 +881,46 @@ GLint GLScene::drawGLScene(bool pressed[256])
     makeModel(killBox,texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
     //dividing wall
+    if(level==1)
     makeModel(divide,texD,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
+    else
+    {
+        divide->box.width=0;
+        divide->box.height=0;
+    }
+
 
     //top wall
     makeModel(wallC,tex3,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
+    if(level==2)
+    {
+        makeModel(platTileBL, tileTex, -1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+        makeModel(platTileBR, tileTex, 1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+        makeModel(platTileTL, tileTex, -1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+        makeModel(platTileTR, tileTex, 1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
+        makeModel(platTileM, tileTex, 0, 0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
 
+           //left goal
+        makeModel(GoalL,texGL,-3,0,-0.2,0.5,0.2,0.5,0.2,-0.5,-0.2,-0.5,0.5,1);
+
+        //right goal
+        makeModel(GoalR,texGL,3,0,-0.2,0.5,0.2,0.5,0.2,-0.5,-0.2,-0.5,0.5,1);
+    }
+    else
+    {
+        platTileBL->box.width=0;
+        platTileBL->box.height=0;
+        platTileBR->box.width=0;
+        platTileBR->box.height=0;
+        platTileM->box.width=0;
+        platTileM->box.height=0;
+        platTileTL->box.width=0;
+        platTileTL->box.height=0;
+        platTileTR->box.width=0;
+        platTileTR->box.height=0;
+
+    }
 
 
     //ball creation
@@ -1054,10 +1137,29 @@ GLint GLScene::drawGLScene(bool pressed[256])
         }
     }
 
+    if(pressed['1'])
+    {
+        tw+=10;
+        th+=5;
+    }
+
+    if(pressed['2'])
+    {
+        tw-=10;
+        th-=5;
+    }
+    manhattanDist(ply,ply2);
+    cout<<mX<<" , "<<mY<<endl;
+   // cout<<tw<<","<<th<<endl;
+    //if(level==2&&(tw*(0.5/mX))>=tw)
+    //glViewport(0, 0, (tw*(0.5/mX)), th/mY);
+
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {
     GLfloat aspectRatio = (GLfloat)width / (GLfloat)height;
+    tw=width;
+    th=height;
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
