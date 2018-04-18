@@ -10,7 +10,7 @@
 #include <timer.h>
 #include <GLFW/glfw3.h>
 float tw=100,th=100;
-float mX,mY;
+float mX,mY,mXpos=0,mYpos=0;
 
 using namespace std;
 
@@ -1148,11 +1148,37 @@ GLint GLScene::drawGLScene(bool pressed[256])
         tw-=10;
         th-=5;
     }
+     if(pressed['3'])
+    {
+        mXpos+=10;
+        mYpos+=5;
+    }
+
+    if(pressed['4'])
+    {
+        mXpos-=10;
+        mYpos-=5;
+    }
+    if(pressed['D']&&!ply->rightWC)
+    {
+        mXpos-=10;
+        tw+=10;
+        th+=5;
+    }
+    if(pressed['A']&&!ply->leftWC)
+    {
+        mXpos+=10;
+        tw-=10;
+        th-=5;
+    }
+
+    //mXpos-=mX;
+
     manhattanDist(ply,ply2);
     cout<<mX<<" , "<<mY<<endl;
-   // cout<<tw<<","<<th<<endl;
-    //if(level==2&&(tw*(0.5/mX))>=tw)
-    //glViewport(0, 0, (tw*(0.5/mX)), th/mY);
+    cout<<tw<<","<<th<<endl;
+    if(level==2)
+    glViewport(mXpos, mYpos, tw, th);
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
