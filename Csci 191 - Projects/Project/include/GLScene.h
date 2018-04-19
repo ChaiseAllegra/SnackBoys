@@ -79,7 +79,7 @@ class GLScene
         float scale=1;
         bool setBallSpeed;
         double startTime;
-        float level=1;
+        float level=2;
 
         timer* D;
         timer* PAT;//projectile A timer to stop multiple health decrements on a collision

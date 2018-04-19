@@ -256,6 +256,8 @@ void player::actions()
 
         if(topWC)
             verticalVelocity=-0.5;
+        if(!OnTile)
+            verticalVelocity-=20/delta;
 
 
     }

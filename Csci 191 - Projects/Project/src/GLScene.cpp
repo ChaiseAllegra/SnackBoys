@@ -9,6 +9,10 @@
 #include <cmath>
 #include <timer.h>
 #include <GLFW/glfw3.h>
+#include <levelOmega.h>//slapstick gameMode
+
+levelOmega* omg;
+
 float tw=100,th=100;
 float mX,mY,mXpos=0,mYpos=0;
 float bY;
@@ -374,6 +378,7 @@ void GLScene:: update()
     //-------------------------------------------------------------------------------------------------//
     if (box_collision(Ball->box, wallB->box))
     {
+        //omg->ballDirX=-1;//directionX = -1;
         directionX = -1;
         //hit=false;
         //velocity=resetV;
@@ -863,8 +868,10 @@ void GLScene:: update2()
     //------------------------------- BALL -----------------------------------------//
     //---------------------------------------------------------------------------------------------------//
 
-     if(!ballOnTile(Ball))
-            CurYpos+=(ballGrav)/scale;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+     //if(!ballOnTile(Ball))
+      //      CurYpos+=(0.0005)/scale;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+     //if(ballOnTile(Ball))
+      //      CurYpos=0;
     //----------------------PLAYER 1 --------------------------------------//
      if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
     {
@@ -951,11 +958,11 @@ void GLScene:: update2()
              Ball->prevHeld=true;
     }
     //MOVING THE BALL
-    /*else if(!hit)
+    else if(!hit)
     {
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
-    }*/
+    }
      if(Ball->prevHeld&&!ply->hold)
      {
          prevBallSpeed=ballSpeed;
