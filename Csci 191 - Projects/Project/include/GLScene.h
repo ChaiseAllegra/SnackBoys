@@ -19,13 +19,10 @@ class GLScene
         virtual ~GLScene();
         GLint initGL();
         GLint drawGLScene(bool[256]);
-        GLint drawGLScene2(bool[256]);
         GLvoid resizeGLScene(GLsizei, GLsizei);
          void update();
-         void update2();
          void makeModel(Model* ,textureLoader* ,float ,float ,float ,float ,float , float , float , float , float, float, float, float);
         bool playerOnTile(player* );
-        bool ballOnTile(Model* );
          bool lol(player* );
         void tileChange(Model* , Model* ,textureLoader* );
         bool box_collision(Hbox, Hbox);
@@ -41,6 +38,8 @@ class GLScene
         float screenHeight;
         float screenWidth;
         float ground;
+        bool levelOne;
+        bool levelTwo;
         float TBscore=0;
         float TRscore=0;
         float prevBallSpeed;
@@ -99,8 +98,6 @@ class GLScene
 
         parallax* plx2;
 
-
-        player* ply;
         player* ply2;
         Model* wallA; // left wall
         Model* wallB; // right wall
@@ -109,7 +106,6 @@ class GLScene
         Model* divide;
         Model* hud;
         Model* GoalL;
-        Model* floor;
         Model* GoalR;
 
         //left side tiles
@@ -158,7 +154,6 @@ class GLScene
         textureLoader* tex3;
         textureLoader* texD;
         textureLoader* ballHBTex;
-        textureLoader* tileTexfloor;
         textureLoader* ballHBTex2;
         textureLoader* texc;
         textureLoader* texH;
