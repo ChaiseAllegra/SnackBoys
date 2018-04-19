@@ -226,7 +226,6 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 	Scene->resizeGLScene(width, height);			// Set Up Our Perspective GL Screen
 	if(currLevel==1)
 	levelA->resizeGLScene(width, height);
-    if(currLevel==0)
 	if (!Scene->initGL())							// Initialize Our Newly Created GL Window
 	{
 		KillGLWindow();								// Reset The Display
@@ -375,15 +374,17 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			    Scene->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
-			if(currLevel==1)									// Not Time To Quit, Update Screen
+			else if(currLevel==1)									// Not Time To Quit, Update Screen
 			{
 			    levelA->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
 			}
 			if(keys['Z'])
-               Scene->level=1;
+               //Scene->level=1;
+               currLevel=1;
             if(keys['V'])
-                Scene->level=2;
+                //Scene->level=2;
+                currLevel=0;
             if(keys['B'])
                Scene->pauseMenu=true;
 

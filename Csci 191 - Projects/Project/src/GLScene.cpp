@@ -11,6 +11,14 @@
 #include <GLFW/glfw3.h>
 float tw=100,th=100;
 float mX,mY,mXpos=0,mYpos=0;
+float bY;
+float resetV=0;
+float velocity=resetV;
+bool hit;
+float maxHeight=1.5;
+float vDecrement=0.001;
+float endGoal;
+float BallprevY;
 
 using namespace std;
 
@@ -230,6 +238,8 @@ GLint GLScene::initGL()
 
     ply->frameRate->start();
     startTime = glfwGetTime();
+    Ball->Xpos=-2;
+    Ball->Ypos=-0.5;
 
     return true;
 }
@@ -334,18 +344,32 @@ void GLScene:: update()
     //-------------------------------WALL COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
     if (box_collision(Ball->box, wallB->box))
+    {
         directionX = -1;
+        //hit=false;
+        //velocity=resetV;
+    }
 
     if (box_collision(Ball->box, wallA->box))
+    {
         directionX = 1;
+        //hit=false;
+          //velocity=resetV;
+    }
 
     if (box_collision(Ball->box, wallC->box))
+    {
         directionY = -1;
+        //hit=false;
+          //velocity=resetV;
+    }
 
     if (box_collision(Ball->box, killBox->box))
     {
        CurYpos=2;
        directionY=-1;
+       //hit=false;
+       //velocity=resetV;
 
         if(directionX==-1)
         CurXpos+=2;
@@ -494,6 +518,7 @@ void GLScene:: update()
         ply->swinging=false;
 
     }
+
     //Set a bool if player is on tile
     ply->OnTile=playerOnTile(ply);
 
@@ -573,11 +598,11 @@ void GLScene:: update()
              Ball->prevHeld=true;
     }
     //MOVING THE BALL
-    else
+    /*else if(!hit)
     {
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
-    }
+    }*/
      if(Ball->prevHeld&&!ply->hold)
      {
          prevBallSpeed=ballSpeed;
@@ -1151,35 +1176,60 @@ GLint GLScene::drawGLScene(bool pressed[256])
      if(pressed['3'])
     {
         mXpos+=10;
-        mYpos+=5;
+        //mYpos+=5;
     }
 
     if(pressed['4'])
     {
         mXpos-=10;
+        //mYpos-=5;
+    }
+      if(pressed['5'])
+    {
+        //mXpos+=10;
+        mYpos+=5;
+    }
+
+    if(pressed['6'])
+    {
+        //mXpos-=10;
         mYpos-=5;
     }
-    if(pressed['D']&&!ply->rightWC)
+    /*if(pressed['D']&&!ply->rightWC&&mX>1)
     {
-        mXpos-=10;
-        tw+=10;
-        th+=5;
+        mXpos-=1/mX;
+        tw+=2/mX;
+        th+=1/mX;
     }
-    if(pressed['A']&&!ply->leftWC)
+    if(pressed['A']&&!ply->leftWC&&mX>1)
     {
-        mXpos+=10;
-        tw-=10;
-        th-=5;
-    }
+        mXpos+=1/mX;
+        tw-=2/mX;
+        th-=1/mX;
+    }*/
 
     //mXpos-=mX;
+   // cout<<mXpos<<endl;
+   /*manhattanDist(ply,ply2);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+      gluOrtho2D(ply->PXpos-600/2,ply->PXpos+600/2,ply->PYpos-600/2,ply->PYpos+600/2);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();*/
 
-    manhattanDist(ply,ply2);
-    cout<<mX<<" , "<<mY<<endl;
-    cout<<tw<<","<<th<<endl;
-    if(level==2)
-    glViewport(mXpos, mYpos, tw, th);
 
+
+    //cout<<mX<<" , "<<mY<<endl;
+    //cout<<tw<<","<<th<<endl;
+    //cout<<mXpos<<", "<<mYpos<<endl;
+    //if(level==2)
+    //glViewport(mXpos, mYpos, tw*4, th*2);
+    //if(mX<2)
+      //   glViewport((-1*(ply2->PXpos + ply->PXpos)/2)*63, mYpos, tw*1.5, th*1.25);
+   /* if(tw*mX>=tw&&tw*mX<2500)
+    glViewport((-1*(ply2->PXpos + ply->PXpos)/2)*63, mYpos, tw*mX, th*mX);
+    if(tw*mX<=tw)
+    glViewport((-1*(ply2->PXpos + ply->PXpos)/2)*63, mYpos, tw/mX, th/mX);*/
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 {
