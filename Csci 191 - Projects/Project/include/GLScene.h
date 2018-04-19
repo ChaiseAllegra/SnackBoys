@@ -19,8 +19,10 @@ class GLScene
         virtual ~GLScene();
         GLint initGL();
         GLint drawGLScene(bool[256]);
+        GLint drawGLScene2(bool[256]);
         GLvoid resizeGLScene(GLsizei, GLsizei);
          void update();
+         void update2();
          void makeModel(Model* ,textureLoader* ,float ,float ,float ,float ,float , float , float , float , float, float, float, float);
         bool playerOnTile(player* );
          bool lol(player* );
@@ -38,8 +40,6 @@ class GLScene
         float screenHeight;
         float screenWidth;
         float ground;
-        bool levelOne;
-        bool levelTwo;
         float TBscore=0;
         float TRscore=0;
         float prevBallSpeed;
@@ -78,7 +78,7 @@ class GLScene
         float scale=1;
         bool setBallSpeed;
         double startTime;
-        float level=2;
+        float level=1;
 
         timer* D;
         timer* PAT;//projectile A timer to stop multiple health decrements on a collision
@@ -108,6 +108,7 @@ class GLScene
         Model* divide;
         Model* hud;
         Model* GoalL;
+        Model* floor;
         Model* GoalR;
 
         //left side tiles
@@ -156,6 +157,7 @@ class GLScene
         textureLoader* tex3;
         textureLoader* texD;
         textureLoader* ballHBTex;
+        textureLoader* tileTexfloor;
         textureLoader* ballHBTex2;
         textureLoader* texc;
         textureLoader* texH;

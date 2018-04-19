@@ -1566,15 +1566,14 @@
 	<timer.h>
 	<GLFW/glfw3.h>
 
-1524022690 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
+1524117839 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
-	<level1.h>
 	<stdlib.h>
 	<iostream>
 	<windows.h>
 
-1524022690 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
+1524119379 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1692,7 +1691,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1524026151 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524119328 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>

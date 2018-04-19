@@ -10,7 +10,7 @@
 #pragma comment(lib, "glu32.lib")
 
 #include <GLScene.h> //change
-#include<level1.h>
+
 #include <stdlib.h>
 #include <iostream>
 #include <windows.h>		// Header File For Windows
@@ -26,13 +26,12 @@ HINSTANCE	hInstance;		// Holds The Instance Of The Application
 bool	keys[256];			// Array Used For The Keyboard Routine
 bool	active=TRUE;		// Window Active Flag Set To TRUE By Default
 bool	fullscreen=TRUE;	// Fullscreen Flag Set To Fullscreen Mode By Default
-int currLevel=0;
+
 
 LRESULT	CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);	// Declaration For WndProc
 
 GLScene *Scene = new GLScene();
 
-level1 * levelA = new  level1();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //										THE KILL GL WINDOW
@@ -222,23 +221,16 @@ BOOL CreateGLWindow(char* title, int width, int height, int bits, bool fullscree
 	ShowWindow(hWnd,SW_SHOW);						// Show The Window
 	SetForegroundWindow(hWnd);						// Slightly Higher Priority
 	SetFocus(hWnd);
-	if(currLevel==0)					// Sets Keyboard Focus To The Window
+					// Sets Keyboard Focus To The Window
 	Scene->resizeGLScene(width, height);			// Set Up Our Perspective GL Screen
-	if(currLevel==1)
-	levelA->resizeGLScene(width, height);
+
 	if (!Scene->initGL())							// Initialize Our Newly Created GL Window
 	{
 		KillGLWindow();								// Reset The Display
 		MessageBox(NULL,"Initialization Failed.","ERROR",MB_OK|MB_ICONEXCLAMATION);
 		return FALSE;								// Return FALSE
 	}
-	if(currLevel==1)
-    if (!levelA->initGL())							// Initialize Our Newly Created GL Window
-	{
-		KillGLWindow();								// Reset The Display
-		MessageBox(NULL,"Initialization Failed.","ERROR",MB_OK|MB_ICONEXCLAMATION);
-		return FALSE;								// Return FALSE
-	}
+
 
 	return TRUE;									// Success
 }
@@ -307,10 +299,8 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
                                                     // LoWord=Width, HiWord=Height
 			//Scene->ReSizeGLScene(GetSystemMetrics(SM_CXSCREEN),HIWORD(lParam));
 
-			if(currLevel==0)
+
 			Scene->resizeGLScene(LOWORD(lParam),HIWORD(lParam));
-			if(currLevel==1)
-			levelA->resizeGLScene(LOWORD(lParam),HIWORD(lParam));
 			return 0;								// Jump Back
 		}
 	}
@@ -369,22 +359,26 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			{
 				done=TRUE;							// ESC or DrawGLScene Signalled A Quit
 			}
-			if(currLevel==0)									// Not Time To Quit, Update Screen
-			{
+            else
+            {
+                if(Scene->level==1)
+                {
 			    Scene->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
-			}
-			else if(currLevel==1)									// Not Time To Quit, Update Screen
-			{
-			    levelA->drawGLScene(keys);
+                }
+
+                if(Scene->level==2)
+                {
+			    Scene->drawGLScene2(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
-			}
+                }
+            }
+
 			if(keys['Z'])
-               //Scene->level=1;
-               currLevel=1;
+               Scene->level=1;
             if(keys['V'])
-                //Scene->level=2;
-                currLevel=0;
+                Scene->level=2;
+
             if(keys['B'])
                Scene->pauseMenu=true;
 
