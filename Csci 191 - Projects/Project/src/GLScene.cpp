@@ -19,6 +19,7 @@ float maxHeight=1.5;
 float vDecrement=0.001;
 float endGoal;
 float BallprevY;
+float ballGrav=-18.5;
 
 using namespace std;
 
@@ -301,6 +302,21 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
 
 
     }
+     bool topOfTile(Model* Ball,Model* tileT){
+        if(
+           (((Ball->pl_pltfrm_box.x-Ball->pl_pltfrm_box.width) < (tileT->box.x + tileT->box.width) && (Ball->pl_pltfrm_box.x+Ball->pl_pltfrm_box.width) > (tileT->box.x - tileT->box.width))
+            ||((tileT->box.x-tileT->box.width) < (Ball->pl_pltfrm_box.x + Ball->pl_pltfrm_box.width) && (tileT->box.x+tileT->box.width) > (Ball->pl_pltfrm_box.x - Ball->pl_pltfrm_box.width)))
+            &&(((Ball->pl_pltfrm_box.y-Ball->pl_pltfrm_box.height) < (tileT->box.y + tileT->box.height) ||
+            (tileT->box.y+tileT->box.height) > (Ball->pl_pltfrm_box.y - Ball->pl_pltfrm_box.height))&&
+            (Ball->pl_pltfrm_box.y-Ball->pl_pltfrm_box.height>tileT->box.y))
+        )
+        return true;
+        else
+        return false;
+
+
+
+    }
 bool GLScene::playerOnTile(player* ply)
 {
              if((topOfTile(ply,tile1)||topOfTile(ply,tile2)||topOfTile(ply,tile3)||topOfTile(ply,tile4)||
@@ -314,7 +330,19 @@ bool GLScene::playerOnTile(player* ply)
     else
         false;
 }
+bool GLScene::ballOnTile(Model* Ball)
+{
+             if((topOfTile(Ball,tile1)||topOfTile(Ball,tile2)||topOfTile(Ball,tile3)||topOfTile(Ball,tile4)||
+                    topOfTile(Ball,tile5)||topOfTile(Ball,tile6)||topOfTile(Ball,tile7)||topOfTile(Ball,tile8)||
+                    topOfTile(Ball,tile9)||topOfTile(Ball,tile10)||topOfTile(Ball,tile22)||topOfTile(Ball,tile12)||
+                    topOfTile(Ball,tile13)||topOfTile(Ball,tile14)||topOfTile(Ball,tile15)||topOfTile(Ball,platTileBL)||
+                    topOfTile(Ball,platTileBR)||topOfTile(Ball,platTileTL)||topOfTile(Ball,platTileTR)||
+                    topOfTile(Ball,platTileM))||topOfTile(Ball,floor))
 
+               return true;
+    else
+        false;
+}
 void GLScene:: update()
 {
     double currentTime = glfwGetTime();
@@ -665,6 +693,7 @@ void GLScene:: update()
 
 void GLScene:: update2()
 {
+
     double currentTime = glfwGetTime();
 
     frameCount++;
@@ -834,6 +863,8 @@ void GLScene:: update2()
     //------------------------------- BALL -----------------------------------------//
     //---------------------------------------------------------------------------------------------------//
 
+     if(!ballOnTile(Ball))
+            CurYpos+=(ballGrav)/scale;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
     //----------------------PLAYER 1 --------------------------------------//
      if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
     {
@@ -1601,7 +1632,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply2->pl_pltfrm_box.width = 0.07;
             ply2->box.height=0.5;
             ply2->box.width=0.2;
-            update();
+            update2();
             ply2->drawplayer();
         glPopMatrix();
     }
@@ -1795,7 +1826,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         Ball->verticies[3].y = 0.15;
         Ball->box.x = Ball ->Xpos;
         Ball->box.y = Ball ->Ypos;
-       update();
+       update2();
         Ball->drawModel(ballHBTex);
     glPopMatrix();
 

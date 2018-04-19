@@ -25,6 +25,7 @@ class GLScene
          void update2();
          void makeModel(Model* ,textureLoader* ,float ,float ,float ,float ,float , float , float , float , float, float, float, float);
         bool playerOnTile(player* );
+        bool ballOnTile(Model* );
          bool lol(player* );
         void tileChange(Model* , Model* ,textureLoader* );
         bool box_collision(Hbox, Hbox);

@@ -1573,7 +1573,7 @@
 	<iostream>
 	<windows.h>
 
-1524119379 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
+1524122888 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1691,7 +1691,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1524119328 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524122985 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1712,7 +1712,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1523692739 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
+1524122974 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>

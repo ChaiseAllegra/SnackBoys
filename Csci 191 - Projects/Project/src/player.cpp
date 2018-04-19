@@ -257,8 +257,7 @@ void player::actions()
         if(topWC)
             verticalVelocity=-0.5;
 
-        if(!OnTile)
-            verticalVelocity+=(playerGrav)/delta;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+
     }
 }
  void player::playerUpdateHbox() // updates the hit-box location to the players location
