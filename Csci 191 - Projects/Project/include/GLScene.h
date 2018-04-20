@@ -64,6 +64,9 @@ class GLScene
         bool projAdrawn;
         float dashVel;
         bool shot;
+        bool firstpause=true;
+        int tDirx=1;
+         int tDiry=1;
         float dashChange=0.00001;
 
         float curFrame = 0;

@@ -18,8 +18,8 @@ levelOmega::levelOmega()
     topWall->modelInit("images/box/girder2.png", true, tex3);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
-    projA->modelInit("images/box/ball.png", true, ballHBTex);
-    projB->modelInit("images/box/ball.png", true, ballHBTex);
+    ply->projA->modelInit("images/box/ball.png", true, ballHBTex);
+    ply2->projA->modelInit("images/box/ball.png", true, ballHBTex);
 
     cross->modelInit("images/box/crosshair.png", true, crosshair);
 
@@ -34,16 +34,16 @@ levelOmega::levelOmega()
     ply2->T->start();
     ply2->T2->start();
 
-    ProjACurY=ply->PYpos, ProjACurX=ply->PXpos;
-    ProjBCurY=ply2->PYpos, ProjBCurX=ply2->PXpos;
-    projA->Xpos=999;
-    projA->Ypos=999;
-    projA->box.x = projA ->Xpos;
-    projA->box.y = projA ->Ypos;
-    projB->Xpos=999;
-    projB->Ypos=999;
-    projB->box.x = projB ->Xpos;
-    projB->box.y = projB ->Ypos;
+    ply->ProjACurY=ply->PYpos, ply->ProjACurX=ply->PXpos;
+    ply2->ProjACurY=ply2->PYpos, ply2->ProjACurX=ply2->PXpos;
+    ply->projA->Xpos=999;
+    ply->projA->Ypos=999;
+    ply->projA->box.x = ply->projA ->Xpos;
+    ply->projA->box.y = ply->projA ->Ypos;
+    ply2->projA->Xpos=999;
+    ply2->projA->Ypos=999;
+    ply2->projA->box.x = ply2->projA ->Xpos;
+    ply2->projA->box.y = ply2->projA ->Ypos;
     ply2->health=5;
     ply->health=5;
 
@@ -62,6 +62,23 @@ levelOmega::levelOmega()
     tile13->modelInit("images/box/block.png", true, tileTex13);
     tile14->modelInit("images/box/block.png", true, tileTex14);
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+
+      tile1->tag="left";
+     tile2->tag="left";
+     tile3->tag="left";
+     tile4->tag="left";
+     tile5->tag="left";
+     tile6->tag="left";
+     tile7->tag="left";
+
+     tile8->tag="right";
+     tile9->tag="right";
+     tile10->tag="right";
+     tile12->tag="right";
+     tile13->tag="right";
+     tile14->tag="right";
+     tile15->tag="right";
+
     divide->modelInit("images/box/block.png", true, divTex);
 
 
@@ -79,7 +96,10 @@ void levelOmega::tileChange(Model* b, Model* t,textureLoader* TX)
     {
                 D->reset();
                 ballDirY =  1;
-                t->health-=1;
+                if(b->tag=="two"&&t->tag=="left")
+                    t->health-=1;
+                if(b->tag=="one"&&t->tag=="right")
+                    t->health-=1;
                 t->isalive();
                 ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
 
@@ -133,6 +153,7 @@ void levelOmega::ballColl()
     if (box_collision(Ball->box, ply->box) && ply->swinging == true)
     {
         pCol->reset();
+        Ball->tag="one";
         if(ply->lastCase == 'R') // lets player aim to his right
         {
             ballDirX = ply->xdir;
@@ -150,6 +171,7 @@ void levelOmega::ballColl()
     //-----------------------PLAYER 2--------------------------------------//
     if (box_collision(Ball->box, ply2->box) && ply2->swinging == true)
     {
+         Ball->tag="two";
         pCol->reset();
         if(ply2->lastCase == 'R')//lets player aim to his right
         {
@@ -173,6 +195,16 @@ void levelOmega::ballColl()
 }
 void levelOmega::wallColl()
 {
+    if(box_collision(ply->box,killBox->box))
+    {
+        reset();
+        ply2Score++;
+    }
+    if(box_collision(ply2->box,killBox->box))
+    {
+        reset();
+        plyScore++;
+    }
     if (box_collision(Ball->box, rightWall->box))
         ballDirX = -1;
 
@@ -226,72 +258,72 @@ void levelOmega::wallColl()
         ply2->topWC=false;
 
 
-    if(box_collision(projA->box,leftWall->box) && projA->myTime->getTicks() >= 200)
+    if(box_collision(ply->projA->box,leftWall->box) && ply->projA->myTime->getTicks() >= 200)
     {
-        projA->myTime->reset();
-        projA->health--;
-        projAXdir *= -1;
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAXdir *= -1;
     }
 
-    if(box_collision(projA->box,rightWall->box) && projA->myTime->getTicks() >= 200)
+    if(box_collision(ply->projA->box,rightWall->box) && ply->projA->myTime->getTicks() >= 200)
     {
-        projA->myTime->reset();
-        projA->health--;
-        projAXdir *= -1;
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAXdir *= -1;
     }
 
-    if(box_collision(projA->box,topWall->box)&& projA->myTime->getTicks() >= 200)
+    if(box_collision(ply->projA->box,topWall->box)&& ply->projA->myTime->getTicks() >= 200)
     {
-        projA->myTime->reset();
-        projA->health--;
-        projAYdir *= -1;
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAYdir *= -1;
     }
 
-    if(box_collision(projA->box,killBox->box)&& projA->myTime->getTicks() >= 200)
+    if(box_collision(ply->projA->box,killBox->box)&& ply->projA->myTime->getTicks() >= 200)
     {
-        projA->myTime->reset();
-        projA->health--;
-        projAYdir *= -1;
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAYdir *= -1;
     }
 
-    if(box_collision(Ball->box,projA->box)&&BPA->getTicks() >= 200)
+    if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200)
     {
         BPA->reset();
         ballDirX *= -1;
-        projA->health=0;
+        ply->projA->health=0;
         //ballDirY *= -1;
     }
 
     //-----------------PROJECTILE 2 WALL COLLISIONS---------------------------------------------//
-      if(box_collision(projB->box,leftWall->box)&& projB->myTime->getTicks() >= 200)
+      if(box_collision(ply2->projA->box,leftWall->box)&& ply2->projA->myTime->getTicks() >= 200)
     {
-        projB->myTime->reset();
-        projB->health--;
-        projBXdir*=-1;
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAXdir*=-1;
     }
 
-    if(box_collision(projB->box,rightWall->box)&& projB->myTime->getTicks() >= 200)
+    if(box_collision(ply2->projA->box, rightWall->box) && ply2->projA->myTime->getTicks() >= 200)
     {
-        projB->myTime->reset();
-        projB->health--;
-        projBXdir*=-1;
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAXdir*=-1;
     }
 
-    if(box_collision(projB->box,topWall->box)&& projB->myTime->getTicks() >= 200)
+    if(box_collision(ply2->projA->box,topWall->box)&& ply2->projA->myTime->getTicks() >= 200)
     {
-        projB->myTime->reset();
-        projB->health--;
-        projBYdir*=-1;
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAYdir*=-1;
     }
 
-    if(box_collision(projB->box,killBox->box)&& projB->myTime->getTicks() >= 200)
+    if(box_collision(ply2->projA->box,killBox->box)&& ply2->projA->myTime->getTicks() >= 200)
     {
-        projB->myTime->reset();
-        projB->health--;
-        projBYdir*=-1;
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAYdir*=-1;
     }
 
-    if(box_collision(Ball->box,projB->box)&&BPA->getTicks() >= 200)
+    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200)
     {
         BPA->reset();
         ballDirX*=-1;
@@ -300,34 +332,67 @@ void levelOmega::wallColl()
 }
 void levelOmega::projectileCol(player* ply, player* ply2)
 {
-    if(box_collision(projA->box, ply2->box) && ply2->isalive() && projA->myTime->getTicks() > 200) // ball from player one hits player 2
+    if(box_collision(ply->projA->box, ply2->box) && ply2->isalive() && ply->projA->myTime->getTicks() > 200) // ball from player one hits player 2
     {
-           projA->myTime->reset();
+           ply->projA->myTime->reset();
            //if(ply2->lastCase=='R')
             //make him dash in the oppposit direction he is facing
-           projA->health = 0;
+           ply->projA->health = 0;
            ply2->health--;
     }
-    if(box_collision(projA->box, ply->box) && ply->swinging == true)//player one can hit his own wall
+    if(box_collision(ply->projA->box, ply->box) && ply->swinging == true)//player one can hit his own wall
     {
-        projAXdir=ply->xdir;
-        projAYdir=ply->ydir;
+        ply->projAXdir=ply->xdir;
+        ply->projAYdir=ply->ydir;
         //player 2 is deleted or stunned
     }
 
-    if(box_collision(projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
+    if(box_collision(ply->projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
          ply->verticalVelocity=6;
 
     if(ply->thrown)
     {
-        ProjACurY += (projAYdir * 3)/scale;
-        ProjACurX += (projAXdir * 3)/scale;
+        ply->ProjACurY += (ply->projAYdir * 6)/scale;
+        ply->ProjACurX += (ply->projAXdir * 6)/scale;
 
-        projA->Xpos = ProjACurX;
-        projA->Ypos = ProjACurY;
+        ply->projA->Xpos = ply->ProjACurX;
+        ply->projA->Ypos = ply->ProjACurY;
     }
-}
 
+}
+void levelOmega::reset()
+{
+    tile1->health=3;
+    tile2->health=3;
+    tile3->health=3;
+    tile4->health=3;
+    tile5->health=3;
+    tile6->health=3;
+    tile7->health=3;
+    tile8->health=3;
+    tile9->health=3;
+    tile10->health=3;
+    tile22->health=3;
+    tile12->health=3;
+    tile13->health=3;
+    tile14->health=3;
+    tile15->health=3;
+
+    ply->PXpos=-2;
+    ply2->PXpos=2;
+    ply->PYpos = -1.1;
+    ply2->PYpos = -1.1;
+    ply->thrown=false;
+    ply2->thrown=false;
+
+    Ball->Xpos=0;
+    Ball->Ypos=0;
+    ballDirX=-1;
+    ballDirY=1;
+    CurXpos=0;
+    CurYpos=0;
+    //reset the speed
+}
 void levelOmega:: update()
 {
     double currentTime = glfwGetTime();
@@ -385,42 +450,15 @@ void levelOmega:: update()
     tileChange(Ball, tile15,tileTex15);
 
     //----------------------------------
-    //holding the ball or moving the ball
+    // moving the ball
     //---------------------------------
 
      CurYpos = CurYpos + ballDirY * ballSpeed;
      CurXpos = CurXpos + ballDirX * ballSpeed;
-
-     if(box_collision(Ball->box, ply->box)&&ply->hold)//lets the player hold the ball
-    {
-        Ball->Xpos=ply->PXpos;
-        Ball->Ypos=ply->PYpos;
-        if(ply->lastCase=='R')
-        {
-             ballDirY=ply->ydir;
-             ballDirX=ply->xdir;
-        }
-        if(ply->lastCase=='L')
-        {
-             ballDirY=ply->ydir;
-             ballDirX=-ply->xdir;
-        }
-             CurYpos=ply->PYpos;
-             CurXpos=ply->PXpos;
-             Ball->prevHeld=true;
-    }
     //MOVING THE BALL
-    else
-    {
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
-    }
-     if(Ball->prevHeld&&!ply->hold)
-     {
-        prevBallSpeed=ballSpeed;
-        ballSpeed += (0.010*200)/scale;
-        Ball->prevHeld=false;
-     }
+
 
      projectileCol(ply, ply2);
      projectileCol(ply2, ply);
@@ -428,27 +466,55 @@ void levelOmega:: update()
     {
         if(ply->lastCase=='R')//lets player aim to his right
         {
-            projAXdir = ply->xdir;
-            projAYdir = ply->ydir;
+            ply->projAXdir = ply->xdir;
+            ply->projAYdir = ply->ydir;
         }
         if(ply->lastCase=='L')//lets player aim to his left
         {
-            projAXdir = -ply->xdir;
-            projAYdir = ply->ydir;
+            ply->projAXdir = -ply->xdir;
+            ply->projAYdir = ply->ydir;
         }
-        projA->health = 3;
+        ply->projA->health = 3;
     }
-     if(projA->health<=0)
+     if(ply->projA->health<=0)
     {
         ply->thrown=false;
-        projA->box.width=0;
-        projA->box.height=0;
-        projA->box.x=999;
-        projA->box.y=999;
+        ply->projA->box.width=0;
+        ply->projA->box.height=0;
+        ply->projA->box.x=999;
+        ply->projA->box.y=999;
 
     }
     if(ply->thrown==false&&ply->lastCase=='R')
-        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos+0.5;
+        ply->ProjACurY=ply->PYpos, ply->ProjACurX=ply->PXpos+0.5;
     if(ply->thrown==false&&ply->lastCase=='L')
-        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos-0.5;
+        ply->ProjACurY=ply->PYpos, ply->ProjACurX=ply->PXpos-0.5;
+
+     if(!ply2->thrown)
+    {
+        if(ply2->lastCase=='R')//lets player aim to his right
+        {
+            ply2->projAXdir = ply2->xdir;
+            ply2->projAYdir = ply2->ydir;
+        }
+        if(ply2->lastCase=='L')//lets player aim to his left
+        {
+            ply2->projAXdir = -ply2->xdir;
+            ply2->projAYdir = ply2->ydir;
+        }
+        ply2->projA->health = 3;
+    }
+     if(ply2->projA->health<=0)
+    {
+        ply2->thrown=false;
+        ply2->projA->box.width=0;
+        ply2->projA->box.height=0;
+        ply2->projA->box.x=999;
+        ply2->projA->box.y=999;
+
+    }
+    if(ply2->thrown==false&&ply2->lastCase=='R')
+        ply2->ProjACurY=ply2->PYpos, ply2->ProjACurX=ply2->PXpos+0.5;
+    if(ply2->thrown==false&&ply2->lastCase=='L')
+        ply2->ProjACurY=ply2->PYpos, ply2->ProjACurX=ply2->PXpos-0.5;
 }

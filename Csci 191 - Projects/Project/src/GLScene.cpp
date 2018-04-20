@@ -465,8 +465,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
-        omega->projA->myTime->start();
-        omega->projB->myTime->start();
+        omega->ply->projA->myTime->start();
+        omega->ply2->projA->myTime->start();
         omega->ply->myTime->start();
         omega->Ball->myTime->start();
         omega->ply->swingTimer->start();
@@ -615,19 +615,19 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(omega->ply->thrown)
         {
             glPushMatrix();
-                omega->projA->box.height =  .2;
-                omega->projA->box.width = .05;
-                omega->projA->verticies[0].x = -0.15;
-                omega->projA->verticies[1].x = 0.15;
-                omega->projA->verticies[2].x = 0.15;
-                omega->projA->verticies[3].x = -0.15;
-                omega->projA->verticies[0].y = -0.15;
-                omega->projA->verticies[1].y = -0.15;
-                omega->projA->verticies[2].y = 0.15;
-                omega->projA->verticies[3].y = 0.15;
-                omega->projA->box.x = omega->projA ->Xpos;
-                omega->projA->box.y = omega->projA ->Ypos;
-                omega->projA->drawModel(omega->ballHBTex);
+                omega->ply->projA->box.height =  .2;
+                omega->ply->projA->box.width = .05;
+                omega->ply->projA->verticies[0].x = -0.15;
+                omega->ply->projA->verticies[1].x = 0.15;
+                omega->ply->projA->verticies[2].x = 0.15;
+                omega->ply->projA->verticies[3].x = -0.15;
+                omega->ply->projA->verticies[0].y = -0.15;
+                omega->ply->projA->verticies[1].y = -0.15;
+                omega->ply->projA->verticies[2].y = 0.15;
+                omega->ply->projA->verticies[3].y = 0.15;
+                omega->ply->projA->box.x = omega->ply->projA ->Xpos;
+                omega->ply->projA->box.y = omega->ply->projA ->Ypos;
+                omega->ply->projA->drawModel(omega->ballHBTex);
           glPopMatrix();
         }
 
@@ -635,51 +635,33 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     if(omega->ply2->thrown)
         {
             glPushMatrix();
-                omega->projB->box.height =  .2;
-                omega->projB->box.width = .05;
-                omega->projB->verticies[0].x = -0.15;
-                omega->projB->verticies[1].x = 0.15;
-                omega->projB->verticies[2].x = 0.15;
-                omega->projB->verticies[3].x = -0.15;
-                omega->projB->verticies[0].y = -0.15;
-                omega->projB->verticies[1].y = -0.15;
-                omega->projB->verticies[2].y = 0.15;
-                omega->projB->verticies[3].y = 0.15;
-                omega->projB->box.x = omega->projB ->Xpos;
-                omega->projB->box.y = omega->projB ->Ypos;
-                if(!shot)
-                {
-                    if(omega->ply2->lastCase=='R')//lets player aim to his right
-                    {
-                        omega->projBXdir = omega->ply2->xdir;
-                        omega->projBYdir = omega->ply2->ydir;
-                    }
-                    if(omega->ply2->lastCase=='L')//lets player aim to his left
-                    {
-                        omega->projBXdir = -omega->ply2->xdir;
-                        omega->projBYdir = omega->ply2->ydir;
-                    }
-                    omega->projB->health = 3;
-                    omega->shot = true;
-                }
-                omega->projB->drawModel(ballHBTex);
+                omega->ply2->projA->box.height =  .2;
+                omega->ply2->projA->box.width = .05;
+                omega->ply2->projA->verticies[0].x = -0.15;
+                omega->ply2->projA->verticies[1].x = 0.15;
+                omega->ply2->projA->verticies[2].x = 0.15;
+                omega->ply2->projA->verticies[3].x = -0.15;
+                omega->ply2->projA->verticies[0].y = -0.15;
+                omega->ply2->projA->verticies[1].y = -0.15;
+                omega->ply2->projA->verticies[2].y = 0.15;
+                omega->ply2->projA->verticies[3].y = 0.15;
+                omega->ply2->projA->box.x = omega->ply2->projA ->Xpos;
+                omega->ply2->projA->box.y = omega->ply2->projA ->Ypos;
+                omega->ply2->projA->drawModel(omega->ballHBTex);
           glPopMatrix();
         }
-    if(omega->projB->health<=0)
+    if(omega->ply2->projA->health<=0)
     {
         omega->ply2->thrown=false;
         omega->shot=false;
-        omega->projB->Xpos=999;
-        omega->projB->Ypos=999;
-        omega->projB->box.x=999;
-        omega->projB->box.y=999;
-        omega->projB->box.width=0;
-        omega->projB->box.height=0;
+        omega->ply2->projA->Xpos=999;
+        omega->ply2->projA->Ypos=999;
+        omega->ply2->projA->box.x=999;
+        omega->ply2->projA->box.y=999;
+        omega->ply2->projA->box.width=0;
+        omega->ply2->projA->box.height=0;
     }
-    if(omega->ply2->thrown == false && omega->ply2->lastCase == 'R')
-        omega->ProjBCurY = omega->ply2->PYpos, omega->ProjBCurX = omega->ply2->PXpos + 0.5;
-    if(omega->ply2->thrown == false&&omega->ply2->lastCase=='L')
-        omega->ProjBCurY = omega->ply2->PYpos, omega->ProjBCurX = omega->ply2->PXpos - 0.5;
+
     //----------------------------BALL CREATION------------------------------------//
     glPushMatrix();
         omega->Ball->box.height =  .2;
@@ -696,6 +678,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         omega->Ball->box.y = omega->Ball ->Ypos;
         omega->Ball->drawModel(omega->ballHBTex);
     glPopMatrix();
+
     //---------------------------Crosshair player 1 creation----------------------------------//
     float tmp1 = omega->ply->PXpos - omega->ply->xdir;
     float tmp2 = omega->ply->PYpos + omega->ply->ydir;
@@ -715,6 +698,68 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     if(omega->ply2->lastCase=='R')
         makeModel(omega->cross, omega->crosshair, tmp6, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
+
+
+     if(pauseMenu)
+    {
+        omega->ply->pause=true;
+        omega->ply2->pause=true;
+        if(firstpause)
+        {
+          tDirx=omega->ballDirX;
+          tDiry=omega->ballDirY;
+         firstpause=false;
+        }
+        omega->ballDirX=0;
+        omega->ballDirY=0;
+        if(pauseChoice)
+        {
+            if(menuPos==1)//reset the gameee
+            {
+                pauseMenu=false;
+                omega->reset();
+            }
+            if(menuPos==2)//resumed the game
+            {
+                omega->ballDirX=tDirx;
+                omega->ballDirY=tDiry;
+                pauseMenu=false;
+                firstpause=true;
+                omega->ply->pause=false;
+                omega->ply2->pause=false;
+            }
+            menuPos=2;
+            pauseChoice=false;
+        }
+        else
+        {
+        glLoadIdentity();
+            if(menuPos==2)
+            {
+                glPushMatrix();
+                playMod->Xpos=0;
+                 playMod->Ypos=0;
+                 playMod->drawModel(playTex);
+                glPopMatrix();
+            }
+            if(menuPos==1)
+            {
+                glPushMatrix();
+                resetMod->Xpos=0;
+                  resetMod->Ypos=0;
+                 resetMod->drawModel(resetTex);
+                glPopMatrix();
+            }
+             if(menuPos==0)
+            {
+                glPushMatrix();
+                exitMod->Xpos=0;
+                exitMod->Ypos=0;
+                 exitMod->drawModel(exitTex);
+                glPopMatrix();
+            }
+        }
+    }
 
     if(lolTime-startTime>=2&&!pauseMenu)//wait three seconds to start the
     {

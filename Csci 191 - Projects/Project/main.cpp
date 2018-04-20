@@ -12,10 +12,12 @@
 #include <GLScene.h> //change
 
 #include <stdlib.h>
+#include<timer.h>
 #include <iostream>
 #include <windows.h>		// Header File For Windows
 
 using namespace std;
+timer* menu= new timer();
 
 
 HDC			hDC=NULL;		// Private GDI Device Context
@@ -319,6 +321,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 					LPSTR		lpCmdLine,			// Command Line Parameters
 					int			nCmdShow)			// Window Show State
 {
+    menu->start();
 	MSG		msg;									// Windows Message Structure
 	BOOL	done=FALSE;								// Bool Variable To Exit Loop
 
@@ -384,12 +387,18 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 
             if(Scene->pauseMenu)
             {
-               if(keys['S'])
+               if(keys['S']&&menu->getTicks()>150)
+               {
+                   menu->reset();
                    if(Scene->menuPos>0)
                         Scene->menuPos-=1;
-               if(keys['W'])
+               }
+               if(keys['W']&&menu->getTicks()>150)
+               {
+                   menu->reset();
                     if(Scene->menuPos<2)
                         Scene->menuPos++;
+               }
                if(keys['E'])
                     Scene->pauseChoice=true;
                if(Scene->pauseChoice&&Scene->menuPos==0)

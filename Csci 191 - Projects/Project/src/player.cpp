@@ -14,7 +14,7 @@ player::player()
     jumpInitiated = false;
     PZoom = -4;
     PXpos = 0;
-    PYpos = -1.38;
+    PYpos = -1.1;
     aimX = 0;
     aimY = -1;
 
@@ -147,7 +147,7 @@ void player::actions()
                 glTranslated(PXpos, PYpos, PZoom);
                 if(5==5)//T->getTicks() > 3)
                 {
-                    if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated))
+                    if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated)&&!pause)
                     {
                        // plyVel *= plyAccel;
 
@@ -166,7 +166,7 @@ void player::actions()
                     }
                 }
 
-                if (swingDuration->getTicks() >= 400 && !ballCollided)
+                if (swingDuration->getTicks() >= 400 && !ballCollided&&!pause)
                 {
                     if(T2 ->getTicks()>80)
                     {
@@ -193,7 +193,7 @@ void player::actions()
 
     break;
    }
-   if(swinging)
+   if(swinging&&!pause)
    {
            glPushMatrix();
               if(T2 ->getTicks()>80)
@@ -209,7 +209,7 @@ void player::actions()
               drawplayer();
            glPopMatrix();
    }
-    if(isDash)
+    if(isDash&&!pause)
     {
         if(lastCase=='R'&&rightWC)
         {
@@ -244,7 +244,7 @@ void player::actions()
         }
 
     }
-    if(delta>0)
+    if(delta>0&&!pause)
     {
         PYpos+=(verticalVelocity)/delta;
 

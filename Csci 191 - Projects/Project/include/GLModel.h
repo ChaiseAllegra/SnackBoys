@@ -6,6 +6,8 @@
 #include<GLTexture.h>
 #include<timer.h>
 
+using namespace std;
+
 typedef struct{
  float x;
  float y;
@@ -37,7 +39,7 @@ class Model
         Hbox box;
         Hbox pl_pltfrm_box;
         float health;
-        std::string tag;
+
         timer* myTime;
 
         double RotateX;
@@ -46,6 +48,10 @@ class Model
         double Zoom;
         double Xpos;
         double Ypos;
+
+        string tag;
+        //string lasthit="none";
+
         vec1 verticies[4];
     protected:
     private:

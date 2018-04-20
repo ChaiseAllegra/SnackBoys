@@ -26,6 +26,14 @@ class player: public Model
         float scalesize[3]={1.0,1.0,1.0};
         vec verticies[4];
 
+        float projAXdir;
+        float projAYdir;
+        float ProjACurX;
+        float ProjACurY;
+        bool pause=false;
+
+        Model * projA = new Model();
+
         int runspeed;
         int jumpspeed;
         int actionTrigger;

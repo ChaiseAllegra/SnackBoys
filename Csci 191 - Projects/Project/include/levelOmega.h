@@ -9,6 +9,7 @@ class levelOmega
     public:
         levelOmega();
         virtual ~levelOmega();
+        void reset();
         void update();
         void wallColl();
         void ballColl();
@@ -31,14 +32,6 @@ class levelOmega
         float ballDirY=-1;
 
         float prevBallSpeed;
-        float projAXdir;
-        float projAYdir;
-        float ProjACurX;
-        float ProjACurY;
-        float projBXdir;
-        float projBYdir;
-        float ProjBCurX;
-        float ProjBCurY;
         float lastTime;
 
         double  strtTime;
@@ -46,11 +39,12 @@ class levelOmega
         bool setBallSpeed;
         bool start=false;
 
+        int plyScore=0;
+        int ply2Score=0;
+
         Model * modelTeapot = new Model();
         Model * modelTeapot2 = new Model();
         Model* Ball = new Model();
-        Model * projA = new Model();
-        Model * projB = new Model();
         Model* leftWall = new Model(); // left wall
         Model* rightWall = new Model(); // right wall
         Model* topWall = new Model(); // top wall
