@@ -81,7 +81,7 @@ void levelOmega::tileChange(Model* b, Model* t,textureLoader* TX)
                 ballDirY =  1;
                 t->health-=1;
                 t->isalive();
-                ballSpeed=(0.125*8)/scale;
+                ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
 
                 if (t->health == 2)
                     t->modelInit("images/box/block2.png", true, TX);
@@ -143,7 +143,7 @@ void levelOmega::ballColl()
             ballDirX = -ply->xdir;
             ballDirY = ply->ydir;
         }
-        ballSpeed += 0.2 / scale;
+        ballSpeed += 0.1 / scale;//0.2 / scale;
         ply->swinging = false;
     }
 
@@ -162,7 +162,7 @@ void levelOmega::ballColl()
             ballDirX = -ply2->xdir;
             ballDirY = ply2->ydir;
         }
-        ballSpeed += 0.2 / scale;
+        ballSpeed += 0.1 / scale;
         ply2->swinging = false;
     }
     if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
@@ -258,7 +258,8 @@ void levelOmega::wallColl()
     {
         BPA->reset();
         ballDirX *= -1;
-        ballDirY *= -1;
+        projA->health=0;
+        //ballDirY *= -1;
     }
 
     //-----------------PROJECTILE 2 WALL COLLISIONS---------------------------------------------//
@@ -338,7 +339,7 @@ void levelOmega:: update()
             scale=(frameCount);
         if(!setBallSpeed)
         {
-             ballSpeed=(0.125*8)/scale;
+             ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
              setBallSpeed=true;
         }
         frameCount=0;

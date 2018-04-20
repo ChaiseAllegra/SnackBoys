@@ -517,7 +517,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         omega-> ply->pl_pltfrm_box.x = omega->ply ->PXpos;
         omega->ply->pl_pltfrm_box.y = omega->ply -> PYpos;
         omega->ply->pl_pltfrm_box.height = 0.6;
-        omega->ply->pl_pltfrm_box.width = 0.7;
+        omega->ply->pl_pltfrm_box.width = 0.07;
         omega->ply->box.height=0.1;
         omega->ply->trueHeight=0.1;
         omega->ply->box.width=0.3;

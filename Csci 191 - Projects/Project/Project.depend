@@ -1476,7 +1476,7 @@
 
 1522122624 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1524022690 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1524251713 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1536,7 +1536,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1523692739 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1524249712 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -1552,7 +1552,7 @@
 1523077152 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1524186732 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524251835 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2613,9 +2613,10 @@
 	"levelAlpha.h"
 	<GLFW/glfw3.h>
 
-1524187030 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\levelomega.cpp
+1524250560 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\levelomega.cpp
 	"levelOmega.h"
 	<GLFW/glfw3.h>
+	<iostream>
 
 1524186711 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\levelomega.h
 	<player.h>
