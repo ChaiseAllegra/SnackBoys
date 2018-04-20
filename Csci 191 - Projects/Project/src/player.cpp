@@ -7,7 +7,7 @@
 player::player()
 {
     verticalVelocity=0;
-    playerGrav=-18.5;
+    playerGrav=-20;
     ydir=0;
     xdir=1;
 
@@ -224,7 +224,7 @@ void player::actions()
                 isDash=false;
                 dashVel=4;
             }
-            dashVel-=(5.5)/delta;//dashDec;
+            dashVel-=(8.5)/delta;//dashDec;//5.5
         }
 
         if(lastCase=='L'&&leftWC)
@@ -240,7 +240,7 @@ void player::actions()
                 isDash=false;
                 dashVel=4;
             }
-            dashVel-=(5.5)/delta;
+            dashVel-=(8.5)/delta;//5.5
         }
 
     }
@@ -257,8 +257,10 @@ void player::actions()
         if(topWC)
             verticalVelocity=-0.5;
 
-        if(!OnTile)
-            verticalVelocity+=(playerGrav)/delta;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+        //if(!OnTile)
+        //    verticalVelocity+=(playerGrav)/delta;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
+
+
     }
 }
  void player::playerUpdateHbox() // updates the hit-box location to the players location

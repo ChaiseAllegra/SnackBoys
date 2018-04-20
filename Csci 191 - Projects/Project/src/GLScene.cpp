@@ -460,7 +460,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
 GLint GLScene::drawGLScene2(bool pressed[256])
 {
     double lolTime = glfwGetTime();
-    cout<<lolTime<<endl;
+    //cout<<lolTime<<endl;
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
@@ -517,7 +517,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         omega-> ply->pl_pltfrm_box.x = omega->ply ->PXpos;
         omega->ply->pl_pltfrm_box.y = omega->ply -> PYpos;
         omega->ply->pl_pltfrm_box.height = 0.6;
-        omega->ply->pl_pltfrm_box.width = 0.07;
+        omega->ply->pl_pltfrm_box.width = 0.7;
         omega->ply->box.height=0.1;
         omega->ply->trueHeight=0.1;
         omega->ply->box.width=0.3;
@@ -525,13 +525,13 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         omega->ply->drawplayer();
     glPopMatrix();
     }
-     /*if(omega->ply->health<=0)
+    if(omega->ply->health<=0)
     {
             omega->ply->box.height=0;
             omega->ply->box.width=0;
             omega->ply->pl_pltfrm_box.height = 0;
             omega->ply->pl_pltfrm_box.width = 0;
-    }*/
+    }
     if(omega->ply2->health>0)
     {
         glPushMatrix();
@@ -605,6 +605,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(omega->killBox,omega->texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
     //dividing wall
     makeModel(omega->divide,omega->divTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
+
 
     //top wall
     makeModel(omega->topWall, omega->tex3,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);

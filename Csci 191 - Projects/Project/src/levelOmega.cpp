@@ -1,6 +1,8 @@
 #include "levelOmega.h"
 #include <GLFW/glfw3.h>
+#include <iostream>
 
+using namespace std;
 levelOmega::levelOmega()
 {
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
@@ -218,6 +220,12 @@ void levelOmega::wallColl()
     else
         ply2->rightWC=false;
 
+    if(box_collision(ply2->box,topWall->box))//player has hit the top wall
+        ply2->topWC=true;//set to true so the player cannot move up
+    else
+        ply2->topWC=false;
+
+
     if(box_collision(projA->box,leftWall->box) && projA->myTime->getTicks() >= 200)
     {
         projA->myTime->reset();
@@ -294,6 +302,8 @@ void levelOmega::projectileCol(player* ply, player* ply2)
     if(box_collision(projA->box, ply2->box) && ply2->isalive() && projA->myTime->getTicks() > 200) // ball from player one hits player 2
     {
            projA->myTime->reset();
+           //if(ply2->lastCase=='R')
+            //make him dash in the oppposit direction he is facing
            projA->health = 0;
            ply2->health--;
     }
@@ -324,8 +334,8 @@ void levelOmega:: update()
     frameCount++;
     if(currentTime-lastTime>=1.0)
     {
-        if(frameCount/2>0)
-            scale=(frameCount)/2;
+        if(frameCount>0)
+            scale=(frameCount);
         if(!setBallSpeed)
         {
              ballSpeed=(0.125*8)/scale;
@@ -340,7 +350,7 @@ void levelOmega:: update()
             ply2->delta=scale;
         }
     }
-
+    //cout<<scale<<endl;
     if (!glfwInit())
     exit(EXIT_FAILURE);
 
