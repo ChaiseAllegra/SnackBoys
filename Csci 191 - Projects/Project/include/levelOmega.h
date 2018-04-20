@@ -3,31 +3,34 @@
 #include <player.h>
 #include<time.h>
 #include <GLModel.h>
-
+#include <GLFW/glfw3.h>
 class levelOmega
 {
     public:
         levelOmega();
         virtual ~levelOmega();
-        void update(float);
+        void update();
+        void wallColl();
+        void ballColl();
+        void projectileCol(player*,player*);
         bool playerOnTile(player* );
         void tileChange(Model* , Model* ,textureLoader* );
         bool topOfTile(player*, Model*);
         bool box_collision(Hbox, Hbox);
-
+        bool shot;
         int frameCount=0;
-        int rightScore=0;
-        int leftScore=0;
         float oneSecondTimer;
-        float scale;
+        float scale=1;
+        float CurYpos=0;
+        float CurXpos=0;
+
+        Model* cross = new Model();
 
         float ballSpeed;
-        float ballDirX;
-        float ballDirY;
-        float CurYpos;
-        float CurXpos;
-        float prevBallSpeed;
+        float ballDirX=1;
+        float ballDirY=-1;
 
+        float prevBallSpeed;
         float projAXdir;
         float projAYdir;
         float ProjACurX;
@@ -36,9 +39,15 @@ class levelOmega
         float projBYdir;
         float ProjBCurX;
         float ProjBCurY;
+        float lastTime;
+
+        double  strtTime;
 
         bool setBallSpeed;
+        bool start=false;
 
+        Model * modelTeapot = new Model();
+        Model * modelTeapot2 = new Model();
         Model* Ball = new Model();
         Model * projA = new Model();
         Model * projB = new Model();
@@ -47,7 +56,6 @@ class levelOmega
         Model* topWall = new Model(); // top wall
         Model* killBox = new Model();
         Model* divide = new Model();
-
         //left side tiles
         Model* tile1 = new Model();
         Model* tile2 = new Model();
@@ -66,15 +74,11 @@ class levelOmega
         Model* tile13 = new Model();
         Model* tile14 = new Model();
         Model* tile15 = new Model();
-
-
         player* ply = new player();
         player* ply2 = new player();
-
         timer* BPA = new timer;//projectile A and ball collision timer
         timer* pCol = new timer;//ball and player collision timer
         timer* D = new timer;//tile and ball collision timer
-
         textureLoader* tileTex=new textureLoader();
         textureLoader* tileTex2=new textureLoader();
         textureLoader* tileTex3=new textureLoader();
@@ -90,10 +94,17 @@ class levelOmega
         textureLoader* tileTex13=new textureLoader();
         textureLoader* tileTex14=new textureLoader();
         textureLoader* tileTex15=new textureLoader();
-
+        textureLoader* tex0 = new textureLoader();
+        textureLoader* tex1 = new textureLoader();
+        textureLoader* tex2 = new textureLoader();
+        textureLoader* tex3 = new textureLoader();
+        textureLoader* divTex = new textureLoader();
+        textureLoader* ballHBTex = new textureLoader();
+        textureLoader* texGL = new textureLoader();
+        textureLoader* texGR = new textureLoader();
+        textureLoader* crosshair = new textureLoader();
+        textureLoader* texc = new textureLoader();
     protected:
-
     private:
 };
-
 #endif // levelOmega_H

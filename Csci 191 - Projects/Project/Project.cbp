@@ -53,6 +53,7 @@
 		<Unit filename="include/SOIL.h" />
 		<Unit filename="include/level1.h" />
 		<Unit filename="include/levelAlpha.h" />
+		<Unit filename="include/levelOmega.h" />
 		<Unit filename="include/parallax.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="include/skyBox.h" />
@@ -65,6 +66,7 @@
 		<Unit filename="src/GLTexture.cpp" />
 		<Unit filename="src/level1.cpp" />
 		<Unit filename="src/levelAlpha.cpp" />
+		<Unit filename="src/levelOmega.cpp" />
 		<Unit filename="src/parallax.cpp" />
 		<Unit filename="src/player.cpp" />
 		<Unit filename="src/skyBox.cpp" />

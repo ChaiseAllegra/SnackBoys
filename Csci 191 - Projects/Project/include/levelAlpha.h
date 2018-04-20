@@ -37,6 +37,7 @@ class levelAlpha
         float ProjBCurY;
 
         bool setBallSpeed;
+        bool shot;
 
         Model* Ball = new Model();
         Model * projA = new Model();

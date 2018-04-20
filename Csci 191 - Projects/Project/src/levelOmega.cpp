@@ -3,70 +3,21 @@
 
 levelOmega::levelOmega()
 {
-    //ctor
-    /*ground=-1.38;
-    levelOne=true;
-    levelTwo=false;
-    dirXX = 1, dirYY = 1;
-    directionX = -2;
-    directionY = 1;
-    CurXpos = 0, CurYpos = 0;//-1.3 ; // Current x position of the ball, current y position of the ball,
-    ballSpeed = 0.001;
-    lastTime = glfwGetTime();
-    glShadeModel(GL_SMOOTH);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClearDepth(1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    GLLight SetLight(GL_LIGHT0);
-    GLLight Light(GL_LIGHT0);
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
     modelTeapot2->modelInit("images/player/player0.png", true, tex0);
-   // plx->parallaxInit("images/box/band-BG2.png");
     ply->playerInit();
     ply2->playerInit();
-    sky->loadTextures();
 
-    plx->parallaxInit("images/box/sky.png",texSky1);
-    plx2->parallaxInit("images/box/city.png",texSky2);
-    wallA->modelInit("images/box/girder.png", true, tex1);
-    wallB->modelInit("images/box/girder.png", true, tex2);
-    wallC->modelInit("images/box/girder2.png", true, tex3);
-    divide->modelInit("images/box/nothing.png", true, texD);
-    hud->modelInit("images/box/hud.png", true, texH);
+    ply->playerInit();
+    ply2->playerInit();
+
+    leftWall->modelInit("images/box/girder.png", true, tex1);
+    rightWall->modelInit("images/box/girder.png", true, tex2);
+    topWall->modelInit("images/box/girder2.png", true, tex3);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
     projA->modelInit("images/box/ball.png", true, ballHBTex);
     projB->modelInit("images/box/ball.png", true, ballHBTex);
-    BallHbawks->modelInit("images/box/hitbox.png",true, ballHBTex2);
-
-    tile1->modelInit("images/box/nothing2.png", true, tileTex);
-    tile2->modelInit("images/box/block.png", true, tileTex2);
-    tile3->modelInit("images/box/block.png", true, tileTex3);
-    tile4->modelInit("images/box/block.png", true, tileTex4);
-    tile5->modelInit("images/box/block.png", true, tileTex5);
-    tile6->modelInit("images/box/block.png", true, tileTex6);
-    tile7->modelInit("images/box/block.png", true, tileTex7);
-    tile8->modelInit("images/box/block.png", true, tileTex8);
-    tile9->modelInit("images/box/block.png", true, tileTex9);
-    tile10->modelInit("images/box/block.png", true, tileTex10);
-    tile22->modelInit("images/box/block.png", true, tileTex11);
-    tile12->modelInit("images/box/block.png", true, tileTex12);
-    tile13->modelInit("images/box/block.png", true, tileTex13);
-    tile14->modelInit("images/box/block.png", true, tileTex14);
-    tile15->modelInit("images/box/nothing2.png", true, tileTex15);
-     GoalL->modelInit("images/box/hitbox.png",true,texGL);
-    GoalR->modelInit("images/box/hitbox.png",true,texGR);
-    platTileBL->modelInit("images/box/block.png", true, tileTex);
-    platTileBR->modelInit("images/box/block.png", true, tileTex);
-    platTileTL->modelInit("images/box/block.png", true, tileTex);
-    platTileTR->modelInit("images/box/block.png", true, tileTex);
-    platTileM->modelInit("images/box/block.png", true, tileTex);
-
-    playMod->modelInit("images/box/pMPlay.png", true, playTex);
-    resetMod->modelInit("images/box/pMReset.png", true, resetTex);
-    exitMod->modelInit("images/box/pMExit.png", true, exitTex);
-
 
     cross->modelInit("images/box/crosshair.png", true, crosshair);
 
@@ -94,8 +45,26 @@ levelOmega::levelOmega()
     ply2->health=5;
     ply->health=5;
 
-    ply->frameRate->start();
-    startTime = glfwGetTime();*/
+    tile1->modelInit("images/box/nothing2.png", true, tileTex);
+    tile2->modelInit("images/box/block.png", true, tileTex2);
+    tile3->modelInit("images/box/block.png", true, tileTex3);
+    tile4->modelInit("images/box/block.png", true, tileTex4);
+    tile5->modelInit("images/box/block.png", true, tileTex5);
+    tile6->modelInit("images/box/block.png", true, tileTex6);
+    tile7->modelInit("images/box/block.png", true, tileTex7);
+    tile8->modelInit("images/box/block.png", true, tileTex8);
+    tile9->modelInit("images/box/block.png", true, tileTex9);
+    tile10->modelInit("images/box/block.png", true, tileTex10);
+    tile22->modelInit("images/box/block.png", true, tileTex11);
+    tile12->modelInit("images/box/block.png", true, tileTex12);
+    tile13->modelInit("images/box/block.png", true, tileTex13);
+    tile14->modelInit("images/box/block.png", true, tileTex14);
+    tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+    divide->modelInit("images/box/block.png", true, divTex);
+
+
+
+    cross->modelInit("images/box/crosshair.png", true, crosshair);
 }
 
 levelOmega::~levelOmega()
@@ -156,148 +125,159 @@ collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1
 
     return collisionX && collisionY;
 }
-void levelOmega:: update(float scale)
+void levelOmega::ballColl()
 {
-    //-------------------------------------------------------------------------------------------------//
-    //-------------------------------WALL COLLISIONS -----------------------------------------//
-    //-------------------------------------------------------------------------------------------------//
-    if (box_collision(Ball->box, rightWall->box))
+    //----------------------PLAYER 1 --------------------------------------//
+    if (box_collision(Ball->box, ply->box) && ply->swinging == true)
     {
-        ballDirX = -1;
-        //hit=false;
-        //velocity=resetV;
+        pCol->reset();
+        if(ply->lastCase == 'R') // lets player aim to his right
+        {
+            ballDirX = ply->xdir;
+            ballDirY = ply->ydir;
+        }
+        if(ply->lastCase == 'L') // lets player aim to his left
+        {
+            ballDirX = -ply->xdir;
+            ballDirY = ply->ydir;
+        }
+        ballSpeed += 0.2 / scale;
+        ply->swinging = false;
     }
+
+    //-----------------------PLAYER 2--------------------------------------//
+    if (box_collision(Ball->box, ply2->box) && ply2->swinging == true)
+    {
+        pCol->reset();
+        if(ply2->lastCase == 'R')//lets player aim to his right
+        {
+            ballDirX = ply2->xdir;
+            ballDirY = ply2->ydir;
+        }
+
+        if(ply2->lastCase == 'L')//lets player aim to his left
+        {
+            ballDirX = -ply2->xdir;
+            ballDirY = ply2->ydir;
+        }
+        ballSpeed += 0.2 / scale;
+        ply2->swinging = false;
+    }
+    if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
+    {
+           Ball->myTime->reset();
+           ply2->health--;
+    }
+}
+void levelOmega::wallColl()
+{
+    if (box_collision(Ball->box, rightWall->box))
+        ballDirX = -1;
 
     if (box_collision(Ball->box, leftWall->box))
-    {
         ballDirX = 1;
-        //hit=false;
-          //velocity=resetV;
-    }
 
     if (box_collision(Ball->box, topWall->box))
-    {
         ballDirY = -1;
-        //hit=false;
-          //velocity=resetV;
-    }
 
     if (box_collision(Ball->box, killBox->box))
     {
-       CurYpos=2;
-       ballDirY=-1;
-       //hit=false;
-       //velocity=resetV;
+        CurYpos=2;
+        ballDirY=-1;
 
         if(ballDirX==-1)
-        CurXpos+=2;
+            CurXpos+=2;
 
         if(ballDirX==1)
-        CurXpos-=2;
+            CurXpos-=2;
     }
 
-
-    if(box_collision(ply->box,leftWall->box))//player has hit the left wall
-        ply->leftWC=true;//set to true so the player cannot move left
+    if(box_collision(ply->box,leftWall->box)) // player has hit the left wall
+        ply->leftWC=true; // set to true so the player cannot move left
     else
         ply->leftWC=false;
 
-
-    if(box_collision(ply->box,divide->box))//player has hit the right wall
-        ply->rightWC=true;//set to true so the player cannot move right
+    if(box_collision(ply->box,divide->box)) // player has hit the right wall
+        ply->rightWC=true; // set to true so the player cannot move right
     else
         ply->rightWC=false;
 
-
-    if(box_collision(ply->box,rightWall->box))//player has hit the right wall
-        ply->rightWC=true;//set to true so the player cannot move right
-    else
-        ply->rightWC=false;
-
-
-
-     if(box_collision(ply->box,topWall->box))//player has hit the top wall
+    if(box_collision(ply->box,topWall->box))//player has hit the top wall
         ply->topWC=true;//set to true so the player cannot move up
     else
         ply->topWC=false;
 
-
-    if(box_collision(ply2->box,divide->box))//player has hit the left wall
-        ply2->leftWC=true;//set to true so the player cannot move left
-        else
-        ply2->leftWC=false;
-
-    if(box_collision(ply2->box,leftWall->box))//player has hit the left wall
-        ply2->leftWC=true;//set to true so the player cannot move left
+    if(box_collision(ply2->box,divide->box)) // player has hit the left wall
+        ply2->leftWC=true; // set to true so the player cannot move left
     else
         ply2->leftWC=false;
 
 
-    if(box_collision(ply2->box,rightWall->box))//player has hit the right wall
-        ply2->rightWC=true;//set to true so the player cannot move right
+    if(box_collision(ply2->box,rightWall->box)) // player has hit the right wall
+        ply2->rightWC=true; // set to true so the player cannot move right
     else
         ply2->rightWC=false;
 
-    if(box_collision(projA->box,leftWall->box)&& projA->myTime->getTicks() >= 200)
+    if(box_collision(projA->box,leftWall->box) && projA->myTime->getTicks() >= 200)
     {
-         projA->myTime->reset();
+        projA->myTime->reset();
         projA->health--;
-        projAXdir*=-1;
+        projAXdir *= -1;
     }
 
-    if(box_collision(projA->box,rightWall->box)&& projA->myTime->getTicks() >= 200)
+    if(box_collision(projA->box,rightWall->box) && projA->myTime->getTicks() >= 200)
     {
-       projA->myTime->reset();
+        projA->myTime->reset();
         projA->health--;
-        projAXdir*=-1;
+        projAXdir *= -1;
     }
 
     if(box_collision(projA->box,topWall->box)&& projA->myTime->getTicks() >= 200)
     {
-         projA->myTime->reset();
+        projA->myTime->reset();
         projA->health--;
-        projAYdir*=-1;
+        projAYdir *= -1;
     }
 
     if(box_collision(projA->box,killBox->box)&& projA->myTime->getTicks() >= 200)
     {
-         projA->myTime->reset();
+        projA->myTime->reset();
         projA->health--;
-        projAYdir*=-1;
+        projAYdir *= -1;
     }
 
     if(box_collision(Ball->box,projA->box)&&BPA->getTicks() >= 200)
     {
         BPA->reset();
-        ballDirX*=-1;
-        ballDirY*=-1;
+        ballDirX *= -1;
+        ballDirY *= -1;
     }
 
     //-----------------PROJECTILE 2 WALL COLLISIONS---------------------------------------------//
       if(box_collision(projB->box,leftWall->box)&& projB->myTime->getTicks() >= 200)
     {
-         projB->myTime->reset();
+        projB->myTime->reset();
         projB->health--;
         projBXdir*=-1;
     }
 
     if(box_collision(projB->box,rightWall->box)&& projB->myTime->getTicks() >= 200)
     {
-       projB->myTime->reset();
+        projB->myTime->reset();
         projB->health--;
         projBXdir*=-1;
     }
 
     if(box_collision(projB->box,topWall->box)&& projB->myTime->getTicks() >= 200)
     {
-         projB->myTime->reset();
+        projB->myTime->reset();
         projB->health--;
         projBYdir*=-1;
     }
 
     if(box_collision(projB->box,killBox->box)&& projB->myTime->getTicks() >= 200)
     {
-         projB->myTime->reset();
+        projB->myTime->reset();
         projB->health--;
         projBYdir*=-1;
     }
@@ -308,58 +288,66 @@ void levelOmega:: update(float scale)
         ballDirX*=-1;
         ballDirY*=-1;
     }
-
-    //---------------------------------------------------------------------------------------------------//
-    //------------------------------- BALL -----------------------------------------//
-    //---------------------------------------------------------------------------------------------------//
-
-    //----------------------PLAYER 1 --------------------------------------//
-     if (box_collision(Ball->box, ply->box) && ply->swinging == true )//&& pCol->getTicks() >= 350)
+}
+void levelOmega::projectileCol(player* ply, player* ply2)
+{
+    if(box_collision(projA->box, ply2->box) && ply2->isalive() && projA->myTime->getTicks() > 200) // ball from player one hits player 2
     {
-        pCol->reset();
-        if(ply->lastCase=='R')//lets player aim to his right
-        {
-            ballDirX = ply->xdir;
-            ballDirY = ply->ydir;
-        }
-
-        if(ply->lastCase=='L')//lets player aim to his left
-        {
-            ballDirX = -ply->xdir;
-            ballDirY = ply->ydir;
-        }
-        ballSpeed += (0.0010*200)/scale;
-        ply->swinging=false;
-
-    }
-
-    //Set a bool if player is on tile
-    ply->OnTile=playerOnTile(ply);
-
-    //-----------------------PLAYER 2--------------------------------------//
-     if (box_collision(Ball->box, ply2->box) && ply2->swinging == true )//&& pCol->getTicks() >= 350)
-    {
-        pCol->reset();
-        if(ply2->lastCase=='R')//lets player aim to his right
-        {
-            ballDirX = ply2->xdir;
-            ballDirY = ply2->ydir;
-        }
-
-        if(ply2->lastCase=='L')//lets player aim to his left
-        {
-            ballDirX = -ply2->xdir;
-            ballDirY = ply2->ydir;
-        }
-        ballSpeed += (0.0010*200)/scale;
-        ply2->swinging=false;
-
-    }
-    if(box_collision(ply2->box,Ball->box)&&ply2->isalive()&&Ball->myTime->getTicks()>200)
-    {
-           Ball->myTime->reset();
+           projA->myTime->reset();
+           projA->health = 0;
            ply2->health--;
     }
+    if(box_collision(projA->box, ply->box) && ply->swinging == true)//player one can hit his own wall
+    {
+        projAXdir=ply->xdir;
+        projAYdir=ply->ydir;
+        //player 2 is deleted or stunned
+    }
+
+    if(box_collision(projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
+         ply->verticalVelocity=6;
+
+    if(ply->thrown)
+    {
+        ProjACurY += (projAYdir * 3)/scale;
+        ProjACurX += (projAXdir * 3)/scale;
+
+        projA->Xpos = ProjACurX;
+        projA->Ypos = ProjACurY;
+    }
+}
+
+void levelOmega:: update()
+{
+    double currentTime = glfwGetTime();
+
+    frameCount++;
+    if(currentTime-lastTime>=1.0)
+    {
+        if(frameCount/2>0)
+            scale=(frameCount)/2;
+        if(!setBallSpeed)
+        {
+             ballSpeed=(0.125*8)/scale;
+             setBallSpeed=true;
+        }
+        frameCount=0;
+        lastTime+=1.0;
+
+        if(scale>0)
+        {
+            ply->delta=scale;
+            ply2->delta=scale;
+        }
+    }
+
+    if (!glfwInit())
+    exit(EXIT_FAILURE);
+
+    wallColl();
+    ballColl();
+     //Set a bool if player is on tile
+    ply->OnTile=playerOnTile(ply);
     //Set a bool if player is on tile
     ply2->OnTile=playerOnTile(ply2);
 
@@ -390,8 +378,7 @@ void levelOmega:: update(float scale)
     //---------------------------------
 
      CurYpos = CurYpos + ballDirY * ballSpeed;
-
-      CurXpos = CurXpos + ballDirX * ballSpeed;
+     CurXpos = CurXpos + ballDirX * ballSpeed;
 
      if(box_collision(Ball->box, ply->box)&&ply->hold)//lets the player hold the ball
     {
@@ -412,11 +399,11 @@ void levelOmega:: update(float scale)
              Ball->prevHeld=true;
     }
     //MOVING THE BALL
-    /*else if(!hit)
+    else
     {
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
-    }*/
+    }
      if(Ball->prevHeld&&!ply->hold)
      {
         prevBallSpeed=ballSpeed;
@@ -424,68 +411,33 @@ void levelOmega:: update(float scale)
         Ball->prevHeld=false;
      }
 
-     //-------------------------------------------------------------------
-     //-----------------------Projectile----------------------------------
-     //-------------------------------------------------------------------
-     //------------------------Projectile A----------------------------------//
-    if(box_collision(projA->box,ply2->box)&&ply2->isalive()&&projA->myTime->getTicks()>200)//ball from player one hits player 2
+     projectileCol(ply, ply2);
+     projectileCol(ply2, ply);
+    if(!ply->thrown)
     {
-           projA->myTime->reset();
-           projA->health=0;
-           ply2->health--;
-           //cout<<"p2 collisions"<<endl;
-           //player 2 is deleted or stunned
+        if(ply->lastCase=='R')//lets player aim to his right
+        {
+            projAXdir = ply->xdir;
+            projAYdir = ply->ydir;
+        }
+        if(ply->lastCase=='L')//lets player aim to his left
+        {
+            projAXdir = -ply->xdir;
+            projAYdir = ply->ydir;
+        }
+        projA->health = 3;
     }
-    if(box_collision(projA->box,ply->box)&&ply->swinging==true)//player one can hit his own wall
-       {
-           //projA->health--;
-            projAXdir=ply->xdir;
-            projAYdir=ply->ydir;
-           //player 2 is deleted or stunned
-       }
-
-    if(box_collision(projA->box,ply->box)&&ply->swinging==false)//player one can hit his own ball
-         ply->verticalVelocity=6;
-
-
-    if(ply->thrown)
+     if(projA->health<=0)
     {
-        ProjACurY += (projAYdir * 3)/scale;
-        ProjACurX += (projAXdir * 3)/scale;
+        ply->thrown=false;
+        projA->box.width=0;
+        projA->box.height=0;
+        projA->box.x=999;
+        projA->box.y=999;
 
-        projA->Xpos = ProjACurX;
-        projA->Ypos = ProjACurY;
     }
-
-    //-------------------------projectile B-----------------------------------//
-
-      if(box_collision(projB->box,ply->box)&&ply->isalive()&&projB->myTime->getTicks()>200)//ball from player one hits player
-    {
-           projB->myTime->reset();
-           projB->health=0;
-           ply->health--;
-           //cout<<"p2 collisions"<<endl;
-           //player 2 is deleted or stunned
-    }
-    if(box_collision(projB->box,ply2->box)&&ply2->swinging==true)//player one can hit his own wall
-       {
-           //projB->health--;
-            projBXdir=ply2->xdir;
-            projBYdir=ply2->ydir;
-           //player 2 is deleted or stunned
-       }
-
-    if(box_collision(projB->box,ply2->box)&&ply2->swinging==false)//player one can hit his own ball
-         ply2->verticalVelocity=6;
-
-
-    if(ply2->thrown)
-    {
-        ProjBCurY += (projBYdir * 3)/scale;
-        ProjBCurX += (projBXdir * 3)/scale;
-
-        projB->Xpos = ProjBCurX;
-        projB->Ypos = ProjBCurY;
-    }
-
+    if(ply->thrown==false&&ply->lastCase=='R')
+        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos+0.5;
+    if(ply->thrown==false&&ply->lastCase=='L')
+        ProjACurY=ply->PYpos, ProjACurX=ply->PXpos-0.5;
 }

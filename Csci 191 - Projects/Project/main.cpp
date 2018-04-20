@@ -361,8 +361,17 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			}
             else
             {
+                if(Scene->level==2)
+                {
 			    Scene->drawGLScene(keys);
 				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
+				}
+				if(Scene->level==1)
+                {
+			    Scene->drawGLScene2(keys);
+				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
+				}
+
             }
 
 			if(keys['Z'])
