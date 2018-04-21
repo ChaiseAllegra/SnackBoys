@@ -3,6 +3,8 @@
 #include <iostream>
 
 using namespace std;
+float speedInc=0.15;
+float speedDecr=0.0025;
 levelOmega::levelOmega()
 {
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
@@ -18,8 +20,8 @@ levelOmega::levelOmega()
     topWall->modelInit("images/box/girder2.png", true, tex3);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
-    ply->projA->modelInit("images/box/ball.png", true, ballHBTex);
-    ply2->projA->modelInit("images/box/ball.png", true, ballHBTex);
+    ply->projA->modelInit("images/box/Fire.png", true, projTex);
+    ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
 
     cross->modelInit("images/box/crosshair.png", true, crosshair);
 
@@ -62,6 +64,8 @@ levelOmega::levelOmega()
     tile13->modelInit("images/box/block.png", true, tileTex13);
     tile14->modelInit("images/box/block.png", true, tileTex14);
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+    hitTimer= new timer();
+    hitTimer2= new timer();
 
       tile1->tag="left";
      tile2->tag="left";
@@ -96,12 +100,14 @@ void levelOmega::tileChange(Model* b, Model* t,textureLoader* TX)
     {
                 D->reset();
                 ballDirY =  1;
-                if(b->tag=="two"&&t->tag=="left")
+                if((b->tag=="one"&&t->tag=="right")||(b->tag=="two"&&t->tag=="left"))
+                {
                     t->health-=1;
-                if(b->tag=="one"&&t->tag=="right")
-                    t->health-=1;
+                    ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
+                    hitCount=0;
+                }
                 t->isalive();
-                ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
+
 
                 if (t->health == 2)
                     t->modelInit("images/box/block2.png", true, TX);
@@ -150,8 +156,10 @@ collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1
 void levelOmega::ballColl()
 {
     //----------------------PLAYER 1 --------------------------------------//
-    if (box_collision(Ball->box, ply->box) && ply->swinging == true)
+    if (box_collision(Ball->box, ply->box) && ply->swinging == true&& hitTimer->getTicks()>200)
     {
+        hitTimer->reset();
+
         pCol->reset();
         Ball->tag="one";
         if(ply->lastCase == 'R') // lets player aim to his right
@@ -164,13 +172,20 @@ void levelOmega::ballColl()
             ballDirX = -ply->xdir;
             ballDirY = ply->ydir;
         }
-        ballSpeed += 0.1 / scale;//0.2 / scale;
+       // ballAccel=0.5;
+       ballSpeed+=speedInc;
+        //if(hitCount<1)
+          //  ballSpdBfrAcc=ballSpeed+0.15;
+        //ballSpeed += 0.6 / scale;//0.2 / scale;
+        Ball->modelInit("images/box/ball.png", true, ballHBTex);
         ply->swinging = false;
+         hitCount++;
     }
 
     //-----------------------PLAYER 2--------------------------------------//
-    if (box_collision(Ball->box, ply2->box) && ply2->swinging == true)
+    if (box_collision(Ball->box, ply2->box) && ply2->swinging == true&&hitTimer2->getTicks()>200)
     {
+        hitTimer2->reset();
          Ball->tag="two";
         pCol->reset();
         if(ply2->lastCase == 'R')//lets player aim to his right
@@ -184,8 +199,13 @@ void levelOmega::ballColl()
             ballDirX = -ply2->xdir;
             ballDirY = ply2->ydir;
         }
-        ballSpeed += 0.1 / scale;
+        //ballAccel=0.5;
+        ballSpeed+=speedInc;
+        //if(hitCount<1)
+        //ballSpdBfrAcc=ballSpeed+0.15;
+        Ball->modelInit("images/box/ball2.png", true, ballHBTex);
         ply2->swinging = false;
+        hitCount++;
     }
     if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
     {
@@ -395,6 +415,8 @@ void levelOmega::reset()
 }
 void levelOmega:: update()
 {
+    hitTimer2->start();
+    hitTimer->start();
     double currentTime = glfwGetTime();
 
     frameCount++;
@@ -404,7 +426,8 @@ void levelOmega:: update()
             scale=(frameCount);
         if(!setBallSpeed)
         {
-             ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
+             ballSpeed=(3.4)/scale;//(0.125*8)/scale;
+             ballSpdBfrAcc=ballSpeed;
              setBallSpeed=true;
         }
         frameCount=0;
@@ -453,9 +476,23 @@ void levelOmega:: update()
     // moving the ball
     //---------------------------------
 
+     /*if(ballAccel>0)
+     {
+        cout << "ballspeed: " << ballSpeed << " bassaccell: " << ballAccel << endl;
+       ballSpeed+=(ballAccel*2)/scale;
+       ballAccel-=(1.5)/scale;
+     }
+     if(ballAccel<0)
+     {
+        ballSpeed=(0.4*8)/scale;
+        ballAccel=0;
+     }*/
+     if(ballSpeed>ballSpdBfrAcc)
+     ballSpeed-=speedDecr;
+
+    //MOVING THE BALL
      CurYpos = CurYpos + ballDirY * ballSpeed;
      CurXpos = CurXpos + ballDirX * ballSpeed;
-    //MOVING THE BALL
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
 

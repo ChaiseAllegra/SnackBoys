@@ -89,8 +89,7 @@ class GLScene
         timer* ballCollTimer;
         timer* frameRate;
 
-        Model * projA;
-        Model * projB;
+
         Model* modelTeapot;
         Model* modelTeapot2;
 

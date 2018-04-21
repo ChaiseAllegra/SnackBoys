@@ -14,8 +14,8 @@ levelAlpha::levelAlpha()
     topWall->modelInit("images/box/girder2.png", true, tex3);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
-    projA->modelInit("images/box/ball.png", true, ballHBTex);
-    projB->modelInit("images/box/ball.png", true, ballHBTex);
+    //projA->modelInit("images/box/ball.png", true, ballHBTex);
+    //projB->modelInit("images/box/ball.png", true, ballHBTex);
 
     GoalL->modelInit("images/box/hitbox.png",true,texGL);
     GoalR->modelInit("images/box/hitbox.png",true,texGR);

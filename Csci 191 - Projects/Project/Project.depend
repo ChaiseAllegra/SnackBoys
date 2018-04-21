@@ -2010,14 +2010,15 @@
 	<windows.h>
 	<iostream>
 
-1523241465 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
+1524268412 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
+	<timer.h>
 	<iostream>
 	<windows.h>
 
-1523305548 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1524274033 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -2027,7 +2028,7 @@
 	<iostream>
 	<player.h>
 
-1523312037 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glmodel.h
+1524268412 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glmodel.h
 	<windows.h>
 	<string>
 	<GL/glut.h>
@@ -2045,7 +2046,7 @@
 
 1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\soil.h
 
-1523243700 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\player.h
+1524269496 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
@@ -2055,7 +2056,7 @@
 1522874275 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\timer.h
 	<time.h>
 
-1523308783 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1524272999 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -2065,15 +2066,16 @@
 	<iostream>
 	<string>
 
-1523045108 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glinputs.h
+1524272804 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glinputs.h
 	<windows.h>
 	<iostream>
 	<GLModel.h>
 	<parallax.h>
 	<player.h>
 	<skyBox.h>
+	<timer.h>
 
-1523240302 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\parallax.h
+1523919193 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\parallax.h
 	<iostream>
 	<string.h>
 	<gl/gl.h>
@@ -2116,12 +2118,12 @@
 1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1523312385 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1523492665 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
 
-1523313609 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524275590 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2132,16 +2134,19 @@
 	<mmsystem.h>
 	<cmath>
 	<timer.h>
+	<GLFW/glfw3.h>
+	<levelAlpha.h>
+	<levelOmega.h>
 
 1522481324 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\gltexture.cpp
 	<iostream>
 	"textureLoader.h"
 
-1523240302 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\parallax.cpp
+1523919193 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\parallax.cpp
 	"parallax.h"
 	<textureLoader.h>
 
-1523241340 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1524272063 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -2627,4 +2632,71 @@
 	<time.h>
 	<GLModel.h>
 	<GLFW/glfw3.h>
+
+1523660612 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<vulkan/vulkan.h>
+	<GL/gl.h>
+	<GL/glext.h>
+	<GL/glu.h>
+
+1524268412 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\levelalpha.h
+	<player.h>
+	<time.h>
+	<GLModel.h>
+
+1524281205 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\levelomega.h
+	<player.h>
+	<time.h>
+	<GLModel.h>
+	<GLFW/glfw3.h>
+
+1524274566 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\level1.cpp
+	<level1.h>
+	<GLLight.h>
+	<GLInputs.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<windows.h>
+	<mmsystem.h>
+	<cmath>
+	<timer.h>
+	<GLFW/glfw3.h>
+
+1524082321 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\level1.h
+	<time.h>
+	<GLInputs.h>
+	<windows.h>
+	<parallax.h>
+	<GLModel.h>
+	<gl/gl.h>
+	<iostream>
+	<player.h>
+
+1524274186 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\levelalpha.cpp
+	"levelAlpha.h"
+	<GLFW/glfw3.h>
+	"levelOmega.h"
+	<GLFW/glfw3.h>
+	<iostream>
+
+1524281779 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\levelomega.cpp
+	"levelOmega.h"
+	<GLFW/glfw3.h>
+	<iostream>
 

@@ -15,6 +15,8 @@ Inputs::Inputs()
    prev_Mouse_Y =0;
    Mouse_Translate=0;
    Mouse_Roatate=0;
+   dashTimer= new timer();
+   dashTimer2= new timer();
 }
 
 Inputs::~Inputs()
@@ -50,22 +52,24 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
     ply->jumpTimer->start();
     ply2->jumpTimer->start();
+    dashTimer->start();
+    dashTimer2->start();
 
-    if(pressed['A'])
+    if(pressed['A']&&!ply->isDash)
      {
         ply->actionTrigger = 1;
         ply->lastKey = 'L';
         ply->lastCase = 'L';
      }
 
-    if(pressed['D'])
+    if(pressed['D']&&!ply->isDash)
     {
         ply->actionTrigger = 1;
         ply->lastKey = 'R';
         ply->lastCase = 'R';
     }
 
-    if(!pressed['D']&&!pressed['A'])
+    if(!pressed['D']&&!pressed['A']||ply->isDash)
         ply->actionTrigger=0;
     if(pressed['S'])//ducking
         ply->box.height=ply->trueHeight/2;
@@ -110,10 +114,11 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
          ply->xdir+=(0.005*600)/ply->delta;
 
     }
-    if(pressed['R'])
+    if(pressed['R']&&dashTimer->getTicks()>1200)
     {
         ply->isDash=true;
         ply->prevx=ply->PXpos;
+        dashTimer->reset();
     }
     if(pressed['Q'])
         ply->thrown=true;
@@ -184,8 +189,9 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
          ply2->xdir+=(0.0025*600)/ply2->delta;
 
     }
-    if(pressed['U'])
+    if(pressed['U']&&dashTimer2->getTicks()>1200)
     {
+        dashTimer2->reset();
         ply2->isDash=true;
         ply2->prevx=ply2->PXpos;
     }

@@ -33,6 +33,8 @@ GLScene::GLScene()
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
 
+    pauseMenu = false;
+
     alpha= new levelAlpha();
     omega = new levelOmega();
 
@@ -542,8 +544,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             omega->ply2->pl_pltfrm_box.y =  omega->ply2 -> PYpos;
             omega->ply2->pl_pltfrm_box.height = 0.6;
             omega->ply2->pl_pltfrm_box.width = 0.07;
-            omega->ply2->box.height=0.5;
-            omega->ply2->box.width=0.2;
+            omega->ply2->trueHeight=0.1;
+            omega->ply2->box.height=0.1;
+            omega->ply2->box.width=0.3;
 //          update();
             omega->ply2->drawplayer();
         glPopMatrix();
@@ -602,7 +605,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //right wall
     makeModel(omega->rightWall,omega->tex2,3.37,0,-0.2,3.0,0.2,3.0,0.2,-3.0,-0.2,-3.0,0.3,88);
     //bottom wall
-    makeModel(omega->killBox,omega->texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
+    makeModel(omega->killBox,omega->texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,0.5);
     //dividing wall
     makeModel(omega->divide,omega->divTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
 
@@ -627,7 +630,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 omega->ply->projA->verticies[3].y = 0.15;
                 omega->ply->projA->box.x = omega->ply->projA ->Xpos;
                 omega->ply->projA->box.y = omega->ply->projA ->Ypos;
-                omega->ply->projA->drawModel(omega->ballHBTex);
+                omega->ply->projA->drawModel(omega->projTex);
           glPopMatrix();
         }
 
@@ -647,7 +650,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 omega->ply2->projA->verticies[3].y = 0.15;
                 omega->ply2->projA->box.x = omega->ply2->projA ->Xpos;
                 omega->ply2->projA->box.y = omega->ply2->projA ->Ypos;
-                omega->ply2->projA->drawModel(omega->ballHBTex);
+                omega->ply2->projA->drawModel(omega->projTex2);
           glPopMatrix();
         }
     if(omega->ply2->projA->health<=0)
@@ -700,7 +703,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
 
 
-     if(pauseMenu)
+    if(pauseMenu)
     {
         omega->ply->pause=true;
         omega->ply2->pause=true;
@@ -718,6 +721,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             {
                 pauseMenu=false;
                 omega->reset();
+                firstpause=true;
+                omega->ply->pause=false;
+                omega->ply2->pause=false;
             }
             if(menuPos==2)//resumed the game
             {

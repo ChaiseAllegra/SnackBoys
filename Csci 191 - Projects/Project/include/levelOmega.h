@@ -27,9 +27,11 @@ class levelOmega
 
         Model* cross = new Model();
 
-        float ballSpeed;
+        float ballSpeed=0;
         float ballDirX=1;
         float ballDirY=-1;
+        float ballAccel=0;
+        float ballSpdBfrAcc=0.5;//ball speed before acceleration
 
         float prevBallSpeed;
         float lastTime;
@@ -41,6 +43,10 @@ class levelOmega
 
         int plyScore=0;
         int ply2Score=0;
+        int hitCount=0;
+
+        timer* hitTimer;
+        timer* hitTimer2;
 
         Model * modelTeapot = new Model();
         Model * modelTeapot2 = new Model();
@@ -98,6 +104,8 @@ class levelOmega
         textureLoader* texGR = new textureLoader();
         textureLoader* crosshair = new textureLoader();
         textureLoader* texc = new textureLoader();
+        textureLoader* projTex = new textureLoader();
+        textureLoader* projTex2 = new textureLoader();
     protected:
     private:
 };

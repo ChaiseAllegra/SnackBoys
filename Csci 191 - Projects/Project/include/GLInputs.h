@@ -6,6 +6,7 @@
 #include <parallax.h>
 #include <player.h>
 #include <skyBox.h>
+#include <timer.h>
 class Inputs
 {
     public:
@@ -26,6 +27,8 @@ class Inputs
         double prev_Mouse_Y;
         bool Mouse_Translate;
         bool Mouse_Roatate;
+        timer* dashTimer;
+        timer* dashTimer2;
         WPARAM wParam;
     protected:
     private:

@@ -64,7 +64,6 @@
 		<Unit filename="src/GLModel.cpp" />
 		<Unit filename="src/GLScene.cpp" />
 		<Unit filename="src/GLTexture.cpp" />
-		<Unit filename="src/level1.cpp" />
 		<Unit filename="src/levelAlpha.cpp" />
 		<Unit filename="src/levelOmega.cpp" />
 		<Unit filename="src/parallax.cpp" />

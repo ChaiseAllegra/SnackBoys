@@ -30,7 +30,7 @@ class player: public Model
         float projAYdir;
         float ProjACurX;
         float ProjACurY;
-        bool pause=false;
+        bool pause;
 
         Model * projA = new Model();
 
