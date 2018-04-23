@@ -91,7 +91,6 @@ class GLScene
         Inputs* KbMs;
 
         parallax* plx;
-
         parallax* plx2;
 
         Model* playMod;

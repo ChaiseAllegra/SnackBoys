@@ -2011,7 +2011,7 @@
 	<windows.h>
 	<iostream>
 
-1524268412 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
+1524526501 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
@@ -2019,7 +2019,7 @@
 	<iostream>
 	<windows.h>
 
-1524525216 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1524526310 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -2124,7 +2124,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1524525605 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524526620 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2136,7 +2136,6 @@
 	<cmath>
 	<timer.h>
 	<GLFW/glfw3.h>
-	<levelAlpha.h>
 	<levelOmega.h>
 
 1522481324 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\gltexture.cpp
@@ -2655,7 +2654,7 @@
 	<GL/glext.h>
 	<GL/glu.h>
 
-1524268412 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\levelalpha.h
+1524526501 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\levelalpha.h
 	<player.h>
 	<time.h>
 	<GLModel.h>
@@ -2689,14 +2688,14 @@
 	<iostream>
 	<player.h>
 
-1524274186 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\levelalpha.cpp
+1524526501 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\levelalpha.cpp
 	"levelAlpha.h"
 	<GLFW/glfw3.h>
 	"levelOmega.h"
 	<GLFW/glfw3.h>
 	<iostream>
 
-1524525788 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\levelomega.cpp
+1524526174 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\levelomega.cpp
 	"levelOmega.h"
 	<GLFW/glfw3.h>
 	<iostream>

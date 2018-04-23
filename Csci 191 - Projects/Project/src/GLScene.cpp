@@ -9,10 +9,10 @@
 #include <cmath>
 #include <timer.h>
 #include <GLFW/glfw3.h>
-#include<levelAlpha.h>
+//#include<levelAlpha.h>
 #include<levelOmega.h>
 
-levelAlpha* alpha;
+//levelAlpha* alpha;
 levelOmega* omega;
 
 float tw=100,th=100;
@@ -35,7 +35,7 @@ GLScene::GLScene()
 
     pauseMenu = false;
 
-    alpha= new levelAlpha();
+    //alpha= new levelAlpha();
     omega = new levelOmega();
 
      KbMs = new Inputs();
@@ -118,7 +118,7 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 
 GLint GLScene::drawGLScene(bool pressed[256])
 {
-
+/*
 
 
       //-----------------------------------------------------------------------------------------------//
@@ -456,6 +456,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
     alpha->scale=20;
     //if(timeFromStart-startTime>=2&&!pauseMenu)//wait three seconds to start the game
      //KbMs->idle(pressed,alpha->ply,alpha->ply2);
+     */
 }
 
 GLint GLScene::drawGLScene2(bool pressed[256])
