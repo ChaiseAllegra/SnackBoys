@@ -510,8 +510,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-    if(omega->ply->health>0)
-    {
+   // if(omega->ply->health>0)
+    //{
     glPushMatrix();
         omega->ply->actions();
         omega->ply->box.x=omega->ply->PXpos;
@@ -526,14 +526,22 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         //omega->update(20);
         omega->ply->drawplayer();
     glPopMatrix();
-    }
-    if(omega->ply->health<=0)
+   // }
+    /*if(omega->ply->health<=0)
     {
             omega->ply->box.height=0;
             omega->ply->box.width=0;
+            omega->ply->box.x=999;
+            omega->ply->box.y=999;
+            omega->ply->pl_pltfrm_box.x =999;
+            omega->ply->pl_pltfrm_box.y = 999;
             omega->ply->pl_pltfrm_box.height = 0;
             omega->ply->pl_pltfrm_box.width = 0;
-    }
+            omega->ply->PXpos=999;
+            omega->ply->PYpos=999;
+            omega->ply->box.x=999;
+            omega->ply->box.y=999;
+    }*/
     if(omega->ply2->health>0)
     {
         glPushMatrix();

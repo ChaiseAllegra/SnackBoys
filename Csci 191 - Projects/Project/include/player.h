@@ -31,6 +31,7 @@ class player: public Model
         float ProjACurX;
         float ProjACurY;
         bool pause;
+        bool stunned;
 
         Model * projA = new Model();
 

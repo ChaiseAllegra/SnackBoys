@@ -9,21 +9,21 @@ levelOmega::levelOmega()
 {
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
     modelTeapot2->modelInit("images/player/player0.png", true, tex0);
-    ply->playerInit();
-    ply2->playerInit();
 
-    ply->playerInit();
-    ply2->playerInit();
+
 
     leftWall->modelInit("images/box/girder.png", true, tex1);
     rightWall->modelInit("images/box/girder.png", true, tex2);
     topWall->modelInit("images/box/girder2.png", true, tex3);
 
     Ball->modelInit("images/box/ball.png", true, ballHBTex);
-    ply->projA->modelInit("images/box/Fire.png", true, projTex);
-    ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
 
     cross->modelInit("images/box/crosshair.png", true, crosshair);
+
+    ply->playerInit();
+    ply2->playerInit();
+    ply->projA->modelInit("images/box/Fire.png", true, projTex);
+    ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
 
     ply->PXpos = -2;
     ply2->PXpos = 2;
@@ -172,14 +172,16 @@ void levelOmega::ballColl()
             ballDirX = -ply->xdir;
             ballDirY = ply->ydir;
         }
-       // ballAccel=0.5;
-       ballSpeed+=speedInc;
-        //if(hitCount<1)
-          //  ballSpdBfrAcc=ballSpeed+0.15;
-        //ballSpeed += 0.6 / scale;//0.2 / scale;
+        ballSpeed+=speedInc*(80/scale);
+
         Ball->modelInit("images/box/ball.png", true, ballHBTex);
         ply->swinging = false;
          hitCount++;
+    }
+     if (box_collision(Ball->box, ply->box) && ply->swinging == false&& hitTimer->getTicks()>200&&Ball->lethal==1)
+    {
+        //stun player1
+        Ball->lethal=0;//now it is neutral and wont stun anyone
     }
 
     //-----------------------PLAYER 2--------------------------------------//
@@ -199,13 +201,18 @@ void levelOmega::ballColl()
             ballDirX = -ply2->xdir;
             ballDirY = ply2->ydir;
         }
-        //ballAccel=0.5;
-        ballSpeed+=speedInc;
-        //if(hitCount<1)
-        //ballSpdBfrAcc=ballSpeed+0.15;
+        ballSpeed+=speedInc*(40/scale);
+
         Ball->modelInit("images/box/ball2.png", true, ballHBTex);
         ply2->swinging = false;
         hitCount++;
+    }
+      if (box_collision(Ball->box, ply2->box) && ply2->swinging == false&& hitTimer2->getTicks()>200&&Ball->lethal==2)
+    {
+        //stun player2
+        Ball->lethal=0;//now it is neutral and wont stun anyone
+        ply2->stunned=true;
+        cout<<Ball->lethal<<endl;
     }
     if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
     {
@@ -306,13 +313,6 @@ void levelOmega::wallColl()
         ply->projAYdir *= -1;
     }
 
-    if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200)
-    {
-        BPA->reset();
-        ballDirX *= -1;
-        ply->projA->health=0;
-        //ballDirY *= -1;
-    }
 
     //-----------------PROJECTILE 2 WALL COLLISIONS---------------------------------------------//
       if(box_collision(ply2->projA->box,leftWall->box)&& ply2->projA->myTime->getTicks() >= 200)
@@ -343,12 +343,7 @@ void levelOmega::wallColl()
         ply2->projAYdir*=-1;
     }
 
-    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200)
-    {
-        BPA->reset();
-        ballDirX*=-1;
-        ballDirY*=-1;
-    }
+
 }
 void levelOmega::projectileCol(player* ply, player* ply2)
 {
@@ -364,16 +359,35 @@ void levelOmega::projectileCol(player* ply, player* ply2)
     {
         ply->projAXdir=ply->xdir;
         ply->projAYdir=ply->ydir;
-        //player 2 is deleted or stunned
     }
 
     if(box_collision(ply->projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
          ply->verticalVelocity=6;
 
+    if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200)
+    {
+        BPA->reset();
+        ballDirX *= -1;
+        ply->projA->health=0;
+        if(Ball->Xpos>0&&Ball->tag=="one")
+            Ball->lethal=2;
+        //ballDirY *= -1;
+    }
+
+    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200)
+    {
+        BPA->reset();
+        ballDirX*=-1;
+        ply->projA->health=0;
+        if(Ball->Xpos<0&&Ball->tag=="two")
+            Ball->lethal=1;
+        //ballDirY*=-1;
+    }
+
     if(ply->thrown)
     {
-        ply->ProjACurY += (ply->projAYdir * 6)/scale;
-        ply->ProjACurX += (ply->projAXdir * 6)/scale;
+        ply->ProjACurY += ply->projAYdir * (10/scale);
+        ply->ProjACurX += ply->projAXdir * (10/scale);
 
         ply->projA->Xpos = ply->ProjACurX;
         ply->projA->Ypos = ply->ProjACurY;
@@ -475,24 +489,14 @@ void levelOmega:: update()
     //----------------------------------
     // moving the ball
     //---------------------------------
-
-     /*if(ballAccel>0)
-     {
-        cout << "ballspeed: " << ballSpeed << " bassaccell: " << ballAccel << endl;
-       ballSpeed+=(ballAccel*2)/scale;
-       ballAccel-=(1.5)/scale;
-     }
-     if(ballAccel<0)
-     {
-        ballSpeed=(0.4*8)/scale;
-        ballAccel=0;
-     }*/
      if(ballSpeed>ballSpdBfrAcc)
-     ballSpeed-=speedDecr;
+     ballSpeed-=speedDecr*(10/scale);
 
     //MOVING THE BALL
      CurYpos = CurYpos + ballDirY * ballSpeed;
      CurXpos = CurXpos + ballDirX * ballSpeed;
+     Ball->tag="one";
+     Ball->lethal=2;
         Ball->Xpos = CurXpos;
         Ball->Ypos = CurYpos;
 

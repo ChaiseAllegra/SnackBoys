@@ -10,6 +10,7 @@ player::player()
     playerGrav=-20;
     ydir=0;
     xdir=1;
+    stunned=false;
 
     jumpInitiated = false;
     PZoom = -4;
@@ -30,6 +31,7 @@ player::player()
     box.height = 0;
     leftWC=false;
     rightWC=false;
+    health=5;
 
     thrown = false;
     isDash = false;
@@ -47,7 +49,6 @@ player::player()
 
     playerDirection = "RIGHT";
 
-    isPlayer = 1;
 }
 
 player::~player()

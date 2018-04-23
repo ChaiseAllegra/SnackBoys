@@ -8,7 +8,7 @@
 #include <string>
 
 using namespace std;
-
+timer* stunTimer= new timer();
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -130,6 +130,18 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 
 
     //------------------------------player 2---------------------------//
+    if(ply2->stunned)
+    {
+        stunTimer->start();
+        ply2->actionTrigger=0;
+    }
+    if(ply2->stunned&&stunTimer->getTicks()>900)
+    {
+    stunTimer->reset();
+    ply2->stunned=false;
+    }
+    if(!ply2->stunned)
+    {
      if(pressed['J'])
      {
         ply2->actionTrigger = 1;
@@ -202,6 +214,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply2->hold=true;
     else
         ply2->hold=false;
+    }
 
 
 }

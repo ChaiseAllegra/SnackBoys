@@ -35,6 +35,7 @@ class Model
                         bool bcollision(Hbox , Hbox );
         bool isalive();
         bool prevHeld;
+        int lethal;
 
         Hbox box;
         Hbox pl_pltfrm_box;

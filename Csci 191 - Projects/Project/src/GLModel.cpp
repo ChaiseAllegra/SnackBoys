@@ -10,6 +10,7 @@ Model::Model()
         RotateY =0.0;
         RotateZ =0.0;
         myTime=new timer();
+        lethal=0;
 
         Zoom = -4.0;  //translations
         Xpos = 0;
