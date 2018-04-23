@@ -42,7 +42,7 @@ GLScene::GLScene()
 
      plx = new parallax();
      plx2 = new parallax();
-    sky = new skyBox;
+     sky = new skyBox;
 
      playMod= new Model();
      resetMod= new Model();
@@ -124,7 +124,6 @@ GLint GLScene::drawGLScene(bool pressed[256])
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
-
         alpha->projA->myTime->start();
         alpha->projB->myTime->start();
         alpha->ply->myTime->start();
@@ -133,7 +132,7 @@ GLint GLScene::drawGLScene(bool pressed[256])
         alpha->ply2->swingTimer->start();
         alpha->D->start();
         alpha->BPA->start();
-        alpha-> pCol->start();
+        alpha->pCol->start();
       //-----------------------------------------------------------------------------------------------//
      //-------------------------------- SKYBOX CREATION ----------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -475,7 +474,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         omega->ply2->swingTimer->start();
         omega->D->start();
         omega->BPA->start();
-        omega-> pCol->start();
+        omega->pCol->start();
        //-----------------------------------------------------------------------------------------------//
      //-------------------------------- SKYBOX CREATION ----------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -510,8 +509,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-   // if(omega->ply->health>0)
-    //{
+   if(omega->ply->health>0)
+   {
     glPushMatrix();
         omega->ply->actions();
         omega->ply->box.x=omega->ply->PXpos;
@@ -526,8 +525,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         //omega->update(20);
         omega->ply->drawplayer();
     glPopMatrix();
-   // }
-    /*if(omega->ply->health<=0)
+   }
+    if(omega->ply->health<=0)
     {
             omega->ply->box.height=0;
             omega->ply->box.width=0;
@@ -541,7 +540,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             omega->ply->PYpos=999;
             omega->ply->box.x=999;
             omega->ply->box.y=999;
-    }*/
+    }
     if(omega->ply2->health>0)
     {
         glPushMatrix();
@@ -555,7 +554,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             omega->ply2->trueHeight=0.1;
             omega->ply2->box.height=0.1;
             omega->ply2->box.width=0.3;
-//          update();
             omega->ply2->drawplayer();
         glPopMatrix();
     }

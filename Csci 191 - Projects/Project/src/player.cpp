@@ -72,11 +72,8 @@ void player::drawplayer()
 }
 void player::playerInit()
 {
-    jumpTimer = new timer();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    //T2->start();
-    //T->start();
     runText[0].bindTexture("images/player_right/player0.png");
     runText[1].bindTexture("images/player_right/player1.png");
     runText[2].bindTexture("images/player_right/player2.png");

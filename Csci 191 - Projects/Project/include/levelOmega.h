@@ -95,6 +95,7 @@ class levelOmega
         textureLoader* tileTex14=new textureLoader();
         textureLoader* tileTex15=new textureLoader();
         textureLoader* tex0 = new textureLoader();
+        textureLoader* texP = new textureLoader();
         textureLoader* tex1 = new textureLoader();
         textureLoader* tex2 = new textureLoader();
         textureLoader* tex3 = new textureLoader();

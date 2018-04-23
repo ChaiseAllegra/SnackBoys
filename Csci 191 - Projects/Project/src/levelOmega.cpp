@@ -8,9 +8,7 @@ float speedDecr=0.0025;
 levelOmega::levelOmega()
 {
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
-    modelTeapot2->modelInit("images/player/player0.png", true, tex0);
-
-
+    modelTeapot2->modelInit("images/player/player0.png", true, texP);
 
     leftWall->modelInit("images/box/girder.png", true, tex1);
     rightWall->modelInit("images/box/girder.png", true, tex2);
@@ -22,6 +20,7 @@ levelOmega::levelOmega()
 
     ply->playerInit();
     ply2->playerInit();
+
     ply->projA->modelInit("images/box/Fire.png", true, projTex);
     ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
 
@@ -67,7 +66,7 @@ levelOmega::levelOmega()
     hitTimer= new timer();
     hitTimer2= new timer();
 
-      tile1->tag="left";
+     tile1->tag="left";
      tile2->tag="left";
      tile3->tag="left";
      tile4->tag="left";
@@ -84,8 +83,6 @@ levelOmega::levelOmega()
      tile15->tag="right";
 
     divide->modelInit("images/box/block.png", true, divTex);
-
-
 
     cross->modelInit("images/box/crosshair.png", true, crosshair);
 }

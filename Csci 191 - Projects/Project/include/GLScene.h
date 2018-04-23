@@ -31,7 +31,6 @@ class GLScene
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
 
-
         WPARAM wParam;
         bool pauseMenu;
         int menuPos=2;
@@ -89,44 +88,12 @@ class GLScene
         timer* ballCollTimer;
         timer* frameRate;
 
-
-        Model* modelTeapot;
-        Model* modelTeapot2;
-
         Inputs* KbMs;
 
         parallax* plx;
 
         parallax* plx2;
 
-        Model* wallA; // left wall
-        Model* wallB; // right wall
-        Model* wallC; // top wall
-        Model* killBox;
-        Model* hud;
-        Model* GoalL;
-        Model* GoalR;
-
-        //left side tiles
-        Model* tile1;
-        Model* tile2;
-        Model* tile3;
-        Model* tile4;
-        Model* tile5;
-        Model* tile6;
-        Model* tile7;
-
-        //middle tile
-        Model* tile8;
-
-        //right side tiles
-        Model* tile9;
-        Model* tile10;
-        Model* tile22;
-        Model* tile12;
-        Model* tile13;
-        Model* tile14;
-        Model* tile15;
         Model* playMod;
         Model* resetMod;
         Model* exitMod;
@@ -145,41 +112,12 @@ class GLScene
         Model* platTileTR;
         Model* platTileM;
 
-        textureLoader* tex0;
-        textureLoader* texGL;
-        textureLoader* texGR;
-        textureLoader* tex1;
-        textureLoader* tex2;
-        textureLoader* tex3;
-        textureLoader* texD;
-        textureLoader* ballHBTex;
-        textureLoader* ballHBTex2;
-        textureLoader* texc;
-        textureLoader* texH;
-
         textureLoader* texSky1;
         textureLoader* texSky2;
 
-        textureLoader* tileTex;
-        textureLoader* tileTex2;
-        textureLoader* tileTex3;
-        textureLoader* tileTex4;
-        textureLoader* tileTex5;
-        textureLoader* tileTex6;
-        textureLoader* tileTex7;
-        textureLoader* tileTex8;
-        textureLoader* tileTex9;
-        textureLoader* tileTex10;
-        textureLoader* tileTex11;
-        textureLoader* tileTex12;
-        textureLoader* tileTex13;
-        textureLoader* tileTex14;
-        textureLoader* tileTex15;
         textureLoader* playTex;
         textureLoader* resetTex;
         textureLoader* exitTex;
-
-        textureLoader* crosshair;
 
     protected:
 
