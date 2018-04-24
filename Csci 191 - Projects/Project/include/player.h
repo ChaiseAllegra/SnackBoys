@@ -32,6 +32,7 @@ class player: public Model
         float ProjACurY;
         bool pause;
         bool stunned;
+        bool plyprojJump;
 
         Model * projA = new Model();
 
@@ -94,6 +95,7 @@ class player: public Model
         timer *T2 = new timer();
         timer* frameRate = new timer();
         timer* jumpTimer = new timer();
+        timer* projJump;
 
         float delta;
 
