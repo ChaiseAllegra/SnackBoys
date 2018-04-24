@@ -48,6 +48,13 @@ player::player()
     swingDuration->start();
 
     playerDirection = "RIGHT";
+        projA->Xpos=999;
+        projA->Ypos=999;
+        projA->box.x=999;
+        projA->box.y=999;
+        projA->box.width=0;
+        projA->box.height=0;
+
 
 }
 

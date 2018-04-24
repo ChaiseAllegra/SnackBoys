@@ -29,6 +29,9 @@ class Inputs
         bool Mouse_Roatate;
         timer* dashTimer;
         timer* dashTimer2;
+        timer* stunTimer;
+        timer* projSpam;
+        timer* projSpam2;
         WPARAM wParam;
     protected:
     private:

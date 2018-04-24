@@ -8,7 +8,7 @@
 #include <string>
 
 using namespace std;
-timer* stunTimer= new timer();
+
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -17,6 +17,9 @@ Inputs::Inputs()
    Mouse_Roatate=0;
    dashTimer= new timer();
    dashTimer2= new timer();
+   stunTimer= new timer();
+   projSpam= new timer();
+   projSpam2 = new timer();
 }
 
 Inputs::~Inputs()
@@ -55,6 +58,9 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     ply2->jumpTimer->start();
     dashTimer->start();
     dashTimer2->start();
+    projSpam->start();
+    projSpam2->start();
+
 
     if(ply->stunned)
     {
@@ -134,8 +140,12 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply->prevx=ply->PXpos;
         dashTimer->reset();
     }
-    if(pressed['Q'])
+    if(pressed['Q']&&projSpam->getTicks()>500)
+    {
+        projSpam->reset();
         ply->thrown=true;
+        ply->projA->health = 3;
+    }
 
     if(pressed['C'])
         ply->hold=true;
@@ -222,8 +232,12 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply2->isDash=true;
         ply2->prevx=ply2->PXpos;
     }
-    if(pressed['M'])
+    if(pressed['M']&&projSpam2->getTicks()>500)
+    {
         ply2->thrown=true;
+        projSpam2->reset();
+        ply2->projA->health = 3;
+    }
 
     if(pressed['N'])
         ply2->hold=true;

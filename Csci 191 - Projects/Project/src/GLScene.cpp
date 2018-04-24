@@ -74,12 +74,29 @@ GLScene::GLScene()
          tile14 = new Model();
          tile15 = new Model();
 
+
+         tile1->tag="left";
+     tile2->tag="left";
+     tile3->tag="left";
+     tile4->tag="left";
+     tile5->tag="left";
+     tile6->tag="left";
+     tile7->tag="left";
+
+     tile8->tag="right";
+     tile9->tag="right";
+     tile10->tag="right";
+     tile12->tag="right";
+     tile13->tag="right";
+     tile14->tag="right";
+     tile15->tag="right";
+
         ply = new player();
         ply2 = new player();
          hitTimer=new timer();
       hitTimer2=new timer();
        speedInc=0.15;
-        speedDecr=0.0025;
+        speedDecr=0.0055;
      ballTex = new textureLoader();
      killBox= new Model();
      ply2Score=0;
@@ -337,7 +354,7 @@ void GLScene::ballColl()
             ballDirX = -ply->xdir;
             ballDirY = ply->ydir;
         }
-        ballSpeed+=speedInc*(80/scale);
+        ballSpeed+=speedInc*(40/scale);
 
         Ball->modelInit("images/box/ball.png", true, ballTex);
         ply->swinging = false;
@@ -609,6 +626,11 @@ void GLScene:: update()
     //Set a bool if player is on tile
     ply2->OnTile=playerOnTile(ply2);
 
+    if(ply->OnTile&&ply->verticalVelocity<0)
+            ply->PYpos=-1.2;
+    if(ply2->OnTile&&ply2->verticalVelocity<0)
+            ply2->PYpos=-1.2;
+
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
@@ -662,7 +684,6 @@ void GLScene:: update()
             ply->projAXdir = -ply->xdir;
             ply->projAYdir = ply->ydir;
         }
-        ply->projA->health = 3;
     }
      if(ply->projA->health<=0)
     {
@@ -690,7 +711,6 @@ void GLScene:: update()
             ply2->projAXdir = -ply2->xdir;
             ply2->projAYdir = ply2->ydir;
         }
-        ply2->projA->health = 3;
     }
      if(ply2->projA->health<=0)
     {
@@ -839,7 +859,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     if(tile7->isalive())
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     if(tile8->isalive())
-    makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    //makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     if(tile9->isalive())
     makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     if(tile10->isalive())
@@ -886,6 +906,17 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply->projA->drawModel(projTex);
           glPopMatrix();
         }
+    if(ply->projA->health<=0)
+    {
+        ply->thrown=false;
+        shot=false;
+        ply->projA->Xpos=999;
+        ply->projA->Ypos=999;
+        ply->projA->box.x=999;
+        ply->projA->box.y=999;
+        ply->projA->box.width=0;
+        ply->projA->box.height=0;
+    }
 
     //-------------------------projectile b-----------------------------------------//
     if(ply2->thrown)
@@ -917,6 +948,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         ply2->projA->box.width=0;
         ply2->projA->box.height=0;
     }
+    cout<<""<<endl;
+    cout<<ply2->projA->health<<endl;
+    cout<<ply->projA->health<<endl;
 
     //----------------------------BALL CREATION------------------------------------//
     glPushMatrix();
@@ -1021,7 +1055,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     if(lolTime-startTime>=2&&!pauseMenu)//wait two seconds to start the
         KbMs->idle(pressed,ply,ply2);
 
-        cout<<ply->xdir<<endl;
+
     update();
 
 }
@@ -1039,4 +1073,5 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 }
 int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool press[256])
 {
+    return 0;
 }
