@@ -74,29 +74,12 @@ GLScene::GLScene()
          tile14 = new Model();
          tile15 = new Model();
 
-
-         tile1->tag="left";
-     tile2->tag="left";
-     tile3->tag="left";
-     tile4->tag="left";
-     tile5->tag="left";
-     tile6->tag="left";
-     tile7->tag="left";
-
-     tile8->tag="right";
-     tile9->tag="right";
-     tile10->tag="right";
-     tile12->tag="right";
-     tile13->tag="right";
-     tile14->tag="right";
-     tile15->tag="right";
-
         ply = new player();
         ply2 = new player();
          hitTimer=new timer();
       hitTimer2=new timer();
        speedInc=0.15;
-        speedDecr=0.0055;
+        speedDecr=0.0045;
      ballTex = new textureLoader();
      killBox= new Model();
      ply2Score=0;
@@ -139,6 +122,22 @@ GLScene::GLScene()
         scale=1;
         ballDirX=-1;
         ballDirY=1;
+         tile1->tag="left";
+     tile2->tag="left";
+     tile3->tag="left";
+     tile4->tag="left";
+     tile5->tag="left";
+     tile6->tag="left";
+     tile7->tag="left";
+
+     tile8->tag="right";
+     tile9->tag="right";
+     tile10->tag="right";
+     tile12->tag="right";
+     tile13->tag="right";
+     tile14->tag="right";
+     tile15->tag="right";
+
 
      /*------------------------------------------*/
 }
@@ -210,6 +209,34 @@ GLint GLScene::initGL()
     startTime = glfwGetTime();
 
     return true;
+}
+int GLScene::ballPosHit(Model* projA,Model* Ball)
+{
+    //if the projectile hits the ball on the TOP half of the ball   //if((Ball->Ypos-Ball->box.height)>(projA->Ypos+projA->box.height))
+   if(
+           (((projA->box.x-projA->box.width) < (Ball->box.x + Ball->box.width) &&
+            (projA->box.x+projA->box.width) > (Ball->box.x - Ball->box.width)) ||
+            ((Ball->box.x-Ball->box.width) < (projA->box.x + projA->box.width) &&
+             (Ball->box.x+Ball->box.width) > (projA->box.x - projA->box.width)))&&
+
+            (((projA->box.y-projA->box.height) < (Ball->box.y + Ball->box.height) ||
+            (Ball->box.y+Ball->box.height) > (projA->box.y - projA->box.height))&&
+            (projA->box.y-projA->box.height>Ball->box.y))
+        )
+    return 1;
+    //if the projectile hits thte ball on the BOTTOM half of the ball //if((Ball->Ypos+Ball->box.height)<(projA->Ypos-projA->box.height))
+    if(
+                (((projA->box.x-projA->box.width) < (Ball->box.x + Ball->box.width) &&
+            (projA->box.x+projA->box.width) > (Ball->box.x - Ball->box.width)) ||
+            ((Ball->box.x-Ball->box.width) < (projA->box.x + projA->box.width) &&
+             (Ball->box.x+Ball->box.width) > (projA->box.x - projA->box.width)))&&
+
+            (((projA->box.y+projA->box.height) > (Ball->box.y - Ball->box.height) ||
+            (Ball->box.y-Ball->box.height) < (projA->box.y + projA->box.height))&&
+            (projA->box.y+projA->box.height<Ball->box.y))
+        )
+    return 2;
+    else return 0;
 }
 
 float manhattanD(player* ply, Model* Ball)
@@ -354,7 +381,7 @@ void GLScene::ballColl()
             ballDirX = -ply->xdir;
             ballDirY = ply->ydir;
         }
-        ballSpeed+=speedInc*(40/scale);
+        ballSpeed+=speedInc*(80/scale);
 
         Ball->modelInit("images/box/ball.png", true, ballTex);
         ply->swinging = false;
@@ -531,11 +558,11 @@ void GLScene::projectileCol(player* ply, player* ply2)
 {
     if(box_collision(ply->projA->box, ply2->box) && ply2->isalive() && ply->projA->myTime->getTicks() > 200) // ball from player one hits player 2
     {
-           ply->projA->myTime->reset();
+           //ply->projA->myTime->reset();
            //if(ply2->lastCase=='R')
             //make him dash in the oppposit direction he is facing
-           ply->projA->health = 0;
-           ply2->health--;
+           //ply->projA->health = 0;
+           //ply2->health--;
     }
     if(box_collision(ply->projA->box, ply->box) && ply->swinging == true)//player one can hit his own wall
     {
@@ -543,25 +570,31 @@ void GLScene::projectileCol(player* ply, player* ply2)
         ply->projAYdir=ply->ydir;
     }
 
-    /*if(box_collision(ply->projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
+    if(box_collision(ply->projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
     {
          ply->verticalVelocity=6;
-         projJump->start();
-         plyprojJump=true;
+         ply->projJump->start();
+         ply->plyprojJump=true;
     }
-    if(projJump->getTicks()<500&&plyprojJump)
-    {
+    if(ply->projJump->getTicks()<500&&ply->plyprojJump)
         ply->playerGrav=-20/2;
-    }
-    else if(projJump->getTicks()>500&&plyprojJump){
-            plyprojJump=false;
-        projJump->reset();
+
+    else if(ply->projJump->getTicks()>500&&ply->plyprojJump)
+    {
+        ply->plyprojJump=false;
+        ply->projJump->reset();
         ply->playerGrav=-20;
-    }*/
+    }
 
     if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply,Ball)>1)
     {
         BPA->reset();
+        cout<<ballPosHit(ply->projA,Ball)<<endl;
+
+        if(ballPosHit(ply->projA,Ball)==1)//hit the top half of the ball
+            ballDirY=-1;
+        if(ballPosHit(ply->projA,Ball)==2)//hit the bottom half of the ball
+            ballDirY=1;
         ballDirX *= -1;
         //cout<<manhattanDist(ply,Ball)<<endl;
         ply->projA->health=0;
@@ -626,11 +659,6 @@ void GLScene:: update()
     //Set a bool if player is on tile
     ply2->OnTile=playerOnTile(ply2);
 
-    if(ply->OnTile&&ply->verticalVelocity<0)
-            ply->PYpos=-1.2;
-    if(ply2->OnTile&&ply2->verticalVelocity<0)
-            ply2->PYpos=-1.2;
-
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
@@ -662,8 +690,8 @@ void GLScene:: update()
      CurYpos = CurYpos + ballDirY * ballSpeed;
      CurXpos = CurXpos + ballDirX * ballSpeed;
      //cout<<scale<<endl;
-     Ball->Xpos = CurXpos;
-     Ball->Ypos = CurYpos;
+     Ball->Xpos =CurXpos;
+     Ball->Ypos =CurYpos;
     // cout<<""<<endl;
      //cout<<CurXpos<<endl;
     // cout<<ballSpeed<<endl;
@@ -684,6 +712,7 @@ void GLScene:: update()
             ply->projAXdir = -ply->xdir;
             ply->projAYdir = ply->ydir;
         }
+        ply->projA->health = 3;
     }
      if(ply->projA->health<=0)
     {
@@ -711,6 +740,7 @@ void GLScene:: update()
             ply2->projAXdir = -ply2->xdir;
             ply2->projAYdir = ply2->ydir;
         }
+        ply2->projA->health = 3;
     }
      if(ply2->projA->health<=0)
     {
@@ -859,7 +889,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     if(tile7->isalive())
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     if(tile8->isalive())
-    //makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     if(tile9->isalive())
     makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     if(tile10->isalive())
@@ -906,7 +936,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply->projA->drawModel(projTex);
           glPopMatrix();
         }
-    if(ply->projA->health<=0)
+        if(ply->projA->health<=0)
     {
         ply->thrown=false;
         shot=false;
@@ -948,9 +978,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         ply2->projA->box.width=0;
         ply2->projA->box.height=0;
     }
-    cout<<""<<endl;
-    cout<<ply2->projA->health<<endl;
-    cout<<ply->projA->health<<endl;
 
     //----------------------------BALL CREATION------------------------------------//
     glPushMatrix();
@@ -1055,7 +1082,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     if(lolTime-startTime>=2&&!pauseMenu)//wait two seconds to start the
         KbMs->idle(pressed,ply,ply2);
 
-
+        //cout<<ply->xdir<<endl;
     update();
 
 }
@@ -1073,5 +1100,4 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 }
 int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool press[256])
 {
-    return 0;
 }

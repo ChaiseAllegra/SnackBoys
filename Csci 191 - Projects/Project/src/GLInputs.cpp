@@ -8,7 +8,7 @@
 #include <string>
 
 using namespace std;
-
+timer* stunTimer= new timer();
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -17,9 +17,6 @@ Inputs::Inputs()
    Mouse_Roatate=0;
    dashTimer= new timer();
    dashTimer2= new timer();
-   stunTimer= new timer();
-   projSpam= new timer();
-   projSpam2 = new timer();
 }
 
 Inputs::~Inputs()
@@ -58,9 +55,6 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     ply2->jumpTimer->start();
     dashTimer->start();
     dashTimer2->start();
-    projSpam->start();
-    projSpam2->start();
-
 
     if(ply->stunned)
     {
@@ -140,12 +134,8 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply->prevx=ply->PXpos;
         dashTimer->reset();
     }
-    if(pressed['Q']&&projSpam->getTicks()>500)
-    {
-        projSpam->reset();
+    if(pressed['Q'])
         ply->thrown=true;
-        ply->projA->health = 3;
-    }
 
     if(pressed['C'])
         ply->hold=true;
@@ -232,12 +222,8 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply2->isDash=true;
         ply2->prevx=ply2->PXpos;
     }
-    if(pressed['M']&&projSpam2->getTicks()>500)
-    {
+    if(pressed['M'])
         ply2->thrown=true;
-        projSpam2->reset();
-        ply2->projA->health = 3;
-    }
 
     if(pressed['N'])
         ply2->hold=true;
@@ -277,7 +263,7 @@ void Inputs::mouseWheel(Model *Model,double Delta)
 void Inputs::mouseMove(Model *Model,double x,double y)
 {
       if(Mouse_Translate)
-      {//lol
+      {
        Model->Xpos += (x-prev_Mouse_X)/100;
        Model->Ypos -= (y-prev_Mouse_Y)/100;
        prev_Mouse_X =x;

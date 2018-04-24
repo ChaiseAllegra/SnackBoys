@@ -28,6 +28,8 @@ class GLScene
         void tileChange(Model* , Model* ,textureLoader* );
         bool box_collision(Hbox, Hbox);
         void reset();
+        int ballPosHit(Model* ,Model* );
+
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
         /*-----------------------------------------------------*/
