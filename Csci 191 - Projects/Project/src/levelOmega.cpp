@@ -1,12 +1,14 @@
 #include "levelOmega.h"
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 float speedInc=0.15;
 float speedDecr=0.0025;
 levelOmega::levelOmega()
 {
+    projJump= new timer();
     modelTeapot->modelInit("images/player/player0.png", true, tex0);
     modelTeapot2->modelInit("images/player/player0.png", true, texP);
 
@@ -85,11 +87,18 @@ levelOmega::levelOmega()
     divide->modelInit("images/box/block.png", true, divTex);
 
     cross->modelInit("images/box/crosshair.png", true, crosshair);
+    Ball->lethal=0;
 }
 
 levelOmega::~levelOmega()
 {
     //dtor
+}
+float manhattanDist(player* ply,Model* Ball)
+{
+     float mX=fabs(ply->PXpos-Ball->Xpos);
+     float mY=fabs(ply->PYpos-Ball->Ypos);
+    return mX+mY;
 }
 void levelOmega::tileChange(Model* b, Model* t,textureLoader* TX)
 {
@@ -159,6 +168,7 @@ void levelOmega::ballColl()
 
         pCol->reset();
         Ball->tag="one";
+        //Ball->lethal=0;
         if(ply->lastCase == 'R') // lets player aim to his right
         {
             ballDirX = ply->xdir;
@@ -179,6 +189,7 @@ void levelOmega::ballColl()
     {
         //stun player1
         Ball->lethal=0;//now it is neutral and wont stun anyone
+        ply->stunned=true;
     }
 
     //-----------------------PLAYER 2--------------------------------------//
@@ -186,6 +197,7 @@ void levelOmega::ballColl()
     {
         hitTimer2->reset();
          Ball->tag="two";
+         //Ball->lethal=0;
         pCol->reset();
         if(ply2->lastCase == 'R')//lets player aim to his right
         {
@@ -209,8 +221,8 @@ void levelOmega::ballColl()
         //stun player2
         Ball->lethal=0;//now it is neutral and wont stun anyone
         ply2->stunned=true;
-        cout<<Ball->lethal<<endl;
     }
+
     if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
     {
            Ball->myTime->reset();
@@ -359,19 +371,33 @@ void levelOmega::projectileCol(player* ply, player* ply2)
     }
 
     if(box_collision(ply->projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
+    {
          ply->verticalVelocity=6;
+         projJump->start();
+         plyprojJump=true;
+    }
+    if(projJump->getTicks()<500&&plyprojJump)
+    {
+        ply->playerGrav=-20/2;
+    }
+    else if(projJump->getTicks()>500&&plyprojJump){
+            plyprojJump=false;
+        projJump->reset();
+        ply->playerGrav=-20;
+    }
 
-    if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200)
+    if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200&&manhattanDist(ply,Ball)>1)
     {
         BPA->reset();
         ballDirX *= -1;
+        //cout<<manhattanDist(ply,Ball)<<endl;
         ply->projA->health=0;
         if(Ball->Xpos>0&&Ball->tag=="one")
             Ball->lethal=2;
         //ballDirY *= -1;
     }
 
-    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200)
+    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200&&manhattanDist(ply2,Ball)>1)
     {
         BPA->reset();
         ballDirX*=-1;
@@ -418,11 +444,12 @@ void levelOmega::reset()
 
     Ball->Xpos=0;
     Ball->Ypos=0;
+    Ball->tag="";
     ballDirX=-1;
     ballDirY=1;
     CurXpos=0;
     CurYpos=0;
-    //reset the speed
+    //reset the accel
 }
 void levelOmega:: update()
 {
@@ -483,19 +510,16 @@ void levelOmega:: update()
     tileChange(Ball, tile14,tileTex14);
     tileChange(Ball, tile15,tileTex15);
 
-    //----------------------------------
-    // moving the ball
-    //---------------------------------
-     if(ballSpeed>ballSpdBfrAcc)
-     ballSpeed-=speedDecr*(10/scale);
+
+
 
     //MOVING THE BALL
+     if(ballSpeed>ballSpdBfrAcc)
+        ballSpeed-=speedDecr*(10/scale);
      CurYpos = CurYpos + ballDirY * ballSpeed;
      CurXpos = CurXpos + ballDirX * ballSpeed;
-     Ball->tag="one";
-     Ball->lethal=2;
-        Ball->Xpos = CurXpos;
-        Ball->Ypos = CurYpos;
+     Ball->Xpos = -2;//CurXpos;
+     Ball->Ypos = -1;//CurYpos;
 
 
      projectileCol(ply, ply2);

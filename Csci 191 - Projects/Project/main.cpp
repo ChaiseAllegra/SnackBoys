@@ -377,10 +377,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 
             }
 
-			if(keys['Z'])
+			/*if(keys['Z'])
                Scene->level=1;
             if(keys['V'])
-                Scene->level=2;
+                Scene->level=2;*/
 
             if(keys['B'])
                Scene->pauseMenu=true;

@@ -40,6 +40,7 @@ class levelOmega
 
         bool setBallSpeed;
         bool start=false;
+        bool plyprojJump=false;
 
         int plyScore=0;
         int ply2Score=0;
@@ -47,6 +48,7 @@ class levelOmega
 
         timer* hitTimer;
         timer* hitTimer2;
+        timer* projJump;
 
         Model * modelTeapot = new Model();
         Model * modelTeapot2 = new Model();

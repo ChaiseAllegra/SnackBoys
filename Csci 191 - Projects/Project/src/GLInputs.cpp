@@ -55,6 +55,19 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     dashTimer->start();
     dashTimer2->start();
 
+    if(ply->stunned)
+    {
+        stunTimer->start();
+        ply->actionTrigger=0;
+    }
+    if(ply->stunned&&stunTimer->getTicks()>900)
+    {
+    stunTimer->reset();
+    ply->stunned=false;
+    }
+    if(!ply->stunned)
+    {
+
     if(pressed['A']&&!ply->isDash)
      {
         ply->actionTrigger = 1;
@@ -127,6 +140,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply->hold=true;
     else
         ply->hold=false;
+}
 
 
     //------------------------------player 2---------------------------//
