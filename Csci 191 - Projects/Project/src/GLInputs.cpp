@@ -277,7 +277,7 @@ void Inputs::mouseWheel(Model *Model,double Delta)
 void Inputs::mouseMove(Model *Model,double x,double y)
 {
       if(Mouse_Translate)
-      {
+      {//lol
        Model->Xpos += (x-prev_Mouse_X)/100;
        Model->Ypos -= (y-prev_Mouse_Y)/100;
        prev_Mouse_X =x;
