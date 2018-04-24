@@ -76,8 +76,10 @@ class levelOmega
         Model* tile13 = new Model();
         Model* tile14 = new Model();
         Model* tile15 = new Model();
+
         player* ply = new player();
         player* ply2 = new player();
+
         timer* BPA = new timer;//projectile A and ball collision timer
         timer* pCol = new timer;//ball and player collision timer
         timer* D = new timer;//tile and ball collision timer

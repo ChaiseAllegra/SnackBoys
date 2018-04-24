@@ -10,10 +10,10 @@
 #include <timer.h>
 #include <GLFW/glfw3.h>
 //#include<levelAlpha.h>
-#include<levelOmega.h>
+//#include<levelOmega.h>
 
 //levelAlpha* alpha;
-levelOmega* omega;
+//levelOmega* omega;
 
 float tw=100,th=100;
 float mX,mY,mXpos=0,mYpos=0;
@@ -36,7 +36,7 @@ GLScene::GLScene()
     pauseMenu = false;
 
     //alpha= new levelAlpha();
-    omega = new levelOmega();
+    //omega = new levelOmega();
 
      KbMs = new Inputs();
 
@@ -54,6 +54,76 @@ GLScene::GLScene()
 
      texSky1 = new textureLoader();
      texSky2 = new textureLoader();
+     /*------------------------------------------*/
+      //left side tiles
+         tile1 = new Model();
+         tile2 = new Model();
+         tile3 = new Model();
+         tile4 = new Model();
+         tile5 = new Model();
+         tile6 = new Model();
+         tile7 = new Model();
+        //middle tile
+         tile8 = new Model();
+        //right side tiles
+         tile9 = new Model();
+        tile10 = new Model();
+         tile22 = new Model();
+         tile12 = new Model();
+         tile13 = new Model();
+         tile14 = new Model();
+         tile15 = new Model();
+
+        ply = new player();
+        ply2 = new player();
+         hitTimer=new timer();
+      hitTimer2=new timer();
+       speedInc=0.15;
+        speedDecr=0.0025;
+     ballTex = new textureLoader();
+     killBox= new Model();
+     ply2Score=0;
+        leftWall = new Model(); // left wall
+        rightWall = new Model(); // right wall
+      topWall = new Model(); // top wall
+     divide = new Model();
+    ballSpdBfrAcc=0.5;
+      tileTex=new textureLoader();
+         tileTex2=new textureLoader();
+         tileTex3=new textureLoader();
+         tileTex4=new textureLoader();
+         tileTex5=new textureLoader();
+         tileTex6=new textureLoader();
+         tileTex7=new textureLoader();
+         tileTex8=new textureLoader();
+         tileTex9=new textureLoader();
+         tileTex10=new textureLoader();
+         tileTex11=new textureLoader();
+         tileTex12=new textureLoader();
+         tileTex13=new textureLoader();
+         tileTex14=new textureLoader();
+         tileTex15=new textureLoader();
+         leftWallTex= new textureLoader();
+         rightWallTex= new textureLoader();
+         topWallTex= new textureLoader();
+         divWallTex= new textureLoader();
+         D= new timer();
+         BPA = new timer();
+         pCol= new timer();
+          playerModel = new Model();
+          playerModel2 = new Model();
+         plyTex = new textureLoader();
+        projTex = new textureLoader();
+        projTex2 = new textureLoader();
+        cross = new Model();
+        crosshair = new textureLoader();
+        Ball = new Model();
+        setBallSpeed=false;
+        scale=1;
+        ballDirX=-1;
+        ballDirY=1;
+
+     /*------------------------------------------*/
 }
 
 GLScene::~GLScene()
@@ -80,18 +150,116 @@ GLint GLScene::initGL()
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
     exitMod->modelInit("images/box/pMExit.png", true, exitTex);
 
-    startTime= glfwGetTime();
+    /* declare model init, player init in scene init*/
+    playerModel->modelInit("images/player/player0.png", true, plyTex);
+    ply->playerInit();
+    playerModel2->modelInit("images/player/player0.png", true, plyTex);
+    ply2->playerInit();
+
+    ply->PXpos=-2;
+    ply->PYpos=-1;
+    ply2->PXpos=2;
+    ply2->PYpos=-1;
+    tile1->modelInit("images/box/nothing2.png", true, tileTex);
+    tile2->modelInit("images/box/block.png", true, tileTex2);
+    tile3->modelInit("images/box/block.png", true, tileTex3);
+    tile4->modelInit("images/box/block.png", true, tileTex4);
+    tile5->modelInit("images/box/block.png", true, tileTex5);
+    tile6->modelInit("images/box/block.png", true, tileTex6);
+    tile7->modelInit("images/box/block.png", true, tileTex7);
+    tile8->modelInit("images/box/block.png", true, tileTex8);
+    tile9->modelInit("images/box/block.png", true, tileTex9);
+    tile10->modelInit("images/box/block.png", true, tileTex10);
+    tile22->modelInit("images/box/block.png", true, tileTex11);
+    tile12->modelInit("images/box/block.png", true, tileTex12);
+    tile13->modelInit("images/box/block.png", true, tileTex13);
+    tile14->modelInit("images/box/block.png", true, tileTex14);
+    tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+    leftWall->modelInit("images/box/girder.png", true, leftWallTex);
+    rightWall->modelInit("images/box/girder.png", true, rightWallTex);
+    topWall->modelInit("images/box/girder2.png", true, topWallTex);
+    divide->modelInit("images/box/block.png", true, divWallTex);
+    cross->modelInit("images/box/crosshair.png", true, crosshair);
+    ply->projA->modelInit("images/box/Fire.png", true, projTex);
+    ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
+    Ball->modelInit("images/box/ball.png", true, ballTex);
+    ply->T->start();
+    ply->T2->start();
+    ply2->T->start();
+    ply2->T2->start();
+
+    /*------------------------*/
+
+    startTime = glfwGetTime();
 
     return true;
 }
 
-float manhattanDist(player* ply, player* ply2)
+float manhattanD(player* ply, Model* Ball)
 {
-     mX=abs(ply->PXpos-ply2->PXpos);
-     mY=abs(ply->PYpos-ply2->PYpos);
+      float mX=fabs(ply->PXpos-Ball->Xpos);
+     float mY=fabs(ply->PYpos-Ball->Ypos);
     return mX+mY;
 }
+bool GLScene::box_collision(Hbox rect1, Hbox rect2)
+ {
 
+ bool collisionX;
+ bool collisionY;
+
+collisionY = (((rect1.y-rect1.height) < (rect2.y + rect2.height) && (rect1.y+rect1.height) > (rect2.y - rect2.height))||((rect2.y-rect2.height) < (rect1.y + rect1.height) && (rect2.y+rect2.height) > (rect1.y - rect1.height)));
+collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1.width) > (rect2.x - rect2.width))||((rect2.x-rect2.width) < (rect1.x + rect1.width) && (rect2.x+rect2.width) > (rect1.x - rect1.width)));
+
+    return collisionX && collisionY;
+}
+void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
+{
+    if(box_collision(b->box, t->box ) && D->getTicks() >= 200)
+    {
+                D->reset();
+                ballDirY =  1;
+                if((b->tag=="one"&&t->tag=="right")||(b->tag=="two"&&t->tag=="left"))
+                {
+                    t->health-=1;
+                    ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
+                    hitCount=0;
+                }
+                t->isalive();
+
+
+                if (t->health == 2)
+                    t->modelInit("images/box/block2.png", true, TX);
+                if (t->health == 1)
+                    t->modelInit("images/box/block3.png", true, TX);
+                    return;
+    }
+
+}
+bool GLScene::playerOnTile(player* ply)
+{
+             if((topOfTile(ply,tile1)||topOfTile(ply,tile2)||topOfTile(ply,tile3)||topOfTile(ply,tile4)||
+                    topOfTile(ply,tile5)||topOfTile(ply,tile6)||topOfTile(ply,tile7)||topOfTile(ply,tile8)||
+                    topOfTile(ply,tile9)||topOfTile(ply,tile10)||topOfTile(ply,tile22)||topOfTile(ply,tile12)||
+                    topOfTile(ply,tile13)||topOfTile(ply,tile14)||topOfTile(ply,tile15)))
+               return true;
+    else
+        false;
+}
+bool GLScene::topOfTile(player* ply,Model* tileT){
+        if(
+           (((ply->pl_pltfrm_box.x-ply->pl_pltfrm_box.width) < (tileT->box.x + tileT->box.width) && (ply->pl_pltfrm_box.x+ply->pl_pltfrm_box.width) > (tileT->box.x - tileT->box.width))
+            ||((tileT->box.x-tileT->box.width) < (ply->pl_pltfrm_box.x + ply->pl_pltfrm_box.width) && (tileT->box.x+tileT->box.width) > (ply->pl_pltfrm_box.x - ply->pl_pltfrm_box.width)))
+            &&(((ply->pl_pltfrm_box.y-ply->pl_pltfrm_box.height) < (tileT->box.y + tileT->box.height) ||
+            (tileT->box.y+tileT->box.height) > (ply->pl_pltfrm_box.y - ply->pl_pltfrm_box.height))&&
+            (ply->pl_pltfrm_box.y-ply->pl_pltfrm_box.height>tileT->box.y))
+        )
+        return true;
+        else
+        return false;
+
+
+
+    }
 void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
 {
        glPushMatrix();
@@ -115,367 +283,446 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
     glPopMatrix();
     return;
 }
-
-GLint GLScene::drawGLScene(bool pressed[256])
+void GLScene::reset()
 {
-/*
+    tile1->health=3;
+    tile2->health=3;
+    tile3->health=3;
+    tile4->health=3;
+    tile5->health=3;
+    tile6->health=3;
+    tile7->health=3;
+    tile8->health=3;
+    tile9->health=3;
+    tile10->health=3;
+    tile22->health=3;
+    tile12->health=3;
+    tile13->health=3;
+    tile14->health=3;
+    tile15->health=3;
+
+    ply->PXpos=-2;
+    ply2->PXpos=2;
+    ply->PYpos = -1.1;
+    ply2->PYpos = -1.1;
+    ply->thrown=false;
+    ply2->thrown=false;
+
+    Ball->Xpos=0;
+    Ball->Ypos=0;
+    Ball->tag="";
+    ballDirX=-1;
+    ballDirY=1;
+    CurXpos=0;
+    CurYpos=0;
+    //reset the accel
+}
+void GLScene::ballColl()
+{
+    //----------------------PLAYER 1 --------------------------------------//
+    if (box_collision(Ball->box, ply->box) && ply->swinging == true&& hitTimer->getTicks()>200)
+    {
+        hitTimer->reset();
+
+        pCol->reset();
+        Ball->tag="one";
+        Ball->lethal=0;
+        if(ply->lastCase == 'R') // lets player aim to his right
+        {
+            ballDirX = ply->xdir;
+            ballDirY = ply->ydir;
+        }
+        if(ply->lastCase == 'L') // lets player aim to his left
+        {
+            ballDirX = -ply->xdir;
+            ballDirY = ply->ydir;
+        }
+        ballSpeed+=speedInc*(80/scale);
+
+        Ball->modelInit("images/box/ball.png", true, ballTex);
+        ply->swinging = false;
+         hitCount++;
+    }
+     if (box_collision(Ball->box, ply->box) && ply->swinging == false&& hitTimer->getTicks()>200&&Ball->lethal==1)
+    {
+        //stun player1
+        Ball->lethal=0;//now it is neutral and wont stun anyone
+        ply->stunned=true;
+    }
+
+    //-----------------------PLAYER 2--------------------------------------//
+    if (box_collision(Ball->box, ply2->box) && ply2->swinging == true&&hitTimer2->getTicks()>200)
+    {
+        hitTimer2->reset();
+         Ball->tag="two";
+         Ball->lethal=0;
+        pCol->reset();
+        if(ply2->lastCase == 'R')//lets player aim to his right
+        {
+            ballDirX = ply2->xdir;
+            ballDirY = ply2->ydir;
+        }
+
+        if(ply2->lastCase == 'L')//lets player aim to his left
+        {
+            ballDirX = -ply2->xdir;
+            ballDirY = ply2->ydir;
+        }
+        ballSpeed+=speedInc*(40/scale);
+
+        Ball->modelInit("images/box/ball2.png", true, ballTex);
+        ply2->swinging = false;
+        hitCount++;
+    }
+      if (box_collision(Ball->box, ply2->box) && ply2->swinging == false&& hitTimer2->getTicks()>200&&Ball->lethal==2)
+    {
+        //stun player2
+        Ball->lethal=0;//now it is neutral and wont stun anyone
+        ply2->stunned=true;
+    }
+
+    if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
+    {
+           Ball->myTime->reset();
+           ply2->health--;
+    }
+}
+void GLScene::wallColl()
+{
+    if(box_collision(ply->box,killBox->box))
+    {
+        reset();
+        ply2Score++;
+    }
+    if(box_collision(ply2->box,killBox->box))
+    {
+        reset();
+        plyScore++;
+    }
+    if (box_collision(Ball->box, rightWall->box))
+        ballDirX = -1;
+
+    if (box_collision(Ball->box, leftWall->box))
+        ballDirX = 1;
+
+    if (box_collision(Ball->box, topWall->box))
+        ballDirY = -1;
+
+    if (box_collision(Ball->box, killBox->box))
+    {
+        CurYpos=2;
+        ballDirY=-1;
+
+        if(ballDirX==-1)
+            CurXpos+=2;
+
+        if(ballDirX==1)
+            CurXpos-=2;
+    }
+
+    if(box_collision(ply->box,leftWall->box)) // player has hit the left wall
+        ply->leftWC=true; // set to true so the player cannot move left
+    else
+        ply->leftWC=false;
+
+    if(box_collision(ply->box,divide->box)) // player has hit the right wall
+        ply->rightWC=true; // set to true so the player cannot move right
+    else
+        ply->rightWC=false;
+
+    if(box_collision(ply->box,topWall->box))//player has hit the top wall
+        ply->topWC=true;//set to true so the player cannot move up
+    else
+        ply->topWC=false;
+
+    if(box_collision(ply2->box,divide->box)) // player has hit the left wall
+        ply2->leftWC=true; // set to true so the player cannot move left
+    else
+        ply2->leftWC=false;
 
 
-      //-----------------------------------------------------------------------------------------------//
-     //------------------------------------------ TIMERS ---------------------------------------------//
-    //-----------------------------------------------------------------------------------------------//
-        alpha->projA->myTime->start();
-        alpha->projB->myTime->start();
-        alpha->ply->myTime->start();
-        alpha->Ball->myTime->start();
-        alpha->ply->swingTimer->start();
-        alpha->ply2->swingTimer->start();
-        alpha->D->start();
-        alpha->BPA->start();
-        alpha->pCol->start();
-      //-----------------------------------------------------------------------------------------------//
-     //-------------------------------- SKYBOX CREATION ----------------------------------------------//
-    //-----------------------------------------------------------------------------------------------//
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
-    glLoadIdentity();
-    // Reset The Current Modelview Matrix
-    glPushMatrix();
-        glTranslated(0, 0, 1);
-        glDisable(GL_LIGHTING);
-        glScaled(10, 10, 10);
-        sky->drawBox();
-        glEnable(GL_LIGHTING);
-    glPopMatrix();
+    if(box_collision(ply2->box,rightWall->box)) // player has hit the right wall
+        ply2->rightWC=true; // set to true so the player cannot move right
+    else
+        ply2->rightWC=false;
 
-      //-----------------------------------------------------------------------------------------------//
-     //------------------------------- PARALLAX CREATION ---------------------------------------------//
-    //-----------------------------------------------------------------------------------------------//
-    glPushMatrix();
-        glScaled(3.33, 3.33, 1.0);
-        plx->drawSquare(screenWidth, screenHeight, texSky1);
-    glPopMatrix();
-     if(timeFromStart-startTime>=2)//wait three seconds to start the game
-    plx->scroll(true,"left",1,scale);
-
-      //-----------------------------------------------------------------------------------------------//
-     //------------------------------- PARALLAX2 CREATION --------------------------------------------//
-    //-----------------------------------------------------------------------------------------------//
-    glPushMatrix();
-        glScaled(3.33, 3.33, 1.0);
-
-             plx2->drawSquare(screenWidth, screenHeight, texSky2);
+    if(box_collision(ply2->box,topWall->box))//player has hit the top wall
+        ply2->topWC=true;//set to true so the player cannot move up
+    else
+        ply2->topWC=false;
 
 
-    glPopMatrix();
-     if(timeFromStart-startTime>=2)//wait three seconds to start the game
-    plx2->scroll(false,"left",0.0002,scale);
+    if(box_collision(ply->projA->box,leftWall->box) && ply->projA->myTime->getTicks() >= 200)
+    {
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAXdir *= -1;
+    }
+
+    if(box_collision(ply->projA->box,rightWall->box) && ply->projA->myTime->getTicks() >= 200)
+    {
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAXdir *= -1;
+    }
+
+    if(box_collision(ply->projA->box,topWall->box)&& ply->projA->myTime->getTicks() >= 200)
+    {
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAYdir *= -1;
+    }
+
+    if(box_collision(ply->projA->box,killBox->box)&& ply->projA->myTime->getTicks() >= 200)
+    {
+        ply->projA->myTime->reset();
+        ply->projA->health--;
+        ply->projAYdir *= -1;
+    }
+
+
+    //-----------------PROJECTILE 2 WALL COLLISIONS---------------------------------------------//
+      if(box_collision(ply2->projA->box,leftWall->box)&& ply2->projA->myTime->getTicks() >= 200)
+    {
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAXdir*=-1;
+    }
+
+    if(box_collision(ply2->projA->box, rightWall->box) && ply2->projA->myTime->getTicks() >= 200)
+    {
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAXdir*=-1;
+    }
+
+    if(box_collision(ply2->projA->box,topWall->box)&& ply2->projA->myTime->getTicks() >= 200)
+    {
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAYdir*=-1;
+    }
+
+    if(box_collision(ply2->projA->box,killBox->box)&& ply2->projA->myTime->getTicks() >= 200)
+    {
+        ply2->projA->myTime->reset();
+        ply2->projA->health--;
+        ply2->projAYdir*=-1;
+    }
+}
+void GLScene::projectileCol(player* ply, player* ply2)
+{
+    if(box_collision(ply->projA->box, ply2->box) && ply2->isalive() && ply->projA->myTime->getTicks() > 200) // ball from player one hits player 2
+    {
+           ply->projA->myTime->reset();
+           //if(ply2->lastCase=='R')
+            //make him dash in the oppposit direction he is facing
+           ply->projA->health = 0;
+           ply2->health--;
+    }
+    if(box_collision(ply->projA->box, ply->box) && ply->swinging == true)//player one can hit his own wall
+    {
+        ply->projAXdir=ply->xdir;
+        ply->projAYdir=ply->ydir;
+    }
+
+    /*if(box_collision(ply->projA->box,ply->box) && ply->swinging==false)//player one can hit his own ball
+    {
+         ply->verticalVelocity=6;
+         projJump->start();
+         plyprojJump=true;
+    }
+    if(projJump->getTicks()<500&&plyprojJump)
+    {
+        ply->playerGrav=-20/2;
+    }
+    else if(projJump->getTicks()>500&&plyprojJump){
+            plyprojJump=false;
+        projJump->reset();
+        ply->playerGrav=-20;
+    }*/
+
+    if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply,Ball)>1)
+    {
+        BPA->reset();
+        ballDirX *= -1;
+        //cout<<manhattanDist(ply,Ball)<<endl;
+        ply->projA->health=0;
+        if(Ball->Xpos>0&&Ball->tag=="one")
+            Ball->lethal=2;
+        //ballDirY *= -1;
+    }
+
+    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply2,Ball)>1)
+    {
+        BPA->reset();
+        ballDirX*=-1;
+        ply->projA->health=0;
+        if(Ball->Xpos<0&&Ball->tag=="two")
+            Ball->lethal=1;
+        //ballDirY*=-1;
+    }
+
+    if(ply->thrown)
+    {
+        ply->ProjACurY += ply->projAYdir * (10/scale);
+        ply->ProjACurX += ply->projAXdir * (10/scale);
+
+        ply->projA->Xpos = ply->ProjACurX;
+        ply->projA->Ypos = ply->ProjACurY;
+    }
+
+}
+void GLScene:: update()
+{
+    hitTimer2->start();
+    hitTimer->start();
+    double currentTime = glfwGetTime();
+
+    frameCount++;
+    if(currentTime-lastTime>=1.0)
+    {
+        if(frameCount>0)
+            scale=(frameCount);
+        if(!setBallSpeed&&scale>0)
+        {
+             ballSpeed=(3.4)/scale;//(0.125*8)/scale;
+             ballSpdBfrAcc=ballSpeed;
+             setBallSpeed=true;
+        }
+        frameCount=0;
+        lastTime+=1.0;
+
+        if(scale>0)
+        {
+            ply->delta=scale;
+            ply2->delta=scale;
+        }
+    }
+    if (!glfwInit())
+    exit(EXIT_FAILURE);
+
+    wallColl();
+    ballColl();
+     //Set a bool if player is on tile
+    ply->OnTile=playerOnTile(ply);
+    //Set a bool if player is on tile
+    ply2->OnTile=playerOnTile(ply2);
+
 
       //-------------------------------------------------------------------------------------------------//
-     //------------------------------- PLAYER CREATION -------------------------------------------------//
-    //-------------------------------------------------------------------------------------------------//
-    if(alpha->ply->health>0)
-    {
-    glPushMatrix();
-       alpha->ply->actions();
-       alpha->ply->box.x=alpha->ply->PXpos;
-        alpha->ply->box.y = alpha->ply->PYpos;
-       alpha-> ply->pl_pltfrm_box.x = alpha->ply ->PXpos;
-        alpha->ply->pl_pltfrm_box.y = alpha->ply -> PYpos;
-        alpha->ply->pl_pltfrm_box.height = 0.6;
-        alpha->ply->pl_pltfrm_box.width = 0.07;
-        alpha->ply->box.height=0.1;
-        alpha->ply->trueHeight=0.1;
-        alpha->ply->box.width=0.3;
-        alpha->update(scale);
-        alpha->ply->drawplayer();
-    glPopMatrix();
-    }
-     if(alpha->ply->health<=0)
-    {
-            alpha->ply->box.height=0;
-            alpha->ply->box.width=0;
-            alpha->ply->pl_pltfrm_box.height = 0;
-            alpha->ply->pl_pltfrm_box.width = 0;
-    }
-
-
-    if(alpha->ply2->health>0)
-    {
-        glPushMatrix();
-            alpha->ply2->actions();
-            alpha->ply2->box.x =  alpha->ply2->PXpos;
-            alpha->ply2->box.y =  alpha->ply2->PYpos;
-            alpha->ply2->pl_pltfrm_box.x =  alpha->ply2 ->PXpos;
-            alpha->ply2->pl_pltfrm_box.y =  alpha->ply2 -> PYpos;
-            alpha->ply2->pl_pltfrm_box.height = 0.6;
-            alpha->ply2->pl_pltfrm_box.width = 0.07;
-            alpha->ply2->box.height=0.5;
-           alpha-> ply2->box.width=0.2;
-            alpha->update(scale);
-            alpha->ply2->drawplayer();
-        glPopMatrix();
-    }
-    if(alpha->ply2->health<=0)
-    {
-            alpha->ply2->box.height=0;
-            alpha->ply2->box.width=0;
-            alpha->ply2->box.x=999;
-            alpha->ply2->box.y=999;
-            alpha->ply2->pl_pltfrm_box.x =999;
-            alpha->ply2->pl_pltfrm_box.y = 999;
-            alpha->ply2->pl_pltfrm_box.height = 0;
-            alpha->ply2->pl_pltfrm_box.width = 0;
-            alpha->ply2->PXpos=999;
-            alpha->ply2->PYpos=999;
-            alpha->ply2->box.x=999;
-            alpha->ply2->box.y=999;
-    }
-     //-------------------------------------------------------------------------------------------------//
-     //------------------------------- TILE CREATION ---------------------------------------------------//
+     //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
 
-    // model , texture, xpos,ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
-   makeModel(alpha->floor,alpha->tileTex,0,-2.08,-3.5,-0.00,3.5,-0.00,3.5,0.40,-3.5,0.40,7,.3);
 
-      //left wall
-    makeModel(alpha->leftWall,alpha->tex1,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
+    tileChange(Ball, tile1,tileTex);
+    tileChange(Ball, tile2,tileTex2);
+    tileChange(Ball, tile3,tileTex3);
+    tileChange(Ball, tile4,tileTex4);
+    tileChange(Ball, tile5,tileTex5);
+    tileChange(Ball, tile6,tileTex6);
+    tileChange(Ball, tile7,tileTex7);
+    tileChange(Ball, tile8,tileTex8);
+    tileChange(Ball, tile9,tileTex9);
+    tileChange(Ball, tile10,tileTex10);
+    tileChange(Ball, tile22,tileTex11);
+    tileChange(Ball, tile12,tileTex12);
+    tileChange(Ball, tile13,tileTex13);
+    tileChange(Ball, tile14,tileTex14);
+    tileChange(Ball, tile15,tileTex15);
 
-    //right wall
-    makeModel(alpha->rightWall,alpha->tex2,3.37,0,-0.2,3.0,0.2,3.0,0.2,-3.0,-0.2,-3.0,0.3,88);
 
-    //bottom wall
-    makeModel(alpha->killBox,alpha->tex3,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,1);
 
-     //top wall
-    makeModel(alpha->topWall,alpha->tex3,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
-    makeModel(alpha->platTileBL, alpha->tileTex, -1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
-    makeModel(alpha->platTileBR, alpha->tileTex, 1.5, -1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
-    makeModel(alpha->platTileTL, alpha->tileTex, -1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
-    makeModel(alpha->platTileTR, alpha->tileTex, 1.5, 1.0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
-    makeModel(alpha->platTileM, alpha->tileTex, 0, 0, -0.5, -0.00, 0.5, -0.00, 0.5, 0.10, -0.5, 0.10, 0.3, 0.3);
-    //left goal
-    makeModel(alpha->GoalL,alpha->texGL,-3,0,-0.2,0.5,0.2,0.5,0.2,-0.5,-0.2,-0.5,0.5,1);
-    //right goal
-    makeModel(alpha->GoalR,alpha->texGL,3,0,-0.2,0.5,0.2,0.5,0.2,-0.5,-0.2,-0.5,0.5,1);
+    //MOVING THE BALL
+     if(ballSpeed>ballSpdBfrAcc)
+        ballSpeed-=speedDecr*(10/scale);
+     CurYpos = CurYpos + ballDirY * ballSpeed;
+     CurXpos = CurXpos + ballDirX * ballSpeed;
+     //cout<<scale<<endl;
+     Ball->Xpos = CurXpos;
+     Ball->Ypos = CurYpos;
+    // cout<<""<<endl;
+     //cout<<CurXpos<<endl;
+    // cout<<ballSpeed<<endl;
+    // cout<<ballDirX<<endl;
 
-    if(alpha->ply->thrown)
-        {
-            glPushMatrix();
-            alpha->projA->box.height =  .2;
-            alpha->projA->box.width = .05;
 
-           alpha-> projA->verticies[0].x = -0.15;
-            alpha->projA->verticies[1].x = 0.15;
-           alpha-> projA->verticies[2].x = 0.15;
-           alpha-> projA->verticies[3].x = -0.15;
-           alpha-> projA->verticies[0].y = -0.15;
-           alpha-> projA->verticies[1].y = -0.15;
-           alpha-> projA->verticies[2].y = 0.15;
-           alpha-> projA->verticies[3].y = 0.15;
-           alpha-> projA->box.x = alpha->projA ->Xpos;
-            alpha->projA->box.y = alpha->projA ->Ypos;
-
-            if(!alpha->shot)
-            {
-                if(alpha->ply->lastCase=='R')//lets player aim to his right
-                {
-                    alpha->projAXdir = alpha->ply->xdir;
-                    alpha->projAYdir =  alpha->ply->ydir;
-                }
-
-                if(alpha->ply->lastCase=='L')//lets player aim to his left
-                {
-
-                    alpha->projAXdir = - alpha->ply->xdir;
-                    alpha->projAYdir =  alpha->ply->ydir;
-                }
-
-                alpha->projA->health = 3;
-                alpha->shot = true;
-            }
-            alpha->projA->drawModel(alpha->ballHBTex);
-          glPopMatrix();
-        }
-
-    if(alpha->projA->health<=0)
+     projectileCol(ply, ply2);
+     projectileCol(ply2, ply);
+    if(!ply->thrown)
     {
-        alpha->ply->thrown=false;
-        alpha->shot=false;
-        alpha->projA->Xpos=999;
-       alpha-> projA->Ypos=999;
-
-        alpha->projA->box.x=999;
-        alpha->projA->box.y=999;
-        alpha->projA->box.width=0;
-        alpha->projA->box.height=0;
-    }
-
-
-    if(alpha->ply->thrown==false&&alpha->ply->lastCase=='R')
-        alpha->ProjACurY=alpha->ply->PYpos, alpha->ProjACurX=alpha->ply->PXpos+0.5;
-     if(alpha->ply->thrown==false&&alpha->ply->lastCase=='L')
-           alpha->ProjACurY=alpha->ply->PYpos, alpha->ProjACurX=alpha->ply->PXpos-0.5;
-
-     if(alpha->ply2->thrown)
+        if(ply->lastCase=='R')//lets player aim to his right
         {
-            glPushMatrix();
-            alpha->projA->box.height =  .2;
-            alpha->projA->box.width = .05;
-
-           alpha-> projA->verticies[0].x = -0.15;
-            alpha->projA->verticies[1].x = 0.15;
-           alpha-> projA->verticies[2].x = 0.15;
-           alpha-> projA->verticies[3].x = -0.15;
-           alpha-> projA->verticies[0].y = -0.15;
-           alpha-> projA->verticies[1].y = -0.15;
-           alpha-> projA->verticies[2].y = 0.15;
-           alpha-> projA->verticies[3].y = 0.15;
-           alpha-> projA->box.x = alpha->projA ->Xpos;
-            alpha->projA->box.y = alpha->projA ->Ypos;
-
-            if(!alpha->shot)
-            {
-                if(alpha->ply2->lastCase=='R')//lets player aim to his right
-                {
-                    alpha->projAXdir = alpha->ply2->xdir;
-                    alpha->projAYdir =  alpha->ply2->ydir;
-                }
-
-                if(alpha->ply2->lastCase=='L')//lets player aim to his left
-                {
-
-                    alpha->projAXdir = - alpha->ply2->xdir;
-                    alpha->projAYdir =  alpha->ply2->ydir;
-                }
-
-                alpha->projA->health = 3;
-                alpha->shot = true;
-            }
-            alpha->projA->drawModel(alpha->ballHBTex);
-          glPopMatrix();
+            ply->projAXdir = ply->xdir;
+            ply->projAYdir = ply->ydir;
         }
-
-    if(alpha->projA->health<=0)
+        if(ply->lastCase=='L')//lets player aim to his left
+        {
+            ply->projAXdir = -ply->xdir;
+            ply->projAYdir = ply->ydir;
+        }
+        ply->projA->health = 3;
+    }
+     if(ply->projA->health<=0)
     {
-        alpha->ply2->thrown=false;
-        alpha->shot=false;
-        alpha->projA->Xpos=999;
-       alpha-> projA->Ypos=999;
+        ply->thrown=false;
+        ply->projA->box.width=0;
+        ply->projA->box.height=0;
+        ply->projA->box.x=999;
+        ply->projA->box.y=999;
 
-        alpha->projA->box.x=999;
-        alpha->projA->box.y=999;
-        alpha->projA->box.width=0;
-        alpha->projA->box.height=0;
     }
+    if(ply->thrown==false&&ply->lastCase=='R')
+        ply->ProjACurY=ply->PYpos, ply->ProjACurX=ply->PXpos+0.5;
+    if(ply->thrown==false&&ply->lastCase=='L')
+        ply->ProjACurY=ply->PYpos, ply->ProjACurX=ply->PXpos-0.5;
 
-
-    if(alpha->ply2->thrown==false&&alpha->ply2->lastCase=='R')
-        alpha->ProjACurY=alpha->ply2->PYpos, alpha->ProjACurX=alpha->ply2->PXpos+0.5;
-     if(alpha->ply2->thrown==false&&alpha->ply2->lastCase=='L')
-           alpha->ProjACurY=alpha->ply2->PYpos, alpha->ProjACurX=alpha->ply2->PXpos-0.5;
-
-     glPushMatrix();
-        alpha->Ball->box.height =  .2;
-        alpha->Ball->box.width = .05;
-        alpha->Ball->verticies[0].x = -0.15;
-        alpha->Ball->verticies[1].x = 0.15;
-        alpha->Ball->verticies[2].x = 0.15;
-        alpha->Ball->verticies[3].x = -0.15;
-        alpha->Ball->verticies[0].y = -0.15;
-        alpha->Ball->verticies[1].y = -0.15;
-        alpha->Ball->verticies[2].y = 0.15;
-        alpha->Ball->verticies[3].y = 0.15;
-        alpha->Ball->box.x = alpha->Ball ->Xpos;
-        alpha->Ball->box.y = alpha->Ball ->Ypos;
-       //alpha->update();
-        alpha->Ball->drawModel(alpha->ballHBTex);
-    glPopMatrix();
-
-    //---------------------------Crosshair player 1 creation----------------------------------//
-    float tmp1 = alpha->ply->PXpos - alpha->ply->xdir;
-    float tmp2 = alpha->ply->PYpos + alpha->ply->ydir;
-    float tmp3 = alpha->ply->PXpos + alpha->ply->xdir;
-
-    if(alpha->ply->lastCase=='L')
-        makeModel(alpha->cross, alpha->crosshair, tmp1, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
-
-    if(alpha->ply->lastCase=='R')
-        makeModel(alpha->cross, alpha->crosshair, tmp3, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
-
-
-     if(pauseMenu)
+     if(!ply2->thrown)
     {
-        if(pauseChoice)
+        if(ply2->lastCase=='R')//lets player aim to his right
         {
-            if(menuPos==1)//reset the gameee
-            {
-                pauseMenu=false;
-//                reset();
-            }
-            if(menuPos==2)//resumed the game
-            {
-                pauseMenu=false;
-
-            }
-            menuPos=2;
-            pauseChoice=false;
+            ply2->projAXdir = ply2->xdir;
+            ply2->projAYdir = ply2->ydir;
         }
-        else
+        if(ply2->lastCase=='L')//lets player aim to his left
         {
-        glLoadIdentity();
-            if(menuPos==2)
-            {
-                glPushMatrix();
-                playMod->Xpos=0;
-                 playMod->Ypos=0;
-                 playMod->drawModel(playTex);
-                glPopMatrix();
-            }
-            if(menuPos==1)
-            {
-                glPushMatrix();
-                resetMod->Xpos=0;
-                  resetMod->Ypos=0;
-                 resetMod->drawModel(resetTex);
-                glPopMatrix();
-            }
-             if(menuPos==0)
-            {
-                glPushMatrix();
-                exitMod->Xpos=0;
-                exitMod->Ypos=0;
-                 exitMod->drawModel(exitTex);
-                glPopMatrix();
-            }
+            ply2->projAXdir = -ply2->xdir;
+            ply2->projAYdir = ply2->ydir;
         }
+        ply2->projA->health = 3;
     }
+     if(ply2->projA->health<=0)
+    {
+        ply2->thrown=false;
+        ply2->projA->box.width=0;
+        ply2->projA->box.height=0;
+        ply2->projA->box.x=999;
+        ply2->projA->box.y=999;
 
-    alpha->ply->delta=20;
-    alpha->ply2->delta=20;
-    alpha->scale=20;
-    //if(timeFromStart-startTime>=2&&!pauseMenu)//wait three seconds to start the game
-     //KbMs->idle(pressed,alpha->ply,alpha->ply2);
-     */
+    }
+    if(ply2->thrown==false&&ply2->lastCase=='R')
+        ply2->ProjACurY=ply2->PYpos, ply2->ProjACurX=ply2->PXpos+0.5;
+    if(ply2->thrown==false&&ply2->lastCase=='L')
+        ply2->ProjACurY=ply2->PYpos, ply2->ProjACurX=ply2->PXpos-0.5;
 }
 
 GLint GLScene::drawGLScene2(bool pressed[256])
 {
     double lolTime = glfwGetTime();
-    //cout<<lolTime<<endl;
 
       //-----------------------------------------------------------------------------------------------//
      //------------------------------------------ TIMERS ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
-        omega->ply->projA->myTime->start();
-        omega->ply2->projA->myTime->start();
-        omega->ply->myTime->start();
-        omega->Ball->myTime->start();
-        omega->ply->swingTimer->start();
-        omega->ply2->swingTimer->start();
-        omega->D->start();
-        omega->BPA->start();
-        omega->pCol->start();
+        ply->projA->myTime->start();
+        ply2->projA->myTime->start();
+        ply->myTime->start();
+        Ball->myTime->start();
+        ply->swingTimer->start();
+        ply2->swingTimer->start();
+        D->start();
+        BPA->start();
+        pCol->start();
        //-----------------------------------------------------------------------------------------------//
      //-------------------------------- SKYBOX CREATION ----------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -510,236 +757,233 @@ GLint GLScene::drawGLScene2(bool pressed[256])
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-   if(omega->ply->health>0)
+   if(ply->health>0)
    {
     glPushMatrix();
-        omega->ply->actions();
-        omega->ply->box.x=omega->ply->PXpos;
-        omega->ply->box.y = omega->ply->PYpos;
-        omega-> ply->pl_pltfrm_box.x = omega->ply ->PXpos;
-        omega->ply->pl_pltfrm_box.y = omega->ply -> PYpos;
-        omega->ply->pl_pltfrm_box.height = 0.6;
-        omega->ply->pl_pltfrm_box.width = 0.07;
-        omega->ply->box.height=0.1;
-        omega->ply->trueHeight=0.1;
-        omega->ply->box.width=0.3;
-        //omega->update(20);
-        omega->ply->drawplayer();
+        ply->actions();
+        ply->box.x=ply->PXpos;
+        ply->box.y = ply->PYpos;
+        ply->pl_pltfrm_box.x = ply ->PXpos;
+        ply->pl_pltfrm_box.y = ply -> PYpos;
+        ply->pl_pltfrm_box.height = 0.6;
+        ply->pl_pltfrm_box.width = 0.07;
+        ply->box.height=0.1;
+        ply->trueHeight=0.1;
+        ply->box.width=0.3;
+        //update(20);
+        ply->drawplayer();
     glPopMatrix();
    }
-    if(omega->ply->health<=0)
+    if(ply->health<=0)
     {
-            omega->ply->box.height=0;
-            omega->ply->box.width=0;
-            omega->ply->box.x=999;
-            omega->ply->box.y=999;
-            omega->ply->pl_pltfrm_box.x =999;
-            omega->ply->pl_pltfrm_box.y = 999;
-            omega->ply->pl_pltfrm_box.height = 0;
-            omega->ply->pl_pltfrm_box.width = 0;
-            omega->ply->PXpos=999;
-            omega->ply->PYpos=999;
-            omega->ply->box.x=999;
-            omega->ply->box.y=999;
+            ply->box.height=0;
+            ply->box.width=0;
+            ply->box.x=999;
+            ply->box.y=999;
+            ply->pl_pltfrm_box.x =999;
+            ply->pl_pltfrm_box.y = 999;
+            ply->pl_pltfrm_box.height = 0;
+            ply->pl_pltfrm_box.width = 0;
+            ply->PXpos=999;
+            ply->PYpos=999;
+            ply->box.x=999;
+            ply->box.y=999;
     }
-    if(omega->ply2->health>0)
+    if(ply2->health>0)
     {
         glPushMatrix();
-            omega->ply2->actions();
-            omega->ply2->box.x =  omega->ply2->PXpos;
-            omega->ply2->box.y =  omega->ply2->PYpos;
-            omega->ply2->pl_pltfrm_box.x =  omega->ply2 ->PXpos;
-            omega->ply2->pl_pltfrm_box.y =  omega->ply2 -> PYpos;
-            omega->ply2->pl_pltfrm_box.height = 0.6;
-            omega->ply2->pl_pltfrm_box.width = 0.07;
-            omega->ply2->trueHeight=0.1;
-            omega->ply2->box.height=0.1;
-            omega->ply2->box.width=0.3;
-            omega->ply2->drawplayer();
+            ply2->actions();
+            ply2->box.x =  ply2->PXpos;
+            ply2->box.y =  ply2->PYpos;
+            ply2->pl_pltfrm_box.x =  ply2 ->PXpos;
+            ply2->pl_pltfrm_box.y =  ply2 -> PYpos;
+            ply2->pl_pltfrm_box.height = 0.6;
+            ply2->pl_pltfrm_box.width = 0.07;
+            ply2->trueHeight=0.1;
+            ply2->box.height=0.1;
+            ply2->box.width=0.3;
+            ply2->drawplayer();
         glPopMatrix();
     }
-    if(omega->ply2->health<=0)
+    if(ply2->health<=0)
     {
-            omega->ply2->box.height=0;
-            omega->ply2->box.width=0;
-            omega->ply2->box.x=999;
-            omega->ply2->box.y=999;
-            omega->ply2->pl_pltfrm_box.x =999;
-            omega->ply2->pl_pltfrm_box.y = 999;
-            omega->ply2->pl_pltfrm_box.height = 0;
-            omega->ply2->pl_pltfrm_box.width = 0;
-            omega->ply2->PXpos=999;
-            omega->ply2->PYpos=999;
-            omega->ply2->box.x=999;
-            omega->ply2->box.y=999;
+            ply2->box.height=0;
+            ply2->box.width=0;
+            ply2->box.x=999;
+            ply2->box.y=999;
+            ply2->pl_pltfrm_box.x =999;
+            ply2->pl_pltfrm_box.y = 999;
+            ply2->pl_pltfrm_box.height = 0;
+            ply2->pl_pltfrm_box.width = 0;
+            ply2->PXpos=999;
+            ply2->PYpos=999;
+            ply2->box.x=999;
+            ply2->box.y=999;
     }
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- TILE CREATION ---------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
     // model , texture, xpos,ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
-    if(omega->tile1->isalive())
-    makeModel(omega->tile1,omega->tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile2->isalive())
-    makeModel(omega->tile2,omega->tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile3->isalive())
-    makeModel(omega->tile3,omega->tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile4->isalive())
-    makeModel(omega->tile4,omega->tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile5->isalive())
-    makeModel(omega->tile5,omega->tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile6->isalive())
-    makeModel(omega->tile6,omega->tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile7->isalive())
-    makeModel(omega->tile7,omega->tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile8->isalive())
-    makeModel(omega->tile8,omega->tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile9->isalive())
-    makeModel(omega->tile9,omega->tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile10->isalive())
-    makeModel(omega->tile10,omega->tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile22->isalive())
-    makeModel(omega->tile22,omega->tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile12->isalive())
-    makeModel(omega->tile12,omega->tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile13->isalive())
-    makeModel(omega->tile13,omega->tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile14->isalive())
-    makeModel(omega->tile14,omega->tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(omega->tile15->isalive())
-    makeModel(omega->tile15,omega->tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile1->isalive())
+    makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile2->isalive())
+    makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile3->isalive())
+    makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile4->isalive())
+    makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile5->isalive())
+    makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile6->isalive())
+    makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile7->isalive())
+    makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile8->isalive())
+    makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile9->isalive())
+    makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile10->isalive())
+    makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile22->isalive())
+    makeModel(tile22,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile12->isalive())
+    makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile13->isalive())
+    makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile14->isalive())
+    makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile15->isalive())
+    makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     //left wall
-    makeModel(omega->leftWall,omega->tex1,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
+    makeModel(leftWall,leftWallTex,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
     //right wall
-    makeModel(omega->rightWall,omega->tex2,3.37,0,-0.2,3.0,0.2,3.0,0.2,-3.0,-0.2,-3.0,0.3,88);
+    makeModel(rightWall,rightWallTex,3.37,0,-0.2,3.0,0.2,3.0,0.2,-3.0,-0.2,-3.0,0.3,88);
     //bottom wall
-    makeModel(omega->killBox,omega->texc,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,0.5);
+    makeModel(killBox,topWallTex,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,0.5);
     //dividing wall
-    makeModel(omega->divide,omega->divTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
+    makeModel(divide,divWallTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
 
 
     //top wall
-    makeModel(omega->topWall, omega->tex3,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
-    //ball creation
-    //makeModel(Ball,ballHBTex,-0.5,-0.5,-0.15,-0.15,0.15,-0.15,0.15,0.15,-0.15,0.15,0.3,0.3);
+    makeModel(topWall, topWallTex,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
+
     //----------------Projectile creation------------------------------------------------//
-        if(omega->ply->thrown)
+        if(ply->thrown)
         {
             glPushMatrix();
-                omega->ply->projA->box.height =  .2;
-                omega->ply->projA->box.width = .05;
-                omega->ply->projA->verticies[0].x = -0.15;
-                omega->ply->projA->verticies[1].x = 0.15;
-                omega->ply->projA->verticies[2].x = 0.15;
-                omega->ply->projA->verticies[3].x = -0.15;
-                omega->ply->projA->verticies[0].y = -0.15;
-                omega->ply->projA->verticies[1].y = -0.15;
-                omega->ply->projA->verticies[2].y = 0.15;
-                omega->ply->projA->verticies[3].y = 0.15;
-                omega->ply->projA->box.x = omega->ply->projA ->Xpos;
-                omega->ply->projA->box.y = omega->ply->projA ->Ypos;
-                omega->ply->projA->drawModel(omega->projTex);
+                ply->projA->box.height =  .2;
+                ply->projA->box.width = .05;
+                ply->projA->verticies[0].x = -0.15;
+                ply->projA->verticies[1].x = 0.15;
+                ply->projA->verticies[2].x = 0.15;
+                ply->projA->verticies[3].x = -0.15;
+                ply->projA->verticies[0].y = -0.15;
+                ply->projA->verticies[1].y = -0.15;
+                ply->projA->verticies[2].y = 0.15;
+                ply->projA->verticies[3].y = 0.15;
+                ply->projA->box.x = ply->projA ->Xpos;
+                ply->projA->box.y = ply->projA ->Ypos;
+                ply->projA->drawModel(projTex);
           glPopMatrix();
         }
 
     //-------------------------projectile b-----------------------------------------//
-    if(omega->ply2->thrown)
+    if(ply2->thrown)
         {
             glPushMatrix();
-                omega->ply2->projA->box.height =  .2;
-                omega->ply2->projA->box.width = .05;
-                omega->ply2->projA->verticies[0].x = -0.15;
-                omega->ply2->projA->verticies[1].x = 0.15;
-                omega->ply2->projA->verticies[2].x = 0.15;
-                omega->ply2->projA->verticies[3].x = -0.15;
-                omega->ply2->projA->verticies[0].y = -0.15;
-                omega->ply2->projA->verticies[1].y = -0.15;
-                omega->ply2->projA->verticies[2].y = 0.15;
-                omega->ply2->projA->verticies[3].y = 0.15;
-                omega->ply2->projA->box.x = omega->ply2->projA ->Xpos;
-                omega->ply2->projA->box.y = omega->ply2->projA ->Ypos;
-                omega->ply2->projA->drawModel(omega->projTex2);
+                ply2->projA->box.height =  .2;
+                ply2->projA->box.width = .05;
+                ply2->projA->verticies[0].x = -0.15;
+                ply2->projA->verticies[1].x = 0.15;
+                ply2->projA->verticies[2].x = 0.15;
+                ply2->projA->verticies[3].x = -0.15;
+                ply2->projA->verticies[0].y = -0.15;
+                ply2->projA->verticies[1].y = -0.15;
+                ply2->projA->verticies[2].y = 0.15;
+                ply2->projA->verticies[3].y = 0.15;
+                ply2->projA->box.x = ply2->projA ->Xpos;
+                ply2->projA->box.y = ply2->projA ->Ypos;
+                ply2->projA->drawModel(projTex2);
           glPopMatrix();
         }
-    if(omega->ply2->projA->health<=0)
+    if(ply2->projA->health<=0)
     {
-        omega->ply2->thrown=false;
-        omega->shot=false;
-        omega->ply2->projA->Xpos=999;
-        omega->ply2->projA->Ypos=999;
-        omega->ply2->projA->box.x=999;
-        omega->ply2->projA->box.y=999;
-        omega->ply2->projA->box.width=0;
-        omega->ply2->projA->box.height=0;
+        ply2->thrown=false;
+        shot=false;
+        ply2->projA->Xpos=999;
+        ply2->projA->Ypos=999;
+        ply2->projA->box.x=999;
+        ply2->projA->box.y=999;
+        ply2->projA->box.width=0;
+        ply2->projA->box.height=0;
     }
 
     //----------------------------BALL CREATION------------------------------------//
     glPushMatrix();
-        omega->Ball->box.height =  .2;
-        omega->Ball->box.width = .05;
-        omega->Ball->verticies[0].x = -0.15;
-        omega->Ball->verticies[1].x = 0.15;
-        omega->Ball->verticies[2].x = 0.15;
-        omega->Ball->verticies[3].x = -0.15;
-        omega->Ball->verticies[0].y = -0.15;
-        omega->Ball->verticies[1].y = -0.15;
-        omega->Ball->verticies[2].y = 0.15;
-        omega->Ball->verticies[3].y = 0.15;
-        omega->Ball->box.x = omega->Ball ->Xpos;
-        omega->Ball->box.y = omega->Ball ->Ypos;
-        omega->Ball->drawModel(omega->ballHBTex);
+        Ball->box.height = 0.2;
+        Ball->box.width = 0.05;
+        Ball->verticies[0].x = -0.15;
+        Ball->verticies[1].x = 0.15;
+        Ball->verticies[2].x = 0.15;
+        Ball->verticies[3].x = -0.15;
+        Ball->verticies[0].y = -0.15;
+        Ball->verticies[1].y = -0.15;
+        Ball->verticies[2].y = 0.15;
+        Ball->verticies[3].y = 0.15;
+        Ball->box.x = Ball->Xpos;
+        Ball->box.y = Ball->Ypos;
+        Ball->drawModel(ballTex);
     glPopMatrix();
 
     //---------------------------Crosshair player 1 creation----------------------------------//
-    float tmp1 = omega->ply->PXpos - omega->ply->xdir;
-    float tmp2 = omega->ply->PYpos + omega->ply->ydir;
-    float tmp3 = omega->ply->PXpos + omega->ply->xdir;
-    if(omega->ply->lastCase=='L')
-        makeModel(omega->cross, omega->crosshair, tmp1, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
-    if(omega->ply->lastCase=='R')
-        makeModel(omega->cross, omega->crosshair, tmp3, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
+    float tmp1 = ply->PXpos - ply->xdir;
+    float tmp2 = ply->PYpos + ply->ydir;
+    float tmp3 = ply->PXpos + ply->xdir;
+    if(ply->lastCase=='L')
+        makeModel(cross, crosshair, tmp1, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
+    if(ply->lastCase=='R')
+        makeModel(cross, crosshair, tmp3, tmp2, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
 
     //---------------------------Crosshair player 2 creation----------------------------------//
-    float tmp4 = omega->ply2->PXpos - omega->ply2->xdir;
-    float tmp5 = omega->ply2->PYpos + omega->ply2->ydir;
-    float tmp6 = omega->ply2->PXpos + omega->ply2->xdir;
-    if(omega->ply2->lastCase=='L')
-        makeModel(omega->cross, omega->crosshair, tmp4, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
-    if(omega->ply2->lastCase=='R')
-        makeModel(omega->cross, omega->crosshair, tmp6, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
-
-
+    float tmp4 = ply2->PXpos - ply2->xdir;
+    float tmp5 = ply2->PYpos + ply2->ydir;
+    float tmp6 = ply2->PXpos + ply2->xdir;
+    if(ply2->lastCase=='L')
+        makeModel(cross, crosshair, tmp4, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
+    if(ply2->lastCase=='R')
+        makeModel(cross, crosshair, tmp6, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
     if(pauseMenu)
     {
-        omega->ply->pause=true;
-        omega->ply2->pause=true;
+        ply->pause=true;
+        ply2->pause=true;
         if(firstpause)
         {
-          tDirx=omega->ballDirX;
-          tDiry=omega->ballDirY;
+          tDirx=ballDirX;
+          tDiry=ballDirY;
          firstpause=false;
         }
-        omega->ballDirX=0;
-        omega->ballDirY=0;
+        ballDirX=0;
+        ballDirY=0;
         if(pauseChoice)
         {
             if(menuPos==1)//reset the gameee
             {
                 pauseMenu=false;
-                omega->reset();
+                reset();
                 firstpause=true;
-                omega->ply->pause=false;
-                omega->ply2->pause=false;
+                ply->pause=false;
+                ply2->pause=false;
             }
             if(menuPos==2)//resumed the game
             {
-                omega->ballDirX=tDirx;
-                omega->ballDirY=tDiry;
+                ballDirX=tDirx;
+                ballDirY=tDiry;
                 pauseMenu=false;
                 firstpause=true;
-                omega->ply->pause=false;
-                omega->ply2->pause=false;
+                ply->pause=false;
+                ply2->pause=false;
             }
             menuPos=2;
             pauseChoice=false;
@@ -768,18 +1012,17 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 glPushMatrix();
                 exitMod->Xpos=0;
                 exitMod->Ypos=0;
-                 exitMod->drawModel(exitTex);
+                exitMod->drawModel(exitTex);
                 glPopMatrix();
             }
         }
     }
 
-    if(lolTime-startTime>=2&&!pauseMenu)//wait three seconds to start the
-    {
-        KbMs->idle(pressed,omega->ply,omega->ply2);
-    }
+    if(lolTime-startTime>=2&&!pauseMenu)//wait two seconds to start the
+        KbMs->idle(pressed,ply,ply2);
 
-    omega->update();
+        cout<<ply->xdir<<endl;
+    update();
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)

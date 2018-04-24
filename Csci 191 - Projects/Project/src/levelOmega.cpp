@@ -23,6 +23,7 @@ levelOmega::levelOmega()
     ply->playerInit();
     ply2->playerInit();
 
+
     ply->projA->modelInit("images/box/Fire.png", true, projTex);
     ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
 

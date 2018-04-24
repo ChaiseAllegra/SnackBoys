@@ -30,7 +30,77 @@ class GLScene
         void reset();
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
+        /*-----------------------------------------------------*/
+        //int ballDirY;
+        int hitCount;
+        bool topOfTile(player* ,Model* );
+         //left side tiles
+        Model* tile1;
+        Model* tile2 ;
+        Model* tile3 ;
+        Model* tile4 ;
+        Model* tile5 ;
+        Model* tile6 ;
+        Model* tile7 ;
+        //middle tile
+        Model* tile8 ;
+        //right side tiles
+        Model* tile9 ;
+        Model* tile10;
+        Model* tile22 ;
+        Model* tile12 ;
+        Model* tile13 ;
+        Model* tile14 ;
+        Model* tile15 ;
 
+        player* ply ;
+        player* ply2 ;
+           float ballDirX;
+            float ballDirY;
+                   void ballColl();
+         timer* hitTimer;
+        timer* hitTimer2;
+        float speedInc;
+        float speedDecr;
+        textureLoader* ballTex;
+        void wallColl();
+        int ply2Score;
+        Model* killBox;
+        int plyScore;
+        Model* leftWall; // left wall
+        Model* rightWall; // right wall
+        Model* topWall ; // top wall
+        Model* divide;  //middle wall
+        void projectileCol(player*,player*);
+         float ballSpdBfrAcc;//ball speed before acceleration
+       textureLoader* tileTex;
+        textureLoader* tileTex2;
+        textureLoader* tileTex3;
+        textureLoader* tileTex4;
+        textureLoader* tileTex5;
+        textureLoader* tileTex6;
+        textureLoader* tileTex7;
+        textureLoader* tileTex8;
+        textureLoader* tileTex9;
+        textureLoader* tileTex10;
+        textureLoader* tileTex11;
+        textureLoader* tileTex12;
+        textureLoader* tileTex13;
+        textureLoader* tileTex14;
+        textureLoader* tileTex15;
+          Model * playerModel;
+            textureLoader* plyTex;
+            Model * playerModel2;
+              textureLoader* leftWallTex;
+               textureLoader* rightWallTex;
+                textureLoader* topWallTex;
+                textureLoader* divWallTex;
+                textureLoader* projTex;
+                textureLoader* projTex2;
+        Model* cross;
+        textureLoader* crosshair;
+
+        /*------------------------------------------------------*/
         WPARAM wParam;
         bool pauseMenu;
         int menuPos=2;
@@ -96,7 +166,6 @@ class GLScene
         Model* playMod;
         Model* resetMod;
         Model* exitMod;
-        Model* cross;
 
         Model* wallAHbawks; // left wall
         Model* wallBHbawks; // right wall

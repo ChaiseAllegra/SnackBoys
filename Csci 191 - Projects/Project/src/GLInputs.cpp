@@ -50,6 +50,7 @@ void Inputs::keyUP()
 }
 void Inputs::idle(bool pressed[256],player* ply, player * ply2)
 {
+    //cout << "Inputs!!" << endl;
     ply->jumpTimer->start();
     ply2->jumpTimer->start();
     dashTimer->start();
