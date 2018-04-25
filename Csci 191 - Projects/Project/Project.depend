@@ -1411,7 +1411,7 @@
 	<iostream>
 	<windows.h>
 
-1524601977 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1524696645 c:\users\chaise\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1554,7 +1554,7 @@
 1523077152 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1524605431 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524695052 source:c:\users\chaise\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>

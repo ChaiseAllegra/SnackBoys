@@ -137,6 +137,14 @@ GLScene::GLScene()
      tile13->tag="right";
      tile14->tag="right";
      tile15->tag="right";
+     threeMod= new Model();
+     twoMod= new Model();
+     oneMod= new Model();
+     zeroMod= new Model();
+     threeTex= new textureLoader();
+     twoTex= new textureLoader();
+     oneTex= new textureLoader();
+     zeroTex= new textureLoader();
 
 
      /*------------------------------------------*/
@@ -203,6 +211,10 @@ GLint GLScene::initGL()
     ply->T2->start();
     ply2->T->start();
     ply2->T2->start();
+    threeMod->modelInit("images/box/three.png", true, threeTex);
+    twoMod->modelInit("images/box/two.png", true, twoTex);
+    oneMod->modelInit("images/box/one.png", true, oneTex);
+    zeroMod->modelInit("images/box/zero.png", true, zeroTex);
 
     /*------------------------*/
 
@@ -271,6 +283,8 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
                 t->isalive();
 
 
+                if(t->health>2)
+                    t->modelInit("images/box/block.png", true, TX);
                 if (t->health == 2)
                     t->modelInit("images/box/block2.png", true, TX);
                 if (t->health == 1)
@@ -360,6 +374,7 @@ void GLScene::reset()
     CurXpos=0;
     CurYpos=0;
     //reset the accel
+    initGL();
 }
 void GLScene::ballColl()
 {
@@ -685,6 +700,8 @@ void GLScene:: update()
 
 
     //MOVING THE BALL
+    if(currentTime-startTime>4)
+    {
      if(ballSpeed>ballSpdBfrAcc)
         ballSpeed-=speedDecr*(10/scale);
      CurYpos = CurYpos + ballDirY * ballSpeed;
@@ -696,6 +713,7 @@ void GLScene:: update()
      //cout<<CurXpos<<endl;
     // cout<<ballSpeed<<endl;
     // cout<<ballDirX<<endl;
+    }
 
 
      projectileCol(ply, ply2);
@@ -1079,9 +1097,37 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         }
     }
 
-    if(lolTime-startTime>=2&&!pauseMenu)//wait two seconds to start the
-        KbMs->idle(pressed,ply,ply2);
 
+    if(lolTime-startTime>0.5&&lolTime-startTime<=1)
+    {
+         //draw the number 3
+        glPushMatrix();
+            threeMod->drawModel(threeTex);
+        glPopMatrix();
+    }
+    if(lolTime-startTime>1&&lolTime-startTime<=2)
+     {
+          //draw the number 2
+        glPushMatrix();
+            twoMod->drawModel(twoTex);
+        glPopMatrix();
+    }
+    if(lolTime-startTime>2&&lolTime-startTime<=3)
+     {
+         //draw the number 1
+        glPushMatrix();
+            oneMod->drawModel(oneTex);
+        glPopMatrix();
+    }
+    if(lolTime-startTime>3&&lolTime-startTime<=4)
+     {
+        //draw the number 0
+        glPushMatrix();
+            zeroMod->drawModel(zeroTex);
+        glPopMatrix();
+     }
+    if(lolTime-startTime>=4&&!pauseMenu)//wait two seconds to start the
+        KbMs->idle(pressed,ply,ply2);
         //cout<<ply->xdir<<endl;
     update();
 
