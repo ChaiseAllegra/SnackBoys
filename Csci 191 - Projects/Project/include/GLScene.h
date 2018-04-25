@@ -189,6 +189,16 @@ class GLScene
         textureLoader* resetTex;
         textureLoader* exitTex;
 
+        Model* threeMod;
+        Model* twoMod;
+        Model* oneMod;
+        Model* zeroMod;
+
+         textureLoader* threeTex;
+          textureLoader* twoTex;
+           textureLoader* oneTex;
+            textureLoader* zeroTex;
+
     protected:
 
     private:
