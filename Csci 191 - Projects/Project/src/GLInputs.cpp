@@ -108,24 +108,24 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     {
 
       if(ply->ydir<1)
-        ply->ydir+=(0.0050*600)/ply->delta;
+        ply->ydir+=(0.0050*700)/ply->delta;
 
        if(ply->ydir>0&&ply->xdir>0)
-         ply->xdir-=(0.0050*600)/ply->delta;
+         ply->xdir-=(0.0050*700)/ply->delta;
 
         if(ply->ydir<=0&&ply->xdir<1)
-         ply->xdir+=(0.0050*600)/ply->delta;
+         ply->xdir+=(0.0050*700)/ply->delta;
     }
      if(pressed['G'])
     {
         if(ply->ydir>-1)
-        ply->ydir-=(0.0050*600)/ply->delta;
+        ply->ydir-=(0.0050*700)/ply->delta;
 
        if(ply->ydir<=0&&ply->xdir>0)
-         ply->xdir-=(0.005*600)/ply->delta;
+         ply->xdir-=(0.005*700)/ply->delta;
 
          if(ply->ydir>0&&ply->xdir<1)
-         ply->xdir+=(0.005*600)/ply->delta;
+         ply->xdir+=(0.005*700)/ply->delta;
 
     }
     if(pressed['R']&&dashTimer->getTicks()>1200)
@@ -196,24 +196,24 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     {
 
       if(ply2->ydir<1)
-        ply2->ydir+=(0.0025*600)/ply2->delta;
+        ply2->ydir+=(0.0025*700)/ply2->delta;
 
        if(ply2->ydir>0&&ply2->xdir>0)
-         ply2->xdir-=(0.0025*600)/ply2->delta;
+         ply2->xdir-=(0.0025*700)/ply2->delta;
 
         if(ply2->ydir<=0&&ply2->xdir<1)
-         ply2->xdir+=(0.0025*600)/ply2->delta;
+         ply2->xdir+=(0.0025*700)/ply2->delta;
     }
      if(pressed['H'])
     {
         if(ply2->ydir>-1)
-        ply2->ydir-=(0.0025*600)/ply2->delta;
+        ply2->ydir-=(0.0025*700)/ply2->delta;
 
        if(ply2->ydir<=0&&ply2->xdir>0)
-         ply2->xdir-=(0.0025*600)/ply2->delta;
+         ply2->xdir-=(0.0025*700)/ply2->delta;
 
          if(ply2->ydir>0&&ply2->xdir<1)
-         ply2->xdir+=(0.0025*600)/ply2->delta;
+         ply2->xdir+=(0.0025*700)/ply2->delta;
 
     }
     if(pressed['U']&&dashTimer2->getTicks()>1200)

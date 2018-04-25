@@ -78,7 +78,7 @@ GLScene::GLScene()
         ply2 = new player();
          hitTimer=new timer();
       hitTimer2=new timer();
-       speedInc=0.15;
+       speedInc=0.07;
         speedDecr=0.0045;
      ballTex = new textureLoader();
      killBox= new Model();
@@ -381,7 +381,8 @@ void GLScene::ballColl()
             ballDirX = -ply->xdir;
             ballDirY = ply->ydir;
         }
-        ballSpeed+=speedInc*(80/scale);
+        if(ballSpeed<0.17)
+            ballSpeed+=speedInc*(60/scale);
 
         Ball->modelInit("images/box/ball.png", true, ballTex);
         ply->swinging = false;
@@ -412,7 +413,8 @@ void GLScene::ballColl()
             ballDirX = -ply2->xdir;
             ballDirY = ply2->ydir;
         }
-        ballSpeed+=speedInc*(40/scale);
+        if(ballSpeed<0.17)
+            ballSpeed+=speedInc*(60/scale);
 
         Ball->modelInit("images/box/ball2.png", true, ballTex);
         ply2->swinging = false;
@@ -589,7 +591,7 @@ void GLScene::projectileCol(player* ply, player* ply2)
     if(box_collision(Ball->box, ply->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply,Ball)>1)
     {
         BPA->reset();
-        cout<<ballPosHit(ply->projA,Ball)<<endl;
+        //cout<<ballPosHit(ply->projA,Ball)<<endl;
 
         if(ballPosHit(ply->projA,Ball)==1)//hit the top half of the ball
             ballDirY=-1;
@@ -687,6 +689,7 @@ void GLScene:: update()
     //MOVING THE BALL
      if(ballSpeed>ballSpdBfrAcc)
         ballSpeed-=speedDecr*(10/scale);
+     //cout<<ballSpeed<<endl;
      CurYpos = CurYpos + ballDirY * ballSpeed;
      CurXpos = CurXpos + ballDirX * ballSpeed;
      //cout<<scale<<endl;
@@ -913,9 +916,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //dividing wall
     makeModel(divide,divWallTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
 
-
     //top wall
-    makeModel(topWall, topWallTex,0,2.1,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
+    makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
     //----------------Projectile creation------------------------------------------------//
         if(ply->thrown)

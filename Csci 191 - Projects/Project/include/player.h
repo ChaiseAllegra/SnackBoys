@@ -56,7 +56,7 @@ class player: public Model
 
         char lastCase = 'R';
 
-        float plyAccel = 1.004;
+        float plyAccel;
 
         textureLoader runText[40];
         textureLoader runText_left[40];
@@ -73,6 +73,7 @@ class player: public Model
         float ydir;
         float xdir;
         float x_direction;
+        float startSpeed;
 
         double PZoom;
         double PXpos;

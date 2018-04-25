@@ -3,8 +3,7 @@
 #include <GLTexture.h>
 #include <windows.h>
 #include <iostream>
-
-player::player()
+  player::player()
 {
     verticalVelocity=0;
     playerGrav=-20;
@@ -18,6 +17,7 @@ player::player()
     PYpos = -1.1;
     aimX = 0;
     aimY = -1;
+    plyAccel = 0.000005;
 
         verticies[0].x=-0.3;verticies[0].y=-0.3;verticies[0].z=-1.0;
         verticies[1].x=0.3;verticies[1].y=-0.3;verticies[1].z=-1.0;
@@ -41,7 +41,9 @@ player::player()
 
     swinging = false;
 
-    plyVel = 2;
+    startSpeed=0.0009;
+    //plyVel = startSpeed;//2;
+    plyVel = 0.002;
     !ballCollided;
     !midCollision;
 
@@ -135,6 +137,7 @@ void player::actions()
 {
    switch(actionTrigger){
        case 0:
+           //plyVel = startSpeed;
            plyVel = 0.002;
            glPushMatrix();
                 glTranslated(PXpos, PYpos, PZoom);
@@ -161,11 +164,21 @@ void player::actions()
                 {
                     if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated)&&!pause)
                     {
-                       // plyVel *= plyAccel;
 
-                        //if (plyVel  > 0.004)
-                        //    plyVel = 0.004;
-                        //cout<<"plyvel/delta "<<plyVel/delta<<endl;
+                        /*if (plyVel  >  0.002)
+                        {
+                            plyVel = 0.002;
+                            //cout << "IN te if " << endl;
+                            plyAccel = 0.000005;
+                        }
+                        else
+                        {
+                            //cout<<"else"<<endl;
+                            plyVel += plyAccel;
+                            plyAccel += 0.0000015;
+                        }*/
+
+
                         if(lastCase == 'R'&& !rightWC)//running on the ground and not colliding with the wall
                             PXpos += (plyVel*1200.5)/delta;//10;//(plyVel*1800.5)/delta;//10;
                         if(lastCase == 'L'&& !leftWC)
@@ -226,7 +239,7 @@ void player::actions()
         if(lastCase=='R'&&rightWC)
         {
                     isDash=false;
-                    dashVel=4;
+                    dashVel=5;
         }
         if(lastCase=='R'&&!rightWC)
         {
@@ -234,15 +247,15 @@ void player::actions()
             if(dashVel<=0||rightWC)
             {
                 isDash=false;
-                dashVel=4;
+                dashVel=5;
             }
-            dashVel-=(8.5)/delta;//dashDec;//5.5
+            dashVel-=(6.5)/delta;//dashDec;//5.5
         }
 
         if(lastCase=='L'&&leftWC)
         {
                     isDash=false;
-                    dashVel=4;
+                    dashVel=5;
         }
          if(lastCase=='L'&&!leftWC)
         {
@@ -250,9 +263,9 @@ void player::actions()
             if(dashVel<=0||leftWC)
             {
                 isDash=false;
-                dashVel=4;
+                dashVel=5;
             }
-            dashVel-=(8.5)/delta;//5.5
+            dashVel-=(6.5)/delta;//5.5
         }
 
     }
