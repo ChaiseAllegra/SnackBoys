@@ -122,7 +122,7 @@ GLScene::GLScene()
         scale=1;
         ballDirX=-1;
         ballDirY=1;
-         tile1->tag="left";
+     tile1->tag="left";
      tile2->tag="left";
      tile3->tag="left";
      tile4->tag="left";
@@ -130,7 +130,7 @@ GLScene::GLScene()
      tile6->tag="left";
      tile7->tag="left";
 
-     tile8->tag="right";
+     tile8->tag="middle";
      tile9->tag="right";
      tile10->tag="right";
      tile12->tag="right";
@@ -276,6 +276,7 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
                 ballDirY =  1;
                 if((b->tag=="one"&&t->tag=="right")||(b->tag=="two"&&t->tag=="left"))
                 {
+                    cout<<t->health<<endl;
                     t->health-=1;
                     ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
                     hitCount=0;
@@ -445,7 +446,7 @@ void GLScene::ballColl()
     if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)
     {
            Ball->myTime->reset();
-           ply2->health--;
+           //ply2->health--;
     }
 }
 void GLScene::wallColl()

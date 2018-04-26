@@ -84,7 +84,7 @@ void Model::UpdateHbox(float CurXpos, float CurYpos)//updates the hitbox locatio
 }
 bool Model::isalive()
 {
-    if(health>1)
+    if(health>0)
       return true;
     else{
         box.x=999;
