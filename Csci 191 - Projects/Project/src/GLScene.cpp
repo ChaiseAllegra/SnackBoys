@@ -55,7 +55,7 @@ GLScene::GLScene()
      texSky1 = new textureLoader();
      texSky2 = new textureLoader();
      /*------------------------------------------*/
-      //left side tiles
+         //--left side tiles
          tile1 = new Model();
          tile2 = new Model();
          tile3 = new Model();
@@ -63,12 +63,12 @@ GLScene::GLScene()
          tile5 = new Model();
          tile6 = new Model();
          tile7 = new Model();
-        //middle tile
+         //--middle tile
          tile8 = new Model();
-        //right side tiles
+         //--right side tiles
          tile9 = new Model();
-        tile10 = new Model();
-         tile22 = new Model();
+         tile10 = new Model();
+         tile11 = new Model();
          tile12 = new Model();
          tile13 = new Model();
          tile14 = new Model();
@@ -76,43 +76,43 @@ GLScene::GLScene()
 
         ply = new player();
         ply2 = new player();
-         hitTimer=new timer();
-      hitTimer2=new timer();
-       speedInc=0.07;
+        hitTimer=new timer();
+        hitTimer2=new timer();
+        speedInc=0.07;
         speedDecr=0.0045;
-     ballTex = new textureLoader();
-     killBox= new Model();
-     ply2Score=0;
-        leftWall = new Model(); // left wall
-        rightWall = new Model(); // right wall
-      topWall = new Model(); // top wall
-     divide = new Model();
-    ballSpdBfrAcc=0.5;
-      tileTex=new textureLoader();
-         tileTex2=new textureLoader();
-         tileTex3=new textureLoader();
-         tileTex4=new textureLoader();
-         tileTex5=new textureLoader();
-         tileTex6=new textureLoader();
-         tileTex7=new textureLoader();
-         tileTex8=new textureLoader();
-         tileTex9=new textureLoader();
-         tileTex10=new textureLoader();
-         tileTex11=new textureLoader();
-         tileTex12=new textureLoader();
-         tileTex13=new textureLoader();
-         tileTex14=new textureLoader();
-         tileTex15=new textureLoader();
-         leftWallTex= new textureLoader();
-         rightWallTex= new textureLoader();
-         topWallTex= new textureLoader();
-         divWallTex= new textureLoader();
-         D= new timer();
-         BPA = new timer();
-         pCol= new timer();
-          playerModel = new Model();
-          playerModel2 = new Model();
-         plyTex = new textureLoader();
+        ballTex = new textureLoader();
+        killBox= new Model();
+        ply2Score=0;
+        leftWall = new Model(); //---Left wall
+        rightWall = new Model(); //--Right wall
+        topWall = new Model(); //----Top wall
+        divide = new Model();
+        ballSpdBfrAcc=0.5;
+        tileTex=new textureLoader();
+        tileTex2=new textureLoader();
+        tileTex3=new textureLoader();
+        tileTex4=new textureLoader();
+        tileTex5=new textureLoader();
+        tileTex6=new textureLoader();
+        tileTex7=new textureLoader();
+        tileTex8=new textureLoader();
+        tileTex9=new textureLoader();
+        tileTex10=new textureLoader();
+        tileTex11=new textureLoader();
+        tileTex12=new textureLoader();
+        tileTex13=new textureLoader();
+        tileTex14=new textureLoader();
+        tileTex15=new textureLoader();
+        leftWallTex= new textureLoader();
+        rightWallTex= new textureLoader();
+        topWallTex= new textureLoader();
+        divWallTex= new textureLoader();
+        D= new timer();
+        BPA = new timer();
+        pCol= new timer();
+        playerModel = new Model();
+        playerModel2 = new Model();
+        plyTex = new textureLoader();
         projTex = new textureLoader();
         projTex2 = new textureLoader();
         cross = new Model();
@@ -129,10 +129,10 @@ GLScene::GLScene()
      tile5->tag="left";
      tile6->tag="left";
      tile7->tag="left";
-
      tile8->tag="middle";
      tile9->tag="right";
      tile10->tag="right";
+     tile11->tag="right";
      tile12->tag="right";
      tile13->tag="right";
      tile14->tag="right";
@@ -145,8 +145,6 @@ GLScene::GLScene()
      twoTex= new textureLoader();
      oneTex= new textureLoader();
      zeroTex= new textureLoader();
-
-
      /*------------------------------------------*/
 }
 
@@ -180,10 +178,14 @@ GLint GLScene::initGL()
     playerModel2->modelInit("images/player/player0.png", true, plyTex);
     ply2->playerInit();
 
+    //----------------player position variables---------------//
     ply->PXpos=-2;
     ply->PYpos=-1;
     ply2->PXpos=2;
     ply2->PYpos=-1;
+    //--------------------------------------------------------//
+
+    //-----------------------tile models--------------------------//
     tile1->modelInit("images/box/nothing2.png", true, tileTex);
     tile2->modelInit("images/box/block.png", true, tileTex2);
     tile3->modelInit("images/box/block.png", true, tileTex3);
@@ -194,29 +196,40 @@ GLint GLScene::initGL()
     tile8->modelInit("images/box/block.png", true, tileTex8);
     tile9->modelInit("images/box/block.png", true, tileTex9);
     tile10->modelInit("images/box/block.png", true, tileTex10);
-    tile22->modelInit("images/box/block.png", true, tileTex11);
+    tile11->modelInit("images/box/block.png", true, tileTex11);
     tile12->modelInit("images/box/block.png", true, tileTex12);
     tile13->modelInit("images/box/block.png", true, tileTex13);
     tile14->modelInit("images/box/block.png", true, tileTex14);
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
+    //-------------------------------------------------------------//
+
+    //------------------------wall models--------------------------//
     leftWall->modelInit("images/box/girder.png", true, leftWallTex);
     rightWall->modelInit("images/box/girder.png", true, rightWallTex);
     topWall->modelInit("images/box/girder2.png", true, topWallTex);
     divide->modelInit("images/box/block.png", true, divWallTex);
+    //-------------------------------------------------------------//
+
+    //----------------------projectile/ball--------------------------//
     cross->modelInit("images/box/crosshair.png", true, crosshair);
     ply->projA->modelInit("images/box/Fire.png", true, projTex);
     ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
     Ball->modelInit("images/box/ball.png", true, ballTex);
+    //---------------------------------------------------------------//
+
+    //-------------------player timers------------------------//
     ply->T->start();
     ply->T2->start();
     ply2->T->start();
     ply2->T2->start();
+    //--------------------------------------------------------//
+
+    //-------------------countdown models---------------------//
     threeMod->modelInit("images/box/three.png", true, threeTex);
     twoMod->modelInit("images/box/two.png", true, twoTex);
     oneMod->modelInit("images/box/one.png", true, oneTex);
     zeroMod->modelInit("images/box/zero.png", true, zeroTex);
-
-    /*------------------------*/
+    //--------------------------------------------------------//
 
     startTime = glfwGetTime();
 
@@ -290,6 +303,8 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
                     t->modelInit("images/box/block2.png", true, TX);
                 if (t->health == 1)
                     t->modelInit("images/box/block3.png", true, TX);
+                if (t->health == 0)
+                    t->modelInit("images/box/nothing2.png", true, TX);
                     return;
     }
 
@@ -298,7 +313,7 @@ bool GLScene::playerOnTile(player* ply)
 {
              if((topOfTile(ply,tile1)||topOfTile(ply,tile2)||topOfTile(ply,tile3)||topOfTile(ply,tile4)||
                     topOfTile(ply,tile5)||topOfTile(ply,tile6)||topOfTile(ply,tile7)||topOfTile(ply,tile8)||
-                    topOfTile(ply,tile9)||topOfTile(ply,tile10)||topOfTile(ply,tile22)||topOfTile(ply,tile12)||
+                    topOfTile(ply,tile9)||topOfTile(ply,tile10)||topOfTile(ply,tile11)||topOfTile(ply,tile12)||
                     topOfTile(ply,tile13)||topOfTile(ply,tile14)||topOfTile(ply,tile15)))
                return true;
     else
@@ -322,22 +337,23 @@ bool GLScene::topOfTile(player* ply,Model* tileT){
 void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspot,float ZeroX,float ZeroY,float OneX, float OneY, float TwoX, float TwoY, float ThreX, float ThreY, float w, float h)
 {
        glPushMatrix();
-
-        mod->Xpos=xspot;
-        mod->Ypos=yspot;
-        mod->box.x = mod->Xpos; // wallA->Xpos;
-        mod->box.y = mod->Ypos;
-        mod->verticies[0].x = ZeroX; // -0.15;
-        mod->verticies[1].x = OneX; // 0.15;
-        mod->verticies[2].x = TwoX; // 0.15;
-        mod->verticies[3].x = ThreX; // -0.15;
-        mod->verticies[0].y = ZeroY; // -0.15;
-        mod->verticies[1].y = OneY; // -0.15;
-        mod->verticies[2].y = TwoY; // 0.15;
-        mod->verticies[3].y = ThreY; // 0.15;
-
-        mod->box.height = h;
-        mod->box.width = w;
+        if(mod->isalive())
+        {
+            mod->Xpos=xspot;
+            mod->Ypos=yspot;
+            mod->box.x = mod->Xpos; // wallA->Xpos;
+            mod->box.y = mod->Ypos;
+            mod->verticies[0].x = ZeroX; // -0.15;
+            mod->verticies[1].x = OneX; // 0.15;
+            mod->verticies[2].x = TwoX; // 0.15;
+            mod->verticies[3].x = ThreX; // -0.15;
+            mod->verticies[0].y = ZeroY; // -0.15;
+            mod->verticies[1].y = OneY; // -0.15;
+            mod->verticies[2].y = TwoY; // 0.15;
+            mod->verticies[3].y = ThreY; // 0.15;
+            mod->box.height = h;
+            mod->box.width = w;
+        }
         mod->drawModel(texture);
     glPopMatrix();
     return;
@@ -354,7 +370,7 @@ void GLScene::reset()
     tile8->health=3;
     tile9->health=3;
     tile10->health=3;
-    tile22->health=3;
+    tile11->health=3;
     tile12->health=3;
     tile13->health=3;
     tile14->health=3;
@@ -400,7 +416,7 @@ void GLScene::ballColl()
         if(ballSpeed<0.17)
             ballSpeed+=speedInc*(60/scale);
 
-        Ball->modelInit("images/box/ball.png", true, ballTex);
+        Ball->modelInit("images/box/ball3.png", true, ballTex);
         ply->swinging = false;
          hitCount++;
     }
@@ -693,7 +709,7 @@ void GLScene:: update()
     tileChange(Ball, tile8,tileTex8);
     tileChange(Ball, tile9,tileTex9);
     tileChange(Ball, tile10,tileTex10);
-    tileChange(Ball, tile22,tileTex11);
+    tileChange(Ball, tile11,tileTex11);
     tileChange(Ball, tile12,tileTex12);
     tileChange(Ball, tile13,tileTex13);
     tileChange(Ball, tile14,tileTex14);
@@ -705,23 +721,22 @@ void GLScene:: update()
     //MOVING THE BALL
     if(currentTime-startTime>4)
     {
-     if(ballSpeed>ballSpdBfrAcc)
-        ballSpeed-=speedDecr*(10/scale);
-     //cout<<ballSpeed<<endl;
-     CurYpos = CurYpos + ballDirY * ballSpeed;
-     CurXpos = CurXpos + ballDirX * ballSpeed;
-     //cout<<scale<<endl;
-     Ball->Xpos =CurXpos;
-     Ball->Ypos =CurYpos;
-    // cout<<""<<endl;
-     //cout<<CurXpos<<endl;
-    // cout<<ballSpeed<<endl;
-    // cout<<ballDirX<<endl;
+        if(ballSpeed>ballSpdBfrAcc)
+            ballSpeed-=speedDecr*(10/scale);
+        //cout<<ballSpeed<<endl;
+        CurYpos = CurYpos + ballDirY * ballSpeed;
+        CurXpos = CurXpos + ballDirX * ballSpeed;
+        //cout<<scale<<endl;
+        Ball->Xpos =CurXpos;
+        Ball->Ypos =CurYpos;
+        // cout<<""<<endl;
+        //cout<<CurXpos<<endl;
+        // cout<<ballSpeed<<endl;
+        // cout<<ballDirX<<endl;
     }
 
-
-     projectileCol(ply, ply2);
-     projectileCol(ply2, ply);
+    projectileCol(ply, ply2);
+    projectileCol(ply2, ply);
     if(!ply->thrown)
     {
         if(ply->lastCase=='R')//lets player aim to his right
@@ -750,7 +765,7 @@ void GLScene:: update()
     if(ply->thrown==false&&ply->lastCase=='L')
         ply->ProjACurY=ply->PYpos, ply->ProjACurX=ply->PXpos-0.5;
 
-     if(!ply2->thrown)
+    if(!ply2->thrown)
     {
         if(ply2->lastCase=='R')//lets player aim to his right
         {
@@ -764,7 +779,7 @@ void GLScene:: update()
         }
         ply2->projA->health = 3;
     }
-     if(ply2->projA->health<=0)
+    if(ply2->projA->health<=0)
     {
         ply2->thrown=false;
         ply2->projA->box.width=0;
@@ -808,6 +823,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         sky->drawBox();
         glEnable(GL_LIGHTING);
     glPopMatrix();
+
       //-----------------------------------------------------------------------------------------------//
      //------------------------------- PARALLAX CREATION ---------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -817,6 +833,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     glPopMatrix();
      if(timeFromStart-startTime>=2)//wait three seconds to start the game
         plx->scroll(true,"left",1,scale);
+
       //-----------------------------------------------------------------------------------------------//
      //------------------------------- PARALLAX2 CREATION --------------------------------------------//
     //-----------------------------------------------------------------------------------------------//
@@ -826,40 +843,41 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     glPopMatrix();
     if(timeFromStart-startTime>=2)//wait three seconds to start the game
         plx2->scroll(false,"left",0.0002,scale);
+
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-   if(ply->health>0)
-   {
-    glPushMatrix();
-        ply->actions();
-        ply->box.x=ply->PXpos;
-        ply->box.y = ply->PYpos;
-        ply->pl_pltfrm_box.x = ply ->PXpos;
-        ply->pl_pltfrm_box.y = ply -> PYpos;
-        ply->pl_pltfrm_box.height = 0.6;
-        ply->pl_pltfrm_box.width = 0.07;
-        ply->box.height=0.1;
-        ply->trueHeight=0.1;
-        ply->box.width=0.3;
-        //update(20);
-        ply->drawplayer();
-    glPopMatrix();
-   }
+    if(ply->health>0)
+    {
+        glPushMatrix();
+            ply->actions();
+            ply->box.x=ply->PXpos;
+            ply->box.y = ply->PYpos;
+            ply->pl_pltfrm_box.x = ply ->PXpos;
+            ply->pl_pltfrm_box.y = ply -> PYpos;
+            ply->pl_pltfrm_box.height = 0.6;
+            ply->pl_pltfrm_box.width = 0.07;
+            ply->box.height=0.1;
+            ply->trueHeight=0.1;
+            ply->box.width=0.3;
+            //update(20);
+            ply->drawplayer();
+        glPopMatrix();
+    }
     if(ply->health<=0)
     {
-            ply->box.height=0;
-            ply->box.width=0;
-            ply->box.x=999;
-            ply->box.y=999;
-            ply->pl_pltfrm_box.x =999;
-            ply->pl_pltfrm_box.y = 999;
-            ply->pl_pltfrm_box.height = 0;
-            ply->pl_pltfrm_box.width = 0;
-            ply->PXpos=999;
-            ply->PYpos=999;
-            ply->box.x=999;
-            ply->box.y=999;
+        ply->box.height=0;
+        ply->box.width=0;
+        ply->box.x=999;
+        ply->box.y=999;
+        ply->pl_pltfrm_box.x =999;
+        ply->pl_pltfrm_box.y = 999;
+        ply->pl_pltfrm_box.height = 0;
+        ply->pl_pltfrm_box.width = 0;
+        ply->PXpos=999;
+        ply->PYpos=999;
+        ply->box.x=999;
+        ply->box.y=999;
     }
     if(ply2->health>0)
     {
@@ -879,52 +897,38 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     }
     if(ply2->health<=0)
     {
-            ply2->box.height=0;
-            ply2->box.width=0;
-            ply2->box.x=999;
-            ply2->box.y=999;
-            ply2->pl_pltfrm_box.x =999;
-            ply2->pl_pltfrm_box.y = 999;
-            ply2->pl_pltfrm_box.height = 0;
-            ply2->pl_pltfrm_box.width = 0;
-            ply2->PXpos=999;
-            ply2->PYpos=999;
-            ply2->box.x=999;
-            ply2->box.y=999;
+        ply2->box.height=0;
+        ply2->box.width=0;
+        ply2->box.x=999;
+        ply2->box.y=999;
+        ply2->pl_pltfrm_box.x =999;
+        ply2->pl_pltfrm_box.y = 999;
+        ply2->pl_pltfrm_box.height = 0;
+        ply2->pl_pltfrm_box.width = 0;
+        ply2->PXpos=999;
+        ply2->PYpos=999;
+        ply2->box.x=999;
+        ply2->box.y=999;
     }
+
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- TILE CREATION ---------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-    // model , texture, xpos,ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
-    if(tile1->isalive())
+    //        model,texture, xpos, ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
     makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile2->isalive())
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile3->isalive())
     makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile4->isalive())
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile5->isalive())
     makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile6->isalive())
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile7->isalive())
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile8->isalive())
     makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile9->isalive())
     makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile10->isalive())
     makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile22->isalive())
-    makeModel(tile22,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile12->isalive())
+    makeModel(tile11,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile13->isalive())
     makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile14->isalive())
     makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    if(tile15->isalive())
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     //left wall
     makeModel(leftWall,leftWallTex,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
@@ -934,7 +938,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(killBox,topWallTex,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,0.5);
     //dividing wall
     makeModel(divide,divWallTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
-
     //top wall
     makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 

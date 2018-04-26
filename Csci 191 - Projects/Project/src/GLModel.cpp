@@ -88,12 +88,11 @@ bool Model::isalive()
       return true;
     else{
         box.x=999;
-        box.x=999;
+        box.y=999;
         box.width=0;
         box.height=0;
         return false;
     }
-
 }
 
  bool Model::bcollision(Hbox rect1, Hbox rect2)
