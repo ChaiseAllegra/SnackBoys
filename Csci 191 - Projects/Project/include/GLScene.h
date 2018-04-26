@@ -49,7 +49,7 @@ class GLScene
         //right side tiles
         Model* tile9 ;
         Model* tile10;
-        Model* tile22 ;
+        Model* tile11 ;
         Model* tile12 ;
         Model* tile13 ;
         Model* tile14 ;

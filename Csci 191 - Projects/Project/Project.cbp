@@ -52,8 +52,6 @@
 		<Unit filename="include/GLTexture.h" />
 		<Unit filename="include/SOIL.h" />
 		<Unit filename="include/level1.h" />
-		<Unit filename="include/levelAlpha.h" />
-		<Unit filename="include/levelOmega.h" />
 		<Unit filename="include/parallax.h" />
 		<Unit filename="include/player.h" />
 		<Unit filename="include/skyBox.h" />
