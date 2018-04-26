@@ -101,7 +101,18 @@ class GLScene
                 textureLoader* projTex2;
         Model* cross;
         textureLoader* crosshair;
-
+         bool menu[5];
+         Model *playButton;
+        Model *infoButton;
+        Model *exitButton ;
+        Model *infoPage;
+        textureLoader *tex3 ;
+        textureLoader *tex4;
+        textureLoader *tex5;
+        textureLoader *tex6;
+        int plyScoreLast;
+        int score;
+        void setBallDir();
         /*------------------------------------------------------*/
         WPARAM wParam;
         bool pauseMenu;

@@ -357,31 +357,46 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 		}
 		else										// If There Are No Messages
 		{
-			// Draw The Scene.  Watch For ESC Key And Quit Messages From DrawGLScene()
-			if ( keys[VK_ESCAPE])	// Active?  Was There A Quit Received?
-			{
-				done=TRUE;							// ESC or DrawGLScene Signalled A Quit
-			}
-            else
-            {
+			//menu[0]: landing page
+			//menu[1]: main menu
+			//menu[2]: info page
+			//menu[3]: play Game
+			//menu[4]: in game menu
+			Scene->drawGLScene2(keys);
+            SwapBuffers(hDC);
 
-				if(Scene->level==1)
-                {
-			    Scene->drawGLScene2(keys);
-				SwapBuffers(hDC);				// Swap Buffers (Double Buffering)
-				}
+            if(keys[VK_RETURN]&&Scene->menu[0]==true)
+                Scene->menu[1]=true;
+
+            if(keys['H']&&Scene->menu[1]==true)//info page
+            {
+                			    //cout<<"in here3"<<endl;
+            	Scene->menu[1]=false;
+                Scene->menu[2]=true;
 
             }
+            if ( keys[VK_ESCAPE]&&Scene->menu[2]==true)	//takes you from info page to main menu
+			{
+				Scene->menu[2]=false;
+                Scene->menu[1]=true;
 
-			/*if(keys['Z'])
-               Scene->level=1;
-            if(keys['V'])
-                Scene->level=2;*/
+			}
+            if(keys['N']&&Scene->menu[1]==true)
+            {
+            	Scene->menu[1]=false;
+            	Scene->menu[3]=true;
 
-            if(keys['B'])
-               Scene->pauseMenu=true;
+            }
+            if(keys['E']&&Scene->menu[1]==true)//quit from the main menu
+                done=TRUE;
 
-            if(Scene->pauseMenu)
+
+            if(keys[VK_ESCAPE]&&Scene->menu[3]==true)//brings up in game menu
+            	Scene->menu[4]=true;
+
+            else if(keys[VK_ESCAPE]&&Scene->menu[4]==true)// switches from in game menu to the game
+            		Scene->menu[4]=false;
+            if(Scene->menu[4]==true)//Scene->pauseMenu)
             {
                if(keys['S']&&menu->getTicks()>150)
                {
@@ -399,8 +414,16 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     Scene->pauseChoice=true;
                if(Scene->pauseChoice&&Scene->menuPos==0)
                     done=true;
-                    //cout<<Scene->menuPos<<endl;
             }
+
+            if(keys[VK_RETURN]&&Scene->menu[4]==true)//quit the game from in game menu
+                done=TRUE;
+
+            if(Scene->menu[0]==true&&keys['Q']==true)									// Not Time To Quit, Update Screen
+			    Scene->menu[3]=true;
+			 					// Swap Buffers (Double Buffering)
+			if(keys[VK_END])
+                done=TRUE;
 
 			if (keys[VK_F1])						// Is F1 Being Pressed?
 			{
@@ -414,7 +437,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 				}
 			}
 		}
-	}
+      }
+
 
 	// Shutdown
 	KillGLWindow();									// Kill The Window
