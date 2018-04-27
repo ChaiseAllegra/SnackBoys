@@ -1575,7 +1575,7 @@
 	<iostream>
 	<windows.h>
 
-1524789406 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
+1524790385 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1689,12 +1689,12 @@
 1522122624 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1524783514 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1524790385 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
 
-1524787824 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+1524791114 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>

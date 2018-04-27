@@ -145,7 +145,6 @@ GLScene::GLScene()
      twoTex= new textureLoader();
      oneTex= new textureLoader();
      zeroTex= new textureLoader();
-<<<<<<< HEAD
      playButton= new Model();
      infoButton = new Model();
      exitButton = new Model();
@@ -161,10 +160,6 @@ GLScene::GLScene()
     //menu[4]=false;
     plyScoreLast=0;
     score=0;
-
-
-=======
->>>>>>> f2a8d9836e9a0397befdfbecab97179c0fe7f2a4
      /*------------------------------------------*/
 }
 
@@ -249,7 +244,7 @@ GLint GLScene::initGL()
     twoMod->modelInit("images/box/two.png", true, twoTex);
     oneMod->modelInit("images/box/one.png", true, oneTex);
     zeroMod->modelInit("images/box/zero.png", true, zeroTex);
-<<<<<<< HEAD
+
     playButton->modelInit("images/box/playbutton.png",true,tex3);
     infoButton->modelInit("images/box/info.png",true,tex4);
     exitButton->modelInit("images/box/exit.png",true,tex5);
@@ -257,9 +252,8 @@ GLint GLScene::initGL()
     setBallDir();
 
     /*------------------------*/
-=======
+
     //--------------------------------------------------------//
->>>>>>> f2a8d9836e9a0397befdfbecab97179c0fe7f2a4
 
     startTime = glfwGetTime();
 
@@ -319,7 +313,6 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
                 ballDirY =  1;
                 if((b->tag=="one"&&t->tag=="right")||(b->tag=="two"&&t->tag=="left"))
                 {
-                    cout<<t->health<<endl;
                     t->health-=1;
                     ballSpeed=(0.3*8)/scale;//(0.125*8)/scale;
                     hitCount=0;
@@ -864,7 +857,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         glScaled(10,10,10);
         sky->drawBox();
         glEnable(GL_LIGHTING);
-<<<<<<< HEAD
+
      glPopMatrix();
 
     //-----------------------------------------------------------------------------------------------//
@@ -888,8 +881,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
     if(menu[0])									// Not Time To Quit, Update Screen
     {
-			    					// Swap Buffers (Double Buffering)
-=======
+		}	    					// Swap Buffers (Double Buffering)
+
     glPopMatrix();
 
       //-----------------------------------------------------------------------------------------------//
@@ -915,39 +908,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- PLAYER CREATION -------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
-    if(ply->health>0)
-    {
-        glPushMatrix();
-            ply->actions();
-            ply->box.x=ply->PXpos;
-            ply->box.y = ply->PYpos;
-            ply->pl_pltfrm_box.x = ply ->PXpos;
-            ply->pl_pltfrm_box.y = ply -> PYpos;
-            ply->pl_pltfrm_box.height = 0.6;
-            ply->pl_pltfrm_box.width = 0.07;
-            ply->box.height=0.1;
-            ply->trueHeight=0.1;
-            ply->box.width=0.3;
-            //update(20);
-            ply->drawplayer();
-        glPopMatrix();
-    }
-    if(ply->health<=0)
-    {
-        ply->box.height=0;
-        ply->box.width=0;
-        ply->box.x=999;
-        ply->box.y=999;
-        ply->pl_pltfrm_box.x =999;
-        ply->pl_pltfrm_box.y = 999;
-        ply->pl_pltfrm_box.height = 0;
-        ply->pl_pltfrm_box.width = 0;
-        ply->PXpos=999;
-        ply->PYpos=999;
-        ply->box.x=999;
-        ply->box.y=999;
->>>>>>> f2a8d9836e9a0397befdfbecab97179c0fe7f2a4
-    }
+
      if(menu[1]==true)
     {
         glPushMatrix();
@@ -973,7 +934,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     }
     if(this->menu[2]==true)
     {
-<<<<<<< HEAD
           glPushMatrix();
          glScalef(2.00,1.00,1);
          infoPage->Xpos=-0.0;
@@ -1049,21 +1009,24 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->drawplayer();
         glPopMatrix();
        }
-        if(ply->health<=0)
-=======
-        ply2->box.height=0;
-        ply2->box.width=0;
-        ply2->box.x=999;
-        ply2->box.y=999;
-        ply2->pl_pltfrm_box.x =999;
-        ply2->pl_pltfrm_box.y = 999;
-        ply2->pl_pltfrm_box.height = 0;
-        ply2->pl_pltfrm_box.width = 0;
-        ply2->PXpos=999;
-        ply2->PYpos=999;
-        ply2->box.x=999;
-        ply2->box.y=999;
-    }
+
+       if(ply2->health>0)
+        {
+            glPushMatrix();
+                ply2->actions();
+                ply2->box.x =  ply2->PXpos;
+                ply2->box.y =  ply2->PYpos;
+                ply2->pl_pltfrm_box.x =  ply2 ->PXpos;
+                ply2->pl_pltfrm_box.y =  ply2 -> PYpos;
+                ply2->pl_pltfrm_box.height = 0.6;
+                ply2->pl_pltfrm_box.width = 0.07;
+                ply2->trueHeight=0.1;
+                ply2->box.height=0.1;
+                ply2->box.width=0.3;
+                ply2->drawplayer();
+            glPopMatrix();
+        }
+
 
       //-------------------------------------------------------------------------------------------------//
      //------------------------------- TILE CREATION ---------------------------------------------------//
@@ -1095,9 +1058,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //top wall
     makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
-    //----------------Projectile creation------------------------------------------------//
-        if(ply->thrown)
->>>>>>> f2a8d9836e9a0397befdfbecab97179c0fe7f2a4
+        //----------------Projectile creation------------------------------------------------//
+          if(ply->thrown)
         {
                 ply->box.height=0;
                 ply->box.width=0;
@@ -1112,102 +1074,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply->box.x=999;
                 ply->box.y=999;
         }
-        if(ply2->health>0)
-        {
-            glPushMatrix();
-                ply2->actions();
-                ply2->box.x =  ply2->PXpos;
-                ply2->box.y =  ply2->PYpos;
-                ply2->pl_pltfrm_box.x =  ply2 ->PXpos;
-                ply2->pl_pltfrm_box.y =  ply2 -> PYpos;
-                ply2->pl_pltfrm_box.height = 0.6;
-                ply2->pl_pltfrm_box.width = 0.07;
-                ply2->trueHeight=0.1;
-                ply2->box.height=0.1;
-                ply2->box.width=0.3;
-                ply2->drawplayer();
-            glPopMatrix();
-        }
-        if(ply2->health<=0)
-        {
-                ply2->box.height=0;
-                ply2->box.width=0;
-                ply2->box.x=999;
-                ply2->box.y=999;
-                ply2->pl_pltfrm_box.x =999;
-                ply2->pl_pltfrm_box.y = 999;
-                ply2->pl_pltfrm_box.height = 0;
-                ply2->pl_pltfrm_box.width = 0;
-                ply2->PXpos=999;
-                ply2->PYpos=999;
-                ply2->box.x=999;
-                ply2->box.y=999;
-        }
-          //-------------------------------------------------------------------------------------------------//
-         //------------------------------- TILE CREATION ---------------------------------------------------//
-        //-------------------------------------------------------------------------------------------------//
-        // model , texture, xpos,ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
-        if(tile1->isalive())
-        makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile2->isalive())
-        makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile3->isalive())
-        makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile4->isalive())
-        makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile5->isalive())
-        makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile6->isalive())
-        makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile7->isalive())
-        makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile8->isalive())
-        makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile9->isalive())
-        makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile10->isalive())
-        makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile22->isalive())
-        makeModel(tile22,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile12->isalive())
-        makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile13->isalive())
-        makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile14->isalive())
-        makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        if(tile15->isalive())
-        makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-        //left wall
-        makeModel(leftWall,leftWallTex,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
-        //right wall
-        makeModel(rightWall,rightWallTex,3.37,0,-0.2,3.0,0.2,3.0,0.2,-3.0,-0.2,-3.0,0.3,88);
-        //bottom wall
-        makeModel(killBox,topWallTex,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,0.5);
-        //dividing wall
-        makeModel(divide,divWallTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
-
-        //top wall
-        makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
-
-        //----------------Projectile creation------------------------------------------------//
-            if(ply->thrown)
-            {
-                glPushMatrix();
-                    ply->projA->box.height =  .2;
-                    ply->projA->box.width = .05;
-                    ply->projA->verticies[0].x = -0.15;
-                    ply->projA->verticies[1].x = 0.15;
-                    ply->projA->verticies[2].x = 0.15;
-                    ply->projA->verticies[3].x = -0.15;
-                    ply->projA->verticies[0].y = -0.15;
-                    ply->projA->verticies[1].y = -0.15;
-                    ply->projA->verticies[2].y = 0.15;
-                    ply->projA->verticies[3].y = 0.15;
-                    ply->projA->box.x = ply->projA ->Xpos;
-                    ply->projA->box.y = ply->projA ->Ypos;
-                    ply->projA->drawModel(projTex);
-              glPopMatrix();
-            }
             if(ply->projA->health<=0)
         {
             ply->thrown=false;
