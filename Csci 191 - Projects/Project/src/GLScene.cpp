@@ -1061,18 +1061,21 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         //----------------Projectile creation------------------------------------------------//
           if(ply->thrown)
         {
-                ply->box.height=0;
-                ply->box.width=0;
-                ply->box.x=999;
-                ply->box.y=999;
-                ply->pl_pltfrm_box.x =999;
-                ply->pl_pltfrm_box.y = 999;
-                ply->pl_pltfrm_box.height = 0;
-                ply->pl_pltfrm_box.width = 0;
-                ply->PXpos=999;
-                ply->PYpos=999;
-                ply->box.x=999;
-                ply->box.y=999;
+              glPushMatrix();
+                    ply->projA->box.height =  .2;
+                    ply->projA->box.width = .05;
+                    ply->projA->verticies[0].x = -0.15;
+                    ply->projA->verticies[1].x = 0.15;
+                    ply->projA->verticies[2].x = 0.15;
+                    ply->projA->verticies[3].x = -0.15;
+                    ply->projA->verticies[0].y = -0.15;
+                    ply->projA->verticies[1].y = -0.15;
+                    ply->projA->verticies[2].y = 0.15;
+                    ply->projA->verticies[3].y = 0.15;
+                    ply->projA->box.x = ply->projA ->Xpos;
+                    ply->projA->box.y = ply->projA ->Ypos;
+                    ply->projA->drawModel(projTex);
+              glPopMatrix();
         }
             if(ply->projA->health<=0)
         {
