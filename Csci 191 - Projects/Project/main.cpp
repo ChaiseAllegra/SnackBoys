@@ -446,9 +446,6 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     mainMenChoice=false;
                     Scene->mainMenPos=0;
                 }
-                //cout<<Scene->mainMenPos<<endl;
-<<<<<<< HEAD
-=======
             }
             if(Scene->menu[6])
             {
@@ -460,7 +457,6 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     Scene->plyScore=0;
                     Scene->ply2Score=0;
                 }
->>>>>>> 8c479ba7c1100afb4c51651aee8402394d638c23
             }
             if(Scene->menu[4]==true)//Scene->pauseMenu)
             {

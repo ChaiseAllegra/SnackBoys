@@ -157,7 +157,6 @@ GLScene::GLScene()
     controlButton= new Model();
     controlTex= new textureLoader();
     controlButtonA= new Model();
-<<<<<<< HEAD
     controlTexA= new textureLoader();
     infoButtonA= new Model();
     exitButtonA= new Model();
@@ -169,7 +168,6 @@ GLScene::GLScene()
     menuTex = new textureLoader();
     landingTex = new textureLoader();
     /*------------------------------------------*/
-=======
       controlTexA= new textureLoader();
    infoButtonA= new Model();
      exitButtonA= new Model();
@@ -177,14 +175,13 @@ GLScene::GLScene()
         infoTexA= new textureLoader();
       exitTexA= new textureLoader();
       playButtonTexA= new textureLoader();
-//      mainMenuModel= new Model();
- //     mainMenuTex= new textureLoader();
+//     mainMenuModel= new Model();
+//     mainMenuTex= new textureLoader();
     winPlyModel= new Model();
     winPly2Model= new Model();
     winPlyTex= new textureLoader();
     winPly2Tex= new textureLoader();
      /*------------------------------------------*/
->>>>>>> 8c479ba7c1100afb4c51651aee8402394d638c23
 }
 
 GLScene::~GLScene()
@@ -280,20 +277,17 @@ GLint GLScene::initGL()
     landing->modelInit("images/box/landing.png",true,landingTex);
 
     /*------------------------*/
-<<<<<<< HEAD
 //    playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
 //    infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
 //    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
 //    exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
-=======
 //     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
  //     infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
    //    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
      //   exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
-     winPlyModel->modelInit("images/box/exitMenuPic.png",true,winPlyTex);
-     winPly2Model->modelInit("images/box/exitMenuPic.png",true,winPly2Tex);
+     winPlyModel->modelInit("images/box/ply_wins.png",true,winPlyTex);
+     winPly2Model->modelInit("images/box/ply2_wins.png",true,winPly2Tex);
 
->>>>>>> 8c479ba7c1100afb4c51651aee8402394d638c23
     //--------------------------------------------------------//
 
     startTime = glfwGetTime();
@@ -1041,7 +1035,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    //makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
@@ -1192,15 +1186,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
          }
         if(lolTime-startTime>=4&&!menu[4]&&!menu[6])//wait two seconds to start the
             KbMs->idle(pressed,ply,ply2);
-        if(menu[6])//game is won
-        {
-            glPushMatrix();
-             glScalef(1.00,1.00,1);
-             playButton->Xpos=-2.0;
-             playButton->Ypos=-0.0;
-            playButton->drawModel(tex3);
-            glPopMatrix();
-        }
+
         update();
         if(plyScore>=3||ply2Score>=3)
             menu[6]=true;
@@ -1277,27 +1263,21 @@ GLint GLScene::drawGLScene2(bool pressed[256])
          glScalef(1.00,1.00,1);
          playButton->Xpos=0.0;
          playButton->Ypos=0.0;
-        playButton->drawModel(tex3);
+         playButton->drawModel(tex3);
         glPopMatrix();
     }
     if(menu[6])
     {
         if(plyScore>=3)
         {
-             glPushMatrix();
-             glScalef(1.00,1.00,1);
-             winPlyModel->Xpos=0.0;
-             winPlyModel->Ypos=0.0;
-            winPlyModel->drawModel(winPlyTex);
+            glPushMatrix();
+             makeModel(winPlyModel, winPlyTex, 0.0, 0.0, -3.5, -0.5, 3.5, -0.5, 3.5, 0.5, -3.5, 0.5, 0.0, 0.0);
             glPopMatrix();
         }
         else if(ply2Score>=3)
         {
-             glPushMatrix();
-             glScalef(1.00,1.00,1);
-             winPly2Model->Xpos=0.0;
-             winPly2Model->Ypos=0.0;
-            winPly2Model->drawModel(winPly2Tex);
+            glPushMatrix();
+             makeModel(winPly2Model, winPly2Tex, 0.0, 0.0, -3.5, -0.5, 3.5, -0.5, 3.5, 0.5, -3.5, 0.5, 0.0, 0.0);
             glPopMatrix();
         }
 
