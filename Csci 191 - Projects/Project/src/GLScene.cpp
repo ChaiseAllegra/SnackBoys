@@ -160,6 +160,19 @@ GLScene::GLScene()
     //menu[4]=false;
     plyScoreLast=0;
     score=0;
+    mainMenPos=0;
+    controlButton= new Model();
+    controlTex= new textureLoader();
+    controlButtonA= new Model();
+      controlTexA= new textureLoader();
+   infoButtonA= new Model();
+     exitButtonA= new Model();
+      playButtonA= new Model();
+        infoTexA= new textureLoader();
+      exitTexA= new textureLoader();
+      playButtonTexA= new textureLoader();
+      mainMenuModel= new Model();
+      mainMenuTex= new textureLoader();
      /*------------------------------------------*/
 }
 
@@ -252,7 +265,10 @@ GLint GLScene::initGL()
     setBallDir();
 
     /*------------------------*/
-
+     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
+      infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
+       controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
+        exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
     //--------------------------------------------------------//
 
     startTime = glfwGetTime();
@@ -883,54 +899,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     {
 		}	    					// Swap Buffers (Double Buffering)
 
-    glPopMatrix();
-
-      //-----------------------------------------------------------------------------------------------//
-     //------------------------------- PARALLAX CREATION ---------------------------------------------//
-    //-----------------------------------------------------------------------------------------------//
-    glPushMatrix();
-        glScaled(3.33, 3.33, 1.0);
-        plx->drawSquare(screenWidth, screenHeight, texSky1);
-    glPopMatrix();
-     if(timeFromStart-startTime>=2)//wait three seconds to start the game
-        plx->scroll(true,"left",1,scale);
-
-      //-----------------------------------------------------------------------------------------------//
-     //------------------------------- PARALLAX2 CREATION --------------------------------------------//
-    //-----------------------------------------------------------------------------------------------//
-    glPushMatrix();
-        glScaled(3.33, 3.33, 1.0);
-        plx2->drawSquare(screenWidth, screenHeight, texSky2);
-    glPopMatrix();
-    if(timeFromStart-startTime>=2)//wait three seconds to start the game
-        plx2->scroll(false,"left",0.0002,scale);
-
-      //-------------------------------------------------------------------------------------------------//
-     //------------------------------- PLAYER CREATION -------------------------------------------------//
-    //-------------------------------------------------------------------------------------------------//
-
      if(menu[1]==true)
     {
-        glPushMatrix();
-         glScalef(2.00,1.00,1);
-         playButton->Xpos=-1;
-         playButton->Ypos=-0.0;
-        playButton->drawModel(tex3);
-        glPopMatrix();
 
-        glPushMatrix();
-         glScalef(2.00,1.00,1);
-         infoButton->Xpos=0.0;
-         infoButton->Ypos=0.0;
-        infoButton->drawModel(tex4);
-        glPopMatrix();
-
-        glPushMatrix();
-         glScalef(2.00,1.00,1);
-         exitButton->Xpos=1;
-         exitButton->Ypos=0.0;
-        exitButton->drawModel(tex5);
-        glPopMatrix();
     }
     if(this->menu[2]==true)
     {
@@ -1187,7 +1158,15 @@ GLint GLScene::drawGLScene2(bool pressed[256])
          }
         if(lolTime-startTime>=4&&!menu[4])//wait two seconds to start the
             KbMs->idle(pressed,ply,ply2);
-
+        if(menu[6])//game is won
+        {
+            glPushMatrix();
+             glScalef(1.00,1.00,1);
+             playButton->Xpos=-2.0;
+             playButton->Ypos=-0.0;
+            playButton->drawModel(tex3);
+            glPopMatrix();
+        }
         update();
     }
      if(this->menu[4]==true)
@@ -1255,6 +1234,16 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 }
             }
     }
+    if(menu[5])//controls page
+    {
+        glPushMatrix();
+         glScalef(1.00,1.00,1);
+         playButton->Xpos=0.0;
+         playButton->Ypos=0.0;
+        playButton->drawModel(tex3);
+        glPopMatrix();
+    }
+
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)

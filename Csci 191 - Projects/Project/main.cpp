@@ -18,6 +18,7 @@
 
 using namespace std;
 timer* menu= new timer();
+bool mainMenChoice=false;
 
 
 HDC			hDC=NULL;		// Private GDI Device Context
@@ -359,9 +360,11 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 		{
 			//menu[0]: landing page
 			//menu[1]: main menu
-			//menu[2]: info page
+			//menu[2]: game rules
 			//menu[3]: play Game
 			//menu[4]: in game menu
+			//menu[5]: controls
+			//menu[6]: game is won
 			Scene->drawGLScene2(keys);
             SwapBuffers(hDC);
 
@@ -387,7 +390,19 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
             	Scene->menu[3]=true;
 
             }
-            if(keys['E']&&Scene->menu[1]==true)//quit from the main menu
+             if(keys['I']&&Scene->menu[1]==true)
+            {
+            	Scene->menu[1]=false;
+            	Scene->menu[5]=true;
+
+            }
+            if ( keys[VK_ESCAPE]&&Scene->menu[5]==true)	//takes you from info page to main menu
+			{
+				Scene->menu[5]=false;
+                Scene->menu[1]=true;
+
+			}
+            if(keys['P']&&Scene->menu[1]==true)//quit from the main menu
                 done=TRUE;
 
 
@@ -396,6 +411,40 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 
             else if(keys[VK_ESCAPE]&&Scene->menu[4]==true)// switches from in game menu to the game
             		Scene->menu[4]=false;
+            //Main menu Navigation
+            if(Scene->menu[1])
+            {
+                if((keys['A']||keys['J'])&&Scene->mainMenPos>0&&menu->getTicks()>150)
+                {
+                    Scene->mainMenPos--;
+                    menu->reset();
+                }
+                if((keys['D']||keys['L'])&&Scene->mainMenPos<3&&menu->getTicks()>150)
+                {
+                    Scene->mainMenPos++;
+                    menu->reset();
+                }
+                if(keys['E']||keys['O']&&menu->getTicks()>150)
+                {
+                    mainMenChoice=true;
+                    Scene->menu[1]=false;
+                    menu->reset();
+                }
+                if(mainMenChoice)
+                {
+                    if(Scene->mainMenPos==0)
+                        Scene->menu[3]=true;
+                    if(Scene->mainMenPos==1)
+                        Scene->menu[2]=true;
+                    if(Scene->mainMenPos==2)
+                        Scene->menu[5]=true;
+                    if(Scene->mainMenPos==3)
+                        done=true;
+                    mainMenChoice=false;
+                    Scene->mainMenPos=0;
+                }
+                cout<<Scene->mainMenPos<<endl;
+            }
             if(Scene->menu[4]==true)//Scene->pauseMenu)
             {
                if(keys['S']&&menu->getTicks()>150)

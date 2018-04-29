@@ -101,8 +101,8 @@ class GLScene
                 textureLoader* projTex2;
         Model* cross;
         textureLoader* crosshair;
-         bool menu[5];
-         Model *playButton;
+         bool menu[6];
+        Model* playButton;
         Model *infoButton;
         Model *exitButton ;
         Model *infoPage;
@@ -113,6 +113,19 @@ class GLScene
         int plyScoreLast;
         int score;
         void setBallDir();
+        int mainMenPos;
+        Model* controlButton;
+        textureLoader* controlTex;
+        Model* controlButtonA;
+        textureLoader* controlTexA;
+         Model *infoButtonA;
+         Model *exitButtonA;
+        Model* playButtonA;
+        textureLoader* infoTexA;
+        textureLoader* exitTexA;
+        textureLoader* playButtonTexA;
+        Model playMenuModel;
+        //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
         WPARAM wParam;
         bool pauseMenu;
