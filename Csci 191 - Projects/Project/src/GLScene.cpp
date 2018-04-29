@@ -978,12 +978,11 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->box.y = ply->PYpos;
             ply->pl_pltfrm_box.x = ply ->PXpos;
             ply->pl_pltfrm_box.y = ply -> PYpos;
-            ply->pl_pltfrm_box.height = 0.6;
+            ply->pl_pltfrm_box.height = 0.55;
             ply->pl_pltfrm_box.width = 0.07;
             ply->box.height=0.1;
             ply->trueHeight=0.1;
             ply->box.width=0.3;
-            //update(20);
             ply->drawplayer();
         glPopMatrix();
        }

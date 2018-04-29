@@ -443,7 +443,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     mainMenChoice=false;
                     Scene->mainMenPos=0;
                 }
-                cout<<Scene->mainMenPos<<endl;
+                //cout<<Scene->mainMenPos<<endl;
             }
             if(Scene->menu[6])
             {
