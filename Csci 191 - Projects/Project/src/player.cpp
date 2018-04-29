@@ -3,7 +3,8 @@
 #include <GLTexture.h>
 #include <windows.h>
 #include <iostream>
-  player::player()
+
+player::player()
 {
     verticalVelocity=0;
     playerGrav=-20;

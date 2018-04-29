@@ -102,6 +102,7 @@ class GLScene
         Model* cross;
         textureLoader* crosshair;
          bool menu[6];
+         Model* menuModel;
         Model* playButton;
         Model *infoButton;
         Model *exitButton ;
@@ -121,6 +122,9 @@ class GLScene
          Model *infoButtonA;
          Model *exitButtonA;
         Model* playButtonA;
+        Model* landing;
+        textureLoader* landingTex;
+        textureLoader* menuTex;
         textureLoader* infoTexA;
         textureLoader* exitTexA;
         textureLoader* playButtonTexA;
@@ -188,6 +192,7 @@ class GLScene
 
         parallax* plx;
         parallax* plx2;
+        parallax* plx3;
 
         Model* playMod;
         Model* resetMod;
