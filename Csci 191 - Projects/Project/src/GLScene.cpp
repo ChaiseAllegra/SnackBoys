@@ -171,8 +171,12 @@ GLScene::GLScene()
         infoTexA= new textureLoader();
       exitTexA= new textureLoader();
       playButtonTexA= new textureLoader();
-      mainMenuModel= new Model();
-      mainMenuTex= new textureLoader();
+//      mainMenuModel= new Model();
+ //     mainMenuTex= new textureLoader();
+    winPlyModel= new Model();
+    winPly2Model= new Model();
+    winPlyTex= new textureLoader();
+    winPly2Tex= new textureLoader();
      /*------------------------------------------*/
 }
 
@@ -265,10 +269,13 @@ GLint GLScene::initGL()
     setBallDir();
 
     /*------------------------*/
-     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
-      infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
-       controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
-        exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
+//     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
+ //     infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
+   //    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
+     //   exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
+     winPlyModel->modelInit("images/box/exitMenuPic.png",true,winPlyTex);
+     winPly2Model->modelInit("images/box/exitMenuPic.png",true,winPly2Tex);
+
     //--------------------------------------------------------//
 
     startTime = glfwGetTime();
@@ -1156,7 +1163,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 zeroMod->drawModel(zeroTex);
             glPopMatrix();
          }
-        if(lolTime-startTime>=4&&!menu[4])//wait two seconds to start the
+        if(lolTime-startTime>=4&&!menu[4]&&!menu[6])//wait two seconds to start the
             KbMs->idle(pressed,ply,ply2);
         if(menu[6])//game is won
         {
@@ -1168,6 +1175,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             glPopMatrix();
         }
         update();
+        if(plyScore>=3||ply2Score>=3)
+            menu[6]=true;
+
     }
      if(this->menu[4]==true)
     {
@@ -1243,7 +1253,28 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         playButton->drawModel(tex3);
         glPopMatrix();
     }
+    if(menu[6])
+    {
+        if(plyScore>=3)
+        {
+             glPushMatrix();
+             glScalef(1.00,1.00,1);
+             winPlyModel->Xpos=0.0;
+             winPlyModel->Ypos=0.0;
+            winPlyModel->drawModel(winPlyTex);
+            glPopMatrix();
+        }
+        else if(ply2Score>=3)
+        {
+             glPushMatrix();
+             glScalef(1.00,1.00,1);
+             winPly2Model->Xpos=0.0;
+             winPly2Model->Ypos=0.0;
+            winPly2Model->drawModel(winPly2Tex);
+            glPopMatrix();
+        }
 
+    }
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)

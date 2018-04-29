@@ -445,6 +445,17 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                 }
                 cout<<Scene->mainMenPos<<endl;
             }
+            if(Scene->menu[6])
+            {
+                if(keys['E']||keys['O'])
+                {
+                    Scene->menu[6]=false;
+                    Scene->menu[3]=false;
+                    Scene->menu[1]=true;
+                    Scene->plyScore=0;
+                    Scene->ply2Score=0;
+                }
+            }
             if(Scene->menu[4]==true)//Scene->pauseMenu)
             {
                if(keys['S']&&menu->getTicks()>150)
