@@ -278,6 +278,7 @@ void player::actions()
         {
             jump=0;
             verticalVelocity=0;
+            PYpos=-1.38;
         }
 
         if(topWC)

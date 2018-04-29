@@ -129,6 +129,10 @@ class GLScene
         textureLoader* exitTexA;
         textureLoader* playButtonTexA;
         Model playMenuModel;
+        Model *winPlyModel;
+        Model *winPly2Model;
+        textureLoader* winPlyTex;
+        textureLoader* winPly2Tex;
         //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
         WPARAM wParam;

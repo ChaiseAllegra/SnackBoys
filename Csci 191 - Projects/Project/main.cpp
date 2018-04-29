@@ -447,6 +447,20 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     Scene->mainMenPos=0;
                 }
                 //cout<<Scene->mainMenPos<<endl;
+<<<<<<< HEAD
+=======
+            }
+            if(Scene->menu[6])
+            {
+                if(keys['E']||keys['O'])
+                {
+                    Scene->menu[6]=false;
+                    Scene->menu[3]=false;
+                    Scene->menu[1]=true;
+                    Scene->plyScore=0;
+                    Scene->ply2Score=0;
+                }
+>>>>>>> 8c479ba7c1100afb4c51651aee8402394d638c23
             }
             if(Scene->menu[4]==true)//Scene->pauseMenu)
             {
