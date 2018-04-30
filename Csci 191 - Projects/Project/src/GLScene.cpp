@@ -31,6 +31,11 @@ sounds *BtWsnds = new sounds();
 sounds *gameSoundtrack = new sounds();
 
 timer* soundTimer = new timer();
+timer* plxTime = new timer();
+
+int plxSpeed = 0;
+
+bool menuInitialized = false;
 
 using namespace std;
 
@@ -314,7 +319,9 @@ GLint GLScene::initGL()
      winPlyModel->modelInit("images/box/ply_wins.png",true,winPlyTex);
      winPly2Model->modelInit("images/box/ply2_wins.png",true,winPly2Tex);
 
-    //--------------------------------------------------------//
+
+
+
 
     startTime = glfwGetTime();
 
@@ -945,6 +952,10 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
      glPopMatrix();
 
+
+
+    if(menu[0])	// Not Time To Quit, Update Screen
+    {
           //-----------------------------------------------------------------------------------------------//
          //------------------------------- PARALLAX CREATION ---------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
@@ -963,9 +974,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         glPopMatrix();
         if(timeFromStart-startTime>=2)//wait three seconds to start the game
             plx2->scroll(false,"left",0.0002,scale);
-
-    if(menu[0])	// Not Time To Quit, Update Screen
-    {
         glPushMatrix();
             glScaled(3.33, 3.33, 1.0);
             plx3->drawSquare(screenWidth, screenHeight, landingTex);
