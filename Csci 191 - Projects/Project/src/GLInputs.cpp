@@ -99,7 +99,9 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         }
 
      if(pressed['F'])
+     {
         ply->swinging=true;
+     }
 
      if(!pressed['F'])
         ply->swinging=false;
@@ -276,6 +278,18 @@ void Inputs::mouseMove(Model *Model,double x,double y)
         prev_Mouse_X =x;
         prev_Mouse_Y =y;
       }
+}
+
+void Inputs::keySound(bool pressed[256], sounds* snds)
+{
+        if (pressed['F'])
+        {
+            snds->playSound("sounds/explosion.wav");
+        }
+
+
+
+
 }
 
 

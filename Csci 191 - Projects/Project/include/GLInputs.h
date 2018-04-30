@@ -7,6 +7,7 @@
 #include <player.h>
 #include <skyBox.h>
 #include <timer.h>
+#include <sounds.h>
 class Inputs
 {
     public:
@@ -30,6 +31,7 @@ class Inputs
         timer* dashTimer;
         timer* dashTimer2;
         WPARAM wParam;
+        void keySound(bool[256], sounds *);
     protected:
     private:
 };
