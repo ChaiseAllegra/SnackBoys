@@ -233,8 +233,8 @@ GLint GLScene::initGL()
 
     /* declare model init, player init in scene init*/
     playerModel->modelInit("images/player/player0.png", true, plyTex);
-    ply->playerInit();
-    playerModel2->modelInit("images/player/player0.png", true, plyTex);
+    ply->playerInit2();
+    playerModel2->modelInit("images/player2_right/player0.png", true, plyTex);
     ply2->playerInit();
 
     //----------------player position variables---------------//
@@ -1060,6 +1060,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->trueHeight=0.1;
             ply->box.width=0.3;
             ply->drawplayer();
+            ply->oneORtwo = "one";
         glPopMatrix();
        }
 
@@ -1077,6 +1078,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply2->box.height=0.1;
                 ply2->box.width=0.3;
                 ply2->drawplayer();
+                ply2->oneORtwo = "two";
             glPopMatrix();
         }
 
