@@ -1103,7 +1103,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
         //----------------Projectile creation------------------------------------------------//
           if(ply->thrown)
-        {
+        {cout<<k<<endl;
               glPushMatrix();
                     ply->projA->box.height =  .2;
                     ply->projA->box.width = .05;
