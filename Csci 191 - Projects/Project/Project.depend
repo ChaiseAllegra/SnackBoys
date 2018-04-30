@@ -1749,7 +1749,7 @@
 1523077152 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1525043545 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\main.cpp
+1525054270 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
@@ -1757,7 +1757,7 @@
 	<iostream>
 	<windows.h>
 
-1525039975 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\glscene.h
+1525067666 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1785,14 +1785,14 @@
 
 1525039917 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\soil.h
 
-1525039975 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\player.h
+1525067666 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
 	<timer.h>
 	<string>
 
-1525047574 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1525067666 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1855,12 +1855,12 @@
 1525039917 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1525039975 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1525059554 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
 
-1525053502 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525070045 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1882,7 +1882,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525039975 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\player.cpp
+1525067666 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
