@@ -2009,7 +2009,7 @@
 	<windows.h>
 	<iostream>
 
-1525047516 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
+1525052178 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
@@ -2017,7 +2017,7 @@
 	<iostream>
 	<windows.h>
 
-1525045131 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1525047710 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -2122,7 +2122,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1525046200 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525053786 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2143,7 +2143,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525039584 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1525047710 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
