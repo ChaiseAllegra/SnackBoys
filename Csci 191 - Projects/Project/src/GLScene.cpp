@@ -252,7 +252,7 @@ GLint GLScene::initGL()
     tile5->modelInit("images/box/block.png", true, tileTex5);
     tile6->modelInit("images/box/block.png", true, tileTex6);
     tile7->modelInit("images/box/block.png", true, tileTex7);
-    tile8->modelInit("images/box/block.png", true, tileTex8);
+    tile8->modelInit("images/box/nothing2.png", true, tileTex8);
     tile9->modelInit("images/box/block.png", true, tileTex9);
     tile10->modelInit("images/box/block.png", true, tileTex10);
     tile11->modelInit("images/box/block.png", true, tileTex11);
@@ -266,7 +266,7 @@ GLint GLScene::initGL()
     leftWall->modelInit("images/box/girder.png", true, leftWallTex);
     rightWall->modelInit("images/box/girder.png", true, rightWallTex);
     topWall->modelInit("images/box/girder2.png", true, topWallTex);
-    divide->modelInit("images/box/block.png", true, divWallTex);
+    divide->modelInit("images/box/chain.png", true, divWallTex);
     //-------------------------------------------------------------//
 
     //----------------------projectile/ball--------------------------//
@@ -299,18 +299,6 @@ GLint GLScene::initGL()
     landing->modelInit("images/box/landing.png",true,landingTex);
 
     /*------------------------*/
-//     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
-     // infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
-      // controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
-        //exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
-//    playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
-//    infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
-//    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
-//    exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
-//     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
- //     infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
-   //    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
-     //   exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
      winPlyModel->modelInit("images/box/ply_wins.png",true,winPlyTex);
      winPly2Model->modelInit("images/box/ply2_wins.png",true,winPly2Tex);
 
@@ -845,7 +833,7 @@ void GLScene:: update()
     tileChange(Ball, tile5,tileTex5);
     tileChange(Ball, tile6,tileTex6);
     tileChange(Ball, tile7,tileTex7);
-    tileChange(Ball, tile8,tileTex8);
+    //tileChange(Ball, tile8,tileTex8);
     tileChange(Ball, tile9,tileTex9);
     tileChange(Ball, tile10,tileTex10);
     tileChange(Ball, tile11,tileTex11);
@@ -952,8 +940,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             glScaled(3.33, 3.33, 1.0);
             plx->drawSquare(screenWidth, screenHeight, texSky1);
         glPopMatrix();
-         if(timeFromStart-startTime>=2)//wait three seconds to start the game
-            plx->scroll(true,"left",1,scale);
+         //if(timeFromStart-startTime>=2)//wait three seconds to start the game
+            plx->scroll(true,"left",0.006,1);
           //-----------------------------------------------------------------------------------------------//
          //------------------------------- PARALLAX2 CREATION --------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
@@ -962,7 +950,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             plx2->drawSquare(screenWidth, screenHeight, texSky2);
         glPopMatrix();
         if(timeFromStart-startTime>=2)//wait three seconds to start the game
-            plx2->scroll(false,"left",0.0002,scale);
+            plx2->scroll(false,"left",0.0002,1);
 
     if(menu[0])	// Not Time To Quit, Update Screen
     {
@@ -1058,7 +1046,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->pl_pltfrm_box.width = 0.07;
             ply->box.height=0.1;
             ply->trueHeight=0.1;
-            ply->box.width=0.3;
+            ply->box.width=0.06;
             ply->drawplayer();
             ply->oneORtwo = "one";
         glPopMatrix();
@@ -1076,7 +1064,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply2->pl_pltfrm_box.width = 0.07;
                 ply2->trueHeight=0.1;
                 ply2->box.height=0.1;
-                ply2->box.width=0.3;
+                ply2->box.width=0.06;
                 ply2->drawplayer();
                 ply2->oneORtwo = "two";
             glPopMatrix();
@@ -1109,7 +1097,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //bottom wall
     makeModel(killBox,topWallTex,0,-3.22,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,66,0.5);
     //dividing wall
-    makeModel(divide,divWallTex,0,0,-0.2,-2,0.2,-2,0.2,2,-0.2,2,.1,88);
+    makeModel(divide,divWallTex,0,0, -3.5, -3, 3.5, -3, 3.5, 3, -3.5, 3, 0.25, 88);
     //top wall
     makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 

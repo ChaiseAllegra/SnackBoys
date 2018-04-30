@@ -515,7 +515,7 @@
 1521147548 source:c:\users\deathonadinosaur\documents\github\snackboys\csci191_projects\project\project\src\timer.cpp
 	"timer.h"
 
-1523919193 D
+1525054898 D
 
 1521147548 source:c:\users\deathonadinosaur\documents\github\snackboys\csci191_projects\project\main.cpp
 	<windows.h>
@@ -799,7 +799,7 @@
 1521582333 source:c:\users\chaise\desktop\projects folder\projects\project 1\snackboys\csci191_projects\project\src\timer.cpp
 	"timer.h"
 
-1521582333 
+1525059511 
 
 1521582333 ent of 3eb9558... Inputs
 
@@ -1695,7 +1695,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1525057454 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525059784 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1710,6 +1710,8 @@
 	<sounds.h>
 
 1524893912 4ec9c88ee08f3a0a928a5427569712cd30528
+
+1525059511 fc2d3ae71ebb2a87c5ca646107060e9ff0899
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1721,6 +1723,12 @@
 	<cmath>
 	<timer.h>
 	<GLFW/glfw3.h>
+	<sounds.h>
+	<player.h>
+	<timer.h>
+	<GLTexture.h>
+	<windows.h>
+	<iostream>
 
 1522122625 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\gltexture.cpp
 	<iostream>
@@ -1730,12 +1738,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525054785 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
-	<player.h>
-	<timer.h>
-	<GLTexture.h>
-	<windows.h>
-	<iostream>
+1525059784 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
 
 1523077152 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\timer.h
 	<time.h>
@@ -2180,7 +2183,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1525060694 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525062084 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
