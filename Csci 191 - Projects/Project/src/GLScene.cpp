@@ -9,6 +9,12 @@
 #include <cmath>
 #include <timer.h>
 #include <GLFW/glfw3.h>
+#include <sounds.h>
+//#include<levelAlpha.h>
+//#include<levelOmega.h>
+
+//levelAlpha* alpha;
+//levelOmega* omega;
 
 float tw=100,th=100;
 float mX,mY,mXpos=0,mYpos=0;
@@ -20,6 +26,11 @@ float maxHeight=1.5;
 float vDecrement=0.001;
 float endGoal;
 float BallprevY;
+sounds *snds = new sounds();
+sounds *BtWsnds = new sounds();
+sounds *gameSoundtrack = new sounds();
+
+timer* soundTimer = new timer();
 
 using namespace std;
 
@@ -175,6 +186,8 @@ GLScene::GLScene()
         infoTexA= new textureLoader();
       exitTexA= new textureLoader();
       playButtonTexA= new textureLoader();
+//      mainMenuModel= new Model();
+      //mainMenuTex= new textureLoader();
 //     mainMenuModel= new Model();
 //     mainMenuTex= new textureLoader();
     winPlyModel= new Model();
@@ -191,6 +204,15 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    soundTimer->start();
+    snds->initSounds();
+    BtWsnds->initSounds();
+    gameSoundtrack->initSounds();
+
+    gameSoundtrack->stopAllSounds();
+    gameSoundtrack->adjustVolume(.3);
+    gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
+
     lastTime = glfwGetTime();
     glShadeModel(GL_SMOOTH);
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -271,12 +293,16 @@ GLint GLScene::initGL()
     infoButton->modelInit("images/box/info.png",true,tex4);
     exitButton->modelInit("images/box/exit.png",true,tex5);
     infoPage->modelInit("images/box/InfoPage.png",true,tex6);
-    setBallDir();
+    //setBallDir();
 
     menuModel->modelInit("images/box/menu.png",true,menuTex);
     landing->modelInit("images/box/landing.png",true,landingTex);
 
     /*------------------------*/
+//     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
+     // infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
+      // controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
+        //exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
 //    playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
 //    infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
 //    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
@@ -344,6 +370,7 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
 {
     if(box_collision(b->box, t->box ) && D->getTicks() >= 200)
     {
+                BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
                 D->reset();
                 ballDirY =  1;
                 if((b->tag=="one"&&t->tag=="right")||(b->tag=="two"&&t->tag=="left"))
@@ -450,8 +477,9 @@ void GLScene::reset()
     Ball->Xpos=0;
     Ball->Ypos=0;
     Ball->tag="";
-    ballDirX=-1;
-    ballDirY=1;
+    //ballDirX=-1;
+    //ballDirY=-1;
+    setBallDir();
     CurXpos=0;
     CurYpos=0;
     //reset the accel
@@ -532,21 +560,26 @@ void GLScene::ballColl()
 void GLScene::setBallDir()
 {
     srand (time(NULL));
-	double rando = rand() % 10+1;
-	if(score<0)
+	double rando = rand() % 2+1;
+	if(score<=0)
 	{
-		if(rando>5)
+	    cout<<"in here"<<endl;
+		if(rando>1)
+        {
 			ballDirX=1;
 			ballDirY=1;
-		if(rando<=5)
+        }
+		if(rando<=1)
+        {
 			ballDirX=-1;
 			ballDirY=-1;
+        }
 	}
 	else
 	{
-		if(rando>5)
+		if(rando>1)
 			ballDirY=1;
-		if(rando<=5)
+		if(rando<=1)
 			ballDirY=-1;
 		if(plyScoreLast==1)
 			ballDirX=-1;
@@ -571,13 +604,25 @@ void GLScene::wallColl()
         plyScore++;
     }
     if (box_collision(Ball->box, rightWall->box))
+    {
         ballDirX = -1;
+        BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+    }
+
 
     if (box_collision(Ball->box, leftWall->box))
+    {
         ballDirX = 1;
+        BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+    }
+
 
     if (box_collision(Ball->box, topWall->box))
+    {
         ballDirY = -1;
+        BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+    }
+
 
     if (box_collision(Ball->box, killBox->box))
     {
@@ -727,10 +772,12 @@ void GLScene::projectileCol(player* ply, player* ply2)
         ply->projA->health=0;
         if(Ball->Xpos>0&&Ball->tag=="one")
             Ball->lethal=2;
+        if(Ball->Xpos<0&&Ball->tag=="two")
+            Ball->lethal=1;
         //ballDirY *= -1;
     }
 
-    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply2,Ball)>1)
+    /*if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply2,Ball)>1)
     {
         BPA->reset();
         ballDirX*=-1;
@@ -738,7 +785,7 @@ void GLScene::projectileCol(player* ply, player* ply2)
         if(Ball->Xpos<0&&Ball->tag=="two")
             Ball->lethal=1;
         //ballDirY*=-1;
-    }
+    }*/
 
     if(ply->thrown)
     {
@@ -885,6 +932,7 @@ void GLScene:: update()
 
 GLint GLScene::drawGLScene2(bool pressed[256])
 {
+
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
     glLoadIdentity();
                                      // Reset The Current Modelview Matrix
@@ -1194,7 +1242,16 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
         if(lolTime-startTime>=4&&!menu[4])//wait two seconds to start the
             KbMs->idle(pressed,ply,ply2);
-
+            //KbMs->keySound(pressed, snds);
+        if(menu[6])//game is won
+        {
+            glPushMatrix();
+             glScalef(1.00,1.00,1);
+             playButton->Xpos=-2.0;
+             playButton->Ypos=-0.0;
+            playButton->drawModel(tex3);
+            glPopMatrix();
+        }
         update();
         }
         if(plyScore>=3||ply2Score>=3)
@@ -1307,4 +1364,9 @@ GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)
 }
 int GLScene::windMsg(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam,bool press[256])
 {
+    if(soundTimer->getTicks() >= 20)
+    {
+        KbMs->keySound(press, snds);
+        soundTimer->reset();
+    }
 }

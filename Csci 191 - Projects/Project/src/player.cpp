@@ -115,6 +115,7 @@ void player::playerInit()
     swingText[11].bindTexture("images/player/swing3.png");
     swingText[12].bindTexture("images/player/swing3.png");
 
+<<<<<<< HEAD
     swingTextLeft[0].bindTexture("images/player2_left/swing1.png");
     swingTextLeft[1].bindTexture("images/player2_left/swing2.png");
     swingTextLeft[2].bindTexture("images/player2_left/swing3.png");
@@ -132,6 +133,31 @@ void player::playerInit()
     stand[0].bindTexture("images/player2_right/play.png");
 
     stand[1].bindTexture("images/player2_left/play.png");
+=======
+    swingTextLeft[0].bindTexture("images/player_left/swing1.png");
+    swingTextLeft[1].bindTexture("images/player_left/swing2.png");
+    swingTextLeft[2].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[3].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[4].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[5].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[6].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[7].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[8].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[9].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[10].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[11].bindTexture("images/player_left/swing3.png");
+    swingTextLeft[12].bindTexture("images/player_left/swing3.png");
+
+    stand[0].bindTexture("images/player_right/play.png");
+
+    stand[1].bindTexture("images/player_left/play.png");
+    projA->Xpos=999;
+    projA->Ypos=999;
+    projA->box.x=999;
+    projA->box.y=999;
+    projA->box.width=0;
+    projA->box.height=0;
+>>>>>>> 913969cf283df6aa872d6db76019c64febb16647
 }
 
 void player::actions()

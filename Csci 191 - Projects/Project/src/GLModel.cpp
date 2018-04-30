@@ -16,8 +16,10 @@ Model::Model()
         Xpos = 0;
         Ypos = 0;
 
-        this->box.width = 0;
-        this->box.height = 0;
+        box.width = 0;
+        box.height = 0;
+        box.x=999;
+        box.y=999;
         verticies[0].x=-0.5;verticies[0].y=-0.5;verticies[0].z=-1.0;
         verticies[1].x=0.5;verticies[1].y=-0.5;verticies[1].z=-1.0;
         verticies[2].x=0.5;verticies[2].y=0.5;verticies[2].z=-1.0;
