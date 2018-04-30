@@ -440,6 +440,12 @@ void GLScene::reset()
     ply2->PYpos = -1.1;
     ply->thrown=false;
     ply2->thrown=false;
+    ply->OnTile=true;
+    ply2->OnTile=true;
+    ply->health=4;
+    ply2->health=4;
+    ply->actionTrigger=0;
+    ply2->actionTrigger=0;
 
     Ball->Xpos=0;
     Ball->Ypos=0;
@@ -1155,7 +1161,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(ply2->lastCase=='R')
             makeModel(cross, crosshair, tmp6, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
-
+        if(!menu[6])
+        {
         if(lolTime-startTime>0.5&&lolTime-startTime<=1)
         {
              //draw the number 3
@@ -1165,7 +1172,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         }
         if(lolTime-startTime>1&&lolTime-startTime<=2)
          {
-              //draw the number 2
+              //drawmainMenChoice=false; the number 2
             glPushMatrix();
                 twoMod->drawModel(twoTex);
             glPopMatrix();
@@ -1184,10 +1191,12 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 zeroMod->drawModel(zeroTex);
             glPopMatrix();
          }
-        if(lolTime-startTime>=4&&!menu[4]&&!menu[6])//wait two seconds to start the
+
+        if(lolTime-startTime>=4&&!menu[4])//wait two seconds to start the
             KbMs->idle(pressed,ply,ply2);
 
         update();
+        }
         if(plyScore>=3||ply2Score>=3)
             menu[6]=true;
 

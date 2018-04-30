@@ -436,7 +436,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                 if(mainMenChoice)
                 {
                     if(Scene->mainMenPos==0)
+                    {
                         Scene->menu[3]=true;
+                        Scene->reset();
+                    }
                     if(Scene->mainMenPos==1)
                         Scene->menu[2]=true;
                     if(Scene->mainMenPos==2)
@@ -449,13 +452,14 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
             }
             if(Scene->menu[6])
             {
-                if(keys['E']||keys['O'])
+                if(keys[VK_RETURN])//keys['E']||keys['O'])
                 {
                     Scene->menu[6]=false;
                     Scene->menu[3]=false;
                     Scene->menu[1]=true;
                     Scene->plyScore=0;
                     Scene->ply2Score=0;
+                    mainMenChoice=false;
                 }
             }
             if(Scene->menu[4]==true)//Scene->pauseMenu)
