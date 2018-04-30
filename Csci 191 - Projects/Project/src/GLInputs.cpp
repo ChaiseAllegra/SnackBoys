@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-using namespace std;//
+using namespace std;
 timer* stunTimer= new timer();
 Inputs::Inputs()
 {

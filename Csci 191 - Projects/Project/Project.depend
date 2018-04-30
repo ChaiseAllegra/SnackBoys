@@ -515,7 +515,7 @@
 1521147548 source:c:\users\deathonadinosaur\documents\github\snackboys\csci191_projects\project\project\src\timer.cpp
 	"timer.h"
 
-1524790385 D
+1525054898 D
 
 1521147548 source:c:\users\deathonadinosaur\documents\github\snackboys\csci191_projects\project\main.cpp
 	<windows.h>
@@ -799,7 +799,7 @@
 1521582333 source:c:\users\chaise\desktop\projects folder\projects\project 1\snackboys\csci191_projects\project\src\timer.cpp
 	"timer.h"
 
-1521582333 
+1525059511 
 
 1521582333 ent of 3eb9558... Inputs
 
@@ -1695,7 +1695,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1525057454 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525059784 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1710,6 +1710,8 @@
 	<sounds.h>
 
 1524893912 4ec9c88ee08f3a0a928a5427569712cd30528
+
+1525059511 fc2d3ae71ebb2a87c5ca646107060e9ff0899
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1721,6 +1723,12 @@
 	<cmath>
 	<timer.h>
 	<GLFW/glfw3.h>
+	<sounds.h>
+	<player.h>
+	<timer.h>
+	<GLTexture.h>
+	<windows.h>
+	<iostream>
 
 1522122625 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\gltexture.cpp
 	<iostream>
@@ -1730,12 +1738,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525054785 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
-	<player.h>
-	<timer.h>
-	<GLTexture.h>
-	<windows.h>
-	<iostream>
+1525059784 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
 
 1523077152 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\timer.h
 	<time.h>
@@ -1746,7 +1749,7 @@
 1523077152 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1525054270 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\main.cpp
+1525043545 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
@@ -1754,7 +1757,7 @@
 	<iostream>
 	<windows.h>
 
-1525066780 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\glscene.h
+1525039975 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1782,7 +1785,7 @@
 
 1525039917 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\soil.h
 
-1525066792 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\player.h
+1525039975 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\player.h
 	<GLModel.h>
 	<gl/gl.h>
 	<GLtexture.h>
@@ -1852,12 +1855,12 @@
 1525039917 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1525059554 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1525039975 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
 
-1525066792 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525053502 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1879,7 +1882,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525066792 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\player.cpp
+1525039975 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -2034,7 +2037,7 @@
 	<windows.h>
 	<iostream>
 
-1524791394 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
+1525067171 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
@@ -2042,7 +2045,13 @@
 	<iostream>
 	<windows.h>
 
-1524791394 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1524690996 969cf283df6aa872d6db76019c64febb16647
+	<windows.h>
+	<GLScene.h>
+	<stdlib.h>
+	<timer.h>
+	<iostream>
+	<windows.h>
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -2051,107 +2060,6 @@
 	<gl/gl.h>
 	<iostream>
 	<player.h>
-
-1524523065 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glmodel.h
-	<windows.h>
-	<string>
-	<GL/glut.h>
-	<GLTexture.h>
-	<timer.h>
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\gl\glut.h
-	<windows.h>
-	<GL/gl.h>
-	<GL/glu.h>
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\gltexture.h
-	<SOIL.h>
-	<gl/gl.h>
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\soil.h
-
-1524690366 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\player.h
-	<GLModel.h>
-	<gl/gl.h>
-	<GLtexture.h>
-	<timer.h>
-	<string>
-
-1522874275 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\timer.h
-	<time.h>
-
-1524683723 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
-	"GLInputs.h"
-	<player.h>
-	<GLModel.h>
-	<collision.h>
-	<box.h>
-	<stdint.h>
-	<iostream>
-	<string>
-
-1524617461 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glinputs.h
-	<windows.h>
-	<iostream>
-	<GLModel.h>
-	<parallax.h>
-	<player.h>
-	<skyBox.h>
-	<timer.h>
-
-1523919193 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\parallax.h
-	<iostream>
-	<string.h>
-	<gl/gl.h>
-	<windows.h>
-	<GLTexture.h>
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\skybox.h
-	<gl/gl.h>
-	<textureLoader.h>
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\textureloader.h
-	<SOIL.h>
-	<gl/gl.h>
-
-1522711174 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\collision.h
-	<iomanip>
-	<iostream>
-	<cmath>
-	<math.h>
-	<string>
-	<circle.h>
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\circle.h
-	<iomanip>
-	<iostream>
-	<cmath>
-	<math.h>
-	<string>
-
-1522711174 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\box.h
-	<iomanip>
-	<iostream>
-	<cmath>
-	<math.h>
-	<string>
-
-1522481324 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\gllight.cpp
-	"GLLight.h"
-
-1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\gllight.h
-	<GLScene.h>
-
-1524784804 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
-	"GLModel.h"
-	<stdlib.h>
-	<textureLoader.h>
-
-<<<<<<< HEAD
-1525063987 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
-=======
-1524868200 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
->>>>>>> 26f628f1b815e52248a6c36201cc3fc1e535d4b4
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2163,26 +2071,151 @@
 	<cmath>
 	<timer.h>
 	<GLFW/glfw3.h>
-
-1522481324 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\gltexture.cpp
-	<iostream>
-	"textureLoader.h"
-
-1523919193 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\parallax.cpp
-	"parallax.h"
-	<textureLoader.h>
-
-1524690996 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
 	<windows.h>
 	<iostream>
 
-1522481324 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\skybox.cpp
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+	<time.h>
+	<GLInputs.h>
+	<windows.h>
+	<parallax.h>
+	<GLModel.h>
+	<gl/gl.h>
+	<iostream>
+	<player.h>
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glmodel.h
+	<windows.h>
+	<string>
+	<GL/glut.h>
+	<GLTexture.h>
+	<timer.h>
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\gltexture.h
+	<SOIL.h>
+	<gl/gl.h>
+
+1522481324 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\soil.h
+
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\player.h
+	<GLModel.h>
+	<gl/gl.h>
+	<GLtexture.h>
+	<timer.h>
+	<string>
+
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\timer.h
+	<time.h>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+	"GLInputs.h"
+	<player.h>
+	<GLModel.h>
+	<collision.h>
+	<box.h>
+	<stdint.h>
+	<iostream>
+	<string>
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glinputs.h
+	<windows.h>
+	<iostream>
+	<GLModel.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<timer.h>
+	<sounds.h>
+
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\parallax.h
+	<iostream>
+	<string.h>
+	<gl/gl.h>
+	<windows.h>
+	<GLTexture.h>
+
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\skybox.h
+	<gl/gl.h>
+	<textureLoader.h>
+
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\textureloader.h
+	<SOIL.h>
+	<gl/gl.h>
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\collision.h
+	<iomanip>
+	<iostream>
+	<cmath>
+	<math.h>
+	<string>
+	<circle.h>
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\circle.h
+	<iomanip>
+	<iostream>
+	<cmath>
+	<math.h>
+	<string>
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\box.h
+	<iomanip>
+	<iostream>
+	<cmath>
+	<math.h>
+	<string>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\gllight.cpp
+	"GLLight.h"
+
+1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\gllight.h
+	<GLScene.h>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glmodel.cpp
+	"GLModel.h"
+	<stdlib.h>
+	<textureLoader.h>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+	<GLScene.h>
+	<GLLight.h>
+	<GLInputs.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<windows.h>
+	<mmsystem.h>
+	<cmath>
+	<timer.h>
+	<GLFW/glfw3.h>
+	<sounds.h>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\gltexture.cpp
+	<iostream>
+	"textureLoader.h"
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\parallax.cpp
+	"parallax.h"
+	<textureLoader.h>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
+	<player.h>
+	<timer.h>
+	<GLTexture.h>
+	<windows.h>
+	<iostream>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\skybox.cpp
 	"skyBox.h"
 
-1522874275 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\timer.cpp
+1525067190 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
 1523491842 source:c:\users\ludde_000\desktop\snackboys\csci 191 - projects\project\main.cpp
@@ -2664,7 +2697,7 @@
 	<GLModel.h>
 	<GLFW/glfw3.h>
 
-1523660612 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glfw\glfw3.h
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glfw\glfw3.h
 	<stddef.h>
 	<stdint.h>
 	<OpenGL/gl3.h>
@@ -3176,4 +3209,404 @@
 1525054898 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\sounds.cpp
 	"sounds.h"
 	<iostream>
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\soil.h
+
+1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\sounds.h
+	<SNDS/irrKlang.h>
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\irrklang.h
+	"ik_irrKlangTypes.h"
+	"ik_vec3d.h"
+	"ik_IRefCounted.h"
+	"ik_IVirtualRefCounted.h"
+	"ik_ESoundOutputDrivers.h"
+	"ik_ESoundEngineOptions.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+	"ik_ISoundEngine.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_IAudioStream.h"
+	"ik_IAudioStreamLoader.h"
+	"ik_ISoundEffectControl.h"
+	"ik_ISoundStopEventReceiver.h"
+	"ik_IFileFactory.h"
+	"ik_IFileReader.h"
+	"ik_ISoundDeviceList.h"
+	"ik_IAudioRecorder.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_irrklangtypes.h
+	<wchar.h>
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_vec3d.h
+	<math.h>
+	"ik_irrKlangTypes.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_irefcounted.h
+	"ik_irrKlangTypes.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_ivirtualrefcounted.h
+	"ik_irrKlangTypes.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_esoundoutputdrivers.h
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_esoundengineoptions.h
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_estreammodes.h
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_saudiostreamformat.h
+	"ik_IRefCounted.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isoundengine.h
+	"ik_IRefCounted.h"
+	"ik_vec3d.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_EStreamModes.h"
+	"ik_IFileFactory.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isoundsource.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isound.h
+	"ik_IVirtualRefCounted.h"
+	"ik_ISoundEffectControl.h"
+	"ik_vec3d.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isoundeffectcontrol.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_ifilefactory.h
+	"ik_IRefCounted.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isoundmixedoutputreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_iaudiostream.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_iaudiostreamloader.h
+	"ik_IRefCounted.h"
+	"ik_IFileReader.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_ifilereader.h
+	"ik_IRefCounted.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isoundstopeventreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067158 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_isounddevicelist.h
+	"ik_IRefCounted.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\snds\ik_iaudiorecorder.h
+	"ik_IRefCounted.h"
+	"ik_ISoundSource.h"
+
+1525067157 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\common\include\gl\glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\sounds.cpp
+	"sounds.h"
+	<iostream>
+
+1525067171 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\main.cpp
+	<windows.h>
+	<GLScene.h>
+	<stdlib.h>
+	<timer.h>
+	<iostream>
+	<windows.h>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\glscene.h
+	<time.h>
+	<GLInputs.h>
+	<windows.h>
+	<parallax.h>
+	<GLModel.h>
+	<gl/gl.h>
+	<iostream>
+	<player.h>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\glinputs.h
+	<windows.h>
+	<iostream>
+	<GLModel.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<timer.h>
+	<sounds.h>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\glmodel.h
+	<windows.h>
+	<string>
+	<GL/glut.h>
+	<GLTexture.h>
+	<timer.h>
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\gltexture.h
+	<SOIL.h>
+	<gl/gl.h>
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\soil.h
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\timer.h
+	<time.h>
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\parallax.h
+	<iostream>
+	<string.h>
+	<gl/gl.h>
+	<windows.h>
+	<GLTexture.h>
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\player.h
+	<GLModel.h>
+	<gl/gl.h>
+	<GLtexture.h>
+	<timer.h>
+	<string>
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\skybox.h
+	<gl/gl.h>
+	<textureLoader.h>
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\textureloader.h
+	<SOIL.h>
+	<gl/gl.h>
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\sounds.h
+	<SNDS/irrKlang.h>
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\irrklang.h
+	"ik_irrKlangTypes.h"
+	"ik_vec3d.h"
+	"ik_IRefCounted.h"
+	"ik_IVirtualRefCounted.h"
+	"ik_ESoundOutputDrivers.h"
+	"ik_ESoundEngineOptions.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+	"ik_ISoundEngine.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_IAudioStream.h"
+	"ik_IAudioStreamLoader.h"
+	"ik_ISoundEffectControl.h"
+	"ik_ISoundStopEventReceiver.h"
+	"ik_IFileFactory.h"
+	"ik_IFileReader.h"
+	"ik_ISoundDeviceList.h"
+	"ik_IAudioRecorder.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_irrklangtypes.h
+	<wchar.h>
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_vec3d.h
+	<math.h>
+	"ik_irrKlangTypes.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_irefcounted.h
+	"ik_irrKlangTypes.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_ivirtualrefcounted.h
+	"ik_irrKlangTypes.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_esoundoutputdrivers.h
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_esoundengineoptions.h
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_estreammodes.h
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_saudiostreamformat.h
+	"ik_IRefCounted.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isoundengine.h
+	"ik_IRefCounted.h"
+	"ik_vec3d.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_EStreamModes.h"
+	"ik_IFileFactory.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isoundsource.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isound.h
+	"ik_IVirtualRefCounted.h"
+	"ik_ISoundEffectControl.h"
+	"ik_vec3d.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isoundeffectcontrol.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_ifilefactory.h
+	"ik_IRefCounted.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isoundmixedoutputreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_iaudiostream.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_iaudiostreamloader.h
+	"ik_IRefCounted.h"
+	"ik_IFileReader.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_ifilereader.h
+	"ik_IRefCounted.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isoundstopeventreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525067158 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_isounddevicelist.h
+	"ik_IRefCounted.h"
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\snds\ik_iaudiorecorder.h
+	"ik_IRefCounted.h"
+	"ik_ISoundSource.h"
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\glinputs.cpp
+	"GLInputs.h"
+	<player.h>
+	<GLModel.h>
+	<collision.h>
+	<box.h>
+	<stdint.h>
+	<iostream>
+	<string>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\collision.h
+	<iomanip>
+	<iostream>
+	<cmath>
+	<math.h>
+	<string>
+	<circle.h>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\circle.h
+	<iomanip>
+	<iostream>
+	<cmath>
+	<math.h>
+	<string>
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\box.h
+	<iomanip>
+	<iostream>
+	<cmath>
+	<math.h>
+	<string>
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\gllight.cpp
+	"GLLight.h"
+
+1525067182 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\gllight.h
+	<GLScene.h>
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\glmodel.cpp
+	"GLModel.h"
+	<stdlib.h>
+	<textureLoader.h>
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\glscene.cpp
+	<GLScene.h>
+	<GLLight.h>
+	<GLInputs.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<windows.h>
+	<mmsystem.h>
+	<cmath>
+	<timer.h>
+	<GLFW/glfw3.h>
+	<sounds.h>
+
+1525067183 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\include\glfw\glfw3.h
+	<stddef.h>
+	<stdint.h>
+	<OpenGL/gl3.h>
+	<OpenGL/gl3ext.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/glcorearb.h>
+	<GLES/gl.h>
+	<GLES/glext.h>
+	<GLES2/gl2.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl3.h>
+	<GLES2/gl2ext.h>
+	<GLES3/gl31.h>
+	<GLES2/gl2ext.h>
+	<vulkan/vulkan.h>
+	<GL/gl.h>
+	<GL/glext.h>
+	<GL/glu.h>
+
+1525067157 c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\common\include\gl\glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\gltexture.cpp
+	<iostream>
+	"textureLoader.h"
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\parallax.cpp
+	"parallax.h"
+	<textureLoader.h>
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\player.cpp
+	<player.h>
+	<timer.h>
+	<GLTexture.h>
+	<windows.h>
+	<iostream>
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\skybox.cpp
+	"skyBox.h"
+
+1525067189 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\sounds.cpp
+	"sounds.h"
+	<iostream>
+
+1525067190 source:c:\users\deathonadinosaur\desktop\csci 191 - projects\csci 191 - projects\project\src\timer.cpp
+	"timer.h"
 
