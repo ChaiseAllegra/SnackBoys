@@ -29,8 +29,13 @@ float BallprevY;
 sounds *snds = new sounds();
 sounds *BtWsnds = new sounds();
 sounds *gameSoundtrack = new sounds();
+bool musicStarted = false;
 
 timer* soundTimer = new timer();
+
+timer* musicReset = new timer();
+
+bool gameEntered = false;
 
 using namespace std;
 
@@ -204,6 +209,7 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    // musicReset->start(); //not used
     soundTimer->start();
     snds->initSounds();
     BtWsnds->initSounds();
@@ -211,7 +217,18 @@ GLint GLScene::initGL()
 
     gameSoundtrack->stopAllSounds();
     gameSoundtrack->adjustVolume(.3);
-    gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
+
+    if(!musicStarted)
+    {
+        gameSoundtrack->playMusic("sounds/bgmusic.mp3");
+        musicStarted = true;
+    }
+    else
+    {
+        gameSoundtrack->stopAllSounds();
+        gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
+    }
+
 
     lastTime = glfwGetTime();
     glShadeModel(GL_SMOOTH);
@@ -433,6 +450,7 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 }
 void GLScene::reset()
 {
+
     tile1->health=3;
     tile2->health=3;
     tile3->health=3;
@@ -986,6 +1004,13 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     }
     if(this->menu[3]==true)
     {
+        if(!gameEntered)
+        {
+            //gameSoundtrack->stopAllSounds();
+            //gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
+            gameEntered = true;
+        }
+
         double lolTime = glfwGetTime();
 
           //-----------------------------------------------------------------------------------------------//
@@ -1077,7 +1102,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //        model,texture, xpos, ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
     makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    //makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
