@@ -293,7 +293,7 @@ GLint GLScene::initGL()
     infoButton->modelInit("images/box/info.png",true,tex4);
     exitButton->modelInit("images/box/exit.png",true,tex5);
     infoPage->modelInit("images/box/InfoPage.png",true,tex6);
-    setBallDir();
+    //setBallDir();
 
     menuModel->modelInit("images/box/menu.png",true,menuTex);
     landing->modelInit("images/box/landing.png",true,landingTex);
@@ -477,8 +477,9 @@ void GLScene::reset()
     Ball->Xpos=0;
     Ball->Ypos=0;
     Ball->tag="";
-    ballDirX=-1;
-    ballDirY=1;
+    //ballDirX=-1;
+    //ballDirY=-1;
+    setBallDir();
     CurXpos=0;
     CurYpos=0;
     //reset the accel
@@ -559,21 +560,26 @@ void GLScene::ballColl()
 void GLScene::setBallDir()
 {
     srand (time(NULL));
-	double rando = rand() % 10+1;
-	if(score<0)
+	double rando = rand() % 2+1;
+	if(score<=0)
 	{
-		if(rando>5)
+	    cout<<"in here"<<endl;
+		if(rando>1)
+        {
 			ballDirX=1;
 			ballDirY=1;
-		if(rando<=5)
+        }
+		if(rando<=1)
+        {
 			ballDirX=-1;
 			ballDirY=-1;
+        }
 	}
 	else
 	{
-		if(rando>5)
+		if(rando>1)
 			ballDirY=1;
-		if(rando<=5)
+		if(rando<=1)
 			ballDirY=-1;
 		if(plyScoreLast==1)
 			ballDirX=-1;
@@ -766,10 +772,12 @@ void GLScene::projectileCol(player* ply, player* ply2)
         ply->projA->health=0;
         if(Ball->Xpos>0&&Ball->tag=="one")
             Ball->lethal=2;
+        if(Ball->Xpos<0&&Ball->tag=="two")
+            Ball->lethal=1;
         //ballDirY *= -1;
     }
 
-    if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply2,Ball)>1)
+    /*if(box_collision(Ball->box, ply2->projA->box)&&BPA->getTicks() >= 200&&manhattanD(ply2,Ball)>1)
     {
         BPA->reset();
         ballDirX*=-1;
@@ -777,7 +785,7 @@ void GLScene::projectileCol(player* ply, player* ply2)
         if(Ball->Xpos<0&&Ball->tag=="two")
             Ball->lethal=1;
         //ballDirY*=-1;
-    }
+    }*/
 
     if(ply->thrown)
     {
@@ -1081,7 +1089,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    //makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);

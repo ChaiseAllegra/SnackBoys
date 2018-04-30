@@ -515,7 +515,7 @@
 1521147548 source:c:\users\deathonadinosaur\documents\github\snackboys\csci191_projects\project\project\src\timer.cpp
 	"timer.h"
 
-1521147548 D
+1524790385 D
 
 1521147548 source:c:\users\deathonadinosaur\documents\github\snackboys\csci191_projects\project\main.cpp
 	<windows.h>
@@ -1567,7 +1567,7 @@
 	<timer.h>
 	<GLFW/glfw3.h>
 
-1524894695 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
+1525054898 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
@@ -1575,7 +1575,7 @@
 	<iostream>
 	<windows.h>
 
-1524895311 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
+1525048974 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -1641,7 +1641,7 @@
 
 1522122624 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\soil.h
 
-1524783514 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1525054898 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1651,7 +1651,7 @@
 	<iostream>
 	<string>
 
-1524299832 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glinputs.h
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\glinputs.h
 	<windows.h>
 	<iostream>
 	<GLModel.h>
@@ -1659,6 +1659,7 @@
 	<player.h>
 	<skyBox.h>
 	<timer.h>
+	<sounds.h>
 
 1523686870 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\parallax.h
 	<iostream>
@@ -1689,16 +1690,26 @@
 1522122624 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\gllight.h
 	<GLScene.h>
 
-1524790385 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glmodel.cpp
+1525056340 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glmodel.cpp
 	"GLModel.h"
 	<stdlib.h>
 	<textureLoader.h>
 
-<<<<<<< HEAD
-1525053931 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
-=======
-1524893912 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
->>>>>>> 6494ec9c88ee08f3a0a928a5427569712cd30528
+1525056752 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\glscene.cpp
+	<GLScene.h>
+	<GLLight.h>
+	<GLInputs.h>
+	<parallax.h>
+	<player.h>
+	<skyBox.h>
+	<windows.h>
+	<mmsystem.h>
+	<cmath>
+	<timer.h>
+	<GLFW/glfw3.h>
+	<sounds.h>
+
+1524893912 4ec9c88ee08f3a0a928a5427569712cd30528
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1719,7 +1730,7 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1524783514 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
+1525054785 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
@@ -3045,4 +3056,120 @@
 	"ik_ISoundSource.h"
 
 1525039917 c:\users\jas\desktop\snackboys\csci 191 - projects\common\include\soil.h
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\soil.h
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\include\sounds.h
+	<SNDS/irrKlang.h>
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\irrklang.h
+	"ik_irrKlangTypes.h"
+	"ik_vec3d.h"
+	"ik_IRefCounted.h"
+	"ik_IVirtualRefCounted.h"
+	"ik_ESoundOutputDrivers.h"
+	"ik_ESoundEngineOptions.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+	"ik_ISoundEngine.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_IAudioStream.h"
+	"ik_IAudioStreamLoader.h"
+	"ik_ISoundEffectControl.h"
+	"ik_ISoundStopEventReceiver.h"
+	"ik_IFileFactory.h"
+	"ik_IFileReader.h"
+	"ik_ISoundDeviceList.h"
+	"ik_IAudioRecorder.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_irrklangtypes.h
+	<wchar.h>
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_vec3d.h
+	<math.h>
+	"ik_irrKlangTypes.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_irefcounted.h
+	"ik_irrKlangTypes.h"
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_ivirtualrefcounted.h
+	"ik_irrKlangTypes.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_esoundoutputdrivers.h
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_esoundengineoptions.h
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_estreammodes.h
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_saudiostreamformat.h
+	"ik_IRefCounted.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isoundengine.h
+	"ik_IRefCounted.h"
+	"ik_vec3d.h"
+	"ik_ISoundSource.h"
+	"ik_ISound.h"
+	"ik_EStreamModes.h"
+	"ik_IFileFactory.h"
+	"ik_ISoundMixedOutputReceiver.h"
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isoundsource.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+	"ik_EStreamModes.h"
+	"ik_SAudioStreamFormat.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isound.h
+	"ik_IVirtualRefCounted.h"
+	"ik_ISoundEffectControl.h"
+	"ik_vec3d.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isoundeffectcontrol.h
+	"ik_IVirtualRefCounted.h"
+	"ik_vec3d.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_ifilefactory.h
+	"ik_IRefCounted.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isoundmixedoutputreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_iaudiostream.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_iaudiostreamloader.h
+	"ik_IRefCounted.h"
+	"ik_IFileReader.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_ifilereader.h
+	"ik_IRefCounted.h"
+
+1525054899 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isoundstopeventreceiver.h
+	"ik_IRefCounted.h"
+	"ik_SAudioStreamFormat.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_isounddevicelist.h
+	"ik_IRefCounted.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\snds\ik_iaudiorecorder.h
+	"ik_IRefCounted.h"
+	"ik_ISoundSource.h"
+
+1525054898 c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\common\include\gl\glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1525054898 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\sounds.cpp
+	"sounds.h"
+	<iostream>
 
