@@ -22,7 +22,6 @@ class player: public Model
         player();
         virtual ~player();
 
-        string oneORtwo = "none";
 
         float scalesize[3]={1.0,1.0,1.0};
         vec verticies[4];
@@ -69,7 +68,6 @@ class player: public Model
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
         void drawplayer();
         void playerInit();
-        void playerInit2();
         void actions();
 
         float ydir;

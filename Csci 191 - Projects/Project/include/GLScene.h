@@ -133,6 +133,8 @@ class GLScene
         Model *winPly2Model;
         textureLoader* winPlyTex;
         textureLoader* winPly2Tex;
+
+        textureLoader plxBg[150];
         //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
         WPARAM wParam;
