@@ -42,7 +42,7 @@ player::player()
 
     swinging = false;
 
-    startSpeed=0.0009;
+    startSpeed=0.001;
     plyVel = startSpeed;//2;
    // plyVel = 0.002;
     !ballCollided;

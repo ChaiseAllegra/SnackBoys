@@ -73,7 +73,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(pressed['A']&&!ply->isDash)
      {
         ply->actionTrigger = 1;
-         ply->lastKey = 'R';
+        ply->lastKey = 'R';
         ply->lastCase = 'L';
         if(ply->lastKey!='N'&&!flagged)
         {
