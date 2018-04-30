@@ -132,6 +132,12 @@ void player::playerInit()
     stand[0].bindTexture("images/player_right/play.png");
 
     stand[1].bindTexture("images/player_left/play.png");
+    projA->Xpos=999;
+    projA->Ypos=999;
+    projA->box.x=999;
+    projA->box.y=999;
+    projA->box.width=0;
+    projA->box.height=0;
 }
 
 void player::actions()
