@@ -41,13 +41,11 @@ GLScene::GLScene()
 
     pauseMenu = false;
 
-    //alpha= new levelAlpha();
-    //omega = new levelOmega();
-
      KbMs = new Inputs();
 
      plx = new parallax();
      plx2 = new parallax();
+     plx3 = new parallax();
      sky = new skyBox;
 
      playMod= new Model();
@@ -60,116 +58,127 @@ GLScene::GLScene()
 
      texSky1 = new textureLoader();
      texSky2 = new textureLoader();
-     /*------------------------------------------*/
-         //--left side tiles
-         tile1 = new Model();
-         tile2 = new Model();
-         tile3 = new Model();
-         tile4 = new Model();
-         tile5 = new Model();
-         tile6 = new Model();
-         tile7 = new Model();
-         //--middle tile
-         tile8 = new Model();
-         //--right side tiles
-         tile9 = new Model();
-         tile10 = new Model();
-         tile11 = new Model();
-         tile12 = new Model();
-         tile13 = new Model();
-         tile14 = new Model();
-         tile15 = new Model();
+     /*-----------------------------------------*/
 
-        ply = new player();
-        ply2 = new player();
-        hitTimer=new timer();
-        hitTimer2=new timer();
-        speedInc=0.07;
-        speedDecr=0.0045;
-        ballTex = new textureLoader();
-        killBox= new Model();
-        ply2Score=0;
-        leftWall = new Model(); //---Left wall
-        rightWall = new Model(); //--Right wall
-        topWall = new Model(); //----Top wall
-        divide = new Model();
-        ballSpdBfrAcc=0.5;
-        tileTex=new textureLoader();
-        tileTex2=new textureLoader();
-        tileTex3=new textureLoader();
-        tileTex4=new textureLoader();
-        tileTex5=new textureLoader();
-        tileTex6=new textureLoader();
-        tileTex7=new textureLoader();
-        tileTex8=new textureLoader();
-        tileTex9=new textureLoader();
-        tileTex10=new textureLoader();
-        tileTex11=new textureLoader();
-        tileTex12=new textureLoader();
-        tileTex13=new textureLoader();
-        tileTex14=new textureLoader();
-        tileTex15=new textureLoader();
-        leftWallTex= new textureLoader();
-        rightWallTex= new textureLoader();
-        topWallTex= new textureLoader();
-        divWallTex= new textureLoader();
-        D= new timer();
-        BPA = new timer();
-        pCol= new timer();
-        playerModel = new Model();
-        playerModel2 = new Model();
-        plyTex = new textureLoader();
-        projTex = new textureLoader();
-        projTex2 = new textureLoader();
-        cross = new Model();
-        crosshair = new textureLoader();
-        Ball = new Model();
-        setBallSpeed=false;
-        scale=1;
-        ballDirX=-1;
-        ballDirY=1;
-     tile1->tag="left";
-     tile2->tag="left";
-     tile3->tag="left";
-     tile4->tag="left";
-     tile5->tag="left";
-     tile6->tag="left";
-     tile7->tag="left";
-     tile8->tag="middle";
-     tile9->tag="right";
-     tile10->tag="right";
-     tile11->tag="right";
-     tile12->tag="right";
-     tile13->tag="right";
-     tile14->tag="right";
-     tile15->tag="right";
-     threeMod= new Model();
-     twoMod= new Model();
-     oneMod= new Model();
-     zeroMod= new Model();
-     threeTex= new textureLoader();
-     twoTex= new textureLoader();
-     oneTex= new textureLoader();
-     zeroTex= new textureLoader();
-     playButton= new Model();
-     infoButton = new Model();
-     exitButton = new Model();
-     infoPage= new Model();
-     tex3 = new textureLoader();
+    //--left side tiles
+    tile1 = new Model();
+    tile2 = new Model();
+    tile3 = new Model();
+    tile4 = new Model();
+    tile5 = new Model();
+    tile6 = new Model();
+    tile7 = new Model();
+    //--middle tile
+    tile8 = new Model();
+    //--right side tiles
+    tile9 = new Model();
+    tile10 = new Model();
+    tile11 = new Model();
+    tile12 = new Model();
+    tile13 = new Model();
+    tile14 = new Model();
+    tile15 = new Model();
+
+    ply = new player();
+    ply2 = new player();
+    hitTimer=new timer();
+    hitTimer2=new timer();
+    speedInc=0.07;
+    speedDecr=0.0045;
+    ballTex = new textureLoader();
+    killBox= new Model();
+    ply2Score=0;
+    leftWall = new Model(); //---Left wall
+    rightWall = new Model(); //--Right wall
+    topWall = new Model(); //----Top wall
+    divide = new Model();
+    ballSpdBfrAcc=0.5;
+    tileTex=new textureLoader();
+    tileTex2=new textureLoader();
+    tileTex3=new textureLoader();
+    tileTex4=new textureLoader();
+    tileTex5=new textureLoader();
+    tileTex6=new textureLoader();
+    tileTex7=new textureLoader();
+    tileTex8=new textureLoader();
+    tileTex9=new textureLoader();
+    tileTex10=new textureLoader();
+    tileTex11=new textureLoader();
+    tileTex12=new textureLoader();
+    tileTex13=new textureLoader();
+    tileTex14=new textureLoader();
+    tileTex15=new textureLoader();
+    leftWallTex= new textureLoader();
+    rightWallTex= new textureLoader();
+    topWallTex= new textureLoader();
+    divWallTex= new textureLoader();
+    D= new timer();
+    BPA = new timer();
+    pCol= new timer();
+    playerModel = new Model();
+    playerModel2 = new Model();
+    plyTex = new textureLoader();
+    projTex = new textureLoader();
+    projTex2 = new textureLoader();
+    cross = new Model();
+    crosshair = new textureLoader();
+    Ball = new Model();
+    setBallSpeed=false;
+    scale=1;
+    ballDirX=-1;
+    ballDirY=1;
+    tile1->tag="left";
+    tile2->tag="left";
+    tile3->tag="left";
+    tile4->tag="left";
+    tile5->tag="left";
+    tile6->tag="left";
+    tile7->tag="left";
+    tile8->tag="middle";
+    tile9->tag="right";
+    tile10->tag="right";
+    tile11->tag="right";
+    tile12->tag="right";
+    tile13->tag="right";
+    tile14->tag="right";
+    tile15->tag="right";
+    threeMod= new Model();
+    twoMod= new Model();
+    oneMod= new Model();
+    zeroMod= new Model();
+    threeTex= new textureLoader();
+    twoTex= new textureLoader();
+    oneTex= new textureLoader();
+    zeroTex= new textureLoader();
+
+    menuModel = new Model();
+
+    playButton= new Model();
+    infoButton = new Model();
+    exitButton = new Model();
+    infoPage= new Model();
+    tex3 = new textureLoader();
     tex4 = new textureLoader();
     tex5 = new textureLoader();
     tex6 = new textureLoader();
     menu[0]=true;
-    //menu[1]=false;
-    //menu[2]=false;
-    //menu[3]=false;
-    //menu[4]=false;
-    plyScoreLast=0;
-    score=0;
-    mainMenPos=0;
+    plyScoreLast = 0;
+    score = 0;
+    mainMenPos = 0;
     controlButton= new Model();
     controlTex= new textureLoader();
     controlButtonA= new Model();
+    controlTexA= new textureLoader();
+    infoButtonA= new Model();
+    exitButtonA= new Model();
+    playButtonA= new Model();
+    infoTexA= new textureLoader();
+    exitTexA= new textureLoader();
+    playButtonTexA= new textureLoader();
+
+    menuTex = new textureLoader();
+    landingTex = new textureLoader();
+    /*------------------------------------------*/
       controlTexA= new textureLoader();
    infoButtonA= new Model();
      exitButtonA= new Model();
@@ -179,6 +188,12 @@ GLScene::GLScene()
       playButtonTexA= new textureLoader();
 //      mainMenuModel= new Model();
       //mainMenuTex= new textureLoader();
+//     mainMenuModel= new Model();
+//     mainMenuTex= new textureLoader();
+    winPlyModel= new Model();
+    winPly2Model= new Model();
+    winPlyTex= new textureLoader();
+    winPly2Tex= new textureLoader();
      /*------------------------------------------*/
 }
 
@@ -210,6 +225,7 @@ GLint GLScene::initGL()
 
     plx->parallaxInit("images/box/sky.png",texSky1);
     plx2->parallaxInit("images/box/city.png",texSky2);
+    plx2->parallaxInit("images/box/landing.jpg",landingTex);
 
     playMod->modelInit("images/box/pMPlay.png", true, playTex);
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
@@ -279,11 +295,25 @@ GLint GLScene::initGL()
     infoPage->modelInit("images/box/InfoPage.png",true,tex6);
     setBallDir();
 
+    menuModel->modelInit("images/box/menu.png",true,menuTex);
+    landing->modelInit("images/box/landing.png",true,landingTex);
+
     /*------------------------*/
 //     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
      // infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
       // controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
         //exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
+//    playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
+//    infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
+//    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
+//    exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
+//     playMenuModel->modelInit("images/box/playMenuPic.png",true,mainMenuTex);
+ //     infoMenuModel->modelInit("images/box/infoMenuPic.png",true,mainMenuTex);
+   //    controlsMenuModel->modelInit("images/box/controlsMenuPic.png",true,mainMenuTex);
+     //   exitMenuModel->modelInit("images/box/exitMenuPic.png",true,mainMenuTex);
+     winPlyModel->modelInit("images/box/ply_wins.png",true,winPlyTex);
+     winPly2Model->modelInit("images/box/ply2_wins.png",true,winPly2Tex);
+
     //--------------------------------------------------------//
 
     startTime = glfwGetTime();
@@ -437,6 +467,12 @@ void GLScene::reset()
     ply2->PYpos = -1.1;
     ply->thrown=false;
     ply2->thrown=false;
+    ply->OnTile=true;
+    ply2->OnTile=true;
+    ply->health=4;
+    ply2->health=4;
+    ply->actionTrigger=0;
+    ply2->actionTrigger=0;
 
     Ball->Xpos=0;
     Ball->Ypos=0;
@@ -794,7 +830,6 @@ void GLScene:: update()
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
 
-
     tileChange(Ball, tile1,tileTex);
     tileChange(Ball, tile2,tileTex2);
     tileChange(Ball, tile3,tileTex3);
@@ -810,9 +845,6 @@ void GLScene:: update()
     tileChange(Ball, tile13,tileTex13);
     tileChange(Ball, tile14,tileTex14);
     tileChange(Ball, tile15,tileTex15);
-
-
-
 
     //MOVING THE BALL
     if(currentTime-startTime>4)
@@ -905,7 +937,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
      glPopMatrix();
 
-    //-----------------------------------------------------------------------------------------------//
+          //-----------------------------------------------------------------------------------------------//
          //------------------------------- PARALLAX CREATION ---------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
         glPushMatrix();
@@ -924,27 +956,41 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(timeFromStart-startTime>=2)//wait three seconds to start the game
             plx2->scroll(false,"left",0.0002,scale);
 
-    if(menu[0])									// Not Time To Quit, Update Screen
+    if(menu[0])	// Not Time To Quit, Update Screen
     {
-		}	    					// Swap Buffers (Double Buffering)
+        glPushMatrix();
+            glScaled(3.33, 3.33, 1.0);
+            plx3->drawSquare(screenWidth, screenHeight, landingTex);
+        glPopMatrix();
+         if(timeFromStart-startTime>=2)//wait three seconds to start the game
+            plx->scroll(false,"left",1,scale);
+    }
 
-     if(menu[1]==true)
+    if(menu[1] == true)
     {
-
+        //          model,   texture, xpos,ypos, 0 X,  0 Y, 1 X,  1 Y, 2 X, 2 Y,  3 X, 3 Y, width,height
+        makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -1.0, 3.5, -1.0, 3.5, 1.0, -3.5, 1.0, 0.0, 0.0);
+        if(mainMenPos == 0) // play
+            menuModel->modelInit("images/box/menu_play.png",true,menuTex);
+        if(mainMenPos == 1) // info
+            menuModel->modelInit("images/box/menu_info.png",true,menuTex);
+        if(mainMenPos == 2) // controls
+            menuModel->modelInit("images/box/menu_control.png",true,menuTex);
+        if(mainMenPos == 3) // exit
+            menuModel->modelInit("images/box/menu_exit.png",true,menuTex);
     }
     if(this->menu[2]==true)
     {
-          glPushMatrix();
-         glScalef(2.00,1.00,1);
-         infoPage->Xpos=-0.0;
-         infoPage->Ypos=-0.0;
+        glPushMatrix();
+        glScalef(2.00,1.00,1);
+        infoPage->Xpos=-0.0;
+        infoPage->Ypos=-0.0;
         infoPage->drawModel(tex6);
         glPopMatrix();
     }
     if(this->menu[3]==true)
     {
         double lolTime = glfwGetTime();
-
 
           //-----------------------------------------------------------------------------------------------//
          //------------------------------------------ TIMERS ---------------------------------------------//
@@ -1000,12 +1046,11 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->box.y = ply->PYpos;
             ply->pl_pltfrm_box.x = ply ->PXpos;
             ply->pl_pltfrm_box.y = ply -> PYpos;
-            ply->pl_pltfrm_box.height = 0.6;
+            ply->pl_pltfrm_box.height = 0.55;
             ply->pl_pltfrm_box.width = 0.07;
             ply->box.height=0.1;
             ply->trueHeight=0.1;
             ply->box.width=0.3;
-            //update(20);
             ply->drawplayer();
         glPopMatrix();
        }
@@ -1036,7 +1081,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    //makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
@@ -1156,7 +1201,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(ply2->lastCase=='R')
             makeModel(cross, crosshair, tmp6, tmp5, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
 
-
+        if(!menu[6])
+        {
         if(lolTime-startTime>0.5&&lolTime-startTime<=1)
         {
              //draw the number 3
@@ -1166,7 +1212,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         }
         if(lolTime-startTime>1&&lolTime-startTime<=2)
          {
-              //draw the number 2
+              //drawmainMenChoice=false; the number 2
             glPushMatrix();
                 twoMod->drawModel(twoTex);
             glPopMatrix();
@@ -1185,6 +1231,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 zeroMod->drawModel(zeroTex);
             glPopMatrix();
          }
+
         if(lolTime-startTime>=4&&!menu[4])//wait two seconds to start the
             KbMs->idle(pressed,ply,ply2);
             //KbMs->keySound(pressed, snds);
@@ -1198,6 +1245,10 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             glPopMatrix();
         }
         update();
+        }
+        if(plyScore>=3||ply2Score>=3)
+            menu[6]=true;
+
     }
      if(this->menu[4]==true)
     {
@@ -1270,10 +1321,25 @@ GLint GLScene::drawGLScene2(bool pressed[256])
          glScalef(1.00,1.00,1);
          playButton->Xpos=0.0;
          playButton->Ypos=0.0;
-        playButton->drawModel(tex3);
+         playButton->drawModel(tex3);
         glPopMatrix();
     }
+    if(menu[6])
+    {
+        if(plyScore>=3)
+        {
+            glPushMatrix();
+             makeModel(winPlyModel, winPlyTex, 0.0, 0.0, -3.5, -0.5, 3.5, -0.5, 3.5, 0.5, -3.5, 0.5, 0.0, 0.0);
+            glPopMatrix();
+        }
+        else if(ply2Score>=3)
+        {
+            glPushMatrix();
+             makeModel(winPly2Model, winPly2Tex, 0.0, 0.0, -3.5, -0.5, 3.5, -0.5, 3.5, 0.5, -3.5, 0.5, 0.0, 0.0);
+            glPopMatrix();
+        }
 
+    }
 
 }
 GLvoid GLScene::resizeGLScene(GLsizei width, GLsizei height)

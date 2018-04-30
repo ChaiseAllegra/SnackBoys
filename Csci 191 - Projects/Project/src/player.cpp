@@ -3,7 +3,8 @@
 #include <GLTexture.h>
 #include <windows.h>
 #include <iostream>
-  player::player()
+
+player::player()
 {
     verticalVelocity=0;
     playerGrav=-20;
@@ -277,6 +278,7 @@ void player::actions()
         {
             jump=0;
             verticalVelocity=0;
+            PYpos=-1.38;
         }
 
         if(topWC)

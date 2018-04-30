@@ -367,8 +367,11 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 			Scene->drawGLScene2(keys);
             SwapBuffers(hDC);
 
-            if(keys[VK_RETURN]&&Scene->menu[0]==true)
+            if(keys[VK_RETURN] && Scene->menu[0]==true && menu->getTicks() > 150)
+            {
                 Scene->menu[1]=true;
+                menu->reset();
+            }
 
             if(keys['H']&&Scene->menu[1]==true)//info page
             {
@@ -432,7 +435,10 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                 if(mainMenChoice)
                 {
                     if(Scene->mainMenPos==0)
+                    {
                         Scene->menu[3]=true;
+                        Scene->reset();
+                    }
                     if(Scene->mainMenPos==1)
                         Scene->menu[2]=true;
                     if(Scene->mainMenPos==2)
@@ -442,7 +448,18 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     mainMenChoice=false;
                     Scene->mainMenPos=0;
                 }
-                cout<<Scene->mainMenPos<<endl;
+            }
+            if(Scene->menu[6])
+            {
+                if(keys[VK_RETURN])//keys['E']||keys['O'])
+                {
+                    Scene->menu[6]=false;
+                    Scene->menu[3]=false;
+                    Scene->menu[1]=true;
+                    Scene->plyScore=0;
+                    Scene->ply2Score=0;
+                    mainMenChoice=false;
+                }
             }
             if(Scene->menu[4]==true)//Scene->pauseMenu)
             {

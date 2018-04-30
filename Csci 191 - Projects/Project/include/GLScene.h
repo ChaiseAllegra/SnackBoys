@@ -102,6 +102,7 @@ class GLScene
         Model* cross;
         textureLoader* crosshair;
          bool menu[6];
+         Model* menuModel;
         Model* playButton;
         Model *infoButton;
         Model *exitButton ;
@@ -121,10 +122,17 @@ class GLScene
          Model *infoButtonA;
          Model *exitButtonA;
         Model* playButtonA;
+        Model* landing;
+        textureLoader* landingTex;
+        textureLoader* menuTex;
         textureLoader* infoTexA;
         textureLoader* exitTexA;
         textureLoader* playButtonTexA;
         Model playMenuModel;
+        Model *winPlyModel;
+        Model *winPly2Model;
+        textureLoader* winPlyTex;
+        textureLoader* winPly2Tex;
         //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
         WPARAM wParam;
@@ -188,6 +196,7 @@ class GLScene
 
         parallax* plx;
         parallax* plx2;
+        parallax* plx3;
 
         Model* playMod;
         Model* resetMod;
