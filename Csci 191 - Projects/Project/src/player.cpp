@@ -43,8 +43,8 @@ player::player()
     swinging = false;
 
     startSpeed=0.0009;
-    //plyVel = startSpeed;//2;
-    plyVel = 0.002;
+    plyVel = startSpeed;//2;
+   // plyVel = 0.002;
     !ballCollided;
     !midCollision;
 
@@ -266,8 +266,7 @@ void player::actions()
                 {
                     if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated)&&!pause)
                     {
-
-                        /*if (plyVel  >  0.002)
+                        if (plyVel  >  0.002)
                         {
                             plyVel = 0.002;
                             //cout << "IN te if " << endl;
@@ -278,7 +277,7 @@ void player::actions()
                             //cout<<"else"<<endl;
                             plyVel += plyAccel;
                             plyAccel += 0.0000015;
-                        }*/
+                        }
 
 
                         if(lastCase == 'R'&& !rightWC)//running on the ground and not colliding with the wall
@@ -373,6 +372,7 @@ void player::actions()
     }
     if(delta>0&&!pause)
     {
+        if(!isDash)
         PYpos+=(verticalVelocity)/delta;
 
         if(OnTile&&verticalVelocity<0)
@@ -385,7 +385,7 @@ void player::actions()
         if(topWC)
             verticalVelocity=-0.5;
 
-        if(!OnTile)
+        if(!OnTile&&!isDash)
            verticalVelocity+=(playerGrav)/delta;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
 
 

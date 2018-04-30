@@ -1046,7 +1046,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->pl_pltfrm_box.width = 0.07;
             ply->box.height=0.1;
             ply->trueHeight=0.1;
-            ply->box.width=0.06;
+            ply->box.width=0.1;
             ply->drawplayer();
             ply->oneORtwo = "one";
         glPopMatrix();
@@ -1064,7 +1064,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply2->pl_pltfrm_box.width = 0.07;
                 ply2->trueHeight=0.1;
                 ply2->box.height=0.1;
-                ply2->box.width=0.06;
+                ply2->box.width=0.1;
                 ply2->drawplayer();
                 ply2->oneORtwo = "two";
             glPopMatrix();

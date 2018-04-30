@@ -9,6 +9,7 @@
 
 using namespace std;
 timer* stunTimer= new timer();
+bool flagged=false;
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -72,19 +73,32 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(pressed['A']&&!ply->isDash)
      {
         ply->actionTrigger = 1;
-        ply->lastKey = 'L';
+         ply->lastKey = 'R';
         ply->lastCase = 'L';
+        if(ply->lastKey!='N'&&!flagged)
+        {
+                flagged=true;
+                ply->plyVel = ply->startSpeed;
+        }
      }
 
     if(pressed['D']&&!ply->isDash)
     {
         ply->actionTrigger = 1;
-        ply->lastKey = 'R';
+        ply->lastKey = 'L';
         ply->lastCase = 'R';
+        if(ply->lastKey!='N'&&flagged)
+        {
+                flagged=false;
+                ply->plyVel = ply->startSpeed;
+        }
     }
 
     if(!pressed['D']&&!pressed['A']||ply->isDash)
+    {
         ply->actionTrigger=0;
+        ply->lastKey = 'N';
+    }
     if(pressed['S'])//ducking
         ply->box.height=ply->trueHeight/2;
     if(!pressed['S'])
@@ -284,7 +298,7 @@ void Inputs::keySound(bool pressed[256], sounds* snds)
 {
         if (pressed['F'])
         {
-            snds->playSound("sounds/explosion.wav");
+            //snds->playSound("sounds/explosion.wav");
         }
 
 
