@@ -10,7 +10,6 @@
 #pragma comment(lib, "glu32.lib")
 
 #include <GLScene.h> //change
-
 #include <stdlib.h>
 #include<timer.h>
 #include <iostream>
@@ -248,7 +247,7 @@ LRESULT CALLBACK WndProc(	HWND	hWnd,			// Handle For This Window
 							WPARAM	wParam,			// Additional Message Information
 							LPARAM	lParam)			// Additional Message Information
 {
-   // Scene->windMsg(hWnd,uMsg,wParam,lParam,keys);
+   Scene->windMsg(hWnd,uMsg,wParam,lParam,keys);
 //    levelA->windMsg(hWnd,uMsg,wParam,lParam,keys);
 
 	switch (uMsg)									// Check For Windows Messages
