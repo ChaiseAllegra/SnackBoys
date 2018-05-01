@@ -1749,13 +1749,14 @@
 1523077152 source:c:\users\chaise\documents\gamedevproject\snackboys\csci 191 - projects\project\src\timer.cpp
 	"timer.h"
 
-1525054270 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\main.cpp
+1525153736 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
 	<timer.h>
 	<iostream>
 	<windows.h>
+	<sounds.h>
 
 1525067666 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
@@ -1792,7 +1793,7 @@
 	<timer.h>
 	<string>
 
-1525067666 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1525207785 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -1801,6 +1802,7 @@
 	<stdint.h>
 	<iostream>
 	<string>
+	<sounds.h>
 
 1525044242 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\glinputs.h
 	<windows.h>
@@ -1860,7 +1862,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1525070045 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525209597 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -1882,12 +1884,13 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525067666 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\player.cpp
+1525211627 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
 	<windows.h>
 	<iostream>
+	<sounds.h>
 
 1525039917 c:\users\jas\desktop\snackboys\csci 191 - projects\project\include\timer.h
 	<time.h>
@@ -2988,7 +2991,7 @@
 	<stdint.h>
 	<inttypes.h>
 
-1525053966 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\sounds.cpp
+1525150115 source:c:\users\jas\desktop\snackboys\csci 191 - projects\project\src\sounds.cpp
 	"sounds.h"
 	<iostream>
 

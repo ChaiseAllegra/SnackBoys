@@ -31,6 +31,11 @@ sounds *BtWsnds = new sounds();
 sounds *gameSoundtrack = new sounds();
 bool musicStarted = false;
 
+bool cdown1 = false;
+bool cdown2 = false;
+bool cdown3 = false;
+bool rumble = false;
+
 bool wonSound = false;
 
 timer* soundTimer = new timer();
@@ -211,6 +216,11 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+
+    cdown1 = false;
+    cdown2 = false;
+    cdown3 = false;
+    rumble = false;
     // musicReset->start(); //not used
     soundTimer->start();
     snds->initSounds();
@@ -1251,6 +1261,11 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(lolTime-startTime>0.5&&lolTime-startTime<=1)
         {
              //draw the number 3
+            if (!cdown3)
+            {
+                snds->playSound("sounds/3.mp3");
+                cdown3 = true;
+            }
             glPushMatrix();
                 threeMod->drawModel(threeTex);
             glPopMatrix();
@@ -1258,6 +1273,11 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(lolTime-startTime>1&&lolTime-startTime<=2)
          {
               //drawmainMenChoice=false; the number 2
+            if (!cdown2)
+            {
+                snds->playSound("sounds/2.mp3");
+                cdown2 = true;
+            }
             glPushMatrix();
                 twoMod->drawModel(twoTex);
             glPopMatrix();
@@ -1266,12 +1286,22 @@ GLint GLScene::drawGLScene2(bool pressed[256])
          {
              //draw the number 1
             glPushMatrix();
+            if (!cdown1)
+            {
+                snds->playSound("sounds/1.mp3");
+                cdown1 = true;
+            }
                 oneMod->drawModel(oneTex);
             glPopMatrix();
         }
         if(lolTime-startTime>3&&lolTime-startTime<=4)
          {
             //draw the number 0
+            if (!rumble)
+            {
+                snds->playSound("sounds/rumble.mp3");
+                rumble = true;
+            }
             glPushMatrix();
                 zeroMod->drawModel(zeroTex);
             glPopMatrix();

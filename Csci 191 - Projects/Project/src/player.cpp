@@ -3,7 +3,11 @@
 #include <GLTexture.h>
 #include <windows.h>
 #include <iostream>
+#include <sounds.h>
 
+sounds* steps = new sounds();
+
+timer* soundTime = new timer();
 player::player()
 {
     verticalVelocity=0;
@@ -86,6 +90,7 @@ void player::drawplayer()
 
 void player::playerInit()
 {
+    soundTime->start();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
@@ -282,9 +287,27 @@ void player::actions()
 
 
                         if(lastCase == 'R'&& !rightWC)//running on the ground and not colliding with the wall
+                        {
                             PXpos += (plyVel*1200.5)/delta;//10;//(plyVel*1800.5)/delta;//10;
+
+                            if(soundTime->getTicks() >= 250  && this->OnTile)
+                            {
+                               steps->playSound("sounds/footSteps.mp3");
+                               soundTime->reset();
+                            }
+
+                        }
+
                         if(lastCase == 'L'&& !leftWC)
-                            PXpos -= (plyVel*1200.5)/delta;//10
+                        {
+                           PXpos -= (plyVel*1200.5)/delta;//10
+                           if(soundTime->getTicks() >= 250 && this->OnTile)
+                            {
+                               steps->playSound("sounds/footSteps.mp3");
+                               soundTime->reset();
+                            }
+                        }
+
                         /*if(lastCase == 'L'&& !leftWC&&jump>0)//move slower in the air
                             PXpos -= (plyVel*1200.5)/delta;//10;
                         if(lastCase == 'R'&& !rightWC&&jump>0)
