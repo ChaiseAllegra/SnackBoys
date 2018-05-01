@@ -502,6 +502,9 @@ void GLScene::ballColl()
     {
         hitTimer->reset();
 
+        cout << "swing hit" << endl;
+        snds->playSound("sounds/swingHit.mp3");
+
         pCol->reset();
         Ball->tag="one";
         Ball->lethal=0;
@@ -529,9 +532,18 @@ void GLScene::ballColl()
         ply->stunned=true;
     }
 
+    if (!box_collision(Ball->box, ply->box) && ply->swinging == true && ply->swingTimer->getTicks() >=200 && hitTimer->getTicks()>200)
+    {
+        cout << "swing" << endl;
+        ply->swingTimer->reset();
+        snds->playSound("sounds/swing.mp3");
+    }
+
     //-----------------------PLAYER 2--------------------------------------//
     if (box_collision(Ball->box, ply2->box) && ply2->swinging == true&&hitTimer2->getTicks()>200)
     {
+        cout << "swing2 hit" << endl;
+        snds->playSound("sounds/swingHit.mp3");
         hitTimer2->reset();
          Ball->tag="two";
          Ball->lethal=0;
@@ -559,6 +571,12 @@ void GLScene::ballColl()
         //stun player2
         Ball->lethal=0;//now it is neutral and wont stun anyone
         ply2->stunned=true;
+    }
+    if (!box_collision(Ball->box, ply2->box) && ply2->swinging == true && ply2->swingTimer->getTicks() >=200 && hitTimer->getTicks()>200)
+    {
+        cout << "swing2" << endl;
+        ply2->swingTimer->reset();
+        snds->playSound("sounds/swing.mp3");
     }
 
     if(box_collision(ply2->box,Ball->box) && ply2->isalive() && Ball->myTime->getTicks() > 200)

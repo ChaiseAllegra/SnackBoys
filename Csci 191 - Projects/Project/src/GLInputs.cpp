@@ -288,7 +288,7 @@ void Inputs::keySound(bool pressed[256], sounds* snds)
 {
         if (pressed['F'])
         {
-            snds->playSound("sounds/explosion.wav");
+            //snds->playSound("sounds/swing.mp3");
         }
 
 
