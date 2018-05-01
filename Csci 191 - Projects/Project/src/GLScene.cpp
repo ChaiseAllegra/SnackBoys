@@ -31,6 +31,8 @@ sounds *BtWsnds = new sounds();
 sounds *gameSoundtrack = new sounds();
 bool musicStarted = false;
 
+bool wonSound = false;
+
 timer* soundTimer = new timer();
 
 timer* musicReset = new timer();
@@ -216,7 +218,9 @@ GLint GLScene::initGL()
     gameSoundtrack->initSounds();
 
     gameSoundtrack->stopAllSounds();
-    gameSoundtrack->adjustVolume(.3);
+    gameSoundtrack->adjustVolume(.2);
+
+    wonSound = false;
 
     if(!musicStarted)
     {
@@ -1351,12 +1355,24 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     {
         if(plyScore>=3)
         {
+            if(!wonSound)
+            {
+                gameSoundtrack->stopAllSounds();
+                gameSoundtrack->playSound("sounds/won.mp3");
+                wonSound = true;
+            }
             glPushMatrix();
              makeModel(winPlyModel, winPlyTex, 0.0, 0.0, -3.5, -0.5, 3.5, -0.5, 3.5, 0.5, -3.5, 0.5, 0.0, 0.0);
             glPopMatrix();
         }
         else if(ply2Score>=3)
         {
+            if(!wonSound)
+            {
+                gameSoundtrack->stopAllSounds();
+                gameSoundtrack->playSound("sounds/won.mp3");
+                wonSound = true;
+            }
             glPushMatrix();
              makeModel(winPly2Model, winPly2Tex, 0.0, 0.0, -3.5, -0.5, 3.5, -0.5, 3.5, 0.5, -3.5, 0.5, 0.0, 0.0);
             glPopMatrix();

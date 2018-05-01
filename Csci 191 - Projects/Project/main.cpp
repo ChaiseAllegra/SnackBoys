@@ -14,10 +14,13 @@
 #include<timer.h>
 #include <iostream>
 #include <windows.h>		// Header File For Windows
+#include <sounds.h>
 
 using namespace std;
 timer* menu= new timer();
 bool mainMenChoice=false;
+
+sounds* menuSound = new sounds();
 
 
 HDC			hDC=NULL;		// Private GDI Device Context
@@ -418,16 +421,19 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
             {
                 if((keys['A']||keys['J'])&&Scene->mainMenPos>0&&menu->getTicks()>150)
                 {
+                    menuSound->playSound("sounds/menuSelect.mp3");
                     Scene->mainMenPos--;
                     menu->reset();
                 }
                 if((keys['D']||keys['L'])&&Scene->mainMenPos<3&&menu->getTicks()>150)
                 {
+                    menuSound->playSound("sounds/menuSelect.mp3");
                     Scene->mainMenPos++;
                     menu->reset();
                 }
                 if(keys['E']||keys['O']&&menu->getTicks()>150)
                 {
+                    menuSound->playSound("sounds/selectMenu.mp3");
                     mainMenChoice=true;
                     Scene->menu[1]=false;
                     menu->reset();
@@ -453,6 +459,8 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
             {
                 if(keys[VK_RETURN])//keys['E']||keys['O'])
                 {
+                    menuSound->stopAllSounds();
+                    menuSound->playMusic("sounds/bgmusic.mp3");
                     Scene->menu[6]=false;
                     Scene->menu[3]=false;
                     Scene->menu[1]=true;
@@ -467,16 +475,27 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                {
                    menu->reset();
                    if(Scene->menuPos>0)
-                        Scene->menuPos-=1;
+                   {
+                        Scene->menuPos--;
+                        menuSound->playSound("sounds/menuSelect.mp3");
+                   }
+
                }
                if(keys['W']&&menu->getTicks()>150)
                {
                    menu->reset();
                     if(Scene->menuPos<2)
+                    {
                         Scene->menuPos++;
+                        menuSound->playSound("sounds/menuSelect.mp3");
+                    }
+
                }
                if(keys['E'])
+               {
+                   menuSound->playSound("sounds/selectMenu.mp3");
                     Scene->pauseChoice=true;
+               }
                if(Scene->pauseChoice&&Scene->menuPos==0)
                     done=true;
             }

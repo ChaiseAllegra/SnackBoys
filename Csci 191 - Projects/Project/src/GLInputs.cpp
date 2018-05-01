@@ -6,9 +6,12 @@
 #include <stdint.h>
 #include <iostream>
 #include <string>
+#include <sounds.h>
 
+sounds* jumpSound = new sounds();
 using namespace std;
 timer* stunTimer= new timer();
+
 Inputs::Inputs()
 {
    prev_Mouse_X =0;
@@ -93,6 +96,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(pressed['E']&&ply->jumpTimer->getTicks() >= 200)//200ms
         if(ply->jump<2)
         {
+            jumpSound->playSound("sounds/jump.mp3");
             ply->jumpTimer->reset();
             ply->verticalVelocity=6;//0.008;
             ply->jump++;
