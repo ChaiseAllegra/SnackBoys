@@ -124,6 +124,12 @@ GLScene::GLScene()
     rightWallTex= new textureLoader();
     topWallTex= new textureLoader();
     divWallTex= new textureLoader();
+
+    p1HP = new textureLoader();
+    p1HPModel = new Model();
+    p2HP = new textureLoader();
+    p2HPModel = new Model();
+
     D= new timer();
     BPA = new timer();
     pCol= new timer();
@@ -267,6 +273,10 @@ GLint GLScene::initGL()
     ply->playerInit2();
     playerModel2->modelInit("images/player2_right/player0.png", true, plyTex);
     ply2->playerInit();
+
+    p1HPModel->modelInit("images/box/p1_3.png", true, p1HP);
+    p2HPModel->modelInit("images/box/p2_3.png", true, p2HP);
+
 
     //----------------player position variables---------------//
     ply->PXpos=-2;
@@ -968,8 +978,40 @@ void GLScene:: update()
         ply2->ProjACurY=ply2->PYpos, ply2->ProjACurX=ply2->PXpos-0.5;
 }
 
+void GLScene::updateHPBar( )
+{
+  if (plyScore == 1)
+    {
+        p2HPModel->modelInit("images/box/p2_2.png", true, p2HP);
+    }
+    else if (plyScore == 2)
+    {
+        p2HPModel->modelInit("images/box/p2_1.png", true, p2HP);
+    }
+    else if (plyScore == 3)
+    {
+        p2HPModel->modelInit("images/box/emty.png", true, p2HP);
+    }
+
+    if (ply2Score == 1)
+    {
+        p1HPModel->modelInit("images/box/p1_2.png", true, p1HP);
+    }
+    else if (ply2Score == 2)
+    {
+        p1HPModel->modelInit("images/box/p1_1.png", true, p1HP);
+    }
+    else if (ply2Score == 3)
+    {
+        p1HPModel->modelInit("images/box/emty.png", true, p1HP);
+    }
+}
+
+
 GLint GLScene::drawGLScene2(bool pressed[256])
 {
+    updateHPBar();
+
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
     glLoadIdentity();
@@ -1144,7 +1186,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile11,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+   // makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     //left wall
@@ -1158,6 +1200,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //top wall
     makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
+    //player 2 hp bar creation
+    makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
+    makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
         //----------------Projectile creation------------------------------------------------//
           if(ply->thrown)
         {

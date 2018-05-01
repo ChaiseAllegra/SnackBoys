@@ -29,6 +29,7 @@ class GLScene
         bool box_collision(Hbox, Hbox);
         void reset();
         int ballPosHit(Model* ,Model* );
+        void updateHPBar();
 
 
         int windMsg(HWND,UINT,WPARAM,LPARAM,bool[256]);
@@ -133,6 +134,12 @@ class GLScene
         Model *winPly2Model;
         textureLoader* winPlyTex;
         textureLoader* winPly2Tex;
+
+        textureLoader* p2HP;
+        Model* p2HPModel;
+
+        textureLoader* p1HP;
+        Model* p1HPModel;
         //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
         WPARAM wParam;
