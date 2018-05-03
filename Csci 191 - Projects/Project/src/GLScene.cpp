@@ -522,7 +522,7 @@ void GLScene::ballColl()
     {
         hitTimer->reset();
 
-        cout << "swing hit" << endl;
+        //cout << "swing hit" << endl;
         snds->playSound("sounds/swingHit.mp3");
 
         pCol->reset();
@@ -554,7 +554,7 @@ void GLScene::ballColl()
 
     if (!box_collision(Ball->box, ply->box) && ply->swinging == true && ply->swingTimer->getTicks() >=200 && hitTimer->getTicks()>200)
     {
-        cout << "swing" << endl;
+        //cout << "swing" << endl;
         ply->swingTimer->reset();
         snds->playSound("sounds/swing.mp3");
     }
@@ -562,7 +562,7 @@ void GLScene::ballColl()
     //-----------------------PLAYER 2--------------------------------------//
     if (box_collision(Ball->box, ply2->box) && ply2->swinging == true&&hitTimer2->getTicks()>200)
     {
-        cout << "swing2 hit" << endl;
+        //cout << "swing2 hit" << endl;
         snds->playSound("sounds/swingHit.mp3");
         hitTimer2->reset();
          Ball->tag="two";
@@ -594,7 +594,7 @@ void GLScene::ballColl()
     }
     if (!box_collision(Ball->box, ply2->box) && ply2->swinging == true && ply2->swingTimer->getTicks() >=200 && hitTimer->getTicks()>200)
     {
-        cout << "swing2" << endl;
+        //cout << "swing2" << endl;
         ply2->swingTimer->reset();
         snds->playSound("sounds/swing.mp3");
     }
@@ -611,7 +611,7 @@ void GLScene::setBallDir()
 	double rando = rand() % 2+1;
 	if(score<=0)
 	{
-	    cout<<"in here"<<endl;
+	    //cout<<"in here"<<endl;
 		if(rando>1)
         {
 			ballDirX=1;
@@ -980,7 +980,7 @@ void GLScene:: update()
 
 void GLScene::updateHPBar( )
 {
-  if (plyScore == 1)
+    if (plyScore == 1)
     {
         p2HPModel->modelInit("images/box/p2_2.png", true, p2HP);
     }
@@ -1010,7 +1010,7 @@ void GLScene::updateHPBar( )
 
 GLint GLScene::drawGLScene2(bool pressed[256])
 {
-    updateHPBar();
+    //updateHPBar();
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
@@ -1084,7 +1084,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             //gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
             gameEntered = true;
         }
-
+        //updateHPBar();
         double lolTime = glfwGetTime();
 
           //-----------------------------------------------------------------------------------------------//
@@ -1176,7 +1176,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //        model,texture, xpos, ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
     makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    //makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
@@ -1186,7 +1186,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile11,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-   // makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     //left wall
@@ -1201,8 +1201,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
     //player 2 hp bar creation
-    makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
-    makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
+    //makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
+    //makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
         //----------------Projectile creation------------------------------------------------//
           if(ply->thrown)
         {

@@ -3,11 +3,7 @@
 #include <GLTexture.h>
 #include <windows.h>
 #include <iostream>
-#include <sounds.h>
 
-sounds* steps = new sounds();
-
-timer* soundTime = new timer();
 player::player()
 {
     verticalVelocity=0;
@@ -23,6 +19,7 @@ player::player()
     aimX = 0;
     aimY = -1;
     plyAccel = 0.000005;
+    dashVel=7;//4;
 
         verticies[0].x=-0.3;verticies[0].y=-0.3;verticies[0].z=-1.0;
         verticies[1].x=0.3;verticies[1].y=-0.3;verticies[1].z=-1.0;
@@ -46,9 +43,9 @@ player::player()
 
     swinging = false;
 
-    startSpeed=0.0009;
-    //plyVel = startSpeed;//2;
-    plyVel = 0.002;
+    startSpeed=0.001;
+    plyVel = startSpeed;//2;
+   // plyVel = 0.002;
     !ballCollided;
     !midCollision;
 
@@ -90,7 +87,6 @@ void player::drawplayer()
 
 void player::playerInit()
 {
-    soundTime->start();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
@@ -271,8 +267,7 @@ void player::actions()
                 {
                     if (!ballCollided && (swingDuration->getTicks() >= 400 || jumpInitiated)&&!pause)
                     {
-
-                        /*if (plyVel  >  0.002)
+                        if (plyVel  >  0.002)
                         {
                             plyVel = 0.002;
                             //cout << "IN te if " << endl;
@@ -283,35 +278,18 @@ void player::actions()
                             //cout<<"else"<<endl;
                             plyVel += plyAccel;
                             plyAccel += 0.0000015;
-                        }*/
+                        }
 
 
-                        if(lastCase == 'R'&& !rightWC)//running on the ground and not colliding with the wall
-                        {
+                        if(lastCase == 'R'&& !rightWC&&OnTile)//running on the ground and not colliding with the wall
                             PXpos += (plyVel*1200.5)/delta;//10;//(plyVel*1800.5)/delta;//10;
+                        else if(lastCase == 'R'&& !rightWC&&!OnTile)
+                            PXpos += (plyVel*800)/delta;//10;
+                        if(lastCase == 'L'&& !leftWC&&OnTile)
+                            PXpos -= (plyVel*1200.5)/delta;//10
+                        else if(lastCase == 'L'&& !leftWC&&!OnTile)//move slower in the air
+                            PXpos -= (plyVel*800)/delta;//10;
 
-                            if(soundTime->getTicks() >= 250  && this->OnTile)
-                            {
-                               steps->playSound("sounds/footSteps.mp3");
-                               soundTime->reset();
-                            }
-
-                        }
-
-                        if(lastCase == 'L'&& !leftWC)
-                        {
-                           PXpos -= (plyVel*1200.5)/delta;//10
-                           if(soundTime->getTicks() >= 250 && this->OnTile)
-                            {
-                               steps->playSound("sounds/footSteps.mp3");
-                               soundTime->reset();
-                            }
-                        }
-
-                        /*if(lastCase == 'L'&& !leftWC&&jump>0)//move slower in the air
-                            PXpos -= (plyVel*1200.5)/delta;//10;
-                        if(lastCase == 'R'&& !rightWC&&jump>0)
-                            PXpos += (plyVel*1200.5)/delta;//10;*/
                     T->reset();
                     }
                 }
@@ -361,10 +339,13 @@ void player::actions()
    }
     if(isDash&&!pause)
     {
+        if(!OnTile)
+            verticalVelocity=-0.5;
+
         if(lastCase=='R'&&rightWC)
         {
                     isDash=false;
-                    dashVel=5;
+                    dashVel=7;
         }
         if(lastCase=='R'&&!rightWC)
         {
@@ -372,15 +353,15 @@ void player::actions()
             if(dashVel<=0||rightWC)
             {
                 isDash=false;
-                dashVel=5;
+                dashVel=7;
             }
-            dashVel-=(6.5)/delta;//dashDec;//5.5
+            dashVel-=(11.5)/delta;//dashDec;//5.5
         }
 
         if(lastCase=='L'&&leftWC)
         {
                     isDash=false;
-                    dashVel=5;
+                    dashVel=7;
         }
          if(lastCase=='L'&&!leftWC)
         {
@@ -388,14 +369,15 @@ void player::actions()
             if(dashVel<=0||leftWC)
             {
                 isDash=false;
-                dashVel=5;
+                dashVel=7;
             }
-            dashVel-=(6.5)/delta;//5.5
+            dashVel-=(11.5)/delta;//5.5
         }
 
     }
     if(delta>0&&!pause)
     {
+        if(!isDash)
         PYpos+=(verticalVelocity)/delta;
 
         if(OnTile&&verticalVelocity<0)
@@ -408,7 +390,7 @@ void player::actions()
         if(topWC)
             verticalVelocity=-0.5;
 
-        if(!OnTile)
+        if(!OnTile&&!isDash)
            verticalVelocity+=(playerGrav)/delta;//decrement the vertical velocity by the gravity as long as the player is not touching a tile
 
 
