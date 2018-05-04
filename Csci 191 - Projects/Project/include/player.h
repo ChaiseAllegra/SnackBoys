@@ -88,7 +88,7 @@ class player: public Model
         bool endJump;
         bool onGround;
         float trueHeight;
-        float dashVel=4;
+        float dashVel;
         bool OnTile;
 
         bool swinging;

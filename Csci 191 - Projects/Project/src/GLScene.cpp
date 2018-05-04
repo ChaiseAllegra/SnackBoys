@@ -522,7 +522,7 @@ void GLScene::ballColl()
     {
         hitTimer->reset();
 
-        cout << "swing hit" << endl;
+        //cout << "swing hit" << endl;
         snds->playSound("sounds/swingHit.mp3");
 
         pCol->reset();
@@ -554,7 +554,7 @@ void GLScene::ballColl()
 
     if (!box_collision(Ball->box, ply->box) && ply->swinging == true && ply->swingTimer->getTicks() >=200 && hitTimer->getTicks()>200)
     {
-        cout << "swing" << endl;
+        //cout << "swing" << endl;
         ply->swingTimer->reset();
         snds->playSound("sounds/swing.mp3");
     }
@@ -562,7 +562,7 @@ void GLScene::ballColl()
     //-----------------------PLAYER 2--------------------------------------//
     if (box_collision(Ball->box, ply2->box) && ply2->swinging == true&&hitTimer2->getTicks()>200)
     {
-        cout << "swing2 hit" << endl;
+        //cout << "swing2 hit" << endl;
         snds->playSound("sounds/swingHit.mp3");
         hitTimer2->reset();
          Ball->tag="two";
@@ -594,7 +594,7 @@ void GLScene::ballColl()
     }
     if (!box_collision(Ball->box, ply2->box) && ply2->swinging == true && ply2->swingTimer->getTicks() >=200 && hitTimer->getTicks()>200)
     {
-        cout << "swing2" << endl;
+        //cout << "swing2" << endl;
         ply2->swingTimer->reset();
         snds->playSound("sounds/swing.mp3");
     }
@@ -611,7 +611,7 @@ void GLScene::setBallDir()
 	double rando = rand() % 2+1;
 	if(score<=0)
 	{
-	    cout<<"in here"<<endl;
+	    //cout<<"in here"<<endl;
 		if(rando>1)
         {
 			ballDirX=1;
@@ -980,7 +980,7 @@ void GLScene:: update()
 
 void GLScene::updateHPBar( )
 {
-  if (plyScore == 1)
+    if (plyScore == 1)
     {
         p2HPModel->modelInit("images/box/p2_2.png", true, p2HP);
     }
@@ -1084,7 +1084,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             //gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
             gameEntered = true;
         }
-
+        //updateHPBar();
         double lolTime = glfwGetTime();
 
           //-----------------------------------------------------------------------------------------------//
