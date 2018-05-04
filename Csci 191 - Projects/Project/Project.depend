@@ -2040,13 +2040,14 @@
 	<windows.h>
 	<iostream>
 
-1525067171 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
+1525218786 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\main.cpp
 	<windows.h>
 	<GLScene.h>
 	<stdlib.h>
 	<timer.h>
 	<iostream>
 	<windows.h>
+	<sounds.h>
 
 1524690996 969cf283df6aa872d6db76019c64febb16647
 	<windows.h>
@@ -2080,7 +2081,7 @@
 	<windows.h>
 	<iostream>
 
-1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
+1525218786 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glscene.h
 	<time.h>
 	<GLInputs.h>
 	<windows.h>
@@ -2118,7 +2119,7 @@
 1525067183 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\timer.h
 	<time.h>
 
-1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
+1525218786 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glinputs.cpp
 	"GLInputs.h"
 	<player.h>
 	<GLModel.h>
@@ -2127,6 +2128,7 @@
 	<stdint.h>
 	<iostream>
 	<string>
+	<sounds.h>
 
 1525067182 c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\include\glinputs.h
 	<windows.h>
@@ -2186,7 +2188,7 @@
 	<stdlib.h>
 	<textureLoader.h>
 
-1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
+1525308888 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\glscene.cpp
 	<GLScene.h>
 	<GLLight.h>
 	<GLInputs.h>
@@ -2208,12 +2210,13 @@
 	"parallax.h"
 	<textureLoader.h>
 
-1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
+1525218786 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\player.cpp
 	<player.h>
 	<timer.h>
 	<GLTexture.h>
 	<windows.h>
 	<iostream>
+	<sounds.h>
 
 1525067189 source:c:\users\deathonadinosaur\documents\snackboys\csci 191 - projects\project\src\skybox.cpp
 	"skyBox.h"

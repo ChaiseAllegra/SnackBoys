@@ -1010,7 +1010,7 @@ void GLScene::updateHPBar( )
 
 GLint GLScene::drawGLScene2(bool pressed[256])
 {
-    updateHPBar();
+    //updateHPBar();
 
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear Screen And Depth Buffer
@@ -1145,7 +1145,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply->pl_pltfrm_box.width = 0.07;
             ply->box.height=0.1;
             ply->trueHeight=0.1;
-            ply->box.width=0.06;
+            ply->box.width=0.2;
             ply->drawplayer();
             ply->oneORtwo = "one";
         glPopMatrix();
@@ -1163,7 +1163,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                 ply2->pl_pltfrm_box.width = 0.07;
                 ply2->trueHeight=0.1;
                 ply2->box.height=0.1;
-                ply2->box.width=0.06;
+                ply2->box.width=0.2;
                 ply2->drawplayer();
                 ply2->oneORtwo = "two";
             glPopMatrix();
@@ -1176,7 +1176,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //        model,texture, xpos, ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
     makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-    //makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
@@ -1186,7 +1186,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile11,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
-   // makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
     //left wall
@@ -1201,14 +1201,14 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     makeModel(topWall, topWallTex,0,1.8,-5.0,-0.2,5.0,-0.2,5.0,0.2,-5.0,0.2,88,0.17);
 
     //player 2 hp bar creation
-    makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
-    makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
+   // makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
+    //makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
         //----------------Projectile creation------------------------------------------------//
           if(ply->thrown)
         {
               glPushMatrix();
-                    ply->projA->box.height =  .2;
-                    ply->projA->box.width = .05;
+                    ply->projA->box.height =  0.2;
+                    ply->projA->box.width = 0.05;
                     ply->projA->verticies[0].x = -0.15;
                     ply->projA->verticies[1].x = 0.15;
                     ply->projA->verticies[2].x = 0.15;
