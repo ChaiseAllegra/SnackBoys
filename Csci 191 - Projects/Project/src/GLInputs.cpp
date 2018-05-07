@@ -96,7 +96,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(pressed['E']&&ply->jumpTimer->getTicks() >= 200)//200ms
         if(ply->jump<2)
         {
-            jumpSound->playSound("sounds/jump.mp3");
+            //jumpSound->playSound("sounds/jump.mp3");
             ply->jumpTimer->reset();
             ply->verticalVelocity=6;//0.008;
             ply->jump++;
@@ -187,7 +187,7 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
     if(pressed['O']&&ply2->jumpTimer->getTicks() >= 200)//200ms
         if(ply2->jump<2)
         {
-            jumpSound->playSound("sounds/jump.mp3");
+            //asjumpSound->playSound("sounds/jump.mp3");
             ply2->jumpTimer->reset();
             ply2->verticalVelocity=6;//0.008;
             ply2->jump++;

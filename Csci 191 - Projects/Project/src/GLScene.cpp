@@ -818,6 +818,17 @@ void GLScene::projectileCol(player* ply, player* ply2)
         ballDirX *= -1;
         //cout<<manhattanDist(ply,Ball)<<endl;
         ply->projA->health=0;
+        if(ply->oneORtwo=="one")
+        {
+            Ball->tag="one";
+            Ball->modelInit("images/box/ball3.png", true, ballTex);
+        }
+        if(ply->oneORtwo=="two")
+        {
+            Ball->tag="two";
+            Ball->modelInit("images/box/ball2.png", true, ballTex);
+        }
+
         if(Ball->Xpos>0&&Ball->tag=="one")
             Ball->lethal=2;
         if(Ball->Xpos<0&&Ball->tag=="two")
@@ -1202,6 +1213,8 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
     //player 2 hp bar creation
    // makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
+
+    //makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
     //makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
         //----------------Projectile creation------------------------------------------------//
           if(ply->thrown)
@@ -1308,7 +1321,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
              //draw the number 3
             if (!cdown3)
             {
-                snds->playSound("sounds/3.mp3");
+                //snds->playSound("sounds/3.mp3");
                 cdown3 = true;
             }
             glPushMatrix();
@@ -1320,7 +1333,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
               //drawmainMenChoice=false; the number 2
             if (!cdown2)
             {
-                snds->playSound("sounds/2.mp3");
+              //  snds->playSound("sounds/2.mp3");
                 cdown2 = true;
             }
             glPushMatrix();
@@ -1333,7 +1346,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             glPushMatrix();
             if (!cdown1)
             {
-                snds->playSound("sounds/1.mp3");
+                //snds->playSound("sounds/1.mp3");
                 cdown1 = true;
             }
                 oneMod->drawModel(oneTex);
@@ -1344,7 +1357,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             //draw the number 0
             if (!rumble)
             {
-                snds->playSound("sounds/rumble.mp3");
+                //snds->playSound("sounds/rumble.mp3");
                 rumble = true;
             }
             glPushMatrix();
