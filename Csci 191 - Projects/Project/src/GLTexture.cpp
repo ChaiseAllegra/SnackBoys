@@ -21,9 +21,9 @@ void textureLoader::bindTexture(char* fileName)
     image = SOIL_load_image(fileName,&width,&height, 0,SOIL_LOAD_RGBA);
 
     if(!image){
-            cout<<"fail to find image"<<endl;
-            cout<<fileName<<endl;
-            cout<<""<<endl;
+            //cout<<"fail to find image"<<endl;
+            //cout<<fileName<<endl;
+            //cout<<""<<endl;
     }
 
 

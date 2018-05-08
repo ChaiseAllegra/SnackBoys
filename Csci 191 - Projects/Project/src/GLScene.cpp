@@ -10,6 +10,7 @@
 #include <timer.h>
 #include <GLFW/glfw3.h>
 #include <sounds.h>
+ //#include <SFML/Graphics.hpp>
 //#include<levelAlpha.h>
 //#include<levelOmega.h>
 
@@ -50,8 +51,10 @@ GLScene::GLScene()
 {
     screenHeight = GetSystemMetrics(SM_CYSCREEN);
     screenWidth = GetSystemMetrics(SM_CXSCREEN);
+    MMTex= new textureLoader();
 
     pauseMenu = false;
+    mainParr= new parallax();
 
      KbMs = new Inputs();
 
@@ -263,6 +266,7 @@ GLint GLScene::initGL()
     plx->parallaxInit("images/box/sky.png",texSky1);
     plx2->parallaxInit("images/box/city.png",texSky2);
     plx2->parallaxInit("images/box/landing.jpg",landingTex);
+    mainParr->parallaxInit("images/box/MMBG.png",MMTex);
 
     playMod->modelInit("images/box/pMPlay.png", true, playTex);
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
@@ -513,6 +517,7 @@ void GLScene::reset()
     CurXpos=0;
     CurYpos=0;
     //reset the accel
+   // updateHPBar();
     initGL();
 }
 void GLScene::ballColl()
@@ -1067,6 +1072,10 @@ GLint GLScene::drawGLScene2(bool pressed[256])
 
     if(menu[1] == true)
     {
+        glPushMatrix();
+            glScaled(3.33, 3.33, 1.0);
+            mainParr->drawSquare(screenWidth, screenHeight, MMTex);
+        glPopMatrix();
         //          model,   texture, xpos,ypos, 0 X,  0 Y, 1 X,  1 Y, 2 X, 2 Y,  3 X, 3 Y, width,height
         makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -1.0, 3.5, -1.0, 3.5, 1.0, -3.5, 1.0, 0.0, 0.0);
         if(mainMenPos == 0) // play

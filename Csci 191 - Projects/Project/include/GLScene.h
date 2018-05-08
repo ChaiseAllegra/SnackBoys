@@ -140,6 +140,8 @@ class GLScene
 
         textureLoader* p1HP;
         Model* p1HPModel;
+        parallax* mainParr;
+        textureLoader* MMTex;
         //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
         WPARAM wParam;
