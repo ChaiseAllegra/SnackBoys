@@ -11,6 +11,9 @@ player::player()
     ydir=0;
     xdir=1;
     stunned=false;
+    swingSpeed=0;
+    fireTime= new timer();
+    doReset=false;
 
     jumpInitiated = false;
     PZoom = -4;
@@ -34,6 +37,7 @@ player::player()
     leftWC=false;
     rightWC=false;
     health=5;
+    rTime= new timer();
 
     thrown = false;
     isDash = false;
@@ -62,6 +66,7 @@ player::player()
     projA->box.y=999;
     projA->box.width=0;
     projA->box.height=0;
+    rInc=0;
 
 }
 
@@ -87,6 +92,7 @@ void player::drawplayer()
 
 void player::playerInit()
 {
+    //rTime->start();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
@@ -96,6 +102,11 @@ void player::playerInit()
     runText[3].bindTexture("images/player_right/player3.png");
     runText[4].bindTexture("images/player_right/player4.png");
     runText[5].bindTexture("images/player_right/player5.png");
+
+    fireArr[0].bindTexture("images/player/respawn1.png");
+    fireArr[1].bindTexture("images/player/respawn1.png");
+    fireArr[2].bindTexture("images/player/respawn1.png");
+    fireArr[3].bindTexture("images/player/respawn1.png");
 
     runText_left[0].bindTexture("images/player_left/player0.png");
     runText_left[1].bindTexture("images/player_left/player1.png");
@@ -149,6 +160,18 @@ void player::playerInit()
     swingTextLeft[11].bindTexture("images/player_left/swing3.png");
     swingTextLeft[12].bindTexture("images/player_left/swing3.png");
 
+    respawnArr[0].bindTexture("images/player/respawn1.png");
+    respawnArr[1].bindTexture("images/player/respawn2.png");
+    respawnArr[2].bindTexture("images/player/respawn3.png");
+    respawnArr[3].bindTexture("images/player/respawn4.png");
+    respawnArr[4].bindTexture("images/player/respawn5.png");
+
+
+    fireArr[0].bindTexture("images/player/fire1.png");
+    fireArr[1].bindTexture("images/player/fire2.png");
+    fireArr[2].bindTexture("images/player/fire3.png");
+    fireArr[3].bindTexture("images/player/fire4.png");
+
     stand[0].bindTexture("images/player_right/play.png");
     stand[1].bindTexture("images/player_left/play.png");
 
@@ -162,6 +185,7 @@ void player::playerInit()
 
 void player::playerInit2()
 {
+     //rTime->start();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 
@@ -224,6 +248,17 @@ void player::playerInit2()
     swingTextLeft[11].bindTexture("images/player2_left/swing3.png");
     swingTextLeft[12].bindTexture("images/player2_left/swing3.png");
 
+    respawnArr[0].bindTexture("images/player/respawn1.png");
+    respawnArr[1].bindTexture("images/player/respawn2.png");
+    respawnArr[2].bindTexture("images/player/respawn3.png");
+    respawnArr[3].bindTexture("images/player/respawn4.png");
+    respawnArr[4].bindTexture("images/player/respawn5.png");
+
+    fireArr[0].bindTexture("images/player/fire1.png");
+    fireArr[1].bindTexture("images/player/fire2.png");
+    fireArr[2].bindTexture("images/player/fire3.png");
+    fireArr[3].bindTexture("images/player/fire4.png");
+
     stand[0].bindTexture("images/player2_right/play.png");
     stand[1].bindTexture("images/player2_left/play.png");
 
@@ -240,6 +275,7 @@ void player::actions()
 {
    switch(actionTrigger){
        case 0:
+           cout<<"case 0"<<endl;
            //plyVel = startSpeed;
            plyVel = 0.002;
            glPushMatrix();
@@ -261,6 +297,7 @@ void player::actions()
       break;
 
    case 1:
+       cout << "Case 1 " << endl;
            glPushMatrix();
                 glTranslated(PXpos, PYpos, PZoom);
                 if(5==5)//T->getTicks() > 3)
@@ -320,20 +357,72 @@ void player::actions()
            glPopMatrix();
 
     break;
+   case 4:
+       glPushMatrix();
+        glTranslated(PXpos, PYpos, PZoom);;
+       rTime->start();
+       if(rTime->getTicks()<=300)
+       respawnArr[0].binder();
+       if(rTime->getTicks()<=500&&rTime->getTicks()>300)
+       respawnArr[1].binder();
+       if(rTime->getTicks()<=600&&rTime->getTicks()>500)
+       respawnArr[2].binder();
+       if(rTime->getTicks()<=700&&rTime->getTicks()>600)
+        respawnArr[3].binder();
+        if(rTime->getTicks()<=800&&rTime->getTicks()>700)
+        respawnArr[4].binder();
+        if(rTime->getTicks()<=900&&rTime->getTicks()>800)
+        {
+            actionTrigger=0;
+            rTime->stop();
+            rTime->reset();
+        }
+       drawplayer();
+       glPopMatrix();
+    break;
+   case 5://death animation
+      /* glPushMatrix();
+        glTranslated(PXpos, PYpos, PZoom);;
+       fireTime->start();
+       if(fireTime->getTicks()<=100)
+       fireArr[0].binder();
+       if(fireTime->getTicks()<=200 && fireTime->getTicks()>100)
+       fireArr[1].binder();
+       if(fireTime->getTicks()<=300 && fireTime->getTicks()>200)
+       fireArr[2].binder();
+       if(fireTime->getTicks()<=400 && fireTime->getTicks()>300)
+       fireArr[3].binder();
+       if(fireTime->getTicks()<=500 && fireTime->getTicks()>400)
+       fireArr[0].binder();
+       if(fireTime->getTicks()<=600 && fireTime->getTicks()>500)
+       fireArr[1].binder();
+       if(fireTime->getTicks()<=700 && fireTime->getTicks()>600)
+       fireArr[2].binder();
+       if(fireTime->getTicks()<=800 && fireTime->getTicks()>700)
+       fireArr[3].binder();
+       if(fireTime->getTicks()>=900)
+        {
+            actionTrigger=0;
+            fireTime->stop();
+            fireTime->reset();
+        }
+       drawplayer();
+       glPopMatrix();*/
+    break;
    }
    if(swinging&&!pause)
    {
            glPushMatrix();
               if(T2 ->getTicks()>80)
               {
-                runspeed++;
-                runspeed %= 8;
+                swingSpeed++;
+                swingSpeed %= 8;
                 T2->reset();
               }
             if (lastCase == 'R')
-              swingText[runspeed].binder();
+              swingText[swingSpeed].binder();
             if (lastCase == 'L')
-                swingTextLeft[runspeed].binder();
+                swingTextLeft[swingSpeed].binder();
               drawplayer();
            glPopMatrix();
    }

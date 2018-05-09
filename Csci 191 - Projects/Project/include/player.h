@@ -44,6 +44,8 @@ class player: public Model
         float yex;
         bool hold;
         bool throwB;
+        int swingSpeed;
+        timer* fireTime;
 
         float verticalVelocity;
         float playerGrav;
@@ -58,12 +60,16 @@ class player: public Model
         char lastCase = 'R';
 
         float plyAccel;
+        int rInc;
+        bool doReset;
 
         textureLoader runText[40];
         textureLoader runText_left[40];
         textureLoader swingText[40];
         textureLoader swingTextLeft[40];
         textureLoader stand[2];
+        textureLoader respawnArr[10];
+         textureLoader fireArr[10];
 
 
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
@@ -99,6 +105,7 @@ class player: public Model
         timer* frameRate = new timer();
         timer* jumpTimer = new timer();
         timer* projJump;
+        timer* rTime;
 
         float delta;
 

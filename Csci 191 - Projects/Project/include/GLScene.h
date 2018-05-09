@@ -142,8 +142,11 @@ class GLScene
         Model* p1HPModel;
         parallax* mainParr;
         textureLoader* MMTex;
+        parallax* plxSky2;
+        textureLoader* sky2Tex;
         //combine them all into one photo then load different versions of that phoito depending on where the menu pos is
         /*------------------------------------------------------*/
+
         WPARAM wParam;
         bool pauseMenu;
         int menuPos=2;
