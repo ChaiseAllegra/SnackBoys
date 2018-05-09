@@ -166,6 +166,10 @@ void player::playerInit()
     jumpTextL[4].bindTexture("images/player_left/jump4.png");
     jumpTextL[5].bindTexture("images/player_left/jump5.png");
 
+    dash[0].bindTexture("images/player_right/dash.png");
+    dash[1].bindTexture("images/player_left/dashL.png");
+
+
 
     projA->Xpos=999;
     projA->Ypos=999;
@@ -255,6 +259,9 @@ void player::playerInit2()
     jumpTextL[3].bindTexture("images/player2_left/jump3.png");
     jumpTextL[4].bindTexture("images/player2_left/jump4.png");
     jumpTextL[5].bindTexture("images/player2_left/jump5.png");
+
+    dash[0].bindTexture("images/player2_right/dash.png");
+    dash[1].bindTexture("images/player2_left/dashL.png");
 
     projA->Xpos=999;
     projA->Ypos=999;
@@ -346,7 +353,18 @@ void player::actions()
                       runText_left[runspeed].binder();
                 }
 
-                else if(swingDuration->getTicks() >= 400 && !ballCollided && !pause && !OnTile)
+                else if(swingDuration->getTicks() >= 400 && !ballCollided && !pause && !OnTile && isDash)
+                {
+
+                    cout << "in dash" << endl;
+                    if(lastCase == 'R')
+                      dash[0].binder();
+
+                    if(lastCase == 'L')
+                      dash[1].binder();
+                }
+
+                else if(swingDuration->getTicks() >= 400 && !ballCollided && !pause && !OnTile && !isDash)
                 {
 
                     if(lastCase == 'R')
@@ -355,6 +373,7 @@ void player::actions()
                     if(lastCase == 'L')
                       jumpTextL[5].binder();
                 }
+
 
                 /*else
                 {
@@ -391,11 +410,13 @@ void player::actions()
 
         if(lastCase=='R'&&rightWC)
         {
+
                     isDash=false;
                     dashVel=7;
         }
         if(lastCase=='R'&&!rightWC)
         {
+            dash[0].binder();
             PXpos += (dashVel)/delta;
             if(dashVel<=0||rightWC)
             {
@@ -412,6 +433,7 @@ void player::actions()
         }
          if(lastCase=='L'&&!leftWC)
         {
+            dash[1].binder();
             PXpos -= (dashVel)/delta;
             if(dashVel<=0||leftWC)
             {
