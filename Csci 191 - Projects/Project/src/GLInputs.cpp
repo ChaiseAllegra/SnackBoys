@@ -141,7 +141,10 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         dashTimer->reset();
     }
     if(pressed['Q'])
+    {
         ply->thrown=true;
+        ply->swinging=true;
+    }
 
     if(pressed['C'])
         ply->hold=true;
@@ -230,13 +233,21 @@ void Inputs::idle(bool pressed[256],player* ply, player * ply2)
         ply2->prevx=ply2->PXpos;
     }
     if(pressed['M'])
+    {
         ply2->thrown=true;
+        ply2->swinging=true;
+    }
 
     if(pressed['N'])
         ply2->hold=true;
     else
         ply2->hold=false;
     }
+   /*if(pressed['Z'])
+    {
+        ply2->actionTrigger=5;
+        ply->actionTrigger=5;
+    }*/
 
 
 }

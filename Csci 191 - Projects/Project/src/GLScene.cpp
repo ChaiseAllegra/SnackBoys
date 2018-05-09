@@ -75,6 +75,8 @@ GLScene::GLScene()
 
      texSky1 = new textureLoader();
      texSky2 = new textureLoader();
+     plxSky2= new parallax();
+     sky2Tex= new textureLoader();
      /*-----------------------------------------*/
 
     //--left side tiles
@@ -209,6 +211,7 @@ GLScene::GLScene()
     menuTex4 = new textureLoader();
 
     landingTex = new textureLoader();
+    ply2->lastCase='L';
     /*------------------------------------------*/
       controlTexA= new textureLoader();
         infoButtonA= new Model();
@@ -276,6 +279,10 @@ GLint GLScene::initGL()
 
     plx->parallaxInit("images/box/sky.png",texSky1);
     plx2->parallaxInit("images/box/city.png",texSky2);
+    plx2->parallaxInit("images/box/landing.jpg",landingTex);
+    plxSky2->parallaxInit("images/box/sky2.png",sky2Tex);
+    mainParr->parallaxInit("images/box/MMBG.png",MMTex);
+
     plx2->parallaxInit("images/box/bak.jpg",landingTex);
     mainParr->parallaxInit("images/box/bakgrd.png",MMTex);
 
@@ -298,9 +305,17 @@ GLint GLScene::initGL()
 
     //----------------player position variables---------------//
     ply->PXpos=-2;
-    ply->PYpos=-1;
     ply2->PXpos=2;
-    ply2->PYpos=-1;
+    ply->PYpos = -1.1;
+    ply2->PYpos = -1.1;
+    ply->thrown=false;
+    ply2->thrown=false;
+    ply->OnTile=true;
+    ply2->OnTile=true;
+    ply->actionTrigger=4;
+    ply2->actionTrigger=4;
+    ply->lastCase='R';
+    ply2->lastCase='L';
     //--------------------------------------------------------//
 
     //-----------------------tile models--------------------------//
@@ -666,6 +681,8 @@ void GLScene::wallColl()
         score++;
         plyScoreLast=1;
         ply2Score++;
+        ply->doReset=false;
+
     }
     if(box_collision(ply2->box,killBox->box))
     {
@@ -673,6 +690,7 @@ void GLScene::wallColl()
         reset();
         plyScoreLast=2;
         plyScore++;
+        ply2->doReset=false;
     }
     if (box_collision(Ball->box, rightWall->box))
     {
@@ -1068,6 +1086,13 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         glPopMatrix();
          //if(timeFromStart-startTime>=2)//wait three seconds to start the game
             plx->scroll(true,"left",0.006,1);
+
+        glPushMatrix();
+            glScaled(3.33, 3.33, 1.0);
+            plxSky2->drawSquare(screenWidth, screenHeight, sky2Tex);
+        glPopMatrix();
+         //if(timeFromStart-startTime>=2)//wait three seconds to start the game
+            plxSky2->scroll(true,"left",0.006,6);
           //-----------------------------------------------------------------------------------------------//
          //------------------------------- PARALLAX2 CREATION --------------------------------------------//
         //-----------------------------------------------------------------------------------------------//
@@ -1075,8 +1100,6 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             glScaled(3.33, 3.33, 1.0);
             plx2->drawSquare(screenWidth, screenHeight, texSky2);
         glPopMatrix();
-        if(timeFromStart-startTime>=2)//wait three seconds to start the game
-            plx2->scroll(false,"left",0.0002,1);
 
     if(menu[0])	// Not Time To Quit, Update Screen
     {
@@ -1095,6 +1118,10 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             mainParr->drawSquare(screenWidth, screenHeight, MMTex);
         glPopMatrix();
         //          model,   texture, xpos,ypos, 0 X,  0 Y, 1 X,  1 Y, 2 X, 2 Y,  3 X, 3 Y, width,height
+        //makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -1.0, 3.5, -1.0, 3.5, 1.0, -3.5, 1.0, 0.0, 0.0);
+        //if(mainMenPos == 0) // play
+          //  menuModel->modelInit("images/box/menu_play.png",true,menuTex);
+
         //makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 0) // play
             makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
@@ -1103,6 +1130,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         if(mainMenPos == 2) // controls
             makeModel(menuModel3, menuTex3, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 3) // exit
+            //menuModel->modelInit("images/box/menu_exit.png",true,menuTex);
             makeModel(menuModel4, menuTex4, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
     }
     if(this->menu[2]==true)
@@ -1172,6 +1200,15 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         glPopMatrix();
         if(timeFromStart-startTime>=2)//wait three seconds to start the game
             plx2->scroll(false,"left",0.0002,scale);
+
+        glPushMatrix();
+            glScaled(3.33, 3.33, 1.0);
+            plxSky2->drawSquare(screenWidth, screenHeight, sky2Tex);
+        glPopMatrix();
+         if(timeFromStart-startTime>=2)//wait three seconds to start the game
+            plxSky2->scroll(true,"left",1,scale);
+          //-----------------------------------
+
           //-------------------------------------------------------------------------------------------------//
          //------------------------------- PLAYER CREATION -------------------------------------------------//
         //-------------------------------------------------------------------------------------------------//
