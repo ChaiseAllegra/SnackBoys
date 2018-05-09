@@ -344,12 +344,12 @@ GLint GLScene::initGL()
     playButton->modelInit("images/box/playbutton.png",true,tex3);
     infoButton->modelInit("images/box/info.png",true,tex4);
     exitButton->modelInit("images/box/exit.png",true,tex5);
-    infoPage->modelInit("images/box/InfoPage.png",true,tex6);
+    infoPage->modelInit("images/box/rules_page.png",true,tex6);
     //setBallDir();
 
     menuModel->modelInit("images/box/background_play.png",true,menuTex);
-    menuModel2->modelInit("images/box/background_rules.png",true,menuTex2);
-    menuModel3->modelInit("images/box/background_controls.png",true,menuTex3);
+    menuModel2->modelInit("images/box/rules_page.png",true,menuTex2);
+    menuModel3->modelInit("images/box/controls_page.png",true,menuTex3);
     menuModel4->modelInit("images/box/background_exit.png",true,menuTex4);
 
     landing->modelInit("images/box/bak.png",true,landingTex);
@@ -1106,9 +1106,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         glPopMatrix();
         glPushMatrix();
         glScalef(2.00,1.00,1);
-        infoPage->Xpos=-0.0;
-        infoPage->Ypos=-0.0;
-        infoPage->drawModel(tex6);
+        menuModel2->Xpos=-0.0;
+        menuModel2->Ypos=-0.0;
+        menuModel2->drawModel(menuTex2);
         glPopMatrix();
     }
     if(this->menu[3]==true)
@@ -1480,9 +1480,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
         glPopMatrix();
         glPushMatrix();
          glScalef(1.00,1.00,1);
-         playButton->Xpos=0.0;
-         playButton->Ypos=0.0;
-         playButton->drawModel(tex3);
+         menuModel3->Xpos=0.0;
+         menuModel3->Ypos=0.0;
+         menuModel3->drawModel(menuTex3);
         glPopMatrix();
     }
     if(menu[6])
