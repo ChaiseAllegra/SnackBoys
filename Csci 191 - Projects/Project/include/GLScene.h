@@ -104,6 +104,9 @@ class GLScene
         textureLoader* crosshair;
          bool menu[6];
          Model* menuModel;
+         Model* menuModel2;
+         Model* menuModel3;
+         Model* menuModel4;
         Model* playButton;
         Model *infoButton;
         Model *exitButton ;
@@ -125,7 +128,12 @@ class GLScene
         Model* playButtonA;
         Model* landing;
         textureLoader* landingTex;
+
         textureLoader* menuTex;
+        textureLoader* menuTex2;
+        textureLoader* menuTex3;
+        textureLoader* menuTex4;
+
         textureLoader* infoTexA;
         textureLoader* exitTexA;
         textureLoader* playButtonTexA;

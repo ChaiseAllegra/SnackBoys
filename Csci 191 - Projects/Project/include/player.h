@@ -70,6 +70,10 @@ class player: public Model
         textureLoader stand[2];
         textureLoader respawnArr[10];
          textureLoader fireArr[10];
+        textureLoader jumpText[40];
+        textureLoader jumpTextL[40];
+        textureLoader dashL[40];
+        textureLoader dash[40];
 
 
         void playerUpdateHbox();//updates the hit box x and y to players current x and y
