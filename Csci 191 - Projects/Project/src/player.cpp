@@ -152,12 +152,19 @@ void player::playerInit()
     stand[0].bindTexture("images/player_right/play.png");
     stand[1].bindTexture("images/player_left/play.png");
 
-    jumpText[0].bindTexture("images/player_right/play.png");
-    jumpText[1].bindTexture("images/player_right/play.png");
-    jumpText[2].bindTexture("images/player_right/play.png");
-    jumpText[3].bindTexture("images/player_right/play.png");
-    jumpText[4].bindTexture("images/player_right/play.png");
-    jumpText[5].bindTexture("images/player_right/play.png");
+    jumpText[0].bindTexture("images/player_right/jump0.png");
+    jumpText[1].bindTexture("images/player_right/jump1.png");
+    jumpText[2].bindTexture("images/player_right/jump2.png");
+    jumpText[3].bindTexture("images/player_right/jump3.png");
+    jumpText[4].bindTexture("images/player_right/jump4.png");
+    jumpText[5].bindTexture("images/player_right/jump5.png");
+
+    jumpTextL[0].bindTexture("images/player_left/jump0.png");
+    jumpTextL[1].bindTexture("images/player_left/jump1.png");
+    jumpTextL[2].bindTexture("images/player_left/jump2.png");
+    jumpTextL[3].bindTexture("images/player_left/jump3.png");
+    jumpTextL[4].bindTexture("images/player_left/jump4.png");
+    jumpTextL[5].bindTexture("images/player_left/jump5.png");
 
 
     projA->Xpos=999;
@@ -232,8 +239,22 @@ void player::playerInit2()
     swingTextLeft[11].bindTexture("images/player2_left/swing3.png");
     swingTextLeft[12].bindTexture("images/player2_left/swing3.png");
 
-    stand[0].bindTexture("images/player2_right/play.png");
     stand[1].bindTexture("images/player2_left/play.png");
+    stand[0].bindTexture("images/player2_right/play.png");
+
+    jumpText[0].bindTexture("images/player2_right/jump0.png");
+    jumpText[1].bindTexture("images/player2_right/jump1.png");
+    jumpText[2].bindTexture("images/player2_right/jump2.png");
+    jumpText[3].bindTexture("images/player2_right/jump3.png");
+    jumpText[4].bindTexture("images/player2_right/jump4.png");
+    jumpText[5].bindTexture("images/player2_right/jump5.png");
+
+    jumpTextL[0].bindTexture("images/player2_left/jump0.png");
+    jumpTextL[1].bindTexture("images/player2_left/jump1.png");
+    jumpTextL[2].bindTexture("images/player2_left/jump2.png");
+    jumpTextL[3].bindTexture("images/player2_left/jump3.png");
+    jumpTextL[4].bindTexture("images/player2_left/jump4.png");
+    jumpTextL[5].bindTexture("images/player2_left/jump5.png");
 
     projA->Xpos=999;
     projA->Ypos=999;
@@ -253,13 +274,21 @@ void player::actions()
            glPushMatrix();
                 glTranslated(PXpos, PYpos, PZoom);
 
-                if(!ballCollided && swingDuration->getTicks() >= 400) // If player was swinging but not moving he still swings
+                if(!ballCollided && swingDuration->getTicks() >= 400 && OnTile) // If player was swinging but not moving he still swings
                 {
                     if(lastCase == 'L')
                         stand[1].binder();
 
                     if(lastCase == 'R')
                         stand[0].binder();
+                }
+                else if (!ballCollided && swingDuration->getTicks() >= 400 && !OnTile)
+                {
+                    if(lastCase == 'L')
+                        jumpTextL[4].binder();
+
+                    if(lastCase == 'R')
+                        jumpText[4].binder();
                 }
                 else
                     swingText[2].binder();
@@ -302,7 +331,7 @@ void player::actions()
                     }
                 }
 
-                if (swingDuration->getTicks() >= 400 && !ballCollided&&!pause)
+                if (swingDuration->getTicks() >= 400 && !ballCollided&&!pause && OnTile)
                 {
                     if(T2 ->getTicks()>80)
                     {
@@ -317,13 +346,23 @@ void player::actions()
                       runText_left[runspeed].binder();
                 }
 
-                else
+                else if(swingDuration->getTicks() >= 400 && !ballCollided && !pause && !OnTile)
+                {
+
+                    if(lastCase == 'R')
+                      jumpText[5].binder();
+
+                    if(lastCase == 'L')
+                      jumpTextL[5].binder();
+                }
+
+                /*else
                 {
                     if(lastCase == 'R')
                         swingText[2].binder();
                     if(lastCase == 'L')
                         swingTextLeft[2].binder();
-                }
+                }*/
                 drawplayer();
            glPopMatrix();
 
