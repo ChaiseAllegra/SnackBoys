@@ -489,7 +489,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                if(keys['W']&&menu->getTicks()>150)
                {
                    menu->reset();
-                    if(Scene->menuPos<2)
+                    if(Scene->menuPos<32)
                     {
                         Scene->menuPos++;
                         menuSound->playSound("sounds/menuSelect.mp3");

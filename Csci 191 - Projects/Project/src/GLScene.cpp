@@ -64,10 +64,12 @@ GLScene::GLScene()
      sky = new skyBox;
 
      playMod= new Model();
+     controlsMod = new Model();
      resetMod= new Model();
      exitMod= new Model();
 
      playTex=new textureLoader();
+     controlsTex=new textureLoader();
      resetTex=new textureLoader();
      exitTex=new textureLoader();
 
@@ -196,6 +198,7 @@ GLScene::GLScene()
     infoButtonA= new Model();
     exitButtonA= new Model();
     playButtonA= new Model();
+    pause_controls = new Model();
     infoTexA= new textureLoader();
     exitTexA= new textureLoader();
     playButtonTexA= new textureLoader();
@@ -208,12 +211,13 @@ GLScene::GLScene()
     landingTex = new textureLoader();
     /*------------------------------------------*/
       controlTexA= new textureLoader();
-   infoButtonA= new Model();
+        infoButtonA= new Model();
      exitButtonA= new Model();
       playButtonA= new Model();
         infoTexA= new textureLoader();
       exitTexA= new textureLoader();
       playButtonTexA= new textureLoader();
+      pauseCTex= new textureLoader();
 //      mainMenuModel= new Model();
       //mainMenuTex= new textureLoader();
 //     mainMenuModel= new Model();
@@ -244,7 +248,7 @@ GLint GLScene::initGL()
     gameSoundtrack->initSounds();
 
     gameSoundtrack->stopAllSounds();
-    gameSoundtrack->adjustVolume(.2);
+    gameSoundtrack->adjustVolume(0.2);
 
     wonSound = false;
 
@@ -276,8 +280,11 @@ GLint GLScene::initGL()
     mainParr->parallaxInit("images/box/bakgrd.png",MMTex);
 
     playMod->modelInit("images/box/pMPlay.png", true, playTex);
+    controlsMod->modelInit("images/box/pMcontrols.png", true, controlsTex);
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
-    exitMod->modelInit("images/box/exit.png", true, exitTex);
+    exitMod->modelInit("images/box/pmExit.png", true, exitTex);
+
+    pause_controls->modelInit("images/box/pause_controls.png", true, pauseCTex);
 
     /* declare model init, player init in scene init*/
     playerModel->modelInit("images/player/player0.png", true, plyTex);
@@ -1241,7 +1248,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     //makeModel(p1HPModel,p1HP,-2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
     //makeModel(p2HPModel,p2HP,2.40,1.20,-0.35,-0.00,0.35,-0.00,0.35,0.30,-0.35,0.30,0.2200005,.3);
         //----------------Projectile creation------------------------------------------------//
-          if(ply->thrown)
+        if(ply->thrown)
         {
               glPushMatrix();
                     ply->projA->box.height =  0.2;
@@ -1413,9 +1420,9 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             ply2->pause=true;
             if(firstpause)
             {
-              tDirx=ballDirX;
-              tDiry=ballDirY;
-             firstpause=false;
+                tDirx=ballDirX;
+                tDiry=ballDirY;
+                firstpause=false;
             }
             ballDirX=0;
             ballDirY=0;
@@ -1430,7 +1437,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                     ply2->pause=false;
                     menu[4]=false;
                 }
-                if(menuPos==2)//resumed the game
+                if(menuPos==3)//resumed the game
                 {
                     ballDirX=tDirx;
                     ballDirY=tDiry;
@@ -1440,26 +1447,40 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                     ply2->pause=false;
                     menu[4]=false;
                 }
-                menuPos=2;
+                if(menuPos==2) // controls page
+                {
+                   // makeModel(pause_controls, pauseCTex, 0.0, 0.0, -0.09, -0.09, 0.09, -0.09, 0.09, 0.09, -0.09, 0.09, 0.0, 0.0);
+                   pause_controls->drawModel(pauseCTex);
+                }
+                menuPos=3;
                 pauseChoice=false;
             }
             else
             {
             glLoadIdentity();
-                if(menuPos==2)
+                if(menuPos==3)
                 {
                     glPushMatrix();
                     playMod->Xpos=0;
                     playMod->Ypos=0;
-                    playMod->drawModel(playTex);
+                    makeModel(playMod, playTex, 0.0, 0.0, -0.9, -1.0, 0.9, -1.0, 0.9, 1.0, -0.9, 1.0, 0.0, 0.0);
+                    glPopMatrix();
+                }
+                if(menuPos==2)
+                {
+                    glPushMatrix();
+                    controlsMod->Xpos=0;
+                    controlsMod->Ypos=0;
+                    makeModel(controlsMod, controlsTex, 0.0, 0.0, -0.9, -1.0, 0.9, -1.0, 0.9, 1.0, -0.9, 1.0, 0.0, 0.0);
+                    makeModel(pause_controls, pauseCTex, 1.85, 0.0, -1.2, -1.0, 1.2, -1.0, 1.2, 1.0, -1.2, 1.0, 0.0, 0.0);
                     glPopMatrix();
                 }
                 if(menuPos==1)
                 {
                     glPushMatrix();
                     resetMod->Xpos=0;
-                      resetMod->Ypos=0;
-                     resetMod->drawModel(resetTex);
+                    resetMod->Ypos=0;
+                    makeModel(resetMod, resetTex, 0.0, 0.0, -0.9, -1.0, 0.9, -1.0, 0.9, 1.0, -0.9, 1.0, 0.0, 0.0);
                     glPopMatrix();
                 }
                  if(menuPos==0)
@@ -1467,7 +1488,7 @@ GLint GLScene::drawGLScene2(bool pressed[256])
                     glPushMatrix();
                     exitMod->Xpos=0;
                     exitMod->Ypos=0;
-                    exitMod->drawModel(exitTex);
+                    makeModel(exitMod, exitTex, 0.0, 0.0, -0.9, -1.0, 0.9, -1.0, 0.9, 1.0, -0.9, 1.0, 0.0, 0.0);
                     glPopMatrix();
                 }
             }

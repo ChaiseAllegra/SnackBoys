@@ -154,7 +154,7 @@ class GLScene
         /*------------------------------------------------------*/
         WPARAM wParam;
         bool pauseMenu;
-        int menuPos=2;
+        int menuPos=3;
         float pauseChoice;
         float screenHeight;
         float screenWidth;
@@ -216,6 +216,7 @@ class GLScene
         parallax* plx3;
 
         Model* playMod;
+        Model* controlsMod;
         Model* resetMod;
         Model* exitMod;
 
@@ -231,13 +232,16 @@ class GLScene
         Model* platTileTL;
         Model* platTileTR;
         Model* platTileM;
+        Model* pause_controls;
 
         textureLoader* texSky1;
         textureLoader* texSky2;
 
         textureLoader* playTex;
+        textureLoader* controlsTex;
         textureLoader* resetTex;
         textureLoader* exitTex;
+        textureLoader* pauseCTex;
 
         Model* threeMod;
         Model* twoMod;
