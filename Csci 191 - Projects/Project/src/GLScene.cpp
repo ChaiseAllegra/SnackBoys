@@ -275,14 +275,12 @@ GLint GLScene::initGL()
 
     plx->parallaxInit("images/box/sky.png",texSky1);
     plx2->parallaxInit("images/box/city.png",texSky2);
-<<<<<<< HEAD
     plx2->parallaxInit("images/box/landing.jpg",landingTex);
     plxSky2->parallaxInit("images/box/sky2.png",sky2Tex);
     mainParr->parallaxInit("images/box/MMBG.png",MMTex);
-=======
+
     plx2->parallaxInit("images/box/bak.jpg",landingTex);
     mainParr->parallaxInit("images/box/bakgrd.png",MMTex);
->>>>>>> a89fe6081076835d3c6f133cdef322d7d03e2c75
 
     playMod->modelInit("images/box/pMPlay.png", true, playTex);
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
@@ -1113,25 +1111,20 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             mainParr->drawSquare(screenWidth, screenHeight, MMTex);
         glPopMatrix();
         //          model,   texture, xpos,ypos, 0 X,  0 Y, 1 X,  1 Y, 2 X, 2 Y,  3 X, 3 Y, width,height
-<<<<<<< HEAD
-        makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -1.0, 3.5, -1.0, 3.5, 1.0, -3.5, 1.0, 0.0, 0.0);
-       /* if(mainMenPos == 0) // play
-            menuModel->modelInit("images/box/menu_play.png",true,menuTex);
-=======
+        //makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -1.0, 3.5, -1.0, 3.5, 1.0, -3.5, 1.0, 0.0, 0.0);
+        //if(mainMenPos == 0) // play
+          //  menuModel->modelInit("images/box/menu_play.png",true,menuTex);
+
         //makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 0) // play
             makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
->>>>>>> a89fe6081076835d3c6f133cdef322d7d03e2c75
         if(mainMenPos == 1) // info
             makeModel(menuModel2, menuTex2, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 2) // controls
             makeModel(menuModel3, menuTex3, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 3) // exit
-<<<<<<< HEAD
-            menuModel->modelInit("images/box/menu_exit.png",true,menuTex);*/
-=======
+            //menuModel->modelInit("images/box/menu_exit.png",true,menuTex);
             makeModel(menuModel4, menuTex4, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
->>>>>>> a89fe6081076835d3c6f133cdef322d7d03e2c75
     }
     if(this->menu[2]==true)
     {

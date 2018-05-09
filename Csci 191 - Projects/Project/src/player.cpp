@@ -312,7 +312,6 @@ void player::actions()
 {
    switch(actionTrigger){
        case 0:
-           cout<<"case 0"<<endl;
            //plyVel = startSpeed;
            plyVel = 0.002;
            glPushMatrix();
@@ -342,7 +341,6 @@ void player::actions()
       break;
 
    case 1:
-       cout << "Case 1 " << endl;
            glPushMatrix();
                 glTranslated(PXpos, PYpos, PZoom);
                 if(5==5)//T->getTicks() > 3)
@@ -393,8 +391,6 @@ void player::actions()
 
                 else if(swingDuration->getTicks() >= 400 && !ballCollided && !pause && !OnTile && isDash)
                 {
-
-                    cout << "in dash" << endl;
                     if(lastCase == 'R')
                       dash[0].binder();
 
