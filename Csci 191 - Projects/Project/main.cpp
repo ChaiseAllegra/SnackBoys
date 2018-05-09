@@ -502,7 +502,12 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                     Scene->pauseChoice=true;
                }
                if(Scene->pauseChoice&&Scene->menuPos==0)
-                    done=true;
+                     done=true;
+                     /*
+                     {
+                            Scene->menu[3]=false;
+                            Scene->menu[1]=true;
+                        }*/
             }
 
             if(keys[VK_RETURN]&&Scene->menu[4]==true)//quit the game from in game menu
