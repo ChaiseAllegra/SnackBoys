@@ -173,6 +173,9 @@ GLScene::GLScene()
     zeroTex= new textureLoader();
 
     menuModel = new Model();
+    menuModel2 = new Model();
+    menuModel3 = new Model();
+    menuModel4 = new Model();
 
     playButton= new Model();
     infoButton = new Model();
@@ -198,6 +201,10 @@ GLScene::GLScene()
     playButtonTexA= new textureLoader();
 
     menuTex = new textureLoader();
+    menuTex2 = new textureLoader();
+    menuTex3 = new textureLoader();
+    menuTex4 = new textureLoader();
+
     landingTex = new textureLoader();
     /*------------------------------------------*/
       controlTexA= new textureLoader();
@@ -265,12 +272,12 @@ GLint GLScene::initGL()
 
     plx->parallaxInit("images/box/sky.png",texSky1);
     plx2->parallaxInit("images/box/city.png",texSky2);
-    plx2->parallaxInit("images/box/landing.jpg",landingTex);
-    mainParr->parallaxInit("images/box/MMBG.png",MMTex);
+    plx2->parallaxInit("images/box/bak.jpg",landingTex);
+    mainParr->parallaxInit("images/box/bakgrd.png",MMTex);
 
     playMod->modelInit("images/box/pMPlay.png", true, playTex);
     resetMod->modelInit("images/box/pMReset.png", true, resetTex);
-    exitMod->modelInit("images/box/pMExit.png", true, exitTex);
+    exitMod->modelInit("images/box/exit.png", true, exitTex);
 
     /* declare model init, player init in scene init*/
     playerModel->modelInit("images/player/player0.png", true, plyTex);
@@ -340,8 +347,12 @@ GLint GLScene::initGL()
     infoPage->modelInit("images/box/InfoPage.png",true,tex6);
     //setBallDir();
 
-    menuModel->modelInit("images/box/menu.png",true,menuTex);
-    landing->modelInit("images/box/landing.png",true,landingTex);
+    menuModel->modelInit("images/box/background_play.png",true,menuTex);
+    menuModel2->modelInit("images/box/background_rules.png",true,menuTex2);
+    menuModel3->modelInit("images/box/background_controls.png",true,menuTex3);
+    menuModel4->modelInit("images/box/background_exit.png",true,menuTex4);
+
+    landing->modelInit("images/box/bak.png",true,landingTex);
 
     /*------------------------*/
      winPlyModel->modelInit("images/box/ply_wins.png",true,winPlyTex);
@@ -1077,18 +1088,22 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             mainParr->drawSquare(screenWidth, screenHeight, MMTex);
         glPopMatrix();
         //          model,   texture, xpos,ypos, 0 X,  0 Y, 1 X,  1 Y, 2 X, 2 Y,  3 X, 3 Y, width,height
-        makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -1.0, 3.5, -1.0, 3.5, 1.0, -3.5, 1.0, 0.0, 0.0);
+        //makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 0) // play
-            menuModel->modelInit("images/box/menu_play.png",true,menuTex);
+            makeModel(menuModel, menuTex, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 1) // info
-            menuModel->modelInit("images/box/menu_info.png",true,menuTex);
+            makeModel(menuModel2, menuTex2, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 2) // controls
-            menuModel->modelInit("images/box/menu_control.png",true,menuTex);
+            makeModel(menuModel3, menuTex3, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
         if(mainMenPos == 3) // exit
-            menuModel->modelInit("images/box/menu_exit.png",true,menuTex);
+            makeModel(menuModel4, menuTex4, 0.0, 0.0, -3.5, -2.0, 3.5, -2.0, 3.5, 2.0, -3.5, 2.0, 0.0, 0.0);
     }
     if(this->menu[2]==true)
     {
+        glPushMatrix();
+            glScaled(3.33, 3.33, 1.0);
+            mainParr->drawSquare(screenWidth, screenHeight, MMTex);
+        glPopMatrix();
         glPushMatrix();
         glScalef(2.00,1.00,1);
         infoPage->Xpos=-0.0;
@@ -1459,6 +1474,10 @@ GLint GLScene::drawGLScene2(bool pressed[256])
     }
     if(menu[5])//controls page
     {
+        glPushMatrix();
+            glScaled(3.33, 3.33, 1.0);
+            mainParr->drawSquare(screenWidth, screenHeight, MMTex);
+        glPopMatrix();
         glPushMatrix();
          glScalef(1.00,1.00,1);
          playButton->Xpos=0.0;

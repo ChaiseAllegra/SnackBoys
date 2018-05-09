@@ -152,6 +152,14 @@ void player::playerInit()
     stand[0].bindTexture("images/player_right/play.png");
     stand[1].bindTexture("images/player_left/play.png");
 
+    jumpText[0].bindTexture("images/player_right/play.png");
+    jumpText[1].bindTexture("images/player_right/play.png");
+    jumpText[2].bindTexture("images/player_right/play.png");
+    jumpText[3].bindTexture("images/player_right/play.png");
+    jumpText[4].bindTexture("images/player_right/play.png");
+    jumpText[5].bindTexture("images/player_right/play.png");
+
+
     projA->Xpos=999;
     projA->Ypos=999;
     projA->box.x=999;

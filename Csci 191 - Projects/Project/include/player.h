@@ -64,6 +64,7 @@ class player: public Model
         textureLoader swingText[40];
         textureLoader swingTextLeft[40];
         textureLoader stand[2];
+        textureLoader jumpText[40];
 
 
         void playerUpdateHbox();//updates the hit box x and y to players current x and y

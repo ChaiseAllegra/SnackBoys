@@ -372,22 +372,27 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
 
             if(keys[VK_RETURN] && Scene->menu[0]==true && menu->getTicks() > 150)
             {
-                Scene->menu[1]=true;
+                menuSound->playSound("sounds/selectMenu.mp3");
+                Scene->menu[1] = true;
+                Scene->menu[0] = false;
                 menu->reset();
             }
-
             if(keys['H']&&Scene->menu[1]==true)//info page
             {
-                			    //cout<<"in here3"<<endl;
+                //cout<<"in here3"<<endl;
             	Scene->menu[1]=false;
                 Scene->menu[2]=true;
-
             }
-            if ( keys[VK_ESCAPE]&&Scene->menu[2]==true)	//takes you from info page to main menu
+            if (keys[VK_ESCAPE]&&Scene->menu[2]==true) // takes you from info page to main menu
 			{
 				Scene->menu[2]=false;
                 Scene->menu[1]=true;
-
+			}
+            if (keys[VK_ESCAPE]&&Scene->menu[1]==true)
+			{
+			    menuSound->playSound("sounds/selectMenu.mp3");
+				Scene->menu[0]=true;
+                Scene->menu[1]=false;
 			}
             if(keys['N']&&Scene->menu[1]==true)
             {
@@ -395,13 +400,13 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
             	Scene->menu[3]=true;
 
             }
-             if(keys['I']&&Scene->menu[1]==true)
+            if(keys['I']&&Scene->menu[1]==true)
             {
             	Scene->menu[1]=false;
             	Scene->menu[5]=true;
 
             }
-            if ( keys[VK_ESCAPE]&&Scene->menu[5]==true)	//takes you from info page to main menu
+            if(keys[VK_ESCAPE]&&Scene->menu[5]==true)	//takes you from info page to main menu
 			{
 				Scene->menu[5]=false;
                 Scene->menu[1]=true;
