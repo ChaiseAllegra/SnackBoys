@@ -40,6 +40,7 @@ bool rumble = false;
 bool wonSound = false;
 
 timer* soundTimer = new timer();
+timer* ballToWallTimer = new timer();
 
 timer* musicReset = new timer();
 
@@ -281,6 +282,7 @@ GLScene::~GLScene()
 
 GLint GLScene::initGL()
 {
+    ballToWallTimer->start();
 
     cdown1 = false;
     cdown2 = false;
@@ -587,6 +589,7 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 }
 void GLScene::reset()
 {
+    ballToWallTimer->start();
     tile1->health=3;
     tile2->health=3;
     tile3->health=3;
@@ -813,22 +816,33 @@ void GLScene::wallColl()
     if (box_collision(Ball->box, rightWall->box))
     {
         ballDirX = -1;
-        BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+        if(ballToWallTimer->getTicks() >= 150)
+        {
+            BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+            ballToWallTimer->reset();
+        }
     }
 
 
     if (box_collision(Ball->box, leftWall->box))
     {
         ballDirX = 1;
-        BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+        if(ballToWallTimer->getTicks() >= 150)
+        {
+            BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+            ballToWallTimer->reset();
+        }
     }
 
 
     if (box_collision(Ball->box, topWall->box))
     {
         ballDirY = -1;
-        if (Ball->Ypos <=1.6)
-        BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+        if(ballToWallTimer->getTicks() >= 200 && Ball->Ypos < 1.8)
+        {
+            BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
+            ballToWallTimer->reset();
+        }
     }
 
 
