@@ -104,7 +104,11 @@ GLScene::GLScene()
     hitTimer2=new timer();
     speedInc=0.07;
     speedDecr=0.0045;
+
     ballTex = new textureLoader();
+    ballTex2 = new textureLoader();
+    ballTex3 = new textureLoader();
+
     killBox= new Model();
     ply2Score=0;
     leftWall = new Model(); //---Left wall
@@ -112,6 +116,7 @@ GLScene::GLScene()
     topWall = new Model(); //----Top wall
     divide = new Model();
     ballSpdBfrAcc=0.5;
+
     tileTex=new textureLoader();
     tileTex2=new textureLoader();
     tileTex3=new textureLoader();
@@ -127,6 +132,39 @@ GLScene::GLScene()
     tileTex13=new textureLoader();
     tileTex14=new textureLoader();
     tileTex15=new textureLoader();
+
+    tileTex02=new textureLoader();
+    tileTex22=new textureLoader();
+    tileTex32=new textureLoader();
+    tileTex42=new textureLoader();
+    tileTex52=new textureLoader();
+    tileTex62=new textureLoader();
+    tileTex72=new textureLoader();
+    tileTex82=new textureLoader();
+    tileTex92=new textureLoader();
+    tileTex102=new textureLoader();
+    tileTex112=new textureLoader();
+    tileTex122=new textureLoader();
+    tileTex132=new textureLoader();
+    tileTex142=new textureLoader();
+    tileTex152=new textureLoader();
+
+    tileTex03=new textureLoader();
+    tileTex23=new textureLoader();
+    tileTex33=new textureLoader();
+    tileTex43=new textureLoader();
+    tileTex53=new textureLoader();
+    tileTex63=new textureLoader();
+    tileTex73=new textureLoader();
+    tileTex83=new textureLoader();
+    tileTex93=new textureLoader();
+    tileTex103=new textureLoader();
+    tileTex113=new textureLoader();
+    tileTex123=new textureLoader();
+    tileTex133=new textureLoader();
+    tileTex143=new textureLoader();
+    tileTex153=new textureLoader();
+
     leftWallTex= new textureLoader();
     rightWallTex= new textureLoader();
     topWallTex= new textureLoader();
@@ -147,7 +185,11 @@ GLScene::GLScene()
     projTex2 = new textureLoader();
     cross = new Model();
     crosshair = new textureLoader();
+
     Ball = new Model();
+    Ball2 = new Model();
+    Ball3 = new Model();
+
     setBallSpeed=false;
     scale=1;
     ballDirX=-1;
@@ -336,6 +378,38 @@ GLint GLScene::initGL()
     tile15->modelInit("images/box/nothing2.png", true, tileTex15);
     //-------------------------------------------------------------//
 
+    tileTex02->bindTexture("images/box/nothing2.png");
+    tileTex22->bindTexture("images/box/block2.png");
+    tileTex32->bindTexture("images/box/block2.png");
+    tileTex42->bindTexture("images/box/block2.png");
+    tileTex52->bindTexture("images/box/block2.png");
+    tileTex62->bindTexture("images/box/block2.png");
+    tileTex72->bindTexture("images/box/block2.png");
+    tileTex82->bindTexture("images/box/nothing2.png");
+    tileTex92->bindTexture("images/box/block2.png");
+    tileTex102->bindTexture("images/box/block2.png");
+    tileTex112->bindTexture("images/box/block2.png");
+    tileTex122->bindTexture("images/box/block2.png");
+    tileTex132->bindTexture("images/box/block2.png");
+    tileTex142->bindTexture("images/box/block2.png");
+    tileTex152->bindTexture("images/box/nothing2.png");
+
+    tileTex03->bindTexture("images/box/nothing2.png");
+    tileTex23->bindTexture("images/box/block3.png");
+    tileTex33->bindTexture("images/box/block3.png");
+    tileTex43->bindTexture("images/box/block3.png");
+    tileTex53->bindTexture("images/box/block3.png");
+    tileTex63->bindTexture("images/box/block3.png");
+    tileTex73->bindTexture("images/box/block3.png");
+    tileTex83->bindTexture("images/box/nothing2.png");
+    tileTex93->bindTexture("images/box/block3.png");
+    tileTex103->bindTexture("images/box/block3.png");
+    tileTex113->bindTexture("images/box/block3.png");
+    tileTex123->bindTexture("images/box/block3.png");
+    tileTex133->bindTexture("images/box/block3.png");
+    tileTex143->bindTexture("images/box/block3.png");
+    tileTex153->bindTexture("images/box/nothing2.png");
+
     //------------------------wall models--------------------------//
     leftWall->modelInit("images/box/girder.png", true, leftWallTex);
     rightWall->modelInit("images/box/girder.png", true, rightWallTex);
@@ -348,6 +422,8 @@ GLint GLScene::initGL()
     ply->projA->modelInit("images/box/Fire.png", true, projTex);
     ply2->projA->modelInit("images/box/Fire2.png", true, projTex2);
     Ball->modelInit("images/box/ball.png", true, ballTex);
+    Ball2->modelInit("images/box/ball2.png", true, ballTex2);
+    Ball3->modelInit("images/box/ball3.png", true, ballTex3);
     //---------------------------------------------------------------//
 
     //-------------------player timers------------------------//
@@ -432,7 +508,7 @@ collisionX = (((rect1.x-rect1.width) < (rect2.x + rect2.width) && (rect1.x+rect1
 
     return collisionX && collisionY;
 }
-void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
+void GLScene::tileChange(Model* b, Model* t,textureLoader* TX,textureLoader* TX2,textureLoader* TX3)
 {
     if(box_collision(b->box, t->box ) && D->getTicks() >= 200)
     {
@@ -449,13 +525,13 @@ void GLScene::tileChange(Model* b, Model* t,textureLoader* TX)
 
 
                 if(t->health>2)
-                    t->modelInit("images/box/block.png", true, TX);
+                    t->drawModel(TX);
                 if (t->health == 2)
-                    t->modelInit("images/box/block2.png", true, TX);
+                    t->drawModel(TX2);
                 if (t->health == 1)
-                    t->modelInit("images/box/block3.png", true, TX);
+                    t->drawModel(TX3);
                 if (t->health == 0)
-                    t->modelInit("images/box/nothing2.png", true, TX);
+                    t->drawModel(tileTex8);
                     return;
     }
 
@@ -511,7 +587,6 @@ void GLScene::makeModel(Model* mod,textureLoader* texture,float xspot,float yspo
 }
 void GLScene::reset()
 {
-
     tile1->health=3;
     tile2->health=3;
     tile3->health=3;
@@ -527,7 +602,6 @@ void GLScene::reset()
     tile13->health=3;
     tile14->health=3;
     tile15->health=3;
-
     ply->PXpos=-2;
     ply2->PXpos=2;
     ply->PYpos = -1.1;
@@ -558,23 +632,44 @@ void GLScene::reset()
     ply2->T->start();
     ply2->T2->start();
     //--------------------------------------------------------//
-
     Ball->Xpos=0;
     Ball->Ypos=0;
     Ball->tag="";
+    Ball->drawModel(ballTex);
     //ballDirX=-1;
     //ballDirY=-1;
     setBallDir();
     CurXpos=0;
     CurYpos=0;
-     startTime = glfwGetTime();
-
+    startTime = glfwGetTime();
     lastTime = glfwGetTime();
     Ball->Xpos=0;
     Ball->Ypos=0;
     //reset the accel
-   // updateHPBar();
-   // initGL();
+    //updateHPBar();
+    //initGL();
+    cdown1 = false;
+    cdown2 = false;
+    cdown3 = false;
+    rumble = false;
+    // musicReset->start(); //not used
+    soundTimer->start();
+    snds->initSounds();
+    BtWsnds->initSounds();
+    gameSoundtrack->initSounds();
+    gameSoundtrack->stopAllSounds();
+    gameSoundtrack->adjustVolume(0.2);
+    wonSound = false;
+    if(!musicStarted)
+    {
+        gameSoundtrack->playMusic("sounds/bgmusic.mp3");
+        musicStarted = true;
+    }
+    else
+    {
+        gameSoundtrack->stopAllSounds();
+        gameSoundtrack->playMusic("sounds/Bloom_-_10_-_Temperance.mp3");
+    }
 }
 void GLScene::ballColl()
 {
@@ -602,7 +697,7 @@ void GLScene::ballColl()
         if(ballSpeed<0.17)
             ballSpeed+=speedInc*(60/scale);
 
-        Ball->modelInit("images/box/ball3.png", true, ballTex);
+        //Ball->modelInit("images/box/ball3.png", true, ballTex);
         ply->swinging = false;
          hitCount++;
     }
@@ -643,7 +738,7 @@ void GLScene::ballColl()
         if(ballSpeed<0.17)
             ballSpeed+=speedInc*(60/scale);
 
-        Ball->modelInit("images/box/ball2.png", true, ballTex);
+        //Ball->modelInit("images/box/ball2.png", true, ballTex);
         ply2->swinging = false;
         hitCount++;
     }
@@ -732,6 +827,7 @@ void GLScene::wallColl()
     if (box_collision(Ball->box, topWall->box))
     {
         ballDirY = -1;
+        if (Ball->Ypos <=1.6)
         BtWsnds->playSound("sounds/aaj_1064_TbleHit04.mp3");
     }
 
@@ -885,12 +981,12 @@ void GLScene::projectileCol(player* ply, player* ply2)
         if(ply->oneORtwo=="one")
         {
             Ball->tag="one";
-            Ball->modelInit("images/box/ball3.png", true, ballTex);
+            //Ball->modelInit("images/box/ball3.png", true, ballTex);
         }
         if(ply->oneORtwo=="two")
         {
             Ball->tag="two";
-            Ball->modelInit("images/box/ball2.png", true, ballTex);
+            //Ball->modelInit("images/box/ball2.png", true, ballTex);
         }
 
         if(Ball->Xpos>0&&Ball->tag=="one")
@@ -961,21 +1057,21 @@ void GLScene:: update()
      //------------------------------- BALL VS TILE COLLISIONS -----------------------------------------//
     //-------------------------------------------------------------------------------------------------//
 
-    tileChange(Ball, tile1,tileTex);
-    tileChange(Ball, tile2,tileTex2);
-    tileChange(Ball, tile3,tileTex3);
-    tileChange(Ball, tile4,tileTex4);
-    tileChange(Ball, tile5,tileTex5);
-    tileChange(Ball, tile6,tileTex6);
-    tileChange(Ball, tile7,tileTex7);
+    tileChange(Ball, tile1,tileTex,tileTex02,tileTex03);
+    tileChange(Ball, tile2,tileTex2,tileTex22,tileTex23);
+    tileChange(Ball, tile3,tileTex3,tileTex32,tileTex33);
+    tileChange(Ball, tile4,tileTex4,tileTex42,tileTex43);
+    tileChange(Ball, tile5,tileTex5,tileTex52,tileTex53);
+    tileChange(Ball, tile6,tileTex6,tileTex62,tileTex63);
+    tileChange(Ball, tile7,tileTex7,tileTex72,tileTex73);
     //tileChange(Ball, tile8,tileTex8);
-    tileChange(Ball, tile9,tileTex9);
-    tileChange(Ball, tile10,tileTex10);
-    tileChange(Ball, tile11,tileTex11);
-    tileChange(Ball, tile12,tileTex12);
-    tileChange(Ball, tile13,tileTex13);
-    tileChange(Ball, tile14,tileTex14);
-    tileChange(Ball, tile15,tileTex15);
+    tileChange(Ball, tile9,tileTex9,tileTex92,tileTex93);
+    tileChange(Ball, tile10,tileTex10,tileTex102,tileTex103);
+    tileChange(Ball, tile11,tileTex11,tileTex112,tileTex113);
+    tileChange(Ball, tile12,tileTex12,tileTex122,tileTex123);
+    tileChange(Ball, tile13,tileTex13,tileTex132,tileTex133);
+    tileChange(Ball, tile14,tileTex14,tileTex142,tileTex143);
+    tileChange(Ball, tile15,tileTex15,tileTex152,tileTex153);
 
     //MOVING THE BALL
     if(currentTime-startTime>4)
@@ -1276,21 +1372,133 @@ GLint GLScene::drawGLScene2(bool pressed[256])
      //------------------------------- TILE CREATION ---------------------------------------------------//
     //-------------------------------------------------------------------------------------------------//
     //        model,texture, xpos, ypos, 0 X, 0 Y, 1 X, 1 Y, 2 X, 2 Y, 3 X, 3 Y, width, height
+    if(tile1->health == 3)
     makeModel(tile1,tileTex,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile2->health == 3)
     makeModel(tile2,tileTex2,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile3->health == 3)
     makeModel(tile3,tileTex3,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile4->health == 3)
     makeModel(tile4,tileTex4,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile5->health == 3)
     makeModel(tile5,tileTex5,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile6->health == 3)
     makeModel(tile6,tileTex6,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile7->health == 3)
     makeModel(tile7,tileTex7,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile8->health == 3)
     makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile9->health == 3)
     makeModel(tile9,tileTex9, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile10->health == 3)
     makeModel(tile10,tileTex10, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile11->health == 3)
     makeModel(tile11,tileTex11, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile12->health == 3)
     makeModel(tile12,tileTex12, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile13->health == 3)
     makeModel(tile13,tileTex13, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile14->health == 3)
     makeModel(tile14,tileTex14, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile15->health == 3)
     makeModel(tile15,tileTex15, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+
+
+    if(tile1->health == 2)
+    makeModel(tile1,tileTex02,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile2->health == 2)
+    makeModel(tile2,tileTex22,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile3->health == 2)
+    makeModel(tile3,tileTex32,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile4->health == 2)
+    makeModel(tile4,tileTex42,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile5->health == 2)
+    makeModel(tile5,tileTex52,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile6->health == 2)
+    makeModel(tile6,tileTex62,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile7->health == 2)
+    makeModel(tile7,tileTex72,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile8->health == 2)
+    makeModel(tile8,tileTex82, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile9->health == 2)
+    makeModel(tile9,tileTex92, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile10->health == 2)
+    makeModel(tile10,tileTex102, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile11->health == 2)
+    makeModel(tile11,tileTex112, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile12->health == 2)
+    makeModel(tile12,tileTex122, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile13->health == 2)
+    makeModel(tile13,tileTex132, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile14->health == 2)
+    makeModel(tile14,tileTex142, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile15->health == 2)
+    makeModel(tile15,tileTex152, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+
+    if(tile1->health == 1)
+    makeModel(tile1,tileTex03,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile2->health == 1)
+    makeModel(tile2,tileTex23,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile3->health == 1)
+    makeModel(tile3,tileTex33,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile4->health == 1)
+    makeModel(tile4,tileTex43,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile5->health == 1)
+    makeModel(tile5,tileTex53,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile6->health == 1)
+    makeModel(tile6,tileTex63,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile7->health == 1)
+    makeModel(tile7,tileTex73,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile8->health == 1)
+    makeModel(tile8,tileTex83, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile9->health == 1)
+    makeModel(tile9,tileTex93, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile10->health == 1)
+    makeModel(tile10,tileTex103, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile11->health == 1)
+    makeModel(tile11,tileTex113, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile12->health == 1)
+    makeModel(tile12,tileTex123, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile13->health == 1)
+    makeModel(tile13,tileTex133, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile14->health == 1)
+    makeModel(tile14,tileTex143, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile15->health == 1)
+    makeModel(tile15,tileTex153, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+
+    if(tile1->health == 0)
+    makeModel(tile1,tileTex8,-3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile2->health == 0)
+    makeModel(tile2,tileTex8,-2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile3->health == 0)
+    makeModel(tile3,tileTex8,-2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile4->health == 0)
+    makeModel(tile4,tileTex8,-1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile5->health == 0)
+    makeModel(tile5,tileTex8,-1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile6->health == 0)
+    makeModel(tile6,tileTex8,-0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile7->health == 0)
+    makeModel(tile7,tileTex8,-0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile8->health == 0)
+    makeModel(tile8,tileTex8, 0.00,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile9->health == 0)
+    makeModel(tile9,tileTex8, 0.49,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile10->health == 0)
+    makeModel(tile10,tileTex8, 0.98,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile11->health == 0)
+    makeModel(tile11,tileTex8, 1.47,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile12->health == 0)
+    makeModel(tile12,tileTex8, 1.96,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile13->health == 0)
+    makeModel(tile13,tileTex8, 2.45,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile14->health == 0)
+    makeModel(tile14,tileTex8, 2.94,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+    if(tile15->health == 0)
+    makeModel(tile15,tileTex8, 3.43,-2.08,-0.25,-0.00,0.25,-0.00,0.25,0.40,-0.25,0.40,0.2200005,.3);
+
+
+
     //left wall
     makeModel(leftWall,leftWallTex,-3.37,0,-0.2,-3.0,0.2,-3.0,0.2,3.0,-0.2,3.0,0.3,88);
     //right wall
@@ -1383,7 +1591,13 @@ GLint GLScene::drawGLScene2(bool pressed[256])
             Ball->verticies[3].y = 0.15;
             Ball->box.x = Ball->Xpos;
             Ball->box.y = Ball->Ypos;
-            Ball->drawModel(ballTex);
+            if(Ball->tag=="one")
+                Ball->drawModel(ballTex3);
+            else if(Ball->tag=="two")
+                Ball->drawModel(ballTex2);
+            else if(Ball->tag=="")
+                Ball->drawModel(ballTex);
+
         glPopMatrix();
 
         //---------------------------Crosshair player 1 creation----------------------------------//

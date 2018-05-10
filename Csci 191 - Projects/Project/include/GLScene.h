@@ -25,7 +25,7 @@ class GLScene
          void makeModel(Model* ,textureLoader* ,float ,float ,float ,float ,float , float , float , float , float, float, float, float);
         bool playerOnTile(player* );
          bool lol(player* );
-        void tileChange(Model* , Model* ,textureLoader* );
+        void tileChange(Model* , Model* ,textureLoader*,textureLoader* ,textureLoader*);
         bool box_collision(Hbox, Hbox);
         void reset();
         int ballPosHit(Model* ,Model* );
@@ -37,7 +37,7 @@ class GLScene
         //int ballDirY;
         int hitCount;
         bool topOfTile(player* ,Model* );
-         //left side tiles
+
         Model* tile1;
         Model* tile2 ;
         Model* tile3 ;
@@ -45,9 +45,7 @@ class GLScene
         Model* tile5 ;
         Model* tile6 ;
         Model* tile7 ;
-        //middle tile
         Model* tile8 ;
-        //right side tiles
         Model* tile9 ;
         Model* tile10;
         Model* tile11 ;
@@ -55,6 +53,38 @@ class GLScene
         Model* tile13 ;
         Model* tile14 ;
         Model* tile15 ;
+
+        Model* tile1_2;
+        Model* tile2_2 ;
+        Model* tile3_2 ;
+        Model* tile4_2 ;
+        Model* tile5_2 ;
+        Model* tile6_2 ;
+        Model* tile7_2 ;
+        Model* tile8_2 ;
+        Model* tile9_2 ;
+        Model* tile10_2;
+        Model* tile11_2 ;
+        Model* tile12_2 ;
+        Model* tile13_2 ;
+        Model* tile14_2 ;
+        Model* tile15_2 ;
+
+        Model* tile1_3;
+        Model* tile2_3 ;
+        Model* tile3_3 ;
+        Model* tile4_3 ;
+        Model* tile5_3 ;
+        Model* tile6_3 ;
+        Model* tile7_3 ;
+        Model* tile8_3 ;
+        Model* tile9_3 ;
+        Model* tile10_3;
+        Model* tile11_3 ;
+        Model* tile12_3 ;
+        Model* tile13_3 ;
+        Model* tile14_3 ;
+        Model* tile15_3 ;
 
         player* ply ;
         player* ply2 ;
@@ -66,6 +96,8 @@ class GLScene
         float speedInc;
         float speedDecr;
         textureLoader* ballTex;
+        textureLoader* ballTex2;
+        textureLoader* ballTex3;
         void wallColl();
         int ply2Score;
         Model* killBox;
@@ -76,7 +108,8 @@ class GLScene
         Model* divide;  //middle wall
         void projectileCol(player*,player*);
          float ballSpdBfrAcc;//ball speed before acceleration
-       textureLoader* tileTex;
+
+        textureLoader* tileTex;
         textureLoader* tileTex2;
         textureLoader* tileTex3;
         textureLoader* tileTex4;
@@ -91,6 +124,39 @@ class GLScene
         textureLoader* tileTex13;
         textureLoader* tileTex14;
         textureLoader* tileTex15;
+
+        textureLoader* tileTex02;
+        textureLoader* tileTex22;
+        textureLoader* tileTex32;
+        textureLoader* tileTex42;
+        textureLoader* tileTex52;
+        textureLoader* tileTex62;
+        textureLoader* tileTex72;
+        textureLoader* tileTex82;
+        textureLoader* tileTex92;
+        textureLoader* tileTex102;
+        textureLoader* tileTex112;
+        textureLoader* tileTex122;
+        textureLoader* tileTex132;
+        textureLoader* tileTex142;
+        textureLoader* tileTex152;
+
+        textureLoader* tileTex03;
+        textureLoader* tileTex23;
+        textureLoader* tileTex33;
+        textureLoader* tileTex43;
+        textureLoader* tileTex53;
+        textureLoader* tileTex63;
+        textureLoader* tileTex73;
+        textureLoader* tileTex83;
+        textureLoader* tileTex93;
+        textureLoader* tileTex103;
+        textureLoader* tileTex113;
+        textureLoader* tileTex123;
+        textureLoader* tileTex133;
+        textureLoader* tileTex143;
+        textureLoader* tileTex153;
+
           Model * playerModel;
             textureLoader* plyTex;
             Model * playerModel2;
@@ -228,6 +294,8 @@ class GLScene
         Model* wallCHbawks; // top wall
         skyBox* sky;
         Model* Ball; // the ball
+        Model* Ball2; // the ball
+        Model* Ball3; // the ball
         Model* BallHbawks;
 
         Model* platTileBL;

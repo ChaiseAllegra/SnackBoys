@@ -486,7 +486,7 @@ int WINAPI WinMain(	HINSTANCE	hInstance,			// Instance
                    }
 
                }
-               if(keys['W']&&menu->getTicks()>150)
+               if(keys['W']&&menu->getTicks()>150&&Scene->menuPos<3)
                {
                    menu->reset();
                     if(Scene->menuPos<32)
