@@ -540,6 +540,24 @@ void GLScene::reset()
     ply2->health=4;
     ply->actionTrigger=0;
     ply2->actionTrigger=0;
+    ply->PXpos=-2;
+    ply2->PXpos=2;
+    ply->PYpos = -1.1;
+    ply2->PYpos = -1.1;
+    ply->thrown=false;
+    ply2->thrown=false;
+    ply->OnTile=true;
+    ply2->OnTile=true;
+    ply->actionTrigger=4;
+    ply2->actionTrigger=4;
+    ply->lastCase='R';
+    ply2->lastCase='L';
+    //-------------------player timers------------------------//
+    ply->T->start();
+    ply->T2->start();
+    ply2->T->start();
+    ply2->T2->start();
+    //--------------------------------------------------------//
 
     Ball->Xpos=0;
     Ball->Ypos=0;
@@ -549,9 +567,14 @@ void GLScene::reset()
     setBallDir();
     CurXpos=0;
     CurYpos=0;
+     startTime = glfwGetTime();
+
+    lastTime = glfwGetTime();
+    Ball->Xpos=0;
+    Ball->Ypos=0;
     //reset the accel
    // updateHPBar();
-    initGL();
+   // initGL();
 }
 void GLScene::ballColl()
 {
